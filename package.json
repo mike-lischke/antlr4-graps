@@ -1,0 +1,25 @@
+{
+  "name": "antlr4-graps",
+  "version": "1.0.0",
+  "description": "ANTLR grammar parsing services",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mike-lischke/antlr-graps"
+  },
+  "keywords": [
+    "node",
+    "ANTLR",
+    "grammar"
+  ],
+  "author": "Mike Lischke",
+  "license": "MIT",
+  "gypfile": true
+}
