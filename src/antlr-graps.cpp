@@ -23,6 +23,9 @@
 
 using namespace v8;
 
+v8::Persistent<v8::Function> GrammarSourceContext::constructor;
+v8::Persistent<v8::Function> ANTLRGrammarService::constructor;
+
 //----------------------------------------------------------------------------------------------------------------------
 
 GrammarSourceContext::GrammarSourceContext(std::string const& source)
@@ -51,7 +54,7 @@ void GrammarSourceContext::init(v8::Local<v8::Object> exports)
   // Prototype
   //NODE_SET_PROTOTYPE_METHOD(tpl, "plusOne", plusOne);
 
-  //ctor.Reset(isolate, tpl->GetFunction());
+  constructor.Reset(isolate, tpl->GetFunction());
   exports->Set(String::NewFromUtf8(isolate, "GrammarSourceContext"), tpl->GetFunction());
 }
 
@@ -76,15 +79,14 @@ void GrammarSourceContext::New(const FunctionCallbackInfo<Value>& args)
     args.GetReturnValue().Set(args.This());
   }
   else
-  {/*
+  {
     // Invoked as plain function `MyObject(...)`, turn into construct call.
     const int argc = 1;
     Local<Value> argv[argc] = { args[0] };
     Local<Context> context = isolate->GetCurrentContext();
-    Local<Function> cons = Local<Function>::New(isolate, ctor);
+    Local<Function> cons = Local<Function>::New(isolate, constructor);
     Local<Object> result = cons->NewInstance(context, argc, argv).ToLocalChecked();
     args.GetReturnValue().Set(result);
-    */
   }
 }
 
@@ -129,7 +131,7 @@ void ANTLRGrammarService::init(v8::Local<v8::Object> exports)
   // Prototype
   NODE_SET_PROTOTYPE_METHOD(tpl, "infoTextForSymbol", infoTextForSymbol);
 
-  //ctor.Reset(isolate, tpl->GetFunction());
+  constructor.Reset(isolate, tpl->GetFunction());
   exports->Set(String::NewFromUtf8(isolate, "ANTLRGrammarService"), tpl->GetFunction());
 }
 
@@ -147,15 +149,14 @@ void ANTLRGrammarService::New(const FunctionCallbackInfo<Value>& args)
     args.GetReturnValue().Set(args.This());
   }
   else
-  {/*
+  {
     // Invoked as plain function `MyObject(...)`, turn into construct call.
     const int argc = 1;
     Local<Value> argv[argc] = { args[0] };
     Local<Context> context = isolate->GetCurrentContext();
-    Local<Function> cons = Local<Function>::New(isolate, ctor);
+    Local<Function> cons = Local<Function>::New(isolate, constructor);
     Local<Object> result = cons->NewInstance(context, argc, argv).ToLocalChecked();
     args.GetReturnValue().Set(result);
-    */
   }
 }
 

@@ -34,7 +34,7 @@ public:
   static void init(v8::Local<v8::Object> exports);
 
 protected:
-  static v8::Persistent<v8::Function> ctor;
+  static v8::Persistent<v8::Function> constructor;
 
   GrammarSourceContext(std::string const& source);
   virtual ~GrammarSourceContext();
@@ -49,7 +49,7 @@ public:
   static void init(v8::Local<v8::Object> exports);
 
 protected:
-  static v8::Persistent<v8::Function> ctor;
+  static v8::Persistent<v8::Function> constructor;
 
   ANTLRGrammarService();
   virtual ~ANTLRGrammarService();
