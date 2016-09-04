@@ -18,13 +18,17 @@
       ],
       
       "conditions": [
-        [ 'OS=="mac"', {
+        [ "OS=='mac'", {
           "xcode_settings": {
             'MACOSX_DEPLOYMENT_TARGET': '10.9',
             "CLANG_CXX_LIBRARY": "libc++",
             "GCC_ENABLE_CPP_RTTI": "YES",
             "GCC_ENABLE_CPP_EXCEPTIONS": "YES"
           },
+        }],
+        [ "OS=='linux'", {
+          'cflags_cc!': [ '-fno-rtti', '-fno-exceptions' ],
+          'cflags!': [ '-fno-exceptions' ],
         }],
       ],
     }
