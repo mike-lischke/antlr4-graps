@@ -26,10 +26,48 @@
             "GCC_ENABLE_CPP_EXCEPTIONS": "YES"
           },
         }],
-        [ "OS=='linux'", {
-          'cflags_cc!': [ '-fno-rtti', '-fno-exceptions' ],
-          'cflags!': [ '-fno-exceptions' ],
+      
+        [ 'OS=="win"', {
+          'configurations': {
+            'Debug': {
+              'defines': [ 'WIN32' ],
+              'msvs_settings': {
+                'VCCLCompilerTool': {
+                  'RuntimeLibrary': 3, # shared debug
+                  'ExceptionHandling': 1, # /EHsc
+                  'AdditionalOptions': [
+                    '/EHsc'
+                  ]
+                }
+              }
+            },
+            'Release': {
+              'defines': [ 'WIN32' ],
+              'msvs_settings': {
+                'VCCLCompilerTool': {
+                  'RuntimeLibrary': 2, # shared release
+                  'ExceptionHandling': 1, # /EHsc
+                  'AdditionalOptions': [
+                    '/EHsc'
+                  ]
+                }
+              }
+            }
+          }
         }],
+                
+        [ "OS=='linux'", {
+          'configurations': {
+            'Debug': {
+              'cflags': [ '-std=c++11', '-fexceptions', '-frtti' ],
+              'cflags_cc': [ '-std=c++11', '-fexceptions', '-frtti' ]
+            },
+            'Release': {
+              'cflags': [ '-std=c++11', '-fexceptions', '-frtti' ],
+              'cflags_cc': [ '-std=c++11', '-fexceptions', '-frtti' ]
+            }
+          }
+        }]
       ],
     }
   ]
