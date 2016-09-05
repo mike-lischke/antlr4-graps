@@ -12,3 +12,4 @@ before_install:
   - sudo apt-get install gcc-5 g++-5 libstdc++-5-dev
   - export CXX="g++-5"
   - export CC="gcc-5"
+  - sudo apt-get install v8
