@@ -8,7 +8,7 @@
 #include "ANTLRv4ParserListener.h"
 
 
-namespace parsers {
+namespace graps {
 
 /**
  * This class provides an empty implementation of ANTLRv4ParserListener,
@@ -215,4 +215,4 @@ public:
 
 };
 
-}  // namespace parsers
+}  // namespace graps

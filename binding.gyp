@@ -4,6 +4,7 @@
       "target_name": "antlr_graps",
       "sources": [
         "<!@(ls -1 src/*.cpp)",
+        "<!@(ls -1 parser/*.cpp)",
         "<!@(ls -1 antlr4-runtime/*.cpp)",
         "<!@(ls -1 antlr4-runtime/atn/*.cpp)",
         "<!@(ls -1 antlr4-runtime/dfa/*.cpp)",
@@ -14,7 +15,8 @@
         "<!@(ls -1 antlr4-runtime/tree/xpath/*.cpp)"
         ],
       "include_dirs": [
-        "antlr4-runtime"
+        "antlr4-runtime",
+        "parser",
       ],
       
       "conditions": [

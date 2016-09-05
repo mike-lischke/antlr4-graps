@@ -9,7 +9,7 @@
 
 
 using namespace antlrcpp;
-using namespace parsers;
+using namespace graps;
 using namespace antlr4;
 
 ANTLRv4Parser::ANTLRv4Parser(TokenStream *input) : Parser(input) {

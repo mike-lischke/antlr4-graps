@@ -5,9 +5,12 @@
 #include "ANTLRv4Lexer.h"
 
 
+#include "LexerAdaptor.h"
+
+
 using namespace antlr4;
 
-using namespace parsers;
+using namespace graps;
 
 ANTLRv4Lexer::ANTLRv4Lexer(CharStream *input) : LexerAdaptor(input) {
   _interpreter = new atn::LexerATNSimulator(this, _atn, _decisionToDFA, _sharedContextCache);

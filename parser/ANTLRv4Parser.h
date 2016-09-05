@@ -9,7 +9,7 @@
 
 using namespace antlr4;
 
-namespace parsers {
+namespace graps {
 
 
 class ANTLRv4Parser : public Parser {
@@ -1280,4 +1280,4 @@ private:
   static Initializer _init;
 };
 
-}  // namespace parsers
+}  // namespace graps

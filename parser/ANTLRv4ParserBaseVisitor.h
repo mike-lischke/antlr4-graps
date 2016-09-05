@@ -8,7 +8,7 @@
 #include "ANTLRv4ParserVisitor.h"
 
 
-namespace parsers {
+namespace graps {
 
 /**
  * This class provides an empty implementation of ANTLRv4ParserVisitor, which can be
@@ -272,4 +272,4 @@ public:
 
 };
 
-}  // namespace parsers
+}  // namespace graps

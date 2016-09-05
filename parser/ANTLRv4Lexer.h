@@ -5,11 +5,14 @@
 
 
 #include "antlr4-runtime.h"
+
+
 #include "LexerAdaptor.h"
+
 
 using namespace antlr4;
 
-namespace parsers {
+namespace graps {
 
 
 class ANTLRv4Lexer : public LexerAdaptor {
@@ -84,4 +87,4 @@ private:
   static Initializer _init;
 };
 
-}  // namespace parsers
+}  // namespace graps

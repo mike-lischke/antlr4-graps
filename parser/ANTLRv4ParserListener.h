@@ -8,7 +8,7 @@
 #include "ANTLRv4Parser.h"
 
 
-namespace parsers {
+namespace graps {
 
 /**
  * This interface defines an abstract listener for a parse tree produced by ANTLRv4Parser.
@@ -208,4 +208,4 @@ public:
 
 };
 
-}  // namespace parsers
+}  // namespace graps

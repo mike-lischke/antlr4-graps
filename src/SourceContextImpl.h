@@ -21,46 +21,20 @@
 
 #pragma once
 
-#include <string>
+#include "antlr4-runtime.h"
 
-#include <node.h>
-#include <node_object_wrap.h>
+namespace graps {
 
-#include "SourceContextImpl.h"
-
-#pragma GCC visibility push(default)
-
-// A context for a single code source environment (usually a file).
-class SourceContext : public node::ObjectWrap, public graps::SourceContextImpl
+class SourceContextImpl
 {
 public:
-  static void init(v8::Local<v8::Object> exports);
+  SourceContextImpl(std::string const& source);
 
-protected:
-  static v8::Persistent<v8::Function> constructor;
+private:
+  Ref<antlr4::tree::ParseTree> _tree;
 
-  SourceContext(std::string const& source);
-  virtual ~SourceContext();
-
-  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static void plusOne(const v8::FunctionCallbackInfo<v8::Value>& args);
-};
-
-class ANTLRGrammarService : public node::ObjectWrap
-{
-public:
-  static void init(v8::Local<v8::Object> exports);
-
-protected:
-  static v8::Persistent<v8::Function> constructor;
-
-  ANTLRGrammarService();
-  virtual ~ANTLRGrammarService();
-
-  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
-
-  static void infoTextForSymbol(const v8::FunctionCallbackInfo<v8::Value>& args);
+  void parse(std::string const& source);
 
 };
 
-#pragma GCC visibility pop
+} // namespace graps

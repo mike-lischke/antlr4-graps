@@ -8,7 +8,7 @@
 #include "ANTLRv4Parser.h"
 
 
-namespace parsers {
+namespace graps {
 
 /**
  * This class defines an abstract visitor for a parse tree
@@ -149,4 +149,4 @@ public:
 
 };
 
-}  // namespace parsers
+}  // namespace graps

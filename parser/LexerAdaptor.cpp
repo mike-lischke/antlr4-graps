@@ -5,7 +5,7 @@
 using namespace antlr4;
 using namespace antlr4::misc;
 
-using namespace parsers;
+using namespace graps;
 
 LexerAdaptor::LexerAdaptor(CharStream *input) : Lexer(input)
 {

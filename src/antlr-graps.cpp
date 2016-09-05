@@ -23,44 +23,44 @@
 
 using namespace v8;
 
-v8::Persistent<v8::Function> GrammarSourceContext::constructor;
+v8::Persistent<v8::Function> SourceContext::constructor;
 v8::Persistent<v8::Function> ANTLRGrammarService::constructor;
 
 //----------------------------------------------------------------------------------------------------------------------
 
-GrammarSourceContext::GrammarSourceContext(std::string const& source)
+SourceContext::SourceContext(std::string const& source) : graps::SourceContextImpl(source)
 {
 
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-GrammarSourceContext::~GrammarSourceContext()
+SourceContext::~SourceContext()
 {
 
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-void GrammarSourceContext::init(v8::Local<v8::Object> exports)
+void SourceContext::init(v8::Local<v8::Object> exports)
 {
   Isolate *isolate = exports->GetIsolate();
 
   // Prepare constructor template.
   Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
-  tpl->SetClassName(String::NewFromUtf8(isolate, "GrammarSourceContext"));
+  tpl->SetClassName(String::NewFromUtf8(isolate, "SourceContext"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
   // Prototype
   //NODE_SET_PROTOTYPE_METHOD(tpl, "plusOne", plusOne);
 
   constructor.Reset(isolate, tpl->GetFunction());
-  exports->Set(String::NewFromUtf8(isolate, "GrammarSourceContext"), tpl->GetFunction());
+  exports->Set(String::NewFromUtf8(isolate, "SourceContext"), tpl->GetFunction());
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-void GrammarSourceContext::New(const FunctionCallbackInfo<Value>& args)
+void SourceContext::New(const FunctionCallbackInfo<Value>& args)
 {
   Isolate *isolate = args.GetIsolate();
 
@@ -74,7 +74,7 @@ void GrammarSourceContext::New(const FunctionCallbackInfo<Value>& args)
       argument = *param1;
     }
 
-    GrammarSourceContext *obj = new GrammarSourceContext(argument);
+    SourceContext *obj = new SourceContext(argument);
     obj->Wrap(args.This());
     args.GetReturnValue().Set(args.This());
   }
@@ -92,11 +92,11 @@ void GrammarSourceContext::New(const FunctionCallbackInfo<Value>& args)
 
 //----------------------------------------------------------------------------------------------------------------------
 
-void GrammarSourceContext::plusOne(const v8::FunctionCallbackInfo<v8::Value>& args)
+void SourceContext::plusOne(const v8::FunctionCallbackInfo<v8::Value>& args)
 {/*
   Isolate *isolate = args.GetIsolate();
 
-  GrammarSourceContext *obj = ObjectWrap::Unwrap<GrammarSourceContext>(args.Holder());
+  SourceContext *obj = ObjectWrap::Unwrap<SourceContext>(args.Holder());
   //obj->value_ += 1;
 
   //args.GetReturnValue().Set(Number::New(isolate, obj->value_));
@@ -174,7 +174,7 @@ void ANTLRGrammarService::infoTextForSymbol(const v8::FunctionCallbackInfo<v8::V
 
 void initialize(Local<Object> exports) {
   ANTLRGrammarService::init(exports);
-  GrammarSourceContext::init(exports);
+  SourceContext::init(exports);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
