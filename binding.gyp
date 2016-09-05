@@ -61,12 +61,12 @@
         [ "OS=='linux'", {
           'configurations': {
             'Debug': {
-              'cflags': [ '-std=c++11', '-fexceptions', '-frtti' ],
-              'cflags_cc': [ '-std=c++11', '-fexceptions', '-frtti' ]
+              'cflags': [ '-std=c++0x', '-fexceptions', '-frtti' ],
+              'cflags_cc': [ '-std=c++0x', '-fexceptions', '-frtti' ]
             },
             'Release': {
-              'cflags': [ '-std=c++11', '-fexceptions', '-frtti' ],
-              'cflags_cc': [ '-std=c++11', '-fexceptions', '-frtti' ]
+              'cflags': [ '-std=c++0x', '-fexceptions', '-frtti' ],
+              'cflags_cc': [ '-std=c++0x', '-fexceptions', '-frtti' ]
             }
           }
         }]
