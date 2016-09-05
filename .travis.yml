@@ -3,13 +3,12 @@ node_js:
   - 0.7
   
 compiler:
-  - clang
   - gcc
 
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo apt-get update -qq
   - sudo apt-get install -qq libyajl-dev libxml2-dev libxqilla-dev
-  - if [ "$CXX" = "clang++" ]; then sudo apt-get install -qq libstdc++-5-dev; fi
-  - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-5; fi
-  - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
+  - sudo apt-get install gcc-5 g++-5 libstdc++-5-dev
+  - export CXX="g++-5"
+  - export CC="gcc-5"
