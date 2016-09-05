@@ -1,14 +1,18 @@
 language: node_js
 node_js:
-  - 4.5
+  - "node"
+  - "6"
+  - "5"
   
-compiler:
-  - gcc
+env:
+  - CXX=g++-5
 
-before_install:
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq libyajl-dev libxml2-dev libxqilla-dev
-  - sudo apt-get install gcc-5 g++-5 libstdc++-5-dev
-  - export CXX="g++-5"
-  - export CC="gcc-5"
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-5
+
+install:
+  - node-gyp rebuild -j 8
