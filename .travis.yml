@@ -14,5 +14,3 @@ addons:
     packages:
       - g++-5
 
-install:
-  - node-gyp rebuild -j 8
