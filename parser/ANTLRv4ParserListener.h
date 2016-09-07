@@ -49,8 +49,8 @@ public:
   virtual void enterIdList(ANTLRv4Parser::IdListContext *ctx) = 0;
   virtual void exitIdList(ANTLRv4Parser::IdListContext *ctx) = 0;
 
-  virtual void enterAction(ANTLRv4Parser::ActionContext *ctx) = 0;
-  virtual void exitAction(ANTLRv4Parser::ActionContext *ctx) = 0;
+  virtual void enterNamedAction(ANTLRv4Parser::NamedActionContext *ctx) = 0;
+  virtual void exitNamedAction(ANTLRv4Parser::NamedActionContext *ctx) = 0;
 
   virtual void enterActionScopeName(ANTLRv4Parser::ActionScopeNameContext *ctx) = 0;
   virtual void exitActionScopeName(ANTLRv4Parser::ActionScopeNameContext *ctx) = 0;
@@ -193,8 +193,8 @@ public:
   virtual void enterCharacterRange(ANTLRv4Parser::CharacterRangeContext *ctx) = 0;
   virtual void exitCharacterRange(ANTLRv4Parser::CharacterRangeContext *ctx) = 0;
 
-  virtual void enterTerminal(ANTLRv4Parser::TerminalContext *ctx) = 0;
-  virtual void exitTerminal(ANTLRv4Parser::TerminalContext *ctx) = 0;
+  virtual void enterTerminalRule(ANTLRv4Parser::TerminalRuleContext *ctx) = 0;
+  virtual void exitTerminalRule(ANTLRv4Parser::TerminalRuleContext *ctx) = 0;
 
   virtual void enterElementOptions(ANTLRv4Parser::ElementOptionsContext *ctx) = 0;
   virtual void exitElementOptions(ANTLRv4Parser::ElementOptionsContext *ctx) = 0;

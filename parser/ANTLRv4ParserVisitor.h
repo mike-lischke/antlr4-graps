@@ -42,7 +42,7 @@ public:
 
     virtual antlrcpp::Any visitIdList(ANTLRv4Parser::IdListContext *context) = 0;
 
-    virtual antlrcpp::Any visitAction(ANTLRv4Parser::ActionContext *context) = 0;
+    virtual antlrcpp::Any visitNamedAction(ANTLRv4Parser::NamedActionContext *context) = 0;
 
     virtual antlrcpp::Any visitActionScopeName(ANTLRv4Parser::ActionScopeNameContext *context) = 0;
 
@@ -138,7 +138,7 @@ public:
 
     virtual antlrcpp::Any visitCharacterRange(ANTLRv4Parser::CharacterRangeContext *context) = 0;
 
-    virtual antlrcpp::Any visitTerminal(ANTLRv4Parser::TerminalContext *context) = 0;
+    virtual antlrcpp::Any visitTerminalRule(ANTLRv4Parser::TerminalRuleContext *context) = 0;
 
     virtual antlrcpp::Any visitElementOptions(ANTLRv4Parser::ElementOptionsContext *context) = 0;
 

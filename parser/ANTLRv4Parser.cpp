@@ -287,8 +287,8 @@ Ref<ANTLRv4Parser::ChannelsSpecContext> ANTLRv4Parser::PrequelConstructContext::
   return getRuleContext<ANTLRv4Parser::ChannelsSpecContext>(0);
 }
 
-Ref<ANTLRv4Parser::ActionContext> ANTLRv4Parser::PrequelConstructContext::action() {
-  return getRuleContext<ANTLRv4Parser::ActionContext>(0);
+Ref<ANTLRv4Parser::NamedActionContext> ANTLRv4Parser::PrequelConstructContext::namedAction() {
+  return getRuleContext<ANTLRv4Parser::NamedActionContext>(0);
 }
 
 
@@ -358,7 +358,7 @@ Ref<ANTLRv4Parser::PrequelConstructContext> ANTLRv4Parser::prequelConstruct() {
       case ANTLRv4Parser::AT: {
         enterOuterAlt(_localctx, 5);
         setState(161);
-        action();
+        namedAction();
         break;
       }
 
@@ -1107,60 +1107,60 @@ Ref<ANTLRv4Parser::IdListContext> ANTLRv4Parser::idList() {
   return _localctx;
 }
 
-//----------------- ActionContext ------------------------------------------------------------------
+//----------------- NamedActionContext ------------------------------------------------------------------
 
-ANTLRv4Parser::ActionContext::ActionContext(std::weak_ptr<ParserRuleContext> parent, int invokingState)
+ANTLRv4Parser::NamedActionContext::NamedActionContext(std::weak_ptr<ParserRuleContext> parent, int invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-Ref<tree::TerminalNode> ANTLRv4Parser::ActionContext::AT() {
+Ref<tree::TerminalNode> ANTLRv4Parser::NamedActionContext::AT() {
   return getToken(ANTLRv4Parser::AT, 0);
 }
 
-Ref<ANTLRv4Parser::IdentifierContext> ANTLRv4Parser::ActionContext::identifier() {
+Ref<ANTLRv4Parser::IdentifierContext> ANTLRv4Parser::NamedActionContext::identifier() {
   return getRuleContext<ANTLRv4Parser::IdentifierContext>(0);
 }
 
-Ref<ANTLRv4Parser::ActionBlockContext> ANTLRv4Parser::ActionContext::actionBlock() {
+Ref<ANTLRv4Parser::ActionBlockContext> ANTLRv4Parser::NamedActionContext::actionBlock() {
   return getRuleContext<ANTLRv4Parser::ActionBlockContext>(0);
 }
 
-Ref<ANTLRv4Parser::ActionScopeNameContext> ANTLRv4Parser::ActionContext::actionScopeName() {
+Ref<ANTLRv4Parser::ActionScopeNameContext> ANTLRv4Parser::NamedActionContext::actionScopeName() {
   return getRuleContext<ANTLRv4Parser::ActionScopeNameContext>(0);
 }
 
-Ref<tree::TerminalNode> ANTLRv4Parser::ActionContext::COLONCOLON() {
+Ref<tree::TerminalNode> ANTLRv4Parser::NamedActionContext::COLONCOLON() {
   return getToken(ANTLRv4Parser::COLONCOLON, 0);
 }
 
 
-ssize_t ANTLRv4Parser::ActionContext::getRuleIndex() const {
-  return ANTLRv4Parser::RuleAction;
+ssize_t ANTLRv4Parser::NamedActionContext::getRuleIndex() const {
+  return ANTLRv4Parser::RuleNamedAction;
 }
 
-void ANTLRv4Parser::ActionContext::enterRule(tree::ParseTreeListener *listener) {
+void ANTLRv4Parser::NamedActionContext::enterRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<ANTLRv4ParserListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->enterAction(this);
+    parserListener->enterNamedAction(this);
 }
 
-void ANTLRv4Parser::ActionContext::exitRule(tree::ParseTreeListener *listener) {
+void ANTLRv4Parser::NamedActionContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<ANTLRv4ParserListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->exitAction(this);
+    parserListener->exitNamedAction(this);
 }
 
 
-antlrcpp::Any ANTLRv4Parser::ActionContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any ANTLRv4Parser::NamedActionContext::accept(tree::ParseTreeVisitor *visitor) {
   if (dynamic_cast<ANTLRv4ParserVisitor*>(visitor) != nullptr)
-    return ((ANTLRv4ParserVisitor *)visitor)->visitAction(this);
+    return ((ANTLRv4ParserVisitor *)visitor)->visitNamedAction(this);
   else
     return visitor->visitChildren(this);
 }
 
-Ref<ANTLRv4Parser::ActionContext> ANTLRv4Parser::action() {
-  Ref<ActionContext> _localctx = std::make_shared<ActionContext>(_ctx, getState());
-  enterRule(_localctx, 22, ANTLRv4Parser::RuleAction);
+Ref<ANTLRv4Parser::NamedActionContext> ANTLRv4Parser::namedAction() {
+  Ref<NamedActionContext> _localctx = std::make_shared<NamedActionContext>(_ctx, getState());
+  enterRule(_localctx, 22, ANTLRv4Parser::RuleNamedAction);
 
   auto onExit = finally([=] {
     exitRule();
@@ -4610,8 +4610,8 @@ Ref<ANTLRv4Parser::CharacterRangeContext> ANTLRv4Parser::LexerAtomContext::chara
   return getRuleContext<ANTLRv4Parser::CharacterRangeContext>(0);
 }
 
-Ref<ANTLRv4Parser::TerminalContext> ANTLRv4Parser::LexerAtomContext::terminal() {
-  return getRuleContext<ANTLRv4Parser::TerminalContext>(0);
+Ref<ANTLRv4Parser::TerminalRuleContext> ANTLRv4Parser::LexerAtomContext::terminalRule() {
+  return getRuleContext<ANTLRv4Parser::TerminalRuleContext>(0);
 }
 
 Ref<ANTLRv4Parser::NotSetContext> ANTLRv4Parser::LexerAtomContext::notSet() {
@@ -4677,7 +4677,7 @@ Ref<ANTLRv4Parser::LexerAtomContext> ANTLRv4Parser::lexerAtom() {
     case 2: {
       enterOuterAlt(_localctx, 2);
       setState(533);
-      terminal();
+      terminalRule();
       break;
     }
 
@@ -4731,8 +4731,8 @@ Ref<ANTLRv4Parser::CharacterRangeContext> ANTLRv4Parser::AtomContext::characterR
   return getRuleContext<ANTLRv4Parser::CharacterRangeContext>(0);
 }
 
-Ref<ANTLRv4Parser::TerminalContext> ANTLRv4Parser::AtomContext::terminal() {
-  return getRuleContext<ANTLRv4Parser::TerminalContext>(0);
+Ref<ANTLRv4Parser::TerminalRuleContext> ANTLRv4Parser::AtomContext::terminalRule() {
+  return getRuleContext<ANTLRv4Parser::TerminalRuleContext>(0);
 }
 
 Ref<ANTLRv4Parser::RulerefContext> ANTLRv4Parser::AtomContext::ruleref() {
@@ -4798,7 +4798,7 @@ Ref<ANTLRv4Parser::AtomContext> ANTLRv4Parser::atom() {
     case 2: {
       enterOuterAlt(_localctx, 2);
       setState(543);
-      terminal();
+      terminalRule();
       break;
     }
 
@@ -5399,52 +5399,52 @@ Ref<ANTLRv4Parser::CharacterRangeContext> ANTLRv4Parser::characterRange() {
   return _localctx;
 }
 
-//----------------- TerminalContext ------------------------------------------------------------------
+//----------------- TerminalRuleContext ------------------------------------------------------------------
 
-ANTLRv4Parser::TerminalContext::TerminalContext(std::weak_ptr<ParserRuleContext> parent, int invokingState)
+ANTLRv4Parser::TerminalRuleContext::TerminalRuleContext(std::weak_ptr<ParserRuleContext> parent, int invokingState)
   : ParserRuleContext(parent, invokingState) {
 }
 
-Ref<tree::TerminalNode> ANTLRv4Parser::TerminalContext::TOKEN_REF() {
+Ref<tree::TerminalNode> ANTLRv4Parser::TerminalRuleContext::TOKEN_REF() {
   return getToken(ANTLRv4Parser::TOKEN_REF, 0);
 }
 
-Ref<ANTLRv4Parser::ElementOptionsContext> ANTLRv4Parser::TerminalContext::elementOptions() {
+Ref<ANTLRv4Parser::ElementOptionsContext> ANTLRv4Parser::TerminalRuleContext::elementOptions() {
   return getRuleContext<ANTLRv4Parser::ElementOptionsContext>(0);
 }
 
-Ref<tree::TerminalNode> ANTLRv4Parser::TerminalContext::STRING_LITERAL() {
+Ref<tree::TerminalNode> ANTLRv4Parser::TerminalRuleContext::STRING_LITERAL() {
   return getToken(ANTLRv4Parser::STRING_LITERAL, 0);
 }
 
 
-ssize_t ANTLRv4Parser::TerminalContext::getRuleIndex() const {
-  return ANTLRv4Parser::RuleTerminal;
+ssize_t ANTLRv4Parser::TerminalRuleContext::getRuleIndex() const {
+  return ANTLRv4Parser::RuleTerminalRule;
 }
 
-void ANTLRv4Parser::TerminalContext::enterRule(tree::ParseTreeListener *listener) {
+void ANTLRv4Parser::TerminalRuleContext::enterRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<ANTLRv4ParserListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->enterTerminal(this);
+    parserListener->enterTerminalRule(this);
 }
 
-void ANTLRv4Parser::TerminalContext::exitRule(tree::ParseTreeListener *listener) {
+void ANTLRv4Parser::TerminalRuleContext::exitRule(tree::ParseTreeListener *listener) {
   auto parserListener = dynamic_cast<ANTLRv4ParserListener *>(listener);
   if (parserListener != nullptr)
-    parserListener->exitTerminal(this);
+    parserListener->exitTerminalRule(this);
 }
 
 
-antlrcpp::Any ANTLRv4Parser::TerminalContext::accept(tree::ParseTreeVisitor *visitor) {
+antlrcpp::Any ANTLRv4Parser::TerminalRuleContext::accept(tree::ParseTreeVisitor *visitor) {
   if (dynamic_cast<ANTLRv4ParserVisitor*>(visitor) != nullptr)
-    return ((ANTLRv4ParserVisitor *)visitor)->visitTerminal(this);
+    return ((ANTLRv4ParserVisitor *)visitor)->visitTerminalRule(this);
   else
     return visitor->visitChildren(this);
 }
 
-Ref<ANTLRv4Parser::TerminalContext> ANTLRv4Parser::terminal() {
-  Ref<TerminalContext> _localctx = std::make_shared<TerminalContext>(_ctx, getState());
-  enterRule(_localctx, 118, ANTLRv4Parser::RuleTerminal);
+Ref<ANTLRv4Parser::TerminalRuleContext> ANTLRv4Parser::terminalRule() {
+  Ref<TerminalRuleContext> _localctx = std::make_shared<TerminalRuleContext>(_ctx, getState());
+  enterRule(_localctx, 118, ANTLRv4Parser::RuleTerminalRule);
   ssize_t _la = 0;
 
   auto onExit = finally([=] {
@@ -5775,7 +5775,7 @@ std::vector<uint16_t> ANTLRv4Parser::_serializedATN;
 std::vector<std::string> ANTLRv4Parser::_ruleNames = {
   "grammarSpec", "grammarType", "prequelConstruct", "optionsSpec", "option", 
   "optionValue", "delegateGrammars", "delegateGrammar", "tokensSpec", "channelsSpec", 
-  "idList", "action", "actionScopeName", "actionBlock", "argActionBlock", 
+  "idList", "namedAction", "actionScopeName", "actionBlock", "argActionBlock", 
   "modeSpec", "rules", "ruleSpec", "parserRuleSpec", "exceptionGroup", "exceptionHandler", 
   "finallyClause", "rulePrequel", "ruleReturns", "throwsSpec", "localsSpec", 
   "ruleAction", "ruleModifiers", "ruleModifier", "ruleBlock", "ruleAltList", 
@@ -5784,8 +5784,8 @@ std::vector<std::string> ANTLRv4Parser::_ruleNames = {
   "lexerCommands", "lexerCommand", "lexerCommandName", "lexerCommandExpr", 
   "altList", "alternative", "element", "labeledElement", "ebnf", "blockSuffix", 
   "ebnfSuffix", "lexerAtom", "atom", "notSet", "blockSet", "setElement", 
-  "block", "ruleref", "characterRange", "terminal", "elementOptions", "elementOption", 
-  "identifier"
+  "block", "ruleref", "characterRange", "terminalRule", "elementOptions", 
+  "elementOption", "identifier"
 };
 
 std::vector<std::string> ANTLRv4Parser::_literalNames = {

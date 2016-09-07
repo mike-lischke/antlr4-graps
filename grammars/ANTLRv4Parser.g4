@@ -59,7 +59,7 @@ prequelConstruct
    | delegateGrammars
    | tokensSpec
    | channelsSpec
-   | action
+   | namedAction
    ;
 
 // ------------
@@ -105,7 +105,7 @@ idList
    ;
 
 // Match stuff like @parser::members {int i;}
-action
+namedAction
    : AT (actionScopeName COLONCOLON)? identifier actionBlock
    ;
 
@@ -307,7 +307,7 @@ ebnfSuffix
 
 lexerAtom
    : characterRange
-   | terminal
+   | terminalRule
    | notSet
    | LEXER_CHAR_SET
    | DOT elementOptions?
@@ -315,7 +315,7 @@ lexerAtom
 
 atom
    : characterRange
-   | terminal
+   | terminalRule
    | ruleref
    | notSet
    | DOT elementOptions?
@@ -357,12 +357,12 @@ characterRange
    : STRING_LITERAL RANGE STRING_LITERAL
    ;
 
-terminal
+terminalRule
    : TOKEN_REF elementOptions?
    | STRING_LITERAL elementOptions?
    ;
 
-// Terminals may be adorned with certain options when
+// TerminalRules may be adorned with certain options when
 // reference in the grammar: TOK<,,,>
 elementOptions
    : LT elementOption (COMMA elementOption)* GT

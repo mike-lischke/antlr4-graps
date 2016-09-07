@@ -61,7 +61,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitAction(ANTLRv4Parser::ActionContext *ctx) override {
+  virtual antlrcpp::Any visitNamedAction(ANTLRv4Parser::NamedActionContext *ctx) override {
     return visitChildren(ctx);
   }
 
@@ -253,7 +253,7 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitTerminal(ANTLRv4Parser::TerminalContext *ctx) override {
+  virtual antlrcpp::Any visitTerminalRule(ANTLRv4Parser::TerminalRuleContext *ctx) override {
     return visitChildren(ctx);
   }
 

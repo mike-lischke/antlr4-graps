@@ -33,21 +33,21 @@ public:
     RuleGrammarSpec = 0, RuleGrammarType = 1, RulePrequelConstruct = 2, 
     RuleOptionsSpec = 3, RuleOption = 4, RuleOptionValue = 5, RuleDelegateGrammars = 6, 
     RuleDelegateGrammar = 7, RuleTokensSpec = 8, RuleChannelsSpec = 9, RuleIdList = 10, 
-    RuleAction = 11, RuleActionScopeName = 12, RuleActionBlock = 13, RuleArgActionBlock = 14, 
-    RuleModeSpec = 15, RuleRules = 16, RuleRuleSpec = 17, RuleParserRuleSpec = 18, 
-    RuleExceptionGroup = 19, RuleExceptionHandler = 20, RuleFinallyClause = 21, 
-    RuleRulePrequel = 22, RuleRuleReturns = 23, RuleThrowsSpec = 24, RuleLocalsSpec = 25, 
-    RuleRuleAction = 26, RuleRuleModifiers = 27, RuleRuleModifier = 28, 
-    RuleRuleBlock = 29, RuleRuleAltList = 30, RuleLabeledAlt = 31, RuleLexerRuleSpec = 32, 
-    RuleLexerRuleBlock = 33, RuleLexerAltList = 34, RuleLexerAlt = 35, RuleLexerElements = 36, 
-    RuleLexerElement = 37, RuleLabeledLexerElement = 38, RuleLexerBlock = 39, 
-    RuleLexerCommands = 40, RuleLexerCommand = 41, RuleLexerCommandName = 42, 
-    RuleLexerCommandExpr = 43, RuleAltList = 44, RuleAlternative = 45, RuleElement = 46, 
-    RuleLabeledElement = 47, RuleEbnf = 48, RuleBlockSuffix = 49, RuleEbnfSuffix = 50, 
-    RuleLexerAtom = 51, RuleAtom = 52, RuleNotSet = 53, RuleBlockSet = 54, 
-    RuleSetElement = 55, RuleBlock = 56, RuleRuleref = 57, RuleCharacterRange = 58, 
-    RuleTerminal = 59, RuleElementOptions = 60, RuleElementOption = 61, 
-    RuleIdentifier = 62
+    RuleNamedAction = 11, RuleActionScopeName = 12, RuleActionBlock = 13, 
+    RuleArgActionBlock = 14, RuleModeSpec = 15, RuleRules = 16, RuleRuleSpec = 17, 
+    RuleParserRuleSpec = 18, RuleExceptionGroup = 19, RuleExceptionHandler = 20, 
+    RuleFinallyClause = 21, RuleRulePrequel = 22, RuleRuleReturns = 23, 
+    RuleThrowsSpec = 24, RuleLocalsSpec = 25, RuleRuleAction = 26, RuleRuleModifiers = 27, 
+    RuleRuleModifier = 28, RuleRuleBlock = 29, RuleRuleAltList = 30, RuleLabeledAlt = 31, 
+    RuleLexerRuleSpec = 32, RuleLexerRuleBlock = 33, RuleLexerAltList = 34, 
+    RuleLexerAlt = 35, RuleLexerElements = 36, RuleLexerElement = 37, RuleLabeledLexerElement = 38, 
+    RuleLexerBlock = 39, RuleLexerCommands = 40, RuleLexerCommand = 41, 
+    RuleLexerCommandName = 42, RuleLexerCommandExpr = 43, RuleAltList = 44, 
+    RuleAlternative = 45, RuleElement = 46, RuleLabeledElement = 47, RuleEbnf = 48, 
+    RuleBlockSuffix = 49, RuleEbnfSuffix = 50, RuleLexerAtom = 51, RuleAtom = 52, 
+    RuleNotSet = 53, RuleBlockSet = 54, RuleSetElement = 55, RuleBlock = 56, 
+    RuleRuleref = 57, RuleCharacterRange = 58, RuleTerminalRule = 59, RuleElementOptions = 60, 
+    RuleElementOption = 61, RuleIdentifier = 62
   };
 
   ANTLRv4Parser(TokenStream *input);
@@ -71,7 +71,7 @@ public:
   class TokensSpecContext;
   class ChannelsSpecContext;
   class IdListContext;
-  class ActionContext;
+  class NamedActionContext;
   class ActionScopeNameContext;
   class ActionBlockContext;
   class ArgActionBlockContext;
@@ -119,7 +119,7 @@ public:
   class BlockContext;
   class RulerefContext;
   class CharacterRangeContext;
-  class TerminalContext;
+  class TerminalRuleContext;
   class ElementOptionsContext;
   class ElementOptionContext;
   class IdentifierContext; 
@@ -174,7 +174,7 @@ public:
     Ref<DelegateGrammarsContext> delegateGrammars();
     Ref<TokensSpecContext> tokensSpec();
     Ref<ChannelsSpecContext> channelsSpec();
-    Ref<ActionContext> action();
+    Ref<NamedActionContext> namedAction();
 
     virtual void enterRule(tree::ParseTreeListener *listener) override;
     virtual void exitRule(tree::ParseTreeListener *listener) override;
@@ -335,9 +335,9 @@ public:
 
   Ref<IdListContext> idList();
 
-  class ActionContext : public ParserRuleContext {
+  class NamedActionContext : public ParserRuleContext {
   public:
-    ActionContext(std::weak_ptr<ParserRuleContext> parent, int invokingState);
+    NamedActionContext(std::weak_ptr<ParserRuleContext> parent, int invokingState);
     virtual ssize_t getRuleIndex() const override;
     Ref<tree::TerminalNode> AT();
     Ref<IdentifierContext> identifier();
@@ -352,7 +352,7 @@ public:
    
   };
 
-  Ref<ActionContext> action();
+  Ref<NamedActionContext> namedAction();
 
   class ActionScopeNameContext : public ParserRuleContext {
   public:
@@ -1043,7 +1043,7 @@ public:
     LexerAtomContext(std::weak_ptr<ParserRuleContext> parent, int invokingState);
     virtual ssize_t getRuleIndex() const override;
     Ref<CharacterRangeContext> characterRange();
-    Ref<TerminalContext> terminal();
+    Ref<TerminalRuleContext> terminalRule();
     Ref<NotSetContext> notSet();
     Ref<tree::TerminalNode> LEXER_CHAR_SET();
     Ref<tree::TerminalNode> DOT();
@@ -1063,7 +1063,7 @@ public:
     AtomContext(std::weak_ptr<ParserRuleContext> parent, int invokingState);
     virtual ssize_t getRuleIndex() const override;
     Ref<CharacterRangeContext> characterRange();
-    Ref<TerminalContext> terminal();
+    Ref<TerminalRuleContext> terminalRule();
     Ref<RulerefContext> ruleref();
     Ref<NotSetContext> notSet();
     Ref<tree::TerminalNode> DOT();
@@ -1189,9 +1189,9 @@ public:
 
   Ref<CharacterRangeContext> characterRange();
 
-  class TerminalContext : public ParserRuleContext {
+  class TerminalRuleContext : public ParserRuleContext {
   public:
-    TerminalContext(std::weak_ptr<ParserRuleContext> parent, int invokingState);
+    TerminalRuleContext(std::weak_ptr<ParserRuleContext> parent, int invokingState);
     virtual ssize_t getRuleIndex() const override;
     Ref<tree::TerminalNode> TOKEN_REF();
     Ref<ElementOptionsContext> elementOptions();
@@ -1204,7 +1204,7 @@ public:
    
   };
 
-  Ref<TerminalContext> terminal();
+  Ref<TerminalRuleContext> terminalRule();
 
   class ElementOptionsContext : public ParserRuleContext {
   public:

@@ -51,8 +51,8 @@ public:
   virtual void enterIdList(ANTLRv4Parser::IdListContext * /*ctx*/) override { }
   virtual void exitIdList(ANTLRv4Parser::IdListContext * /*ctx*/) override { }
 
-  virtual void enterAction(ANTLRv4Parser::ActionContext * /*ctx*/) override { }
-  virtual void exitAction(ANTLRv4Parser::ActionContext * /*ctx*/) override { }
+  virtual void enterNamedAction(ANTLRv4Parser::NamedActionContext * /*ctx*/) override { }
+  virtual void exitNamedAction(ANTLRv4Parser::NamedActionContext * /*ctx*/) override { }
 
   virtual void enterActionScopeName(ANTLRv4Parser::ActionScopeNameContext * /*ctx*/) override { }
   virtual void exitActionScopeName(ANTLRv4Parser::ActionScopeNameContext * /*ctx*/) override { }
@@ -195,8 +195,8 @@ public:
   virtual void enterCharacterRange(ANTLRv4Parser::CharacterRangeContext * /*ctx*/) override { }
   virtual void exitCharacterRange(ANTLRv4Parser::CharacterRangeContext * /*ctx*/) override { }
 
-  virtual void enterTerminal(ANTLRv4Parser::TerminalContext * /*ctx*/) override { }
-  virtual void exitTerminal(ANTLRv4Parser::TerminalContext * /*ctx*/) override { }
+  virtual void enterTerminalRule(ANTLRv4Parser::TerminalRuleContext * /*ctx*/) override { }
+  virtual void exitTerminalRule(ANTLRv4Parser::TerminalRuleContext * /*ctx*/) override { }
 
   virtual void enterElementOptions(ANTLRv4Parser::ElementOptionsContext * /*ctx*/) override { }
   virtual void exitElementOptions(ANTLRv4Parser::ElementOptionsContext * /*ctx*/) override { }
