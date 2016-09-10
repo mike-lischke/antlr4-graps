@@ -1,7 +1,7 @@
 {
   "targets": [
     {
-      "target_name": "antlr_graps",
+      "target_name": "antlr4-graps",
       "sources": [
         "<!@(ls -1 src/*.cpp)",
         "<!@(ls -1 parser/*.cpp)",

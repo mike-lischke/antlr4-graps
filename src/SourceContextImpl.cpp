@@ -71,3 +71,9 @@ void SourceContextImpl::parse(std::string const& source)
 
 //----------------------------------------------------------------------------------------------------------------------
 
+std::string SourceContextImpl::infoTextForSymbol(std::string const& symbol)
+{
+  return symbol;
+}
+
+//----------------------------------------------------------------------------------------------------------------------

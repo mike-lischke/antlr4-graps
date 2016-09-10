@@ -46,7 +46,7 @@ protected:
   virtual ~SourceContext();
 
   static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static void plusOne(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void infoForSymbol(const v8::FunctionCallbackInfo<v8::Value>& args);
 };
 
 class ANTLRGrammarService : public node::ObjectWrap
@@ -61,9 +61,6 @@ protected:
   virtual ~ANTLRGrammarService();
 
   static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
-
-  static void infoTextForSymbol(const v8::FunctionCallbackInfo<v8::Value>& args);
-
 };
 
 #pragma GCC visibility pop

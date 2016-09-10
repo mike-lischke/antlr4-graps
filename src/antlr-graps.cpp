@@ -54,8 +54,7 @@ void SourceContext::init(v8::Local<v8::Object> exports)
   tpl->SetClassName(String::NewFromUtf8(isolate, "SourceContext"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-  // Prototype
-  //NODE_SET_PROTOTYPE_METHOD(tpl, "plusOne", plusOne);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "infoForSymbol", infoForSymbol);
 
   constructor.Reset(isolate, tpl->GetFunction());
   exports->Set(String::NewFromUtf8(isolate, "SourceContext"), tpl->GetFunction());
@@ -95,22 +94,33 @@ void SourceContext::New(const FunctionCallbackInfo<Value>& args)
 
 //----------------------------------------------------------------------------------------------------------------------
 
-void SourceContext::plusOne(const v8::FunctionCallbackInfo<v8::Value>& args)
-{/*
+void SourceContext::infoForSymbol(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
   Isolate *isolate = args.GetIsolate();
 
-  SourceContext *obj = ObjectWrap::Unwrap<SourceContext>(args.Holder());
-  //obj->value_ += 1;
+  if (args.Length() < 1) {
+    isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    return;
+  }
 
-  //args.GetReturnValue().Set(Number::New(isolate, obj->value_));
-  */
+  if (!args[0]->IsString()) {
+    isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
+    return;
+  }
+
+  SourceContext *impl = ObjectWrap::Unwrap<SourceContext>(args.Holder());
+
+  v8::String::Utf8Value symbol(args[0]->ToString());
+  std::string info = impl->infoTextForSymbol(*symbol);
+
+  args.GetReturnValue().Set(String::NewFromUtf8(isolate, info.c_str()));
 }
 
 //----------------- ANTLRGrammarService --------------------------------------------------------------------------------
 
 ANTLRGrammarService::ANTLRGrammarService()
 {
-
+  std::cout << "service loaded" << std::endl;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -132,7 +142,7 @@ void ANTLRGrammarService::init(v8::Local<v8::Object> exports)
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
   // Prototype
-  NODE_SET_PROTOTYPE_METHOD(tpl, "infoTextForSymbol", infoTextForSymbol);
+  //NODE_SET_PROTOTYPE_METHOD(tpl, "infoForSymbol", infoForSymbol);
 
   constructor.Reset(isolate, tpl->GetFunction());
   exports->Set(String::NewFromUtf8(isolate, "ANTLRGrammarService"), tpl->GetFunction());
@@ -165,16 +175,6 @@ void ANTLRGrammarService::New(const FunctionCallbackInfo<Value>& args)
 
 //----------------------------------------------------------------------------------------------------------------------
 
-void ANTLRGrammarService::infoTextForSymbol(const v8::FunctionCallbackInfo<v8::Value>& args)
-{
-  Isolate *isolate = args.GetIsolate();
-
-  //ANTLRGrammarService *obj = ObjectWrap::Unwrap<ANTLRGrammarService>(args.Holder());
-  args.GetReturnValue().Set(String::NewFromUtf8(isolate, "rule: a | b = rule2;"));
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-
 void initialize(Local<Object> exports) {
   ANTLRGrammarService::init(exports);
   SourceContext::init(exports);
@@ -182,4 +182,4 @@ void initialize(Local<Object> exports) {
 
 //----------------------------------------------------------------------------------------------------------------------
 
-NODE_MODULE(antlr_graps, initialize)
+NODE_MODULE(antlr4_graps, initialize)

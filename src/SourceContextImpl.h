@@ -33,11 +33,12 @@ class SourceContextImpl
 public:
   SourceContextImpl(std::string const& source);
 
+  std::string infoTextForSymbol(std::string const& symbol);
+
 private:
   Ref<antlr4::tree::ParseTree> _tree;
 
   void parse(std::string const& source);
-
 };
 
 } // namespace graps
