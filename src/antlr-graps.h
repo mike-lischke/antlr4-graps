@@ -42,25 +42,14 @@ public:
 protected:
   static v8::Persistent<v8::Function> constructor;
 
-  SourceContext(std::string const& source);
+  SourceContext();
   virtual ~SourceContext();
 
   static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static void infoForSymbol(const v8::FunctionCallbackInfo<v8::Value>& args);
-};
 
-class ANTLRGrammarService : public node::ObjectWrap
-{
-public:
-  static void init(v8::Local<v8::Object> exports);
-
-protected:
-  static v8::Persistent<v8::Function> constructor;
-
-  ANTLRGrammarService();
-  virtual ~ANTLRGrammarService();
-
-  static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void infoForSymbolAtPosition(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void parse(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void addDependency(const v8::FunctionCallbackInfo<v8::Value>& args);
 };
 
 #pragma GCC visibility pop

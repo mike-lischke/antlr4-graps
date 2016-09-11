@@ -319,7 +319,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2718AA551D7CA5EA00E031FA /* SourceContextImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SourceContextImpl.cpp; path = src/SourceContextImpl.cpp; sourceTree = SOURCE_ROOT; };
+		2718AA551D7CA5EA00E031FA /* SourceContextImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SourceContextImpl.cpp; path = src/SourceContextImpl.cpp; sourceTree = SOURCE_ROOT; wrapsLines = 0; };
 		2718AA561D7CA5EA00E031FA /* SourceContextImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SourceContextImpl.h; path = src/SourceContextImpl.h; sourceTree = SOURCE_ROOT; };
 		27333C481D7C159100D30C42 /* ANTLRv4Parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ANTLRv4Parser.cpp; path = parser/ANTLRv4Parser.cpp; sourceTree = "<group>"; };
 		27333C491D7C159100D30C42 /* ANTLRv4ParserBaseListener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ANTLRv4ParserBaseListener.cpp; path = parser/ANTLRv4ParserBaseListener.cpp; sourceTree = "<group>"; };

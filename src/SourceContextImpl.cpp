@@ -24,30 +24,139 @@
 
 #include "SourceContextImpl.h"
 
-#include "ANTLRv4Lexer.h"
-#include "ANTLRv4Parser.h"
+#include "ANTLRv4ParserBaseListener.h"
 
 using namespace graps;
 
 using namespace antlr4;
 using namespace antlr4::atn;
+using namespace antlr4::tree;
+
+/**
+ * Returns the terminal node at the given position, or null if there is no terminal at that position,
+ * which is given as (column, row) pair.
+ */
+static Ref<TerminalNode> terminalFromPosition(Ref<Tree> const& root, std::pair<ssize_t, ssize_t> position)
+{
+  // Does the root node actually contain the position? If not we don't need to look further.
+  if (antlrcpp::is<TerminalNode>(root))
+  {
+    Ref<TerminalNode> terminal = std::dynamic_pointer_cast<TerminalNode>(root);
+    Token *token = terminal->getSymbol();
+    if (token->getLine() != position.second)
+      return Ref<TerminalNode>();
+
+    int tokenStop = token->getCharPositionInLine() + (token->getStopIndex() - token->getStartIndex() + 1);
+    if (token->getCharPositionInLine() <= position.first && tokenStop >= position.first)
+      return terminal;
+    return Ref<TerminalNode>();
+  }
+  else
+  {
+    Token *start = std::dynamic_pointer_cast<ParserRuleContext>(root)->start;
+    Token *stop = std::dynamic_pointer_cast<ParserRuleContext>(root)->stop;
+    if (start == nullptr || stop == nullptr) // Invalid tree?
+      return Ref<TerminalNode>();
+
+    if (start->getLine() > position.second
+        || (start->getLine() == position.second && position.first < start->getCharPositionInLine()))
+      return Ref<TerminalNode>();
+
+    int tokenStop = stop->getCharPositionInLine() + (start->getStopIndex() - start->getStartIndex() + 1);
+    if (stop->getLine() < position.second || (stop->getLine() == position.second && tokenStop < position.first))
+      return Ref<TerminalNode>();
+  }
+
+  for (auto &child : root->children)
+  {
+    Ref<TerminalNode> result = terminalFromPosition(child, position);
+    if (result != nullptr)
+      return result;
+  }
+
+  return Ref<TerminalNode>();
+}
 
 //----------------------------------------------------------------------------------------------------------------------
 
-SourceContextImpl::SourceContextImpl(std::string const& source)
+static std::string sourceTextForContext(ParserRuleContext *ctx, bool keepQuotes)
 {
-  parse(source);
+  CharStream *cs = ctx->start->getTokenSource()->getInputStream();
+  std::string result = cs->getText(misc::Interval(ctx->start->getStartIndex(), ctx->stop->getStopIndex()));
+  if (keepQuotes || result.size() < 2)
+    return result;
+
+  char quoteChar = result[0];
+  if ((quoteChar == '"' || quoteChar == '`' || quoteChar == '\'') && quoteChar == result.back())
+    return result.substr(1, result.size() - 2);
+  return result;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+
+class DetailsListener : public ANTLRv4ParserBaseListener {
+public:
+  std::string tokenVocab;
+
+  DetailsListener(std::map<std::string, ParserRuleContext *> &map, std::vector<std::string> &imports)
+  : _symbolMap(map), _imports(imports)
+  {
+  }
+
+  virtual void exitLexerRuleSpec(ANTLRv4Parser::LexerRuleSpecContext *ctx) override
+  {
+    std::string symbol = ctx->TOKEN_REF()->getText();
+    _symbolMap[symbol] = ctx;
+  }
+
+  virtual void exitParserRuleSpec(ANTLRv4Parser::ParserRuleSpecContext *ctx) override
+  {
+    std::string symbol = ctx->RULE_REF()->getText();
+    _symbolMap[symbol] = ctx;
+  }
+
+  virtual void exitDelegateGrammar(ANTLRv4Parser::DelegateGrammarContext *ctx) override
+  {
+    if (ctx->identifier().size() == 1)
+      _imports.push_back(sourceTextForContext(ctx->identifier(0).get(), true));
+    else
+      _imports.push_back(sourceTextForContext(ctx->identifier(1).get(), true));
+  }
+
+  virtual void exitOption(ANTLRv4Parser::OptionContext *ctx) override
+  {
+    std::string option = ctx->identifier()->getText();
+    if (option == "tokenVocab")
+      tokenVocab = ctx->optionValue()->getText();
+  }
+
+private:
+  std::map<std::string, ParserRuleContext *> &_symbolMap;
+  std::vector<std::string> &_imports;
+};
+
+//----------------------------------------------------------------------------------------------------------------------
+
+SourceContextImpl::SourceContextImpl()
+: _lexer(&_input), _tokens(&_lexer), _parser(&_tokens)
+{
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
 void SourceContextImpl::parse(std::string const& source)
 {
-  ANTLRInputStream input(source);
-  ANTLRv4Lexer lexer(&input);
-  CommonTokenStream tokens(&lexer);
-  ANTLRv4Parser parser(&tokens);
+  imports.clear();
+  _symbolTable.clear();
+  _dependencies.clear();
 
+  _input.load(source);
+  _lexer.reset();
+  _lexer.setInputStream(&_input);
+  _tokens.setTokenSource(&_lexer);
+  ANTLRv4Parser parser(&_tokens);
+
+  parser.reset();
   parser.setBuildParseTree(true);
 
   // First parse with the bail error strategy to get quick feedback for correct queries.
@@ -60,20 +169,99 @@ void SourceContextImpl::parse(std::string const& source)
   } catch (ParseCancellationException &pce) {
     // If parsing was cancelled we either really have a syntax error or we need to do a second step,
     // now with the default strategy and LL parsing.
-    tokens.reset();
-    parser.reset();
-    parser.setErrorHandler(std::make_shared<DefaultErrorStrategy>());
-    parser.getInterpreter<ParserATNSimulator>()->setPredictionMode(PredictionMode::LL);
-    parser.addErrorListener(&ConsoleErrorListener::INSTANCE);
-    _tree = parser.grammarSpec();
+    _tokens.reset();
+    _parser.reset();
+    _parser.setErrorHandler(std::make_shared<DefaultErrorStrategy>());
+    _parser.getInterpreter<ParserATNSimulator>()->setPredictionMode(PredictionMode::LL);
+    _parser.addErrorListener(&ConsoleErrorListener::INSTANCE);
+    _tree = _parser.grammarSpec();
   }
+
+#if DEBUG == 1
+  std::cout << "Found errors: " << parser.getNumberOfSyntaxErrors() << std::endl;
+  std::cout << "Parse tree: \n" << _tree->toStringTree(&parser) << std::endl;
+#endif
+
+  DetailsListener listener(_symbolTable, imports);
+  tree::ParseTreeWalker::DEFAULT.walk(&listener, _tree.get());
+
+  // We don't create source context instances for dependencies (token vocabularies or imports) here and instead rely on
+  // an outer context to do this and pass on references to us. This way we avoid duplicate instances.
+  if (!listener.tokenVocab.empty())
+    imports.insert(imports.begin(), listener.tokenVocab);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-std::string SourceContextImpl::infoTextForSymbol(std::string const& symbol)
+/**
+ * Determines if the given terminal belongs to a rule spec context.
+ */
+bool isPartOfRuleSpec(Ref<TerminalNode> const& terminal)
 {
-  return symbol;
+  Ref<ParserRuleContext> run = std::dynamic_pointer_cast<ParserRuleContext>(terminal->parent.lock());
+  while (run != nullptr)
+  {
+    if (run->getRuleIndex() == ANTLRv4Parser::RuleRuleSpec)
+      return true;
+    run = std::dynamic_pointer_cast<ParserRuleContext>(run->parent.lock());
+  }
+  return false;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Determines the text for the given symbol from either our own symbol table or one of our dependencies.
+ */
+std::string SourceContextImpl::getTextForSymbol(std::string const& symbol)
+{
+  // First look in our own symbol table, which overrides any imported grammar rule.
+  if (_symbolTable.count(symbol) > 0)
+    return sourceTextForContext(_symbolTable[symbol], true);
+
+  // Nothing in our table, so try the dependencies in order of appearance (effectively implementing rule overrides this way).
+  for (auto dep : _dependencies)
+  {
+    std::string result = dep->getTextForSymbol(symbol);
+    if (!result.empty())
+      return result;
+  }
+  return "";
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+
+std::string SourceContextImpl::infoForSymbolAtPosition(size_t row, size_t column)
+{
+  Ref<TerminalNode> terminal = terminalFromPosition(_tree, { column, row });
+  if (terminal == nullptr)
+#if DEBUG == 1
+    return "No terminal";
+#else
+    return "";
+#endif
+
+  // We only want to show info for symbols in a rule.
+  auto parent = std::dynamic_pointer_cast<ParserRuleContext>(terminal->parent.lock());
+  if (parent->getRuleIndex() != ANTLRv4Parser::RuleRuleref && parent->getRuleIndex() != ANTLRv4Parser::RuleTerminalRule)
+#if DEBUG == 1
+    return "Invalid context";
+#else
+    return "";
+#endif
+
+  return getTextForSymbol(terminal->getText());
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+
+/**
+ * Returns all grammar names (excluding extensions) on which this context depends on (tokenVocab setting + imports).
+ */
+void SourceContextImpl::addDependency(SourceContextImpl *context)
+{
+  _dependencies.push_back(context);
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+

@@ -25,20 +25,34 @@
 #pragma once
 
 #include "antlr4-runtime.h"
+#include "ANTLRv4Lexer.h"
+#include "ANTLRv4Parser.h"
 
 namespace graps {
 
 class SourceContextImpl
 {
 public:
-  SourceContextImpl(std::string const& source);
+  std::vector<std::string> imports; // Updated on each parse run.
 
-  std::string infoTextForSymbol(std::string const& symbol);
+  SourceContextImpl();
+
+  std::string infoForSymbolAtPosition(size_t row, size_t column);
+  void parse(std::string const& source);
+  void addDependency(SourceContextImpl *context);
+
+protected:
+  std::string getTextForSymbol(std::string const& symbol);
 
 private:
-  Ref<antlr4::tree::ParseTree> _tree;
+  antlr4::ANTLRInputStream _input;
+  ANTLRv4Lexer _lexer;
+  antlr4::CommonTokenStream _tokens;
+  ANTLRv4Parser _parser;
 
-  void parse(std::string const& source);
+  Ref<antlr4::tree::ParseTree> _tree;
+  std::map<std::string, antlr4::ParserRuleContext *> _symbolTable;
+  std::vector<SourceContextImpl *> _dependencies;
 };
 
 } // namespace graps

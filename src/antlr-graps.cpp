@@ -27,11 +27,10 @@
 using namespace v8;
 
 v8::Persistent<v8::Function> SourceContext::constructor;
-v8::Persistent<v8::Function> ANTLRGrammarService::constructor;
 
 //----------------------------------------------------------------------------------------------------------------------
 
-SourceContext::SourceContext(std::string const& source) : graps::SourceContextImpl(source)
+SourceContext::SourceContext() : graps::SourceContextImpl()
 {
 
 }
@@ -54,7 +53,9 @@ void SourceContext::init(v8::Local<v8::Object> exports)
   tpl->SetClassName(String::NewFromUtf8(isolate, "SourceContext"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-  NODE_SET_PROTOTYPE_METHOD(tpl, "infoForSymbol", infoForSymbol);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "infoForSymbolAtPosition", infoForSymbolAtPosition);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "parse", parse);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "addDependency", addDependency);
 
   constructor.Reset(isolate, tpl->GetFunction());
   exports->Set(String::NewFromUtf8(isolate, "SourceContext"), tpl->GetFunction());
@@ -69,14 +70,7 @@ void SourceContext::New(const FunctionCallbackInfo<Value>& args)
   if (args.IsConstructCall())
   {
     // Invoked as constructor: `new MyObject(...)`.
-    std::string argument;
-    if (!args[0]->IsUndefined())
-    {
-      v8::String::Utf8Value param1(args[0]->ToString());
-      argument = *param1;
-    }
-
-    SourceContext *obj = new SourceContext(argument);
+    SourceContext *obj = new SourceContext();
     obj->Wrap(args.This());
     args.GetReturnValue().Set(args.This());
   }
@@ -94,7 +88,32 @@ void SourceContext::New(const FunctionCallbackInfo<Value>& args)
 
 //----------------------------------------------------------------------------------------------------------------------
 
-void SourceContext::infoForSymbol(const v8::FunctionCallbackInfo<v8::Value>& args)
+void SourceContext::infoForSymbolAtPosition(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+  Isolate *isolate = args.GetIsolate();
+
+  if (args.Length() < 1) {
+    isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    return;
+  }
+
+  if (!args[0]->IsNumber() || !args[1]->IsNumber()) {
+    isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong arguments")));
+    return;
+  }
+
+  SourceContextImpl *impl = dynamic_cast<SourceContextImpl *>(ObjectWrap::Unwrap<SourceContext>(args.Holder()));
+
+  int64_t row = args[0]->IntegerValue();
+  int64_t column = args[1]->IntegerValue();
+  std::string info = impl->infoForSymbolAtPosition(row, column);
+
+  args.GetReturnValue().Set(String::NewFromUtf8(isolate, info.c_str()));
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+
+void SourceContext::parse(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
   Isolate *isolate = args.GetIsolate();
 
@@ -108,75 +127,38 @@ void SourceContext::infoForSymbol(const v8::FunctionCallbackInfo<v8::Value>& arg
     return;
   }
 
-  SourceContext *impl = ObjectWrap::Unwrap<SourceContext>(args.Holder());
+  SourceContextImpl *impl = dynamic_cast<SourceContextImpl *>(ObjectWrap::Unwrap<SourceContext>(args.Holder()));
 
-  v8::String::Utf8Value symbol(args[0]->ToString());
-  std::string info = impl->infoTextForSymbol(*symbol);
+  v8::String::Utf8Value source(args[0]->ToString());
+  impl->parse(*source);
 
-  args.GetReturnValue().Set(String::NewFromUtf8(isolate, info.c_str()));
-}
+  Handle<Array> array = Array::New(isolate, impl->imports.size());
+  for (size_t i = 0; i < impl->imports.size(); ++i)
+    array->Set(i, String::NewFromUtf8(isolate, impl->imports[i].c_str()));
 
-//----------------- ANTLRGrammarService --------------------------------------------------------------------------------
-
-ANTLRGrammarService::ANTLRGrammarService()
-{
-  std::cout << "service loaded" << std::endl;
+  args.GetReturnValue().Set(array);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-ANTLRGrammarService::~ANTLRGrammarService()
-{
-
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-
-void ANTLRGrammarService::init(v8::Local<v8::Object> exports)
-{
-  Isolate *isolate = exports->GetIsolate();
-
-  // Prepare constructor template.
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
-  tpl->SetClassName(String::NewFromUtf8(isolate, "ANTLRGrammarService"));
-  tpl->InstanceTemplate()->SetInternalFieldCount(1);
-
-  // Prototype
-  //NODE_SET_PROTOTYPE_METHOD(tpl, "infoForSymbol", infoForSymbol);
-
-  constructor.Reset(isolate, tpl->GetFunction());
-  exports->Set(String::NewFromUtf8(isolate, "ANTLRGrammarService"), tpl->GetFunction());
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-
-void ANTLRGrammarService::New(const FunctionCallbackInfo<Value>& args)
+void SourceContext::addDependency(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
   Isolate *isolate = args.GetIsolate();
 
-  if (args.IsConstructCall())
-  {
-    // Invoked as constructor: `new MyObject(...)`.
-    ANTLRGrammarService *obj = new ANTLRGrammarService();
-    obj->Wrap(args.This());
-    args.GetReturnValue().Set(args.This());
+  if (args.Length() < 1) {
+    isolate->ThrowException(Exception::TypeError(String::NewFromUtf8(isolate, "Wrong number of arguments")));
+    return;
   }
-  else
-  {
-    // Invoked as plain function `MyObject(...)`, turn into construct call.
-    const int argc = 1;
-    Local<Value> argv[argc] = { args[0] };
-    Local<Context> context = isolate->GetCurrentContext();
-    Local<Function> cons = Local<Function>::New(isolate, constructor);
-    Local<Object> result = cons->NewInstance(context, argc, argv).ToLocalChecked();
-    args.GetReturnValue().Set(result);
-  }
+
+  SourceContextImpl *dep = dynamic_cast<SourceContextImpl *>(node::ObjectWrap::Unwrap<SourceContext>(args[0]->ToObject()));
+  SourceContextImpl *impl = dynamic_cast<SourceContextImpl *>(ObjectWrap::Unwrap<SourceContext>(args.Holder()));
+  impl->addDependency(dep);
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-void initialize(Local<Object> exports) {
-  ANTLRGrammarService::init(exports);
+void initialize(Local<Object> exports)
+{
   SourceContext::init(exports);
 }
 
