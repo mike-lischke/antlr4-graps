@@ -30,7 +30,7 @@ v8::Persistent<v8::Function> SourceContext::constructor;
 
 //----------------------------------------------------------------------------------------------------------------------
 
-SourceContext::SourceContext() : graps::SourceContextImpl()
+SourceContext::SourceContext(std::string const& sourceId) : graps::SourceContextImpl(sourceId)
 {
 
 }
@@ -70,7 +70,8 @@ void SourceContext::New(const FunctionCallbackInfo<Value>& args)
   if (args.IsConstructCall())
   {
     // Invoked as constructor: `new MyObject(...)`.
-    SourceContext *obj = new SourceContext();
+    v8::String::Utf8Value sourceId(args[0]->ToString());
+    SourceContext *obj = new SourceContext(*sourceId);
     obj->Wrap(args.This());
     args.GetReturnValue().Set(args.This());
   }
@@ -106,9 +107,23 @@ void SourceContext::infoForSymbolAtPosition(const v8::FunctionCallbackInfo<v8::V
 
   int64_t row = args[0]->IntegerValue();
   int64_t column = args[1]->IntegerValue();
-  std::string info = impl->infoForSymbolAtPosition(row, column);
+  std::vector<std::string> info = impl->infoForSymbolAtPosition(row, column);
 
-  args.GetReturnValue().Set(String::NewFromUtf8(isolate, info.c_str()));
+  Local<Object> obj = Object::New(isolate);
+  if (info.empty())
+  {
+    obj->Set(String::NewFromUtf8(isolate, "source"), String::NewFromUtf8(isolate, ""));
+    obj->Set(String::NewFromUtf8(isolate, "kind"), String::NewFromUtf8(isolate, ""));
+    obj->Set(String::NewFromUtf8(isolate, "text"), String::NewFromUtf8(isolate, ""));
+  }
+  else
+  {
+    obj->Set(String::NewFromUtf8(isolate, "source"), String::NewFromUtf8(isolate, info[0].c_str()));
+    obj->Set(String::NewFromUtf8(isolate, "kind"), String::NewFromUtf8(isolate, info[1].c_str()));
+    obj->Set(String::NewFromUtf8(isolate, "text"), String::NewFromUtf8(isolate, info[2].c_str()));
+  }
+
+  args.GetReturnValue().Set(obj);
 }
 
 //----------------------------------------------------------------------------------------------------------------------

@@ -42,7 +42,7 @@ public:
 protected:
   static v8::Persistent<v8::Function> constructor;
 
-  SourceContext();
+  SourceContext(std::string const& sourceId);
   virtual ~SourceContext();
 
   static void New(const v8::FunctionCallbackInfo<v8::Value>& args);

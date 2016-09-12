@@ -81,8 +81,19 @@ static Ref<TerminalNode> terminalFromPosition(Ref<Tree> const& root, std::pair<s
 
 static std::string sourceTextForContext(ParserRuleContext *ctx, bool keepQuotes)
 {
+  if (ctx == nullptr)
+    return "";
+
   CharStream *cs = ctx->start->getTokenSource()->getInputStream();
-  std::string result = cs->getText(misc::Interval(ctx->start->getStartIndex(), ctx->stop->getStopIndex()));
+
+  int start = ctx->start->getStartIndex();
+  int stop = ctx->stop->getStopIndex();
+
+  // For mode definitions we only need the init line, not all the lexer rules following it.
+  if (ctx->getRuleIndex() == ANTLRv4Parser::RuleModeSpec)
+    stop = ((ANTLRv4Parser::ModeSpecContext *)ctx)->SEMI()->getSymbol()->getStopIndex();
+
+  std::string result = cs->getText(misc::Interval(start, stop));
   if (keepQuotes || result.size() < 2)
     return result;
 
@@ -98,21 +109,54 @@ class DetailsListener : public ANTLRv4ParserBaseListener {
 public:
   std::string tokenVocab;
 
-  DetailsListener(std::map<std::string, ParserRuleContext *> &map, std::vector<std::string> &imports)
+  DetailsListener(std::map<std::string, std::pair<std::string, antlr4::ParserRuleContext *>> &map,
+                  std::vector<std::string> &imports)
   : _symbolMap(map), _imports(imports)
   {
+    _symbolMap["DEFAULT"] = { "Predefined token channel", nullptr };
+    _symbolMap["HIDDEN"] = { "Predefined token channel", nullptr };
   }
 
   virtual void exitLexerRuleSpec(ANTLRv4Parser::LexerRuleSpecContext *ctx) override
   {
     std::string symbol = ctx->TOKEN_REF()->getText();
-    _symbolMap[symbol] = ctx;
+    _symbolMap[symbol] = { "Lexer rule", ctx };
   }
 
   virtual void exitParserRuleSpec(ANTLRv4Parser::ParserRuleSpecContext *ctx) override
   {
     std::string symbol = ctx->RULE_REF()->getText();
-    _symbolMap[symbol] = ctx;
+    _symbolMap[symbol] = { "Parser rule", ctx };
+  }
+
+  virtual void exitTokensSpec(ANTLRv4Parser::TokensSpecContext *ctx) override
+  {
+    if (ctx->idList() != nullptr)
+    {
+      for (auto identifier : ctx->idList()->identifier())
+      {
+        std::string symbol = identifier->getText();
+        _symbolMap[symbol] = { "Virtual lexer token", identifier.get() };
+      }
+    }
+  }
+
+  virtual void exitChannelsSpec(ANTLRv4Parser::ChannelsSpecContext *ctx) override
+  {
+    if (ctx->idList() != nullptr)
+    {
+      for (auto identifier : ctx->idList()->identifier())
+      {
+        std::string symbol = identifier->getText();
+        _symbolMap[symbol] = { "Token channel", ctx };
+      }
+    }
+  }
+
+  virtual void exitModeSpec(ANTLRv4Parser::ModeSpecContext *ctx) override
+  {
+    std::string symbol = ctx->identifier()->getText();
+    _symbolMap[symbol] = { "Lexer mode", ctx };
   }
 
   virtual void exitDelegateGrammar(ANTLRv4Parser::DelegateGrammarContext *ctx) override
@@ -131,14 +175,14 @@ public:
   }
 
 private:
-  std::map<std::string, ParserRuleContext *> &_symbolMap;
+  std::map<std::string, std::pair<std::string, antlr4::ParserRuleContext *>> &_symbolMap;
   std::vector<std::string> &_imports;
 };
 
 //----------------------------------------------------------------------------------------------------------------------
 
-SourceContextImpl::SourceContextImpl()
-: _lexer(&_input), _tokens(&_lexer), _parser(&_tokens)
+SourceContextImpl::SourceContextImpl(std::string const& sourceId)
+: _lexer(&_input), _tokens(&_lexer), _parser(&_tokens), _sourceId(sourceId)
 {
 }
 
@@ -194,63 +238,54 @@ void SourceContextImpl::parse(std::string const& source)
 //----------------------------------------------------------------------------------------------------------------------
 
 /**
- * Determines if the given terminal belongs to a rule spec context.
- */
-bool isPartOfRuleSpec(Ref<TerminalNode> const& terminal)
-{
-  Ref<ParserRuleContext> run = std::dynamic_pointer_cast<ParserRuleContext>(terminal->parent.lock());
-  while (run != nullptr)
-  {
-    if (run->getRuleIndex() == ANTLRv4Parser::RuleRuleSpec)
-      return true;
-    run = std::dynamic_pointer_cast<ParserRuleContext>(run->parent.lock());
-  }
-  return false;
-}
-
-//----------------------------------------------------------------------------------------------------------------------
-
-/**
  * Determines the text for the given symbol from either our own symbol table or one of our dependencies.
+ * Returns an array with these details:
+ * 0 - the source id for this context, 1 - a short symbol description, 2 - the symbol definition
  */
-std::string SourceContextImpl::getTextForSymbol(std::string const& symbol)
+std::vector<std::string> SourceContextImpl::getTextForSymbol(std::string const& symbol)
 {
   // First look in our own symbol table, which overrides any imported grammar rule.
   if (_symbolTable.count(symbol) > 0)
-    return sourceTextForContext(_symbolTable[symbol], true);
+  {
+    auto &symbolInfo = _symbolTable[symbol];
+    std::string source = _sourceId;
+    if (symbolInfo.second == nullptr)
+      source = "ANTLR runtime";
+    return { source, symbolInfo.first, sourceTextForContext(symbolInfo.second, true) };
+  }
 
   // Nothing in our table, so try the dependencies in order of appearance (effectively implementing rule overrides this way).
   for (auto dep : _dependencies)
   {
-    std::string result = dep->getTextForSymbol(symbol);
+    std::vector<std::string> result = dep->getTextForSymbol(symbol);
     if (!result.empty())
       return result;
   }
-  return "";
+  return {};
 }
 
 //----------------------------------------------------------------------------------------------------------------------
 
-std::string SourceContextImpl::infoForSymbolAtPosition(size_t row, size_t column)
+std::vector<std::string> SourceContextImpl::infoForSymbolAtPosition(size_t row, size_t column)
 {
   Ref<TerminalNode> terminal = terminalFromPosition(_tree, { column, row });
   if (terminal == nullptr)
-#if DEBUG == 1
-    return "No terminal";
-#else
-    return "";
-#endif
+    return {};
 
-  // We only want to show info for symbols in a rule.
+  // We only want to show info for symbols in specific contexts.
   auto parent = std::dynamic_pointer_cast<ParserRuleContext>(terminal->parent.lock());
-  if (parent->getRuleIndex() != ANTLRv4Parser::RuleRuleref && parent->getRuleIndex() != ANTLRv4Parser::RuleTerminalRule)
-#if DEBUG == 1
-    return "Invalid context";
-#else
-    return "";
-#endif
+  if (parent->getRuleIndex() == ANTLRv4Parser::RuleIdentifier)
+    parent = std::dynamic_pointer_cast<ParserRuleContext>(parent->parent.lock());
 
-  return getTextForSymbol(terminal->getText());
+  switch (parent->getRuleIndex())
+  {
+    case ANTLRv4Parser::RuleRuleref:
+    case ANTLRv4Parser::RuleTerminalRule:
+    case ANTLRv4Parser::RuleLexerCommandExpr:
+      return getTextForSymbol(terminal->getText());
+  }
+
+  return {};
 }
 
 //----------------------------------------------------------------------------------------------------------------------

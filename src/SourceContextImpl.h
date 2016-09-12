@@ -35,14 +35,14 @@ class SourceContextImpl
 public:
   std::vector<std::string> imports; // Updated on each parse run.
 
-  SourceContextImpl();
+  SourceContextImpl(std::string const& sourceId);
 
-  std::string infoForSymbolAtPosition(size_t row, size_t column);
+  std::vector<std::string> infoForSymbolAtPosition(size_t row, size_t column);
   void parse(std::string const& source);
   void addDependency(SourceContextImpl *context);
 
 protected:
-  std::string getTextForSymbol(std::string const& symbol);
+  std::vector<std::string> getTextForSymbol(std::string const& symbol);
 
 private:
   antlr4::ANTLRInputStream _input;
@@ -50,8 +50,9 @@ private:
   antlr4::CommonTokenStream _tokens;
   ANTLRv4Parser _parser;
 
+  std::string _sourceId;
   Ref<antlr4::tree::ParseTree> _tree;
-  std::map<std::string, antlr4::ParserRuleContext *> _symbolTable;
+  std::map<std::string, std::pair<std::string, antlr4::ParserRuleContext *>> _symbolTable;
   std::vector<SourceContextImpl *> _dependencies;
 };
 
