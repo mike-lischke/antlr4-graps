@@ -1,5 +1,5 @@
 var logger = exports;
-logger.logLevel = "debug";
+logger.logLevel = "error";
 
 logger.log = function(level, message) {
   var levels = ["error", "warning", "info", "debug"];

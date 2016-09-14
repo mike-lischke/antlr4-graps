@@ -30,6 +30,38 @@
 
 namespace graps {
 
+struct Definition {
+  std::string text;
+  int startColumn;
+  int startRow;
+  int endColumn;
+  int endRow;
+};
+
+struct SymbolInfo {
+  std::string name;
+  std::string source;
+  std::string kind;
+  Definition definition;
+};
+
+struct ErrorEntry {
+  std::string message;
+  int column;
+  int row;
+  int length;
+};
+
+class ContextErrorListener : public BaseErrorListener {
+public:
+  ContextErrorListener(std::vector<ErrorEntry> &errorList) : _errors(errorList) {}
+
+  virtual void syntaxError(IRecognizer *recognizer, Token * offendingSymbol, size_t line, int charPositionInLine,
+                           const std::string &msg, std::exception_ptr e) override;
+private:
+  std::vector<ErrorEntry> &_errors;
+};
+
 class SourceContextImpl
 {
 public:
@@ -37,23 +69,29 @@ public:
 
   SourceContextImpl(std::string const& sourceId);
 
-  std::vector<std::string> infoForSymbolAtPosition(size_t row, size_t column);
+  SymbolInfo infoForSymbolAtPosition(size_t row, size_t column);
+  std::vector<SymbolInfo> listSymbols();
+
   void parse(std::string const& source);
+  std::vector<ErrorEntry> getErrors();
   void addDependency(SourceContextImpl *context);
 
 protected:
-  std::vector<std::string> getTextForSymbol(std::string const& symbol);
+  SymbolInfo getSymbolInfo(std::string const& symbol);
 
 private:
   antlr4::ANTLRInputStream _input;
   ANTLRv4Lexer _lexer;
   antlr4::CommonTokenStream _tokens;
   ANTLRv4Parser _parser;
+  ContextErrorListener _errorListener;
 
   std::string _sourceId;
   Ref<antlr4::tree::ParseTree> _tree;
   std::map<std::string, std::pair<std::string, antlr4::ParserRuleContext *>> _symbolTable;
   std::vector<SourceContextImpl *> _dependencies;
+
+  std::vector<ErrorEntry> _syntaxErrors;
 };
 
 } // namespace graps

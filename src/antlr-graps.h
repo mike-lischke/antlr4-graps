@@ -49,7 +49,9 @@ protected:
 
   static void infoForSymbolAtPosition(const v8::FunctionCallbackInfo<v8::Value>& args);
   static void parse(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void getErrors(const v8::FunctionCallbackInfo<v8::Value>& args);
   static void addDependency(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void listSymbols(const v8::FunctionCallbackInfo<v8::Value>& args);
 };
 
 #pragma GCC visibility pop

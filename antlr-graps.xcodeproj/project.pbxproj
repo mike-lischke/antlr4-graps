@@ -98,7 +98,6 @@
 		2724F7401D86CB3E00052A79 /* LookaheadEventInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2724F6141D86CB3D00052A79 /* LookaheadEventInfo.h */; };
 		2724F7411D86CB3E00052A79 /* LoopEndState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2724F6151D86CB3D00052A79 /* LoopEndState.cpp */; };
 		2724F7421D86CB3E00052A79 /* LoopEndState.h in Headers */ = {isa = PBXBuildFile; fileRef = 2724F6161D86CB3D00052A79 /* LoopEndState.h */; };
-		2724F7431D86CB3E00052A79 /* Makefile in Sources */ = {isa = PBXBuildFile; fileRef = 2724F6171D86CB3D00052A79 /* Makefile */; };
 		2724F7441D86CB3E00052A79 /* NotSetTransition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2724F6181D86CB3D00052A79 /* NotSetTransition.cpp */; };
 		2724F7451D86CB3E00052A79 /* NotSetTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 2724F6191D86CB3D00052A79 /* NotSetTransition.h */; };
 		2724F7461D86CB3E00052A79 /* OrderedATNConfigSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2724F61A1D86CB3D00052A79 /* OrderedATNConfigSet.cpp */; };
@@ -410,7 +409,6 @@
 		2724F6141D86CB3D00052A79 /* LookaheadEventInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LookaheadEventInfo.h; sourceTree = "<group>"; };
 		2724F6151D86CB3D00052A79 /* LoopEndState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LoopEndState.cpp; sourceTree = "<group>"; };
 		2724F6161D86CB3D00052A79 /* LoopEndState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoopEndState.h; sourceTree = "<group>"; };
-		2724F6171D86CB3D00052A79 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		2724F6181D86CB3D00052A79 /* NotSetTransition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NotSetTransition.cpp; sourceTree = "<group>"; };
 		2724F6191D86CB3D00052A79 /* NotSetTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotSetTransition.h; sourceTree = "<group>"; };
 		2724F61A1D86CB3D00052A79 /* OrderedATNConfigSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OrderedATNConfigSet.cpp; sourceTree = "<group>"; };
@@ -822,7 +820,6 @@
 				2724F6141D86CB3D00052A79 /* LookaheadEventInfo.h */,
 				2724F6151D86CB3D00052A79 /* LoopEndState.cpp */,
 				2724F6161D86CB3D00052A79 /* LoopEndState.h */,
-				2724F6171D86CB3D00052A79 /* Makefile */,
 				2724F6181D86CB3D00052A79 /* NotSetTransition.cpp */,
 				2724F6191D86CB3D00052A79 /* NotSetTransition.h */,
 				2724F61A1D86CB3D00052A79 /* OrderedATNConfigSet.cpp */,
@@ -1398,7 +1395,6 @@
 				2724F7351D86CB3E00052A79 /* LexerPopModeAction.cpp in Sources */,
 				2724F7701D86CB3E00052A79 /* TokensStartState.cpp in Sources */,
 				2724F7A31D86CB3E00052A79 /* ListTokenSource.cpp in Sources */,
-				2724F7431D86CB3E00052A79 /* Makefile in Sources */,
 				2724F6F11D86CB3E00052A79 /* ANTLRInputStream.cpp in Sources */,
 				2724F77C1D86CB3E00052A79 /* CharStream.cpp in Sources */,
 				2724F70E1D86CB3E00052A79 /* BasicBlockStartState.cpp in Sources */,

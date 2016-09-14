@@ -1,13 +1,13 @@
 {
   "name": "antlr4-graps",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "ANTLR grammar parsing services",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "",
+    "test": "mocha",
     "install": "node-gyp rebuild -j 8"
   },
   "repository": {
