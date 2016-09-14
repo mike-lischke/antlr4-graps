@@ -3,7 +3,11 @@ node_js:
   - "node"
   - "6"
   - "5"
-  
+
+before_script:
+  - npm install mocha
+  - npm install chai
+
 env:
   - CXX=g++-5
 
