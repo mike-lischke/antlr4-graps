@@ -36,16 +36,21 @@ var AntlrLanguageSupport = (function () {
     }
 
     function parseGrammar(obj, contextEntry, file, source) {
-        for (let dep of contextEntry.dependencies) {
-            obj.releaseGrammar(dep);
-        }
+        var oldDependencies = contextEntry.dependencies;
         contextEntry.dependencies = [];
-        var dependencies = contextEntry.context.parse(source);
-        for (let dep of dependencies) {
+        var newDependencies = contextEntry.context.parse(source);
+
+        for (let dep of newDependencies) {
             let depContext = loadDependency(obj, contextEntry, file, dep);
             if (depContext != null)
                 contextEntry.context.addDependency(depContext);
         }
+
+        // Release all old dependencies. This will only unload grammars which have
+        // not been ref-counted by the above dep loading (or which are not used by other
+        // grammars).
+        for (let dep of oldDependencies)
+            obj.releaseGrammar(dep);
     }
 
     function getContext(file, source) {

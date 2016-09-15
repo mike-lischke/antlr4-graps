@@ -261,7 +261,10 @@ private:
 void ContextErrorListener::syntaxError(IRecognizer *recognizer, Token * offendingSymbol, size_t line,
   int charPositionInLine, const std::string &msg, std::exception_ptr e)
 {
-  _errors.push_back({ msg, charPositionInLine, (int)line, offendingSymbol->getStopIndex() - offendingSymbol->getStartIndex() + 1});
+  if (offendingSymbol == nullptr)
+    _errors.push_back({ msg, charPositionInLine, (int)line, 1});
+  else
+    _errors.push_back({ msg, charPositionInLine, (int)line, offendingSymbol->getStopIndex() - offendingSymbol->getStartIndex() + 1});
 }
 
 //----------------- SourceContextImpl ----------------------------------------------------------------------------------
