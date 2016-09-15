@@ -106,7 +106,7 @@ The module uses the given file name mostly to identfy a source context, not so m
 
 -----
     
-> function infoForSymbol(file, position)
+> `function infoForSymbol(file, position)`
 
 > Returns informations about the symbol at the given position.
 >
