@@ -89,12 +89,13 @@
       #define ANTLR4CPP_PUBLIC __declspec(dllimport)
       #define EXPIMP_TEMPLATE extern
     #endif
+
+    EXPIMP_TEMPLATE class ANTLR4CPP_PUBLIC std::exception; // Needed for VS 2015.
+
   #else
     #define ANTLR4CPP_PUBLIC
     #define EXPIMP_TEMPLATE
   #endif
-
-  EXPIMP_TEMPLATE class ANTLR4CPP_PUBLIC std::exception; // Needed for VS 2015.
 
 #elif __APPLE__
   #define GUID_CFUUID

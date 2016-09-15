@@ -163,8 +163,8 @@ void SourceContext::parse(const v8::FunctionCallbackInfo<v8::Value>& args)
 
   impl->parse(source);
 
-  Handle<Array> array = Array::New(isolate, impl->imports.size());
-  for (size_t i = 0; i < impl->imports.size(); ++i)
+  Handle<Array> array = Array::New(isolate, (int)impl->imports.size());
+  for (uint32_t i = 0; i < impl->imports.size(); ++i)
     array->Set(i, String::NewFromUtf8(isolate, impl->imports[i].c_str()));
 
   args.GetReturnValue().Set(array);
@@ -179,8 +179,8 @@ void SourceContext::getErrors(const v8::FunctionCallbackInfo<v8::Value>& args)
   SourceContextImpl *impl = dynamic_cast<SourceContextImpl *>(ObjectWrap::Unwrap<SourceContext>(args.Holder()));
 
   std::vector<ErrorEntry> errors = impl->getErrors();
-  Handle<Array> array = Array::New(isolate, errors.size());
-  for (size_t i = 0; i < errors.size(); ++i)
+  Handle<Array> array = Array::New(isolate, (int)errors.size());
+  for (uint32_t i = 0; i < errors.size(); ++i)
   {
     Local<Object> obj = Object::New(isolate);
     obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, errors[i].message.c_str()));
@@ -222,8 +222,8 @@ void SourceContext::listSymbols(const v8::FunctionCallbackInfo<v8::Value>& args)
 
   std::vector<SymbolInfo> symbols = impl->listSymbols();
 
-  Handle<Array> array = Array::New(isolate, symbols.size());
-  for (size_t i = 0; i < symbols.size(); ++i)
+  Handle<Array> array = Array::New(isolate, (int)symbols.size());
+  for (uint32_t i = 0; i < symbols.size(); ++i)
   {
     SymbolInfo &info = symbols[i];
     Local<Object> obj = Object::New(isolate);

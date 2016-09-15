@@ -45,7 +45,10 @@ namespace antlr4 {
     DefaultErrorStrategy();
     virtual ~DefaultErrorStrategy();
 
+    DefaultErrorStrategy& operator = (DefaultErrorStrategy &&other) = delete;
+
   protected:
+
     /**
      * Indicates whether the error strategy is currently "recovering from an
      * error". This is used to suppress reporting multiple error messages while

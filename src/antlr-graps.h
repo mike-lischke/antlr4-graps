@@ -31,8 +31,6 @@
 
 #include "SourceContextImpl.h"
 
-#pragma GCC visibility push(default)
-
 // A context for a single code source environment (usually a file).
 class SourceContext : public node::ObjectWrap, public graps::SourceContextImpl
 {
@@ -53,5 +51,3 @@ protected:
   static void addDependency(const v8::FunctionCallbackInfo<v8::Value>& args);
   static void listSymbols(const v8::FunctionCallbackInfo<v8::Value>& args);
 };
-
-#pragma GCC visibility pop

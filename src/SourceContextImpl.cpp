@@ -258,8 +258,8 @@ private:
 
 //----------------- ContextErrorListener -------------------------------------------------------------------------------
 
-void ContextErrorListener::syntaxError(IRecognizer *recognizer, Token * offendingSymbol, size_t line,
-  int charPositionInLine, const std::string &msg, std::exception_ptr e)
+void ContextErrorListener::syntaxError(IRecognizer *, Token * offendingSymbol, size_t line,
+  int charPositionInLine, const std::string &msg, std::exception_ptr)
 {
   if (offendingSymbol == nullptr)
     _errors.push_back({ msg, charPositionInLine, (int)line, 1});
@@ -301,8 +301,8 @@ void SourceContextImpl::parse(std::string const& source)
 
   try {
     _tree = _parser.grammarSpec();
-  } catch (ParseCancellationException &pce) {
-    // If parsing was cancelled we either really have a syntax error or we need to do a second step,
+  } catch (ParseCancellationException &) {
+    // If parsing was canceled we either really have a syntax error or we need to do a second step,
     // now with the default strategy and LL parsing.
     _tokens.reset();
     _parser.reset();
