@@ -110,7 +110,7 @@ void SourceContext::infoForSymbolAtPosition(const v8::FunctionCallbackInfo<v8::V
 
   int64_t row = args[0]->IntegerValue();
   int64_t column = args[1]->IntegerValue();
-  SymbolInfo info = impl->infoForSymbolAtPosition(row, column);
+  SymbolInfo info = impl->infoForSymbolAtPosition((size_t)row, (size_t)column);
 
   Local<Object> obj = Object::New(isolate);
   if (info.source.empty())
