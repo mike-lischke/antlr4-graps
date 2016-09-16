@@ -9,6 +9,8 @@ The module comes with all needed files (no external binaries needed). There are 
 
 However, in any case, you need the VC++ runtime installed. Either from your Visual Studio installation (if you have one) or by [downloading it from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=48145). The prebuilt binary was compiled with VS 2015 and uses the 64bit arch. Consider that when downloading the VC++ runtime.
 
+Note for Windows: it appears that node-gyp has trouble to compile the node module for 32bit. The node module produced by it makes node crash. I don't believe it's something I did wrong, since the 64bit version works well.
+
 ## Usage
 
 Here's a node session to demonstrate the use of the module:
