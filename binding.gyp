@@ -163,7 +163,7 @@
         [ 'OS=="win"', {
           'configurations': {
             'Debug': { # Note: on Windows there are by default no debug node libs.
-              'defines': [ 'ANTLR4CPP_EXPORTS' ],
+              'defines': [ 'ANTLR4CPP_EXPORTS', 'DELAYIMP_INSECURE_WRITABLE_HOOKS' ],
               'msvs_settings': {
                 'VCCLCompilerTool': {
                   'ExceptionHandling': 1, # /EHsc
@@ -176,7 +176,7 @@
               }
             },
             'Release': {
-			  'defines': [ 'ANTLR4CPP_EXPORTS' ],
+			  'defines': [ 'ANTLR4CPP_EXPORTS', 'DELAYIMP_INSECURE_WRITABLE_HOOKS' ],
               'msvs_settings': {
                 'VCCLCompilerTool': {
                   'ExceptionHandling': 1, # /EHsc
