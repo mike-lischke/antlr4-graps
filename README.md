@@ -5,7 +5,9 @@ ANTLR4 graps (Grammar Parsing Service) is a native node module (tested with node
 
 ## Platform support
 
-The module comes with all needed source files (no external binaries needed) and builds the native antlr4-graps.node binary on installation (via node-gyp rebuild) an all platforms.
+The module comes with all needed files (no external binaries needed). There are 2 flavours of the module you can use, each contained in an own branch. The master branch contains all source code and will build the native antlr4-graps.node binary on installation (via node-gyp rebuild) on all platforms. The second variant (in the graps-bin branch) does not have the cpp source files, but instead comes with precompiled binaries. This way no compilation is needed on the target machines (and hence there's no need for XCode or Visual Studio).
+
+However, in any case, you need the VC++ runtime installed. Either from your Visual Studio installation (if you have one) or by [downloading it from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=48145). The prebuilt binary was compiled with VS 2015 and uses the 64bit arch. Consider that when downloading the VC++ runtime.
 
 ## Usage
 
