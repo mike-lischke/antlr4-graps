@@ -9,8 +9,6 @@ The module comes with all needed files (no external binaries needed). There are 
 
 However, in any case, you need the VC++ runtime installed. Either from your Visual Studio installation (if you have one) or by [downloading it from Microsoft](https://www.microsoft.com/en-us/download/details.aspx?id=48145). The prebuilt binary was compiled with VS 2015 and uses the 64bit arch. Consider that when downloading the VC++ runtime.
 
-Note for Windows: it appears that node-gyp has trouble to compile the node module for 32bit. The node module produced by it makes node crash. I don't believe it's something I did wrong, since the 64bit version works well.
-
 ## Usage
 
 Here's a node session to demonstrate the use of the module:
@@ -31,46 +29,60 @@ undefined
 > var backend = new graps.AntlrLanguageSupport();
 undefined
 >
-> backend.loadGrammar("t.g4", "");
-[graps-debug] Loading source: t.g4
+> backend.loadGrammar("test/t.g4");
+[graps-debug] Loading source: test/t.g4
 SourceContext {}
 >
-> backend.reparse("t.g4", "grammar A; a: b \n| c; c: b+;");
-[graps-debug] Reparsing t.g4
-undefined
->
-> console.log(backend.infoForSymbol("t.g4", { "line": 1, "character": 2 }));
-{ name: 'c',
+> console.log(backend.infoForSymbol("test/t.g4", { "line": 2, "character": 11 }));
+{ name: 'C',
   source: 't.g4',
-  kind: 'Parser rule',
-  text: 'c: b+;',
-  start: { character: 5, line: 2 },
-  stop: { character: 10, line: 2 } }
+  kind: 'Lexer rule',
+  text: 'C: \'C\' -> channel(BLAH);',
+  start: { character: 0, line: 7 },
+  stop: { character: 23, line: 7 } }
 undefined
 >
-> console.log(backend.listSymbols("t.g4"));
-[ { name: 'a',
+> console.log(backend.listSymbols("test/t.g4"));
+[ { name: 'A',
+    source: 't.g4',
+    kind: 'Lexer rule',
+    text: 'A: \'A\';',
+    start: { character: 0, line: 5 },
+    stop: { character: 6, line: 5 } },
+  { name: 'B',
+    source: 't.g4',
+    kind: 'Lexer rule',
+    text: 'B: \'B\';',
+    start: { character: 0, line: 6 },
+    stop: { character: 6, line: 6 } },
+  { name: 'C',
+    source: 't.g4',
+    kind: 'Lexer rule',
+    text: 'C: \'C\' -> channel(BLAH);',
+    start: { character: 0, line: 7 },
+    stop: { character: 23, line: 7 } },
+  { name: 'x',
     source: 't.g4',
     kind: 'Parser rule',
-    text: 'a: b \n| c;',
-    start: { character: 11, line: 1 },
-    stop: { character: 3, line: 2 } },
-  { name: 'c',
+    text: 'x: A | B | C;',
+    start: { character: 0, line: 2 },
+    stop: { character: 12, line: 2 } },
+  { name: 'y',
     source: 't.g4',
     kind: 'Parser rule',
-    text: 'c: b+;',
-    start: { character: 5, line: 2 },
-    stop: { character: 10, line: 2 } } ]
+    text: 'y: ZZ;',
+    start: { character: 0, line: 3 },
+    stop: { character: 5, line: 3 } } ]
 undefined
 >
-> backend.releaseGrammar("t.g4");
-[graps-debug] Unloaded t.g4
+> backend.releaseGrammar("test/t.g4");
+[graps-debug] Unloaded test/t.g4
 undefined
 >
-> backend.reparse("t.g4", "grammar A; a:: b \n| c; c: b+;");
+> backend.reparse("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
 [graps-debug] Reparsing t.g4
 undefined
-> console.log(backend.getErrors("t.g4"));
+> console.log(backend.getErrors("test/t.g4"));
 [ { message: 'mismatched input \'::\' expecting \'{\'options\', COLON, AT}\'',
     position: { character: 12, line: 1 },
     length: 2 },
@@ -86,7 +98,7 @@ undefined
 
 In this example I ran the node module from a local node session, hence the `require(".");` call. Usually you would do: `require("antlr4-graps");`. The module exports a central class (**AntlrLanguageSupport**), through which every call is routed. It takes care to load additional dependencies when you load a grammar (token vocabularies and imports) and it takes care not to load a grammar multiple times. Instead an internal reference counter is maintained. That also means that every call to `loadGrammar` must be paired with a call to `releaseGrammar` to avoid leaking grammar instances.
 
-The module uses the given file name mostly to identfy a source context, not so much to get the source from that file. This happens only if you call `loadGrammar()` without the source parameter. However, the file name is also used to resolve dependencies, by using its base path to locate the other grammar files (they all have to be in the same folder).
+The module uses the given file name mostly to identify a source context, not so much to get the source from that file. This happens only if you call `loadGrammar()` without the source parameter (also indirectly, e.g. `getErrors()` calls `loadGrammar()` if the given grammar is not loaded yet). However, the file name is also used to resolve dependencies, by using its base path to locate the other grammar files (they all have to be in the same folder).
 
 ## Available APIs
 

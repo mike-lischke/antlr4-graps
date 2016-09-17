@@ -53,10 +53,10 @@ var AntlrLanguageSupport = (function () {
             obj.releaseGrammar(dep);
     }
 
-    function getContext(file, source) {
+    function getContext(obj, file, source) {
         var contextEntry = sourceContexts.get(file);
         if (contextEntry == undefined) {
-            return loadGrammar(file, source);
+            return obj.loadGrammar(file, source);
         }
         return contextEntry.context;
     }
@@ -114,17 +114,17 @@ var AntlrLanguageSupport = (function () {
     }
 
     AntlrLanguageSupport.prototype.infoForSymbol = function (file, position) {
-        var context = getContext(file);
-        return context.infoForSymbolAtPosition(position.line + 1, position.character);
+        var context = getContext(this, file);
+        return context.infoForSymbolAtPosition(position.line, position.character);
     };
 
     AntlrLanguageSupport.prototype.listSymbols = function (file) {
-        var context = getContext(file);
+        var context = getContext(this, file);
         return context.listSymbols();
     };
 
     AntlrLanguageSupport.prototype.getErrors = function (file) {
-        var context = getContext(file);
+        var context = getContext(this, file);
         return context.getErrors();
     };
 
