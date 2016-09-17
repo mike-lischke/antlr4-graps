@@ -49,7 +49,7 @@ void BailErrorStrategy::recover(Parser *recognizer, std::exception_ptr e) {
 
   try {
     std::rethrow_exception(e); // Throw the exception to be able to catch and rethrow nested.
-#if defined(_MSC_FULL_VER) && _MSC_FULL_VER < 190023026
+#ifdef _WIN32 // Note: this differs from the original code, as the node.js lib cannot cope with throw_with_nested().
   } catch (RecognitionException &inner) {
     throw ParseCancellationException(inner.what());
 #else

@@ -45,7 +45,8 @@ namespace antlr4 {
     DefaultErrorStrategy();
     virtual ~DefaultErrorStrategy();
 
-    DefaultErrorStrategy& operator = (DefaultErrorStrategy &&other) = delete;
+    DefaultErrorStrategy(const DefaultErrorStrategy &other) = delete;
+    DefaultErrorStrategy& operator = (DefaultErrorStrategy &other) = delete;
 
   protected:
 
