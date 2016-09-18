@@ -3,7 +3,7 @@
 var logger = require("./logger");
 var fs = require("fs");
 var path = require("path");
-var backend = require("./build/Release/antlr4-graps"); // Built on installation.
+var backend = require("./build/Release/antlr4_graps"); // Built on installation.
 
 var AntlrLanguageSupport = (function () {
     var sourceContexts = new Map(); // Mapping file names to SourceContext instances.
