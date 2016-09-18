@@ -1,4 +1,7 @@
 # antlr4-graps
+
+[![NPM](https://nodei.co/npm/antlr4-graps.png?downloads=true&downloadRank=true)](https://nodei.co/npm/antlr4-graps/) [![NPM](https://nodei.co/npm-dl/antlr4-graps.png?months=6&height=3)](https://nodei.co/npm/antlr4-graps/)
+
 [![Build Status](https://travis-ci.org/mike-lischke/antlr-graps.svg?branch=master)](https://travis-ci.org/mike-lischke/antlr-graps)
 
 ANTLR4 graps (Grammar Parsing Service) is a native node module (tested with node 5 and node 6) with a C++ parsing backend that provides parsing functionality for ANTLR grammars.
