@@ -49,7 +49,7 @@ describe('antlr4-graps', function() {
 
   describe('infoForSymbol()', function() {
     it('', function() {
-      var info = backend.infoForSymbol("test/t.g4", { "line": 1, "character": 7});
+      var info = backend.infoForSymbol("test/t.g4", { "line": 2, "character": 7});
       expect(info.name).to.equal("B");
       expect(info.source).to.equal("t.g4");
       expect(info.kind).to.equal("Lexer rule");
