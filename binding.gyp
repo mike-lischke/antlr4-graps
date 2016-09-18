@@ -1,7 +1,7 @@
 {
   "targets": [
     {
-      "target_name": "antlr4-graps",
+      "target_name": "antlr4_graps",
       "sources": [
 	    "antlr4-runtime/ANTLRFileStream.cpp",
         "antlr4-runtime/ANTLRInputStream.cpp",
