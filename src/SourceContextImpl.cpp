@@ -36,7 +36,7 @@ std::string toLower(std::string const& s)
 {
   std::string result = s;
   for (auto &c : result)
-    c = tolower(c);
+    c = (char)tolower(c);
   return result;
 }
 
