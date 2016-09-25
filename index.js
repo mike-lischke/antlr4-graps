@@ -5,6 +5,20 @@ var fs = require("fs");
 var path = require("path");
 var backend = require("./build/Release/antlr4_graps"); // Built on installation.
 
+const SymbolKind = { // Same as SymbolKind in C++.
+    LexerToken : 0,
+    VirtualLexerToken : 1,
+    FragmentLexerToken : 2,
+    BuiltInLexerToken : 3,
+    ParserRule : 4,
+    LexerMode : 5,
+    BuiltInMode : 6,
+    TokenChannel : 7,
+    BuiltInChannel : 8,
+    Import : 9,
+    TokenVocab : 10
+}
+
 var AntlrLanguageSupport = (function () {
     var sourceContexts = new Map(); // Mapping file names to SourceContext instances.
 
@@ -127,6 +141,8 @@ var AntlrLanguageSupport = (function () {
         var context = getContext(this, file);
         return context.getErrors();
     };
+
+    AntlrLanguageSupport.prototype.SymbolKind = SymbolKind;
 
     return AntlrLanguageSupport;
 })();

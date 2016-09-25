@@ -32,6 +32,14 @@ using namespace antlr4;
 using namespace antlr4::atn;
 using namespace antlr4::tree;
 
+std::string toLower(std::string const& s)
+{
+  std::string result = s;
+  for (auto &c : result)
+    c = tolower(c);
+  return result;
+}
+
 /**
  * Returns the terminal node at the given position, or null if there is no terminal at that position,
  * which is given as (column, row) pair.
@@ -102,6 +110,18 @@ static Definition definitionForContext(ParserRuleContext *ctx, bool keepQuotes)
     result.endColumn = modeSpec->SEMI()->getSymbol()->getCharPositionInLine();
     result.endRow = modeSpec->SEMI()->getSymbol()->getLine();
   }
+  else if (ctx->getRuleIndex() == ANTLRv4Parser::RuleGrammarSpec)
+  {
+    // Similar for entire grammars. We only need the introducer line here.
+    ANTLRv4Parser::GrammarSpecContext *grammarSpec = (ANTLRv4Parser::GrammarSpecContext *)ctx;
+    stop = grammarSpec->SEMI()->getSymbol()->getStopIndex();
+    result.endColumn = grammarSpec->SEMI()->getSymbol()->getCharPositionInLine();
+    result.endRow = grammarSpec->SEMI()->getSymbol()->getLine();
+
+    start = grammarSpec->grammarType()->start->getStartIndex();
+    result.startColumn = grammarSpec->grammarType()->start->getCharPositionInLine();
+    result.startRow = grammarSpec->grammarType()->start->getLine();
+  }
 
   result.text = cs->getText(misc::Interval(start, stop));
   if (keepQuotes || result.text.size() < 2)
@@ -119,13 +139,12 @@ class DetailsListener : public ANTLRv4ParserBaseListener {
 public:
   std::string tokenVocab;
 
-  DetailsListener(std::map<std::string, std::pair<std::string, antlr4::ParserRuleContext *>> &map,
-                  std::vector<std::string> &imports)
-  : _symbolMap(map), _imports(imports)
+  DetailsListener(SymbolTable &symbolTable, std::vector<std::string> &imports) : _symbolTable(symbolTable), _imports(imports)
   {
-    _symbolMap["DEFAULT"] = { "Predefined token channel", nullptr };
-    _symbolMap["HIDDEN"] = { "Predefined token channel", nullptr };
-    _symbolMap["EOF"] = { "Predefined token type", nullptr };
+    _symbolTable[SKBuiltInChannel]["DEFAULT"] = nullptr;
+    _symbolTable[SKBuiltInChannel]["HIDDEN"] = nullptr;
+    _symbolTable[SKBuiltInLexerToken]["EOF"] = nullptr;
+    _symbolTable[SKBuiltInMode]["DEFAULT_MODE"] = nullptr;
   }
 
   virtual void exitLexerRuleSpec(ANTLRv4Parser::LexerRuleSpecContext *ctx) override
@@ -134,16 +153,16 @@ public:
     {
       std::string symbol = ctx->TOKEN_REF()->getText();
       if (ctx->FRAGMENT() != nullptr)
-        _symbolMap[symbol] = { "Fragment lexer rule", ctx };
+        _symbolTable[SKFragmentLexerToken][symbol] = ctx;
       else
-        _symbolMap[symbol] = { "Lexer rule", ctx };
+        _symbolTable[SKLexerToken][symbol] = ctx;
     }
   }
 
   virtual void exitParserRuleSpec(ANTLRv4Parser::ParserRuleSpecContext *ctx) override
   {
     std::string symbol = ctx->RULE_REF()->getText();
-    _symbolMap[symbol] = { "Parser rule", ctx };
+    _symbolTable[SKParserRule][symbol] = ctx;
   }
 
   virtual void exitTokensSpec(ANTLRv4Parser::TokensSpecContext *ctx) override
@@ -153,7 +172,7 @@ public:
       for (auto identifier : ctx->idList()->identifier())
       {
         std::string symbol = identifier->getText();
-        _symbolMap[symbol] = { "Virtual lexer token", identifier.get() };
+        _symbolTable[SKVirtualLexerToken][symbol] = identifier.get();
       }
     }
   }
@@ -165,7 +184,7 @@ public:
       for (auto identifier : ctx->idList()->identifier())
       {
         std::string symbol = identifier->getText();
-        _symbolMap[symbol] = { "Token channel", ctx };
+        _symbolTable[SKTokenChannel][symbol] = ctx;
       }
     }
   }
@@ -173,34 +192,43 @@ public:
   virtual void exitModeSpec(ANTLRv4Parser::ModeSpecContext *ctx) override
   {
     std::string symbol = ctx->identifier()->getText();
-    _symbolMap[symbol] = { "Lexer mode", ctx };
+    _symbolTable[SKLexerMode][symbol] = ctx;
   }
 
   virtual void exitDelegateGrammar(ANTLRv4Parser::DelegateGrammarContext *ctx) override
   {
-    if (ctx->identifier().size() == 1)
-      _imports.push_back(definitionForContext(ctx->identifier(0).get(), false).text);
-    else
-      _imports.push_back(definitionForContext(ctx->identifier(1).get(), false).text);
+    ANTLRv4Parser::IdentifierContext *context = ctx->identifier().back().get();
+    _imports.push_back(definitionForContext(context, false).text);
+    _symbolTable[SkImport][_imports.back()] = context;
   }
 
   virtual void exitOption(ANTLRv4Parser::OptionContext *ctx) override
   {
     std::string option = ctx->identifier()->getText();
-    if (option == "tokenVocab")
+    if (toLower(option) == "tokenvocab")
+    {
       tokenVocab = ctx->optionValue()->getText();
+      _symbolTable[SKTokenVocab][tokenVocab] = ctx->optionValue().get();
+    }
   }
 
 private:
-  std::map<std::string, std::pair<std::string, antlr4::ParserRuleContext *>> &_symbolMap;
+  SymbolTable &_symbolTable;
   std::vector<std::string> &_imports;
 };
 
 //----------------- SemanticListener -----------------------------------------------------------------------------------
 
+enum SymbolLookupKind { // Multiple symbol kinds can be involved in a symbol lookup.
+  SLKTokenRef,
+  SLKRuleRef,
+  SLKLexerMode,
+  SLKTokenChannel,
+};
+
 class SemanticListener : public ANTLRv4ParserBaseListener {
 public:
-  SemanticListener(std::vector<ErrorEntry> &errors, std::function<bool (std::string)> checkSymbol)
+  SemanticListener(std::vector<ErrorEntry> &errors, std::function<bool (SymbolLookupKind, std::string)> checkSymbol)
   : _errors(errors), _checkSymbol(checkSymbol)
   {
   }
@@ -210,14 +238,14 @@ public:
     if (ctx->TOKEN_REF() != nullptr)
     {
       std::string symbol = ctx->TOKEN_REF()->getText();
-      checkAndAddError(symbol, "Unknown token reference", ctx->TOKEN_REF()->getSymbol());
+      checkAndAddError(SLKTokenRef, symbol, "Unknown token reference", ctx->TOKEN_REF()->getSymbol());
     }
   }
 
   virtual void exitRuleref(ANTLRv4Parser::RulerefContext *ctx) override
   {
     std::string symbol = ctx->RULE_REF()->getText();
-    checkAndAddError(symbol, "Unknown parser rule", ctx->RULE_REF()->getSymbol());
+    checkAndAddError(SLKRuleRef, symbol, "Unknown parser rule", ctx->RULE_REF()->getSymbol());
   }
 
   virtual void exitSetElement(ANTLRv4Parser::SetElementContext *ctx) override
@@ -225,7 +253,7 @@ public:
     if (ctx->TOKEN_REF() != nullptr)
     {
       std::string symbol = ctx->TOKEN_REF()->getText();
-      checkAndAddError(symbol, "Unknown token reference", ctx->TOKEN_REF()->getSymbol());
+      checkAndAddError(SLKTokenRef, symbol, "Unknown token reference", ctx->TOKEN_REF()->getSymbol());
     }
   }
   
@@ -234,17 +262,24 @@ public:
     if (ctx->lexerCommandExpr() != nullptr && ctx->lexerCommandExpr()->identifier() != nullptr)
     {
       std::string name = ctx->lexerCommandName()->getText();
-      if (name == "pushMode")
+      SymbolLookupKind kind = SLKTokenRef;
+
+      std::string value = toLower(name);
+      if (value == "pushmode" || value == "mode")
+      {
         name = "mode";
+        kind = SLKLexerMode;
+      } else if (value == "channel")
+        kind = SLKTokenChannel;
       std::string symbol = ctx->lexerCommandExpr()->identifier()->getText();
-      checkAndAddError(symbol, "Unknown " + name, ctx->lexerCommandExpr()->identifier()->start);
+      checkAndAddError(kind, symbol, "Unknown " + name, ctx->lexerCommandExpr()->identifier()->start);
     }
   }
 
 protected:
-  void checkAndAddError(std::string const& symbol, std::string const& message, Token *offendingToken)
+  void checkAndAddError(SymbolLookupKind kind, std::string const& symbol, std::string const& message, Token *offendingToken)
   {
-    if (!_checkSymbol(symbol))
+    if (!_checkSymbol(kind, symbol))
     {
       _errors.push_back({ message + " '" + symbol + "'", offendingToken->getCharPositionInLine(), offendingToken->getLine(),
         offendingToken->getStopIndex() - offendingToken->getStartIndex() + 1 });
@@ -253,7 +288,7 @@ protected:
 
 private:
   std::vector<ErrorEntry> &_errors;
-  std::function<bool (std::string)> _checkSymbol;
+  std::function<bool (SymbolLookupKind, std::string)> _checkSymbol;
 };
 
 //----------------- ContextErrorListener -------------------------------------------------------------------------------
@@ -332,18 +367,56 @@ std::vector<ErrorEntry> SourceContextImpl::getErrors()
   std::vector<ErrorEntry> result = _syntaxErrors;
 
   std::vector<ErrorEntry> semanticErrors;
-  SemanticListener semanticListener(semanticErrors, [this](std::string const& symbol) -> bool {
-    if (_symbolTable.count(symbol) > 0)
-      return true;
+  SemanticListener semanticListener(semanticErrors, [this](SymbolLookupKind kind, std::string const& symbol) -> bool {
 
-    for (auto dep : _dependencies)
-    {
-      if (dep->_symbolTable.count(symbol) > 0)
+    auto lookup = [this](SymbolKind kind, std::string const& symbol) -> bool {
+      if (_symbolTable[kind].count(symbol) > 0)
         return true;
+
+      for (auto dep : _dependencies)
+      {
+        if (dep->_symbolTable[kind].count(symbol) > 0)
+          return true;
+      }
+      return false;
+    };
+
+    switch (kind)
+    {
+      case SLKTokenRef:
+        if (lookup(SKBuiltInLexerToken, symbol))
+          return true;
+        if (lookup(SKVirtualLexerToken, symbol))
+          return true;
+        if (lookup(SKFragmentLexerToken, symbol))
+          return true;
+        if (lookup(SKLexerToken, symbol))
+          return true;
+        break;
+
+      case SLKLexerMode:
+        if (lookup(SKBuiltInMode, symbol))
+          return true;
+        if (lookup(SKLexerMode, symbol))
+          return true;
+        break;
+
+      case SLKTokenChannel:
+        if (lookup(SKBuiltInChannel, symbol))
+          return true;
+        if (lookup(SKTokenChannel, symbol))
+          return true;
+        break;
+
+      case SLKRuleRef:
+        if (lookup(SKParserRule, symbol))
+          return true;
+        break;
     }
 
     return false;
   });
+
   tree::ParseTreeWalker::DEFAULT.walk(&semanticListener, _tree.get());
   result.insert(result.end(), semanticErrors.begin(), semanticErrors.end());
 
@@ -358,13 +431,28 @@ std::vector<ErrorEntry> SourceContextImpl::getErrors()
 SymbolInfo SourceContextImpl::getSymbolInfo(std::string const& symbol)
 {
   // First look in our own symbol table, which overrides any imported grammar rule.
-  if (_symbolTable.count(symbol) > 0)
+  for (auto &kind : _symbolTable)
   {
-    auto &symbolInfo = _symbolTable[symbol];
-    std::string source = _sourceId;
-    if (symbolInfo.second == nullptr)
-      source = "ANTLR runtime";
-    return { symbol, source, symbolInfo.first, definitionForContext(symbolInfo.second, true) };
+    if (kind.second.count(symbol) > 0)
+    {
+      auto context = kind.second[symbol];
+
+      if (kind.first == SKTokenVocab || kind.first == SkImport)
+      {
+        // Get the source id from a dependent module.
+        for (auto dep : _dependencies)
+          if (dep->_sourceId.find(symbol) == 0)
+          {
+            return { kind.first, symbol, dep->_sourceId,
+              definitionForContext(std::dynamic_pointer_cast<ParserRuleContext>(dep->_tree).get(), true) };
+          }
+      }
+
+      std::string source = _sourceId;
+      if (context == nullptr)
+        source = "ANTLR runtime";
+      return { kind.first, symbol, source, definitionForContext(context, true) };
+    }
   }
 
   // Nothing in our table, so try the dependencies in order of appearance (effectively implementing rule overrides this way).
@@ -395,6 +483,9 @@ SymbolInfo SourceContextImpl::infoForSymbolAtPosition(size_t row, size_t column)
     case ANTLRv4Parser::RuleRuleref:
     case ANTLRv4Parser::RuleTerminalRule:
     case ANTLRv4Parser::RuleLexerCommandExpr:
+    case ANTLRv4Parser::RuleOptionValue:
+    case ANTLRv4Parser::RuleDelegateGrammar:
+    case ANTLRv4Parser::RuleModeSpec:
       return getSymbolInfo(terminal->getText());
   }
 
@@ -407,13 +498,19 @@ std::vector<SymbolInfo> SourceContextImpl::listSymbols()
 {
   std::vector<SymbolInfo> result;
 
-  for (auto &symbol : _symbolTable)
+  for (SymbolKind kind : {
+    SKTokenVocab, SkImport, SKBuiltInLexerToken, SKVirtualLexerToken, SKFragmentLexerToken, SKLexerToken,
+    SKBuiltInMode, SKLexerMode, SKBuiltInChannel, SKTokenChannel, SKParserRule})
   {
-    auto &symbolInfo = symbol.second;
-    std::string source = _sourceId;
-    if (symbolInfo.second == nullptr)
-      continue;
-    result.push_back({ symbol.first, source, symbolInfo.first, definitionForContext(symbolInfo.second, true) });
+    for (auto &symbol : _symbolTable[kind])
+    {
+      if (symbol.second == nullptr)
+        continue;
+
+      // The symbols list only includes symbols from this source context, hence the source id is always
+      // that of this context, even for imports and token vocabs. This is different for individual symbols.
+      result.push_back({ kind, symbol.first, _sourceId, definitionForContext(symbol.second, true) });
+    }
   }
 
   return result;

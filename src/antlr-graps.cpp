@@ -29,7 +29,7 @@ using namespace graps;
 
 v8::Persistent<v8::Function> SourceContext::constructor;
 
-//----------------------------------------------------------------------------------------------------------------------
+//----------------- SourceContext --------------------------------------------------------------------------------------
 
 SourceContext::SourceContext(std::string const& sourceId) : graps::SourceContextImpl(sourceId)
 {
@@ -119,14 +119,14 @@ void SourceContext::infoForSymbolAtPosition(const v8::FunctionCallbackInfo<v8::V
     // first check of such a property exists at all.
     obj->Set(String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, ""));
     obj->Set(String::NewFromUtf8(isolate, "source"), String::NewFromUtf8(isolate, ""));
-    obj->Set(String::NewFromUtf8(isolate, "kind"), String::NewFromUtf8(isolate, ""));
+    obj->Set(String::NewFromUtf8(isolate, "kind"), Number::New(isolate, -1));
     obj->Set(String::NewFromUtf8(isolate, "text"), String::NewFromUtf8(isolate, ""));
   }
   else
   {
     obj->Set(String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, info.name.c_str()));
     obj->Set(String::NewFromUtf8(isolate, "source"), String::NewFromUtf8(isolate, info.source.c_str()));
-    obj->Set(String::NewFromUtf8(isolate, "kind"), String::NewFromUtf8(isolate, info.kind.c_str()));
+    obj->Set(String::NewFromUtf8(isolate, "kind"), Number::New(isolate, info.kind));
     obj->Set(String::NewFromUtf8(isolate, "text"), String::NewFromUtf8(isolate, info.definition.text.c_str()));
 
     Local<Object> position = Object::New(isolate);
@@ -229,7 +229,7 @@ void SourceContext::listSymbols(const v8::FunctionCallbackInfo<v8::Value>& args)
     Local<Object> obj = Object::New(isolate);
     obj->Set(String::NewFromUtf8(isolate, "name"), String::NewFromUtf8(isolate, info.name.c_str()));
     obj->Set(String::NewFromUtf8(isolate, "source"), String::NewFromUtf8(isolate, info.source.c_str()));
-    obj->Set(String::NewFromUtf8(isolate, "kind"), String::NewFromUtf8(isolate, info.kind.c_str()));
+    obj->Set(String::NewFromUtf8(isolate, "kind"), Number::New(isolate, info.kind));
     obj->Set(String::NewFromUtf8(isolate, "text"), String::NewFromUtf8(isolate, info.definition.text.c_str()));
 
     Local<Object> position = Object::New(isolate);

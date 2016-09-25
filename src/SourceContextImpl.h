@@ -30,68 +30,84 @@
 
 namespace graps {
 
-struct Definition {
-  std::string text;
-  int startColumn;
-  int startRow;
-  int endColumn;
-  int endRow;
-};
+  enum SymbolKind {
+    SKLexerToken = 0,
+    SKVirtualLexerToken = 1,
+    SKFragmentLexerToken = 2,
+    SKBuiltInLexerToken = 3,
+    SKParserRule = 4,
+    SKLexerMode = 5,
+    SKBuiltInMode = 6,
+    SKTokenChannel = 7,
+    SKBuiltInChannel = 8,
+    SkImport = 9,
+    SKTokenVocab = 10,
+  };
 
-struct SymbolInfo {
-  std::string name;
-  std::string source;
-  std::string kind;
-  Definition definition;
-};
+  struct Definition {
+    std::string text;
+    int startColumn;
+    int startRow;
+    int endColumn;
+    int endRow;
+  };
 
-struct ErrorEntry {
-  std::string message;
-  int column;
-  int row;
-  int length;
-};
+  struct SymbolInfo {
+    SymbolKind kind;
+    std::string name;
+    std::string source;
+    Definition definition;
+  };
 
-class ContextErrorListener : public BaseErrorListener {
-public:
-  ContextErrorListener(std::vector<ErrorEntry> &errorList) : _errors(errorList) {}
+  struct ErrorEntry {
+    std::string message;
+    int column;
+    int row;
+    int length;
+  };
 
-  virtual void syntaxError(IRecognizer *recognizer, Token * offendingSymbol, size_t line, int charPositionInLine,
-                           const std::string &msg, std::exception_ptr e) override;
-private:
-  std::vector<ErrorEntry> &_errors;
-};
+  using SymbolTable = std::map<SymbolKind, std::map<std::string, antlr4::ParserRuleContext *>>;
 
-class SourceContextImpl
-{
-public:
-  std::vector<std::string> imports; // Updated on each parse run.
+  class ContextErrorListener : public BaseErrorListener {
+  public:
+    ContextErrorListener(std::vector<ErrorEntry> &errorList) : _errors(errorList) {}
 
-  SourceContextImpl(std::string const& sourceId);
+    virtual void syntaxError(IRecognizer *recognizer, Token * offendingSymbol, size_t line, int charPositionInLine,
+                             const std::string &msg, std::exception_ptr e) override;
+  private:
+    std::vector<ErrorEntry> &_errors;
+  };
 
-  SymbolInfo infoForSymbolAtPosition(size_t row, size_t column);
-  std::vector<SymbolInfo> listSymbols();
+  class SourceContextImpl
+  {
+  public:
+    std::vector<std::string> imports; // Updated on each parse run.
 
-  void parse(std::string const& source);
-  std::vector<ErrorEntry> getErrors();
-  void addDependency(SourceContextImpl *context);
+    SourceContextImpl(std::string const& sourceId);
 
-protected:
-  SymbolInfo getSymbolInfo(std::string const& symbol);
+    SymbolInfo infoForSymbolAtPosition(size_t row, size_t column);
+    std::vector<SymbolInfo> listSymbols();
 
-private:
-  antlr4::ANTLRInputStream _input;
-  ANTLRv4Lexer _lexer;
-  antlr4::CommonTokenStream _tokens;
-  ANTLRv4Parser _parser;
-  ContextErrorListener _errorListener;
+    void parse(std::string const& source);
+    std::vector<ErrorEntry> getErrors();
+    void addDependency(SourceContextImpl *context);
 
-  std::string _sourceId;
-  Ref<antlr4::tree::ParseTree> _tree;
-  std::map<std::string, std::pair<std::string, antlr4::ParserRuleContext *>> _symbolTable;
-  std::vector<SourceContextImpl *> _dependencies;
+  protected:
+    SymbolInfo getSymbolInfo(std::string const& symbol);
 
-  std::vector<ErrorEntry> _syntaxErrors;
-};
+  private:
+    antlr4::ANTLRInputStream _input;
+    ANTLRv4Lexer _lexer;
+    antlr4::CommonTokenStream _tokens;
+    ANTLRv4Parser _parser;
+    ContextErrorListener _errorListener;
+
+    std::string _sourceId;
+    Ref<antlr4::tree::ParseTree> _tree;
+    SymbolTable _symbolTable;
+    std::vector<SourceContextImpl *> _dependencies;
+    
+    std::vector<ErrorEntry> _syntaxErrors;
+  };
 
 } // namespace graps

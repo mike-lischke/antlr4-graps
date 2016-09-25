@@ -39,7 +39,7 @@ SourceContext {}
 > console.log(backend.infoForSymbol("test/t.g4", { "line": 2, "character": 11 }));
 { name: 'C',
   source: 't.g4',
-  kind: 'Lexer rule',
+  kind: 0,
   text: 'C: \'C\' -> channel(BLAH);',
   start: { character: 0, line: 7 },
   stop: { character: 23, line: 7 } }
@@ -48,31 +48,31 @@ undefined
 > console.log(backend.listSymbols("test/t.g4"));
 [ { name: 'A',
     source: 't.g4',
-    kind: 'Lexer rule',
+    kind: 0,
     text: 'A: \'A\';',
     start: { character: 0, line: 5 },
     stop: { character: 6, line: 5 } },
   { name: 'B',
     source: 't.g4',
-    kind: 'Lexer rule',
+    kind: 0,
     text: 'B: \'B\';',
     start: { character: 0, line: 6 },
     stop: { character: 6, line: 6 } },
   { name: 'C',
     source: 't.g4',
-    kind: 'Lexer rule',
+    kind: 0,
     text: 'C: \'C\' -> channel(BLAH);',
     start: { character: 0, line: 7 },
     stop: { character: 23, line: 7 } },
   { name: 'x',
     source: 't.g4',
-    kind: 'Parser rule',
+    kind: 4,
     text: 'x: A | B | C;',
     start: { character: 0, line: 2 },
     stop: { character: 12, line: 2 } },
   { name: 'y',
     source: 't.g4',
-    kind: 'Parser rule',
+    kind: 4,
     text: 'y: ZZ;',
     start: { character: 0, line: 3 },
     stop: { character: 5, line: 3 } } ]
@@ -102,6 +102,22 @@ undefined
 In this example I ran the node module from a local node session, hence the `require(".");` call. Usually you would do: `require("antlr4-graps");`. The module exports a central class (**AntlrLanguageSupport**), through which every call is routed. It takes care to load additional dependencies when you load a grammar (token vocabularies and imports) and it takes care not to load a grammar multiple times. Instead an internal reference counter is maintained. That also means that every call to `loadGrammar` must be paired with a call to `releaseGrammar` to avoid leaking grammar instances.
 
 The module uses the given file name mostly to identify a source context, not so much to get the source from that file. This happens only if you call `loadGrammar()` without the source parameter (also indirectly, e.g. `getErrors()` calls `loadGrammar()` if the given grammar is not loaded yet). However, the file name is also used to resolve dependencies, by using its base path to locate the other grammar files (they all have to be in the same folder).
+
+## Symbol Kinds
+
+The module uses an enum to denote the kind of a symbol, which you can access via `AntlrLanguageSupport.SymbolKind`. Use this to check what type of symbol has been returned by the symbol retrieval functions. Available types are:
+
+* LexerToken
+* VirtualLexerToken
+* FragmentLexerToken
+* BuiltInLexerToken
+* ParserRule
+* LexerMode
+* BuiltInMode
+* TokenChannel
+* BuiltInChannel
+* Import
+* TokenVocab
 
 ## Available APIs
 
@@ -135,7 +151,7 @@ The module uses the given file name mostly to identify a source context, not so 
 > 
 > - **name**: The name of the symbol.
 > - **source**: The base name of the source file it belongs to.
-> - **kind**: The type of symbol (parser rule, lexer token, virtual lexer token, channel, mode, predefined lexer tokens and channels) as string.
+> - **kind**: The type of the symbol,e.g. `AntlrLanguageSupport.SymbolKind.LexerToken`.
 > - **text**: The definition for the symbol.
 > - **start**: The start position of the symbol.
 > - **stop**: The end position of the symbol.
