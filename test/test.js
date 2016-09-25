@@ -52,7 +52,7 @@ describe('antlr4-graps', function() {
       var info = backend.infoForSymbol("test/t.g4", { "line": 2, "character": 7});
       expect(info.name).to.equal("B");
       expect(info.source).to.equal("t.g4");
-      expect(info.kind).to.equal("Lexer rule");
+      expect(info.kind).to.equal(backend.SymbolKind.LexerToken);
       expect(info.text).to.equal("B: 'B';");
       //expect(info.start).to.equal({ character: 0, line: 6 });
       expect(info.start.character).to.equal(0);
@@ -71,7 +71,7 @@ describe('antlr4-graps', function() {
       let info = symbols[3];
       expect(info.name).to.equal("x");
       expect(info.source).to.equal("t.g4");
-      expect(info.kind).to.equal("Parser rule");
+      expect(info.kind).to.equal(backend.SymbolKind.ParserRule);
       expect(info.text).to.equal("x: A | B | C;");
       expect(info.start.character).to.equal(0);
       expect(info.start.line).to.equal(2);
