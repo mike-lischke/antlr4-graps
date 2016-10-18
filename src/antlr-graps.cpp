@@ -56,7 +56,7 @@ void SourceContext::init(v8::Local<v8::Object> exports)
 
   NODE_SET_PROTOTYPE_METHOD(tpl, "infoForSymbolAtPosition", infoForSymbolAtPosition);
   NODE_SET_PROTOTYPE_METHOD(tpl, "parse", parse);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "getErrors", getErrors);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "getDiagnostics", getDiagnostics);
   NODE_SET_PROTOTYPE_METHOD(tpl, "addDependency", addDependency);
   NODE_SET_PROTOTYPE_METHOD(tpl, "listSymbols", listSymbols);
 
@@ -172,23 +172,24 @@ void SourceContext::parse(const v8::FunctionCallbackInfo<v8::Value>& args)
 
 //----------------------------------------------------------------------------------------------------------------------
 
-void SourceContext::getErrors(const v8::FunctionCallbackInfo<v8::Value>& args)
+void SourceContext::getDiagnostics(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
   Isolate *isolate = args.GetIsolate();
 
   SourceContextImpl *impl = dynamic_cast<SourceContextImpl *>(ObjectWrap::Unwrap<SourceContext>(args.Holder()));
 
-  std::vector<ErrorEntry> errors = impl->getErrors();
-  Handle<Array> array = Array::New(isolate, (int)errors.size());
-  for (uint32_t i = 0; i < errors.size(); ++i)
+  std::vector<DiagnosticEntry> diagnostics = impl->getDiagnostics();
+  Handle<Array> array = Array::New(isolate, (int)diagnostics.size());
+  for (uint32_t i = 0; i < diagnostics.size(); ++i)
   {
     Local<Object> obj = Object::New(isolate);
-    obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, errors[i].message.c_str()));
+    obj->Set(String::NewFromUtf8(isolate, "type"), Number::New(isolate, diagnostics[i].type));
+    obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, diagnostics[i].message.c_str()));
     Local<Object> position = Object::New(isolate);
-    position->Set(String::NewFromUtf8(isolate, "character"), Number::New(isolate, errors[i].column));
-    position->Set(String::NewFromUtf8(isolate, "line"), Number::New(isolate, errors[i].row));
+    position->Set(String::NewFromUtf8(isolate, "character"), Number::New(isolate, diagnostics[i].column));
+    position->Set(String::NewFromUtf8(isolate, "line"), Number::New(isolate, diagnostics[i].row));
     obj->Set(String::NewFromUtf8(isolate, "position"), position);
-    obj->Set(String::NewFromUtf8(isolate, "length"), Number::New(isolate, errors[i].length));
+    obj->Set(String::NewFromUtf8(isolate, "length"), Number::New(isolate, diagnostics[i].length));
 
     array->Set(i, obj);
   }
@@ -218,9 +219,14 @@ void SourceContext::listSymbols(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
   Isolate *isolate = args.GetIsolate();
 
+  bool includeDependencies = false;
+  if (args.Length() > 0) {
+    includeDependencies = args[0]->ToBoolean()->Value();
+  }
+
   SourceContextImpl *impl = dynamic_cast<SourceContextImpl *>(ObjectWrap::Unwrap<SourceContext>(args.Holder()));
 
-  std::vector<SymbolInfo> symbols = impl->listSymbols();
+  std::vector<SymbolInfo> symbols = impl->listSymbols(includeDependencies);
 
   Handle<Array> array = Array::New(isolate, (int)symbols.size());
   for (uint32_t i = 0; i < symbols.size(); ++i)

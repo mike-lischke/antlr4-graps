@@ -6,17 +6,24 @@ var path = require("path");
 var backend = require("./build/Release/antlr4_graps"); // Built on installation.
 
 const SymbolKind = { // Same as SymbolKind in C++.
-    LexerToken : 0,
-    VirtualLexerToken : 1,
-    FragmentLexerToken : 2,
-    BuiltInLexerToken : 3,
-    ParserRule : 4,
-    LexerMode : 5,
+    TokenVocab : 0,
+    Import : 1,
+    BuiltInLexerToken : 2,
+    VirtualLexerToken : 3,
+    FragmentLexerToken : 4,
+    LexerToken : 5,
     BuiltInMode : 6,
-    TokenChannel : 7,
+    LexerMode : 7,
     BuiltInChannel : 8,
-    Import : 9,
-    TokenVocab : 10
+    TokenChannel : 9,
+    ParserRule : 10
+}
+
+const DiagnosticType = { // Same as DiagnosticType in C++.
+    Hint : 0,
+    Info : 1,
+    Warning : 2,
+    Error : 3
 }
 
 var AntlrLanguageSupport = (function () {
@@ -132,17 +139,18 @@ var AntlrLanguageSupport = (function () {
         return context.infoForSymbolAtPosition(position.line, position.character);
     };
 
-    AntlrLanguageSupport.prototype.listSymbols = function (file) {
+    AntlrLanguageSupport.prototype.listSymbols = function (file, fullList) {
         var context = getContext(this, file);
-        return context.listSymbols();
+        return context.listSymbols(!!fullList); // Enforce a boolean parameter.
     };
 
-    AntlrLanguageSupport.prototype.getErrors = function (file) {
+    AntlrLanguageSupport.prototype.getDiagnostics = function (file) {
         var context = getContext(this, file);
-        return context.getErrors();
+        return context.getDiagnostics();
     };
 
     AntlrLanguageSupport.prototype.SymbolKind = SymbolKind;
+    AntlrLanguageSupport.prototype.DiagnosticType = DiagnosticType;
 
     return AntlrLanguageSupport;
 })();
