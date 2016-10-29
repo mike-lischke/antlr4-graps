@@ -112,11 +112,24 @@ undefined
     length: 1 } ]
 undefined
 >
+> backend.reparse("test/t.g4", "grammar A; a: b \n| c; c: b+;");
+> undefined
+> console.log(backend.getDiagnostics("test/t.g4"));
+[ { type: 3,
+    message: 'Unknown parser rule \'b\'',
+    position: { character: 14, line: 1 },
+    length: 1 },
+  { type: 3,
+    message: 'Unknown parser rule \'b\'',
+    position: { character: 8, line: 2 },
+    length: 1 } ]
 ```
 
 In this example I ran the node module from a local node session, hence the `require(".");` call. Usually you would do: `require("antlr4-graps");`. The module exports a central class (**AntlrLanguageSupport**), through which every call is routed. It takes care to load additional dependencies when you load a grammar (token vocabularies and imports) and it takes care not to load a grammar multiple times. Instead an internal reference counter is maintained. That also means that every call to `loadGrammar` must be paired with a call to `releaseGrammar` to avoid leaking grammar instances.
 
-The module uses the given file name mostly to identify a source context, not so much to get the source from that file. This happens only if you call `loadGrammar()` without the source parameter (also indirectly, e.g. `getErrors()` calls `loadGrammar()` if the given grammar is not loaded yet). However, the file name is also used to resolve dependencies, by using its base path to locate the other grammar files (they all have to be in the same folder).
+The module uses the given file name mostly to identify a source context, not so much to get the source from that file. This happens only if you call `loadGrammar()` without the source parameter (also indirectly, e.g. `getDiagnostics()` calls `loadGrammar()` if the given grammar is not loaded yet). However, the file name is also used to resolve dependencies, by using its base path to locate the other grammar files (they all have to be in the same folder).
+
+In the node session above you can see how to call the available APIs and what their output is. The diagnostic report is run for 2 different scenarios, one with a syntax error (and partially dubious follow up errors) and one returning results from the semantic check when syntactically everything is correct (e.g. missing symbols).
 
 ## Symbol Kinds
 
