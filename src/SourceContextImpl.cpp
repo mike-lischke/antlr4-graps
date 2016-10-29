@@ -136,8 +136,7 @@ static Definition definitionForContext(ParserRuleContext *ctx, bool keepQuotes)
 //----------------- SymbolTable ----------------------------------------------------------------------------------------
 
 static SymbolStore globalSymbols = {
-  { SKBuiltInChannel, {{ "DEFAULT", nullptr }}},
-  { SKBuiltInChannel, {{ "HIDDEN", nullptr }}},
+  { SKBuiltInChannel, {{ "DEFAULT", nullptr }, { "HIDDEN", nullptr }}},
   { SKBuiltInLexerToken, {{ "EOF" , nullptr }}},
   { SKBuiltInMode, {{ "DEFAULT_MODE", nullptr }}}
 };

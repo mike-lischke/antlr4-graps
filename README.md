@@ -6,11 +6,13 @@
 
 ANTLR4 graps (Grammar Parsing Service) is a native node module (tested with node 5 and node 6) with a C++ parsing backend that provides parsing functionality for ANTLR grammars.
 
-## Platform support
+## Platform support + Building
 
 The module comes with all needed files (no external binaries needed). There are 2 flavours of the module you can use, each contained in an own branch. The master branch contains all source code and will build the native antlr4-graps.node binary on installation (via node-gyp rebuild) on all platforms. The second variant (in the graps-bin branch) does not have the cpp source files, but instead comes with precompiled binaries. This way no compilation is needed on the target machines (and hence there's no need for XCode or Visual Studio).
 
 If you install from master you need a compiler, depending on your platform. Otherwise you should be able to use the node module as is. The Windows variant was built as 32bit module using VS 2013, to make it compatible with Visual Studio Code. Unfortunately, currently the module doesn't work there yet.
+
+> NOTE: If you want to use this module in an Electron app (e.g. Visual Studio Code) you have to rebuild it manually as laid out [in this document](https://github.com/electron/electron/blob/master/docs/tutorial/using-native-node-modules.md). Electron uses a different V8 version than Node.js, so you have to compile the module with Electron's V8 headers.
 
 ## Usage
 
