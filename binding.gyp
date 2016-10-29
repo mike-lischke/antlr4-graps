@@ -149,7 +149,7 @@
         "antlr4-runtime",
         "parser",
       ],
-      
+
       "conditions": [
         [ "OS=='mac'", {
           "xcode_settings": {
@@ -159,7 +159,7 @@
             "GCC_ENABLE_CPP_EXCEPTIONS": "YES"
           },
         }],
-      
+
         [ 'OS=="win"', {
           'configurations': {
             'Debug': { # Note: on Windows there are by default no debug node libs.
@@ -167,22 +167,22 @@
               'msvs_settings': {
                 'VCCLCompilerTool': {
                   'ExceptionHandling': 1, # /EHsc
-				  'WarningLevel': 4,
-				  'RuntimeTypeInfo': 'true',
-				  'DisableSpecificWarnings': [ "4100" ], # Unused parameter
+                  'WarningLevel': 4,
+                  'RuntimeTypeInfo': 'true',
+                  'DisableSpecificWarnings': [ "4100" ], # Unused parameter
                   'AdditionalOptions': [
                   ]
                 }
               }
             },
             'Release': {
-			  'defines': [ 'ANTLR4CPP_EXPORTS', 'DELAYIMP_INSECURE_WRITABLE_HOOKS' ],
+              'defines': [ 'ANTLR4CPP_EXPORTS', 'DELAYIMP_INSECURE_WRITABLE_HOOKS' ],
               'msvs_settings': {
                 'VCCLCompilerTool': {
                   'ExceptionHandling': 1, # /EHsc
-				  'WarningLevel': 4,
-				  'RuntimeTypeInfo': 'true',
-				  'DisableSpecificWarnings': [ "4100" ],
+                  'WarningLevel': 4,
+                  'RuntimeTypeInfo': 'true',
+                  'DisableSpecificWarnings': [ "4100" ],
                   'AdditionalOptions': [
                   ]
                 }
@@ -190,7 +190,7 @@
             }
           }
         }],
-                
+
         [ "OS=='linux'", {
           'configurations': {
             'Debug': {
