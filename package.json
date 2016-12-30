@@ -1,14 +1,13 @@
 {
   "name": "antlr4-graps",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "ANTLR grammar parsing services",
-  "main": "index.js",
+  "main": "src/index.ts",
   "directories": {
     "test": "test"
   },
   "scripts": {
-    "test": "mocha",
-    "install": "node-gyp rebuild -j 8"
+    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register"
   },
   "repository": {
     "type": "git",
@@ -19,12 +18,18 @@
     "ANTLR",
     "grammar"
   ],
-  
-  "devDependencies": {
-    "mocha": "*",
-    "chai": "*"
+  "dependencies": {
+    "antlr4ts": ">=0.4.0-alpha.1"
   },
-  
+  "devDependencies": {
+    "@types/chai": "^3.4.34",
+    "@types/mocha": "^2.2.32",
+    "@types/node": "^6.0.40",
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3",
+    "typescript": "^2.0.3",
+    "vscode": "^1.0.0"
+  },
   "author": "Mike Lischke",
   "license": "MIT",
   "gypfile": true

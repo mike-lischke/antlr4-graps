@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"compileOnSave": true,
+        "module": "commonjs",
+        "target": "es6",
+        "outDir": "out",
+        "removeComments": true,
+		"noImplicitAny": true,
+        "sourceMap": true,
+        "inlineSources": true,
+        "isolatedModules": false,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true
+	},
+	"include": [
+		"src/**/*", "parser/**/*", "test/**/*"
+	],
+	"exclude": [
+		"node_modules",
+		".vscode-test"
+	]
+}
