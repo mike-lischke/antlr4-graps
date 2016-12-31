@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/mike-lischke/antlr-graps.svg?branch=master)](https://travis-ci.org/mike-lischke/antlr-graps)
 
-ANTLR4 graps (Grammar Parsing Service) is a TypeScript node module (tested with node 5 and node 6) using the [TypeScript ANTLR runtime](https://github.com/tunnelvisionlabs/antlr4ts) (antlr4ts) created by Sam Harwell. At the time being this runtime is still considered alpha, while it works already quite well.
+ANTLR4 graps (Grammar Parsing Service) is a TypeScript node module (tested with node 6) using the [TypeScript ANTLR runtime](https://github.com/tunnelvisionlabs/antlr4ts) (antlr4ts) created by Sam Harwell. At the time being this runtime is still considered alpha, while it works already quite well.
 
 ## Usage
 
