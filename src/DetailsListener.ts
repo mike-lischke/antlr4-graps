@@ -7,6 +7,8 @@
 
 "use strict";
 
+import { TerminalNode } from 'antlr4ts/tree';
+
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import { LexerRuleSpecContext, ParserRuleSpecContext, TokensSpecContext, ChannelsSpecContext,
     ModeSpecContext, DelegateGrammarContext, OptionContext } from '../parser/ANTLRv4Parser';
@@ -20,9 +22,13 @@ export class DetailsListener implements ANTLRv4ParserListener {
     constructor(private symbolTable: SymbolTable, private imports: string[]) {}
 
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
-        if (ctx.TOKEN_REF() != null) {
-            let symbol: string = ctx.TOKEN_REF().getText();
-            if (ctx.FRAGMENT() != null) {
+        let tokenRef: TerminalNode;
+        try { tokenRef = ctx.TOKEN_REF() } catch (e) {}
+        if (tokenRef) {
+            let symbol: string = tokenRef.getText();
+            let fragment: TerminalNode;
+            try { fragment = ctx.FRAGMENT() } catch (e) {}
+            if (fragment) {
                 this.symbolTable.addSymbol(SymbolKind.FragmentLexerToken, symbol, ctx);
             } else {
                 this.symbolTable.addSymbol(SymbolKind.LexerToken, symbol, ctx);

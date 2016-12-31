@@ -7,8 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "install": "tsc",
-    "test": "node_modules/mocha/bin/_mocha --colors out/test/**/*.js"
+    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register"
   },
   "repository": {
     "type": "git",
@@ -29,7 +28,8 @@
     "chai": "^3.5.0",
     "mocha": "^2.5.3",
     "typescript": "^2.0.3",
-    "vscode": "^1.0.0"
+    "vscode": "^1.0.0",
+    "ts-node": "^1.7.3"
   },
   "author": "Mike Lischke",
   "license": "MIT"

@@ -12,30 +12,37 @@ import { SymbolTable } from './SymbolTable';
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import {
     TerminalRuleContext, RulerefContext, SetElementContext, LexerCommandContext, LexerRuleSpecContext,
-    ParserRuleSpecContext,
+    ParserRuleSpecContext
 } from '../parser/ANTLRv4Parser';
 
 import { Token } from 'antlr4ts';
+import { TerminalNode } from 'antlr4ts/tree';
 
 export class SemanticListener implements ANTLRv4ParserListener {
     constructor(private diagnostics: DiagnosticEntry[], private symbolTable: SymbolTable) { }
 
     exitTerminalRule(ctx: TerminalRuleContext) {
-        if (ctx.TOKEN_REF()) {
-            let symbol = ctx.TOKEN_REF().getText();
-            this.checkSymbolExistance(true, SymbolGroupKind.TokenRef, symbol, "Unknown token reference", ctx.TOKEN_REF().getSymbol());
+        let tokenRef: TerminalNode;
+        try { tokenRef = ctx.TOKEN_REF() } catch (e) {} // Temporary workaround for incomplete antlr4ts implementation.
+        if (tokenRef) {
+            let symbol = tokenRef.getText();
+            this.checkSymbolExistance(true, SymbolGroupKind.TokenRef, symbol, "Unknown token reference", tokenRef.getSymbol());
         }
     }
 
     exitRuleref(ctx: RulerefContext) {
-        let symbol = ctx.RULE_REF().getText();
-        this.checkSymbolExistance(true, SymbolGroupKind.RuleRef, symbol, "Unknown parser rule", ctx.RULE_REF().getSymbol());
+        let ruleRef = ctx.RULE_REF()
+        let symbol = ruleRef.getText();
+        this.checkSymbolExistance(true, SymbolGroupKind.RuleRef, symbol, "Unknown parser rule", ruleRef.getSymbol());
+
     }
 
     exitSetElement(ctx: SetElementContext) {
-        if (ctx.TOKEN_REF()) {
-            let symbol = ctx.TOKEN_REF().getText();
-            this.checkSymbolExistance(true, SymbolGroupKind.TokenRef, symbol, "Unknown token reference", ctx.TOKEN_REF().getSymbol());
+        let tokenRef: TerminalNode;
+        try { tokenRef = ctx.TOKEN_REF() } catch (e) {}
+        if (tokenRef) {
+            let symbol = tokenRef.getText();
+            this.checkSymbolExistance(true, SymbolGroupKind.TokenRef, symbol, "Unknown token reference", tokenRef.getSymbol());
         }
     }
 
@@ -57,15 +64,17 @@ export class SemanticListener implements ANTLRv4ParserListener {
     }
 
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
-        if (ctx.TOKEN_REF()) {
-            let symbol = ctx.TOKEN_REF().getText();
+        let tokenRef: TerminalNode;
+        try { tokenRef = ctx.TOKEN_REF() } catch (e) {}
+        if (tokenRef) {
+            let symbol = tokenRef.getText();
             if (this.seenSymbols.has(symbol)) {
-                this.reportDuplicateSymbol(symbol, ctx.TOKEN_REF().getSymbol(), this.seenSymbols.get(symbol));
+                this.reportDuplicateSymbol(symbol, tokenRef.getSymbol(), this.seenSymbols.get(symbol));
             } else if (this.symbolTable.symbolExists(symbol, SymbolKind.LexerToken, SymbolScope.DependencyOnly)) {
                 let symbolContext = this.symbolTable.contextForSymbol(symbol, SymbolKind.LexerToken, SymbolScope.DependencyOnly);
-                this.reportDuplicateSymbol(symbol, ctx.TOKEN_REF().getSymbol(), symbolContext.start);
+                this.reportDuplicateSymbol(symbol, tokenRef.getSymbol(), symbolContext.start);
             } else {
-                this.seenSymbols.set(symbol, ctx.TOKEN_REF().getSymbol());
+                this.seenSymbols.set(symbol, tokenRef.getSymbol());
             }
         }
     }

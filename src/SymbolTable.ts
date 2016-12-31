@@ -94,28 +94,28 @@ export class SymbolTable {
         return false;
     }
 
-    contextForSymbol(symbol: string, kind: SymbolKind, scope: SymbolScope): ParserRuleContext {
+    contextForSymbol(symbol: string, kind: SymbolKind, scope: SymbolScope): ParserRuleContext | undefined {
         if (!SymbolTable.globalSymbols.has(kind) || !SymbolTable.globalSymbols.get(kind).has(symbol))
-            return null; // No context available for global symbols.
+            return undefined; // No context available for global symbols.
 
         if (scope == SymbolScope.LocalOnly || scope == SymbolScope.Full) {
             let entry = this.localSymbols.get(kind);
-            if (entry != undefined && entry.has(symbol))
+            if (entry && entry.has(symbol))
                 return entry.get(symbol);
         }
 
         if (scope == SymbolScope.DependencyOnly || scope == SymbolScope.Full) {
             for (let dep of this.dependencies) {
                 let entry = dep.localSymbols.get(kind);
-                if (entry != undefined && entry.has(symbol))
+                if (entry && entry.has(symbol))
                     return entry.get(symbol);
             }
         }
 
-        return null;
+        return undefined;
     }
 
-    getSymbolInfo(symbol: string): SymbolInfo {
+    getSymbolInfo(symbol: string): SymbolInfo | undefined {
         for (let pair of SymbolTable.globalSymbols)
             if (pair[1].has(symbol))
                 return {
@@ -156,11 +156,11 @@ export class SymbolTable {
         // Nothing in our table, so try the dependencies in order of appearance (effectively implementing rule overrides this way).
         for (let dep of this.dependencies) {
             let result: SymbolInfo = dep.getSymbolInfo(symbol);
-            if (result != null)
+            if (result)
                 return result;
         }
 
-        return null;
+        return undefined;
     }
 
     public listSymbols(includeDependencies: boolean): SymbolInfo[] {
@@ -197,9 +197,9 @@ export class SymbolTable {
     ]);
 };
 
-export function definitionForContext(ctx: ParserRuleContext, keepQuotes: boolean): Definition {
-    if (ctx == null)
-        return null;
+export function definitionForContext(ctx: ParserRuleContext, keepQuotes: boolean): Definition | undefined {
+    if (!ctx)
+        return undefined;
 
     let cs: CharStream = ctx.start.getTokenSource().getInputStream();
 
