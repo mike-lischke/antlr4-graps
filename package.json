@@ -7,7 +7,8 @@
     "test": "test"
   },
   "scripts": {
-    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register"
+    "install": "tsc",
+    "test": "node_modules/mocha/bin/_mocha --colors out/test/**/*.js"
   },
   "repository": {
     "type": "git",
