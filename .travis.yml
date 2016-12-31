@@ -1,20 +1,18 @@
 language: node_js
 node_js:
-  - "node"
+  - "stable"
   - "6"
   - "5"
 
-before_script:
-  - npm install mocha
-  - npm install chai
+sudo: false
 
-env:
-  - CXX=g++-5
+install:
+  - npm uninstall typescript
+  - npm uninstall tslint
+  - npm install
+  - npm update
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-5
+cache:
+  directories:
+    - node_modules
 

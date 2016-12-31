@@ -10,22 +10,46 @@
 import fs = require('fs');
 import path = require('path');
 
-import { SourceContext } from './SourceContext';
-import { SymbolInfo } from './SymbolTable';
-
-export const SymbolKind = {
-    TokenVocab: 0,
-    Import: 1,
-    BuiltInLexerToken: 2,
-    VirtualLexerToken: 3,
-    FragmentLexerToken: 4,
-    LexerToken: 5,
-    BuiltInMode: 6,
-    LexerMode: 7,
-    BuiltInChannel: 8,
-    TokenChannel: 9,
-    ParserRule: 10
+export enum SymbolScope {
+    LocalOnly,
+    DependencyOnly,
+    Full
 }
+
+export enum SymbolGroupKind { // Multiple symbol kinds can be involved in a symbol lookup.
+    TokenRef,
+    RuleRef,
+    LexerMode,
+    TokenChannel,
+};
+
+export enum SymbolKind {
+    TokenVocab,
+    Import,
+    BuiltInLexerToken,
+    VirtualLexerToken,
+    FragmentLexerToken,
+    LexerToken,
+    BuiltInMode,
+    LexerMode,
+    BuiltInChannel,
+    TokenChannel,
+    ParserRule
+};
+
+// The definition of a single symbol.
+export class Definition {
+    text: string;
+    start: { column: number, row: number };
+    end: { column: number, row: number };
+};
+
+export class SymbolInfo {
+    kind: SymbolKind;
+    name: string;
+    source: string;
+    definition: Definition;
+};
 
 export enum DiagnosticType {
     Hint,
@@ -47,6 +71,8 @@ class ContextEntry {
     refCount: number;
     dependencies: string[] = [];
 };
+
+import { SourceContext } from './SourceContext'; // Import *after* the type declarations, especially the enums or static init fails.
 
 export class AntlrLanguageSupport {
     // Mapping file names to SourceContext instances.
@@ -81,7 +107,7 @@ export class AntlrLanguageSupport {
 
     private parseGrammar(contextEntry: ContextEntry, file: string, source: string) {
         var oldDependencies = contextEntry.dependencies;
-        contextEntry.dependencies = [];
+        contextEntry.dependencies.length = 0;
         var newDependencies = contextEntry.context.parse(source);
 
         for (let dep of newDependencies) {
@@ -167,6 +193,3 @@ export class AntlrLanguageSupport {
     };
 
 }
-
-var backend = new AntlrLanguageSupport();
-//console.log(backend.listSymbols("test/t.g4", true));

@@ -12,25 +12,23 @@ import { BaseErrorListener, Token, Recognizer, RecognitionException } from 'antl
 import { DiagnosticEntry, DiagnosticType } from './index';
 
 export class ContextErrorListener extends BaseErrorListener {
-    constructor(errorList: DiagnosticEntry[]) {
+    constructor(private errorList: DiagnosticEntry[]) {
         super();
-        this._errorList = errorList;
     }
 
     syntaxError<T extends Token>(recognizer: Recognizer<T, any>, offendingSymbol: T | undefined, line: number,
         charPositionInLine: number, msg: string, e: RecognitionException | undefined) {
 
-        var error: DiagnosticEntry = new DiagnosticEntry();
-        error.type = DiagnosticType.Error;
-        error.message = msg;
-        error.column = charPositionInLine;
-        error.row = line;
-        error.length = 1;
+        var error: DiagnosticEntry = {
+            type: DiagnosticType.Error,
+            message: msg,
+            column: charPositionInLine,
+            row: line,
+            length: 1
+        }
         if (offendingSymbol != undefined) {
             error.length = offendingSymbol.getStopIndex() - offendingSymbol.getStartIndex() + 1;
         }
-        this._errorList.push(error);
+        this.errorList.push(error);
     }
-
-    private _errorList: DiagnosticEntry[]; // A reference to the actual list, filled by us.
 };

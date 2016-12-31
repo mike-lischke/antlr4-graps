@@ -4,116 +4,114 @@
 
 [![Build Status](https://travis-ci.org/mike-lischke/antlr-graps.svg?branch=master)](https://travis-ci.org/mike-lischke/antlr-graps)
 
-ANTLR4 graps (Grammar Parsing Service) is a native node module (tested with node 5 and node 6) with a C++ parsing backend that provides parsing functionality for ANTLR grammars.
-
-## Platform support + Building
-
-The module comes with all needed files (no external binaries needed). There are 2 flavours of the module you can use, each contained in an own branch. The master branch contains all source code and will build the native antlr4-graps.node binary on installation (via node-gyp rebuild) on all platforms. The second variant (in the graps-bin branch) does not have the cpp source files, but instead comes with precompiled binaries. This way no compilation is needed on the target machines (and hence there's no need for XCode or Visual Studio).
-
-If you install from master you need a compiler, depending on your platform. Otherwise you should be able to use the node module as is. The Windows variant was built as 32bit module using VS 2013, to make it compatible with Visual Studio Code. Unfortunately, currently the module doesn't work there yet.
-
-> NOTE: If you want to use this module in an Electron app (e.g. Visual Studio Code) you have to rebuild it manually as laid out [in this document](https://github.com/electron/electron/blob/master/docs/tutorial/using-native-node-modules.md). Electron uses a different V8 version than Node.js, so you have to compile the module with Electron's V8 headers.
+ANTLR4 graps (Grammar Parsing Service) is a TypeScript node module (tested with node 5 and node 6) using the [TypeScript ANTLR runtime](https://github.com/tunnelvisionlabs/antlr4ts) (antlr4ts) created by Sam Harwell. At the time being this runtime is still considered alpha, while it works already quite well.
 
 ## Usage
 
-Here's a node session to demonstrate the use of the module:
+After installation (e.g. via `npm install antlr4-graps`) you can do a first test using `ts-node` (which you also have to install). Here's such a session to demonstrate the use of the module (run from the root folder of the antlr4-graps module):
 
 ```bash
-Mikes-MBP:antlr4-graps Mike$ pwd
-/Volumes/Extern/Work/projects/antlr4-graps
-Mikes-MBP:antlr4-graps Mike$ node
+antlr4-graps Mike$ ts-node
 ```
-```js
+```typescript
 > var graps = require(".");
-undefined
+'use strict'
 >
 > console.log(graps);
-{ AntlrLanguageSupport: [Function: AntlrLanguageSupport] }
+{ SymbolKind: 
+   { TokenVocab: 0,
+     Import: 1,
+     BuiltInLexerToken: 2,
+     VirtualLexerToken: 3,
+     FragmentLexerToken: 4,
+     LexerToken: 5,
+     BuiltInMode: 6,
+     LexerMode: 7,
+     BuiltInChannel: 8,
+     TokenChannel: 9,
+     ParserRule: 10 },
+  DiagnosticType: 
+   { '0': 'Hint',
+     '1': 'Info',
+     '2': 'Warning',
+     '3': 'Error',
+     Hint: 0,
+     Info: 1,
+     Warning: 2,
+     Error: 3 },
+  DiagnosticEntry: [Function: DiagnosticEntry],
+  AntlrLanguageSupport: [Function: AntlrLanguageSupport] }
 undefined
 >
-> var backend = new graps.AntlrLanguageSupport();
+> import { AntlrLanguageSupport } from "./src/index";
+undefined
+> var backend = new AntlrLanguageSupport();
 undefined
 >
-> backend.loadGrammar("test/t.g4");
-[graps-debug] Loading source: test/t.g4
-SourceContext {}
->
-> console.log(backend.infoForSymbol("test/t.g4", { "line": 2, "character": 11 }));
-{ name: 'C',
-  source: 't.g4',
-  kind: 0,
-  text: 'C: \'C\' -> channel(BLAH);',
-  start: { character: 0, line: 8 },
-  stop: { character: 23, line: 8 } }
+> console.log(backend.listSymbols("test/t.g4", true));
+[ { kind: 5,
+    name: 'D',
+    source: 't.g4',
+    definition: { text: 'D: \'D\';', start: [Object], end: [Object] } },
+  { kind: 5,
+    name: 'A',
+    source: 't.g4',
+    definition: { text: 'A: \'A\';', start: [Object], end: [Object] } },
+  { kind: 5,
+    name: 'B',
+    source: 't.g4',
+    definition: { text: 'B: \'B\';', start: [Object], end: [Object] } },
+  { kind: 5,
+    name: 'C',
+    source: 't.g4',
+    definition: 
+     { text: 'C: \'C\' -> channel(BLAH);',
+       start: [Object],
+       end: [Object] } },
+  { kind: 10,
+    name: 'x',
+    source: 't.g4',
+    definition: { text: 'x: A | B | C;', start: [Object], end: [Object] } },
+  { kind: 10,
+    name: 'y',
+    source: 't.g4',
+    definition: { text: 'y: ZZ;', start: [Object], end: [Object] } } ]
 undefined
->
-> console.log(backend.listSymbols("test/t.g4"));
-[ { name: 'C',
-    source: 't.g4',
-    kind: 5,
-    text: 'C: \'C\' -> channel(BLAH);',
-    start: { character: 0, line: 8 },
-    stop: { character: 23, line: 8 } },
-  { name: 'B',
-    source: 't.g4',
-    kind: 5,
-    text: 'B: \'B\';',
-    start: { character: 0, line: 7 },
-    stop: { character: 6, line: 7 } },
-  { name: 'A',
-    source: 't.g4',
-    kind: 5,
-    text: 'A: \'A\';',
-    start: { character: 0, line: 6 },
-    stop: { character: 6, line: 6 } },
-  { name: 'D',
-    source: 't.g4',
-    kind: 5,
-    text: 'D: \'D\';',
-    start: { character: 0, line: 5 },
-    stop: { character: 6, line: 5 } },
-  { name: 'y',
-    source: 't.g4',
-    kind: 10,
-    text: 'y: ZZ;',
-    start: { character: 0, line: 3 },
-    stop: { character: 5, line: 3 } },
-  { name: 'x',
-    source: 't.g4',
-    kind: 10,
-    text: 'x: A | B | C;',
-    start: { character: 0, line: 2 },
-    stop: { character: 12, line: 2 } } ]
-undefined
->
 > backend.releaseGrammar("test/t.g4");
-[graps-debug] Unloaded test/t.g4
 undefined
 >
 > backend.reparse("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
-[graps-debug] Reparsing t.g4
 undefined
+>
 > console.log(backend.getDiagnostics("test/t.g4"));
-[ { type: 3,
-    message: 'mismatched input \'::\' expecting \'{\'options\', COLON, AT}\'',
-    position: { character: 12, line: 1 },
+[ DiagnosticEntry {
+    type: 3,
+    message: 'mismatched input \'::\' expecting {\'options\', COLON, AT}',
+    column: 12,
+    row: 1,
     length: 2 },
-  { type: 3,
-    message: 'mismatched input \'|\' expecting \'{\'options\', COLON, AT}\'',
-    position: { character: 0, line: 2 },
+  DiagnosticEntry {
+    type: 3,
+    message: 'mismatched input \'|\' expecting {\'options\', COLON, AT}',
+    column: 0,
+    row: 2,
     length: 1 },
-  { type: 3,
-    message: 'mismatched input \';\' expecting \'{\'options\', COLON, AT}\'',
-    position: { character: 3, line: 2 },
+  DiagnosticEntry {
+    type: 3,
+    message: 'mismatched input \';\' expecting {\'options\', COLON, AT}',
+    column: 3,
+    row: 2,
     length: 1 },
   { type: 3,
     message: 'Duplicate symbol \'c\'',
-    position: { character: 5, line: 2 },
+    column: 5,
+    row: 2,
     length: 1 } ]
 undefined
 >
 > backend.reparse("test/t.g4", "grammar A; a: b \n| c; c: b+;");
 > undefined
+> 
 > console.log(backend.getDiagnostics("test/t.g4"));
 [ { type: 3,
     message: 'Unknown parser rule \'b\'',
@@ -125,15 +123,15 @@ undefined
     length: 1 } ]
 ```
 
-In this example I ran the node module from a local node session, hence the `require(".");` call. Usually you would do: `require("antlr4-graps");`. The module exports a central class (**AntlrLanguageSupport**), through which every call is routed. It takes care to load additional dependencies when you load a grammar (token vocabularies and imports) and it takes care not to load a grammar multiple times. Instead an internal reference counter is maintained. That also means that every call to `loadGrammar` must be paired with a call to `releaseGrammar` to avoid leaking grammar instances.
+The module exports a central class (**AntlrLanguageSupport**), which provides all the main functionality. It takes care to load additional dependencies when you load a grammar (token vocabularies and imports) and it takes care not to load a grammar multiple times. Instead an internal reference counter is maintained. That also means that every call to `loadGrammar` must be paired with a call to `releaseGrammar` to avoid leaking grammar instances. Note that `loadGrammar` is also called implicitely if you call any of the information functions without having loaded the given grammar first. So, better do an explicit `loadGrammar` call to ensure memory is not held longer than necessary.
 
-The module uses the given file name mostly to identify a source context, not so much to get the source from that file. This happens only if you call `loadGrammar()` without the source parameter (also indirectly, e.g. `getDiagnostics()` calls `loadGrammar()` if the given grammar is not loaded yet). However, the file name is also used to resolve dependencies, by using its base path to locate the other grammar files (they all have to be in the same folder).
+The module uses the given file name mostly to identify a source context, not so much to get the source from that file. Only if you call `loadGrammar()` without the source parameter the file name is used to open that file and load its content. However, the file name is also used to resolve dependencies, by using its base path to locate the other grammar files (they all have to be in the same folder).
 
-In the node session above you can see how to call the available APIs and what their output is. The diagnostic report is run for 2 different scenarios, one with a syntax error (and partially dubious follow up errors) and one returning results from the semantic check when syntactically everything is correct (e.g. missing symbols).
+In the node session above you can see how to call the available APIs and what their output is. The diagnostic report is executed for 2 different scenarios, one with a syntax error (and partially dubious follow up errors) and one returning results from the semantic check when syntactically everything is correct (e.g. missing symbols).
 
 ## Symbol Kinds
 
-The module uses an enum to denote the kind of a symbol, which you can access via `AntlrLanguageSupport.SymbolKind`. Use this to check what type of symbol has been returned by the symbol retrieval functions. Available kinds are:
+The module uses an enum to denote the kind of a symbol (see `SymbolKind`). Use this to check what type of symbol has been returned by the symbol retrieval functions. Available kinds are:
 
 * LexerToken
 * VirtualLexerToken
@@ -149,7 +147,7 @@ The module uses an enum to denote the kind of a symbol, which you can access via
 
 ## Diagnostic Types
 
-The module uses an enum to denote the type of a diagnostic entry (returned by getDiagnostics()), which you can access via `AntlrLanguageSupport.DiagnosticType`. Available types are:
+The module also uses an enum to denote the type of diagnostic entries (returned by `getDiagnostics`, see `DiagnosticType`). Available types are:
 
 * Hint
 * Info
@@ -158,7 +156,7 @@ The module uses an enum to denote the type of a diagnostic entry (returned by ge
 
 ## Available APIs
 
-> `function loadGrammar(file[, source])`
+> `function AntlrLanguageSupport.loadGrammar(file: string[, source: string])`
 
 > Loads a grammar source from either the given file or, if specified, from the source parameter. If an explicit source is given then the file content will be ignored. The file name however is used to identify the internally managed source context and dependency references. A call to this function will not load any additional source, if there was a previous call to loadGrammar with the same file name (e.g. via dependency resolution). It will then only increase the internal ref counter. Calls to `loadGrammar()` must always be paired by a `releaseGrammar()` or the source context will stay in memory until the module is unloaded.
 >
@@ -166,24 +164,22 @@ The module uses an enum to denote the type of a diagnostic entry (returned by ge
 
 -----
 
-> `function releaseGrammar(file)`
+> `function AntlrLanguageSupport.releaseGrammar(file: string)`
 
 > Decreases the ref counter for the given file and if that reaches zero unloads the source context and releases all it's dependencies (which might lead to unloading them too if they are no longer referenced anywhere else).
 
 -----
 
-> `function reparse(file, source)`
+> `function AntlrLanguageSupport.reparse(file: string, source: string)`
 
 > Used to update symbol information for a given file (e.g. after an edit action). It is not necessary that the file already has all the changes. Only `source` is used as source for the grammar code. This function will also update all dependencies, by releasing no longer used ones and loading new ones, if required.
 
 -----
     
-> `function infoForSymbol(file, position)`
+> `function AntlrLanguageSupport.infoForSymbol(file: string, column: number, row: number)`
 
 > Returns informations about the symbol at the given position.
 >
-> The position parameter is an object with the members `line` and `character` (as used e.g. in [Visual Studio code](https://code.visualstudio.com/docs/extensionAPI/vscode-api#Position)). The line value is one based, as usual for ANTLR.
-> 
 > The result is an object with these members:
 > 
 > - **name**: The name of the symbol.
@@ -195,13 +191,13 @@ The module uses an enum to denote the type of a diagnostic entry (returned by ge
     
 -----
     
-> `function listSymbols(file)`
+> `function listSymbols(file: string)`
 
 > Returns a list of all symbols defined in the given file (or grammar if parsed from a string). The result is an array of symbol objects (like the ones returned by `infoForSymbol()`).
 
 -----
     
-> `function getDiagnostics(file)`
+> `function getDiagnostics(file: string)`
 
 > Returns a list of diagnostic records (e.g. syntax errors). Syntax error messages are generated by ANTLR itself and passed on unchanged currently. Semantic errors are mostly about symbol validity. A lookup is done for each found symbol (parser rule, lexer token, channel + mode) in a parse unit in all symbols (including those from imported grammars). The returned list consists of object with this structure:
 > 
@@ -212,11 +208,13 @@ The module uses an enum to denote the type of a diagnostic entry (returned by ge
 
 ##Testing
 
-The module contains a simple test setup, which you can run from the module root folder by simply running mocha from a console. Additionally, there is Test setup for Visual Studio code, which even allows to debug the tests. You have to install the node modules "mocha" and "chai" locally for this to work.
+The module contains a simple test setup, which you can run from the module root folder by running mocha from a console. Since the module uses TypeScript you first have to transpile the code to JavaScript. You can do this with a call to `tsc`, but better is to launch the tests with additional parameters like this:
 
-##Debugging
+```bash
+mocha --compilers ts:ts-node/register,tsx:ts-node/register
+```
 
-The module contains a very small logging class that is used to log errors, warnings, infos or debug infos to the console. The log level is usually set to error, which hides the all irrelevant info output from the user (these are shown above for better understanding). 
+Additionally, there is 'Mocah' setup for Visual Studio Code, which even allows to debug the tests. You have to install the node modules "mocha" and "chai" locally for this to work.
 
 ##Known Issues
 When looking for dependencies a simple search for .g and .g4 files is applied to find the files. This can fail if the grammar extension is different or the files are not all in the same folder.
@@ -224,10 +222,9 @@ When looking for dependencies a simple search for .g and .g4 files is applied to
 ##What's next?
 The module is in a pretty good shape now, but there are ideas to add more functionality, like:
 
-- Pass a callback function to the C++ code so it can send internal errors back to the Node.JS layer.
-- Add support for code completion.
-- Add support for automatic code formatting.
-- Add support for linting ANTLR files.
-- Add special language functions like (indirect) left recursion removal.
+- More semantic checks (e.g. indirect left-recursion and other warning/error conditions as detected by ANTLR)
+- Support for code completion.
+- Automatic code formatting.
+- Linting support?
 
 I'd love to see code contributions, so that the module evolves faster.

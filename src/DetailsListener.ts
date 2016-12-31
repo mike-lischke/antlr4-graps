@@ -11,7 +11,8 @@ import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import { LexerRuleSpecContext, ParserRuleSpecContext, TokensSpecContext, ChannelsSpecContext,
     ModeSpecContext, DelegateGrammarContext, OptionContext } from '../parser/ANTLRv4Parser';
 
-import { SymbolTable, SymbolKind, definitionForContext } from './SymbolTable';
+import { SymbolKind } from './index';
+import { SymbolTable, definitionForContext } from './SymbolTable';
 
 export class DetailsListener implements ANTLRv4ParserListener {
     public tokenVocab: string;

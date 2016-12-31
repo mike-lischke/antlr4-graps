@@ -9,8 +9,7 @@
 
 import { expect, should } from 'chai';
 
-import { AntlrLanguageSupport } from "../src/index";
-import { SymbolKind } from "../src/SymbolTable";
+import { AntlrLanguageSupport, SymbolKind } from "../src/index";
 import { SourceContext } from '../src/SourceContext';
 
 var backend: AntlrLanguageSupport;
@@ -100,6 +99,40 @@ describe('antlr4-graps', function () {
       expect(diagnostics[1].column).to.equal(18);
       expect(diagnostics[1].row).to.equal(8);
 
+    });
+  });
+
+  describe('reparse()', function () {
+    it('', function () {
+      backend.reparse("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
+      let diagnostics = backend.getDiagnostics("test/t.g4");
+
+      expect(diagnostics.length).to.equal(4);
+
+      expect(diagnostics[0].message).to.equal("mismatched input \'::\' expecting {\'options\', COLON, AT}");
+      expect(diagnostics[0].length).to.equal(2);
+      expect(diagnostics[0].column).to.equal(12);
+      expect(diagnostics[0].row).to.equal(1);
+
+      expect(diagnostics[1].message).to.equal("mismatched input \'|\' expecting {\'options\', COLON, AT}");
+      expect(diagnostics[1].length).to.equal(1);
+      expect(diagnostics[1].column).to.equal(0);
+      expect(diagnostics[1].row).to.equal(2);
+
+      backend.reparse("test/t.g4", "grammar A; a: b \n| c; c: b+;");
+      diagnostics = backend.getDiagnostics("test/t.g4");
+
+      expect(diagnostics.length).to.equal(2);
+
+      expect(diagnostics[0].message).to.equal("Unknown parser rule \'b\'");
+      expect(diagnostics[0].length).to.equal(1);
+      expect(diagnostics[0].column).to.equal(14);
+      expect(diagnostics[0].row).to.equal(1);
+
+      expect(diagnostics[1].message).to.equal("Unknown parser rule \'b\'");
+      expect(diagnostics[1].length).to.equal(1);
+      expect(diagnostics[1].column).to.equal(8);
+      expect(diagnostics[1].row).to.equal(2);
     });
   });
 

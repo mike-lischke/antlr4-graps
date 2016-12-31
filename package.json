@@ -19,7 +19,7 @@
     "grammar"
   ],
   "dependencies": {
-    "antlr4ts": ">=0.4.0-alpha.1"
+    "antlr4ts": ">=0.4.0-alpha.2"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",
@@ -32,5 +32,4 @@
   },
   "author": "Mike Lischke",
   "license": "MIT",
-  "gypfile": true
 }

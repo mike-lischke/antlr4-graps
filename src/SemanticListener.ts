@@ -7,8 +7,8 @@
 
 "use strict";
 
-import { DiagnosticEntry, DiagnosticType } from './index';
-import { SymbolTable, SymbolGroupKind, SymbolScope, SymbolKind } from './SymbolTable';
+import { SymbolGroupKind, SymbolScope, SymbolKind, DiagnosticEntry, DiagnosticType } from './index';
+import { SymbolTable } from './SymbolTable';
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import {
     TerminalRuleContext, RulerefContext, SetElementContext, LexerCommandContext, LexerRuleSpecContext,
@@ -84,24 +84,26 @@ export class SemanticListener implements ANTLRv4ParserListener {
 
     protected checkSymbolExistance(mustExist: boolean, kind: SymbolGroupKind, symbol: string, message: string, offendingToken: Token) {
         if (this.symbolTable.symbolExistsInGroup(symbol, kind, SymbolScope.Full) != mustExist) {
-            this.diagnostics.push({
+            let entry: DiagnosticEntry = {
                 type: DiagnosticType.Error,
                 message: message + " '" + symbol + "'",
                 column: offendingToken.getCharPositionInLine(),
                 row: offendingToken.getLine(),
                 length: offendingToken.getStopIndex() - offendingToken.getStartIndex() + 1
-            });
+            }
+            this.diagnostics.push(entry);
         }
     }
 
     reportDuplicateSymbol(symbol: string, offendingToken: Token, previousToken: Token) {
-        this.diagnostics.push({
+        let entry: DiagnosticEntry = {
             type: DiagnosticType.Error,
             message: "Duplicate symbol '" + symbol + "'",
             column: offendingToken.getCharPositionInLine(),
             row: offendingToken.getLine(),
             length: offendingToken.getStopIndex() - offendingToken.getStartIndex() + 1
-        });
+        }
+        this.diagnostics.push(entry);
     }
 
     private seenSymbols: Map<string, Token> = new Map();

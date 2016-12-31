@@ -18,10 +18,10 @@ import { ParseTreeWalker, TerminalNode, ParseTree } from 'antlr4ts/tree';
 import { ANTLRv4Parser } from '../parser/ANTLRv4Parser';
 import { ANTLRv4Lexer } from '../parser/ANTLRv4Lexer';
 
-import { DiagnosticEntry, DiagnosticType } from './index';
+import { SymbolKind, SymbolInfo, DiagnosticEntry, DiagnosticType } from './index';
 
 import { ContextErrorListener } from './ContextErrorListener';
-import { SymbolKind, SymbolTable, SymbolInfo } from './SymbolTable';
+import { SymbolTable } from './SymbolTable';
 import { DetailsListener } from './DetailsListener';
 import { SemanticListener } from './SemanticListener';
 
@@ -65,16 +65,20 @@ export class SourceContext {
         let inputStream = new ANTLRInputStream(source);
         let lexer = new ANTLRv4Lexer(inputStream);
         lexer.removeErrorListeners();
-        lexer.addErrorListener(new ContextErrorListener(this.diagnostics));
+        lexer.addErrorListener(this.errorListener);
         let tokenStream = new CommonTokenStream(lexer);
 
         let parser = new ANTLRv4Parser(tokenStream);
         parser.removeErrorListeners();
-        parser.addErrorListener(new ContextErrorListener(this.diagnostics));
+        parser.addErrorListener(this.errorListener);
         parser.setErrorHandler(new BailErrorStrategy());
         parser.getInterpreter().setPredictionMode(PredictionMode.SLL);
 
         this.tree = null;
+        this.semanticChecksDone = false;
+        this.diagnostics.length = 0;
+        this.imports.length = 0;
+        this.symbolTable.clear();
         try {
             this.tree = parser.grammarSpec();
         } catch (e) {
@@ -97,8 +101,11 @@ export class SourceContext {
     }
 
     public getDiagnostics(): DiagnosticEntry[] {
-        let semanticListener = new SemanticListener(this.diagnostics, this.symbolTable);
-        ParseTreeWalker.DEFAULT.walk(semanticListener, this.tree);
+        if (!this.semanticChecksDone) {
+            this.semanticChecksDone = true;
+            let semanticListener = new SemanticListener(this.diagnostics, this.symbolTable);
+            ParseTreeWalker.DEFAULT.walk(semanticListener, this.tree);
+        }
 
         return this.diagnostics;
     }
@@ -113,8 +120,11 @@ export class SourceContext {
 
     private tree: ParserRuleContext; // The root context for the last parse run.
     private imports: string[] = []; // Updated on each parse run.
-    private errorListener: ContextErrorListener;
+
     private diagnostics: DiagnosticEntry[] = [];
+    private semanticChecksDone: boolean = false;
+
+    private errorListener: ContextErrorListener = new ContextErrorListener(this.diagnostics);
 };
 
 /**

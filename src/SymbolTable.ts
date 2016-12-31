@@ -10,49 +10,9 @@
 import { ParserRuleContext, CharStream } from 'antlr4ts';
 import { Interval } from 'antlr4ts/misc';
 
+import { SymbolKind, SymbolScope, SymbolGroupKind, SymbolInfo, Definition } from './index';
 import { SourceContext } from './SourceContext';
 import { ANTLRv4Parser, ModeSpecContext, GrammarSpecContext } from '../parser/ANTLRv4Parser';
-
-export enum SymbolScope {
-    LocalOnly,
-    DependencyOnly,
-    Full
-}
-
-export enum SymbolGroupKind { // Multiple symbol kinds can be involved in a symbol lookup.
-    TokenRef,
-    RuleRef,
-    LexerMode,
-    TokenChannel,
-};
-
-export enum SymbolKind {
-    TokenVocab,
-    Import,
-    BuiltInLexerToken,
-    VirtualLexerToken,
-    FragmentLexerToken,
-    LexerToken,
-    BuiltInMode,
-    LexerMode,
-    BuiltInChannel,
-    TokenChannel,
-    ParserRule
-};
-
-// The definition of a single symbol.
-export class Definition {
-    text: string;
-    start: { column: number, row: number };
-    end: { column: number, row: number };
-};
-
-export class SymbolInfo {
-    kind: SymbolKind;
-    name: string;
-    source: string;
-    definition: Definition;
-};
 
 type SymbolStore = Map<SymbolKind, Map<string, ParserRuleContext>>;
 
