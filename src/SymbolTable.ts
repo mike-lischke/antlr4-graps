@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016 Mike Lischke
+ * Copyright (c) 2016, 2017 Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -10,7 +10,7 @@
 import { ParserRuleContext, CharStream } from 'antlr4ts';
 import { Interval } from 'antlr4ts/misc';
 
-import { SymbolKind, SymbolScope, SymbolGroupKind, SymbolInfo, Definition } from './index';
+import { SymbolKind, SymbolScope, SymbolGroupKind, SymbolInfo, Definition } from '../index';
 import { SourceContext } from './SourceContext';
 import { ANTLRv4Parser, ModeSpecContext, GrammarSpecContext } from '../parser/ANTLRv4Parser';
 

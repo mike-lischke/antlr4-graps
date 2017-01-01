@@ -72,7 +72,7 @@ class ContextEntry {
     dependencies: string[] = [];
 };
 
-import { SourceContext } from './SourceContext'; // Import *after* the type declarations, especially the enums or static init fails.
+import { SourceContext } from './src/SourceContext'; // Import *after* the type declarations, especially the enums or static init fails.
 
 export class AntlrLanguageSupport {
     // Mapping file names to SourceContext instances.

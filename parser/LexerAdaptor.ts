@@ -1,3 +1,9 @@
+/*
+ * This file is released under the MIT license.
+ * Copyright (c) 2016, 2017 Mike Lischke
+ *
+ * See LICENSE file for more info.
+ */
 
 import { Lexer } from 'antlr4ts';
 import { CharStream } from 'antlr4ts';

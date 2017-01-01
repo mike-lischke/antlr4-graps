@@ -1,13 +1,13 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016 Mike Lischke
+ * Copyright (c) 2016, 2017 Mike Lischke
  *
  * See LICENSE file for more info.
  */
 
 "use strict";
 
-import { SymbolGroupKind, SymbolScope, SymbolKind, DiagnosticEntry, DiagnosticType } from './index';
+import { SymbolGroupKind, SymbolScope, SymbolKind, DiagnosticEntry, DiagnosticType } from '../index';
 import { SymbolTable } from './SymbolTable';
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import {

@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"declaration": true,
 		"compileOnSave": true,
         "module": "commonjs",
         "target": "es6",
@@ -13,7 +14,7 @@
 		"experimentalDecorators": true
 	},
 	"include": [
-		"src/**/*", "parser/**/*", "test/**/*"
+		"src/**/*.ts", "parser/**/*.ts", "test/**/*.ts"
 	],
 	"exclude": [
 		"node_modules",

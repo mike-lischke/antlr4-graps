@@ -1,12 +1,10 @@
 {
   "name": "antlr4-graps",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "ANTLR grammar parsing services",
-  "main": "src/index.ts",
-  "directories": {
-    "test": "test"
-  },
+  "main": "out/index.js",
   "scripts": {
+    "postinstall": "tsc",
     "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register"
   },
   "repository": {

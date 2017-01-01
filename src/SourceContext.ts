@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016 Mike Lischke
+ * Copyright (c) 2016, 2017 Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -18,7 +18,7 @@ import { ParseTreeWalker, TerminalNode, ParseTree } from 'antlr4ts/tree';
 import { ANTLRv4Parser } from '../parser/ANTLRv4Parser';
 import { ANTLRv4Lexer } from '../parser/ANTLRv4Lexer';
 
-import { SymbolKind, SymbolInfo, DiagnosticEntry, DiagnosticType } from './index';
+import { SymbolKind, SymbolInfo, DiagnosticEntry, DiagnosticType } from '../index';
 
 import { ContextErrorListener } from './ContextErrorListener';
 import { SymbolTable } from './SymbolTable';

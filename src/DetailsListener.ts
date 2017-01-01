@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016 Mike Lischke
+ * Copyright (c) 2016, 2017 Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -13,7 +13,7 @@ import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import { LexerRuleSpecContext, ParserRuleSpecContext, TokensSpecContext, ChannelsSpecContext,
     ModeSpecContext, DelegateGrammarContext, OptionContext } from '../parser/ANTLRv4Parser';
 
-import { SymbolKind } from './index';
+import { SymbolKind } from '../index';
 import { SymbolTable, definitionForContext } from './SymbolTable';
 
 export class DetailsListener implements ANTLRv4ParserListener {
