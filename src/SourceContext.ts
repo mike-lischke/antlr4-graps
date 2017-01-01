@@ -41,7 +41,7 @@ export class SourceContext {
         // We only want to show info for symbols in specific contexts.
         let parent = (terminal.parent as ParserRuleContext);
         if (parent.getRuleIndex() == ANTLRv4Parser.RULE_identifier) {
-            parent = (terminal.parent as ParserRuleContext);
+            parent = (parent.parent as ParserRuleContext);
         }
 
         switch (parent.getRuleIndex()) {

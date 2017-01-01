@@ -17,8 +17,6 @@ import { SymbolKind } from '../index';
 import { SymbolTable, definitionForContext } from './SymbolTable';
 
 export class DetailsListener implements ANTLRv4ParserListener {
-    public tokenVocab: string;
-
     constructor(private symbolTable: SymbolTable, private imports: string[]) {}
 
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
@@ -74,8 +72,9 @@ export class DetailsListener implements ANTLRv4ParserListener {
     exitOption(ctx: OptionContext) {
         let option = ctx.identifier().getText();
         if (option.toLocaleLowerCase() == "tokenvocab") {
-            this.tokenVocab = ctx.optionValue().getText();
-            this.symbolTable.addSymbol(SymbolKind.TokenVocab, this.tokenVocab, ctx);
+            let name = ctx.optionValue().getText();
+            this.imports.push(name);
+            this.symbolTable.addSymbol(SymbolKind.TokenVocab, name, ctx);
         }
     }
 

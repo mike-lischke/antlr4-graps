@@ -76,7 +76,7 @@ import { SourceContext } from './src/SourceContext'; // Import *after* the type 
 
 export class AntlrLanguageSupport {
     // Mapping file names to SourceContext instances.
-    private _sourceContexts: Map<string, ContextEntry> = new Map<string, ContextEntry>();
+    private sourceContexts: Map<string, ContextEntry> = new Map<string, ContextEntry>();
 
     constructor() {
     }
@@ -106,7 +106,7 @@ export class AntlrLanguageSupport {
     }
 
     private parseGrammar(contextEntry: ContextEntry, file: string, source: string) {
-        var oldDependencies = contextEntry.dependencies;
+        var oldDependencies = contextEntry.dependencies.slice();
         contextEntry.dependencies.length = 0;
         var newDependencies = contextEntry.context.parse(source);
 
@@ -124,7 +124,7 @@ export class AntlrLanguageSupport {
     }
 
     private getContext(file: string, source?: string | undefined): SourceContext {
-        var contextEntry = this._sourceContexts.get(file);
+        var contextEntry = this.sourceContexts.get(file);
         if (!contextEntry) {
             return this.loadGrammar(file, source);
         }
@@ -132,7 +132,7 @@ export class AntlrLanguageSupport {
     }
 
     public reparse(file: string, source: string) {
-        var contextEntry = this._sourceContexts.get(file);
+        var contextEntry = this.sourceContexts.get(file);
         if (!contextEntry) // Not yet loaded?
             this.loadGrammar(file, source);
         else
@@ -140,7 +140,7 @@ export class AntlrLanguageSupport {
     }
 
     public loadGrammar(file: string, source?: string | undefined): SourceContext {
-        var contextEntry: ContextEntry = this._sourceContexts.get(file);
+        var contextEntry: ContextEntry = this.sourceContexts.get(file);
         if (!contextEntry) {
             if (!source) {
                 try {
@@ -153,7 +153,7 @@ export class AntlrLanguageSupport {
 
             var context = new SourceContext(path.basename(file));
             contextEntry = { context: context, refCount: 0, dependencies: [] };
-            this._sourceContexts.set(file, contextEntry);
+            this.sourceContexts.set(file, contextEntry);
 
             // Do an initial parse run and load all dependencies of this context
             // and pass their references to this context.
@@ -164,11 +164,11 @@ export class AntlrLanguageSupport {
     }
 
     public releaseGrammar(file: string) {
-        var contextEntry = this._sourceContexts.get(file);
+        var contextEntry = this.sourceContexts.get(file);
         if (contextEntry != undefined) {
             contextEntry.refCount--;
             if (contextEntry.refCount == 0) {
-                this._sourceContexts.delete(file);
+                this.sourceContexts.delete(file);
 
                 // Release also all dependencies.
                 for (let dep of contextEntry.dependencies)
@@ -177,7 +177,7 @@ export class AntlrLanguageSupport {
         }
     }
 
-    public infoForSymbol(file: string, column: number, row: number): SymbolInfo {
+    public infoForSymbol(file: string, column: number, row: number): SymbolInfo | undefined {
         var context = this.getContext(file);
         return context.infoForSymbolAtPosition(column, row);
     };
@@ -187,7 +187,7 @@ export class AntlrLanguageSupport {
         return context.listSymbols(fullList);
     };
 
-    public getDiagnostics(file: string) {
+    public getDiagnostics(file: string): DiagnosticEntry[] {
         var context = this.getContext(file);
         return context.getDiagnostics();
     };
