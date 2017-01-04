@@ -21,16 +21,23 @@ export class SymbolTable {
 
     constructor(private owner: SourceContext) { };
 
-    clear() {
-        this.dependencies = [];
+    public clear() {
+        this.dependencies.clear();
         this.localSymbols.clear();
+        this.symbolReferences.clear();
     }
 
-    addDependency(context: SymbolTable) {
-        this.dependencies.push(context);
+    public addDependency(context: SymbolTable) {
+        this.dependencies.set(context, 0);
     }
 
-    addSymbol(kind: SymbolKind, name: string, ctx: ParserRuleContext) {
+    public removeDependency(context: SymbolTable) {
+        if (this.dependencies.has(context)) {
+            this.dependencies.delete(context);
+        }
+    }
+
+    public addSymbol(kind: SymbolKind, name: string, ctx: ParserRuleContext) {
         let symbolsForKind = this.localSymbols.get(kind);
         if (!symbolsForKind) {
             symbolsForKind = new Map();
@@ -39,26 +46,27 @@ export class SymbolTable {
         symbolsForKind.set(name, ctx);
     }
 
-    symbolExists(symbol: string, kind: SymbolKind, scope: SymbolScope): boolean {
+    public symbolExists(symbol: string, kind: SymbolKind, scope: SymbolScope): boolean {
         // Single kind lookup.
-        if (SymbolTable.globalSymbols.has(<SymbolKind>kind) && SymbolTable.globalSymbols.get(<SymbolKind>kind).has(symbol))
+        if (SymbolTable.globalSymbols.has(kind) && SymbolTable.globalSymbols.get(kind).has(symbol))
             return true;
 
         if (scope == SymbolScope.LocalOnly || scope == SymbolScope.Full) {
-            if (this.localSymbols.has(<SymbolKind>kind) && this.localSymbols.get(<SymbolKind>kind).has(symbol))
+            if (this.localSymbols.has(kind) && this.localSymbols.get(kind).has(symbol))
                 return true;
         }
 
         if (scope == SymbolScope.DependencyOnly || scope == SymbolScope.Full) {
-            for (let dep of this.dependencies) {
-                if (dep.localSymbols.has(<SymbolKind>kind) && dep.localSymbols.get(<SymbolKind>kind).has(symbol))
+            for (let pair of this.dependencies) {
+                if (pair[0].localSymbols.has(kind) && pair[0].localSymbols.get(kind).has(symbol)) {
                     return true;
+                }
             }
         }
         return false;
     }
 
-    symbolExistsInGroup(symbol: string, kind: SymbolGroupKind, scope: SymbolScope): boolean {
+    public symbolExistsInGroup(symbol: string, kind: SymbolGroupKind, scope: SymbolScope): boolean {
         // Group of lookups.
         switch (kind) {
             case SymbolGroupKind.TokenRef:
@@ -94,7 +102,7 @@ export class SymbolTable {
         return false;
     }
 
-    contextForSymbol(symbol: string, kind: SymbolKind, scope: SymbolScope): ParserRuleContext | undefined {
+    public contextForSymbol(symbol: string, kind: SymbolKind, scope: SymbolScope): ParserRuleContext | undefined {
         if (!SymbolTable.globalSymbols.has(kind) || !SymbolTable.globalSymbols.get(kind).has(symbol))
             return undefined; // No context available for global symbols.
 
@@ -105,17 +113,17 @@ export class SymbolTable {
         }
 
         if (scope == SymbolScope.DependencyOnly || scope == SymbolScope.Full) {
-            for (let dep of this.dependencies) {
-                let entry = dep.localSymbols.get(kind);
+            this.dependencies.forEach((value: number, key: SymbolTable) => {
+                let entry = key.localSymbols.get(kind);
                 if (entry && entry.has(symbol))
                     return entry.get(symbol);
-            }
+            });
         }
 
         return undefined;
     }
 
-    getSymbolInfo(symbol: string): SymbolInfo | undefined {
+    public getSymbolInfo(symbol: string): SymbolInfo | undefined {
         for (let pair of SymbolTable.globalSymbols)
             if (pair[1].has(symbol))
                 return {
@@ -132,16 +140,16 @@ export class SymbolTable {
                 // Special handling for imports.
                 if (pair[0] == SymbolKind.TokenVocab || pair[0] == SymbolKind.Import) {
                     // Get the source id from a dependent module.
-                    for (let dep of this.dependencies) {
-                        if (dep.owner.sourceId.includes(symbol)) {
+                    this.dependencies.forEach((value: number, key: SymbolTable) => {
+                        if (key.owner.sourceId.includes(symbol)) {
                             return { // TODO: implement a best match search.
                                 kind: pair[0],
                                 name: symbol,
-                                source: dep.owner.sourceId,
-                                definition: definitionForContext(dep.tree, true)
+                                source: key.owner.sourceId,
+                                definition: definitionForContext(key.tree, true)
                             };
                         }
-                    }
+                    });
                 }
 
                 return {
@@ -154,8 +162,8 @@ export class SymbolTable {
         }
 
         // Nothing in our table, so try the dependencies in order of appearance (effectively implementing rule overrides this way).
-        for (let dep of this.dependencies) {
-            let result: SymbolInfo = dep.getSymbolInfo(symbol);
+        for (let pair of this.dependencies) {
+            let result: SymbolInfo = pair[0].getSymbolInfo(symbol);
             if (result)
                 return result;
         }
@@ -167,9 +175,11 @@ export class SymbolTable {
         var result: SymbolInfo[] = [];
 
         // First enumerate entries for all our local symbols.
-        for (let kind of [SymbolKind.TokenVocab, SymbolKind.Import, SymbolKind.BuiltInLexerToken, SymbolKind.VirtualLexerToken,
-        SymbolKind.FragmentLexerToken, SymbolKind.LexerToken, SymbolKind.BuiltInMode, SymbolKind.LexerMode, SymbolKind.BuiltInChannel,
-        SymbolKind.TokenChannel, SymbolKind.ParserRule]) {
+        for (let kind of [
+            SymbolKind.TokenVocab, SymbolKind.Import, SymbolKind.BuiltInLexerToken, SymbolKind.VirtualLexerToken,
+            SymbolKind.FragmentLexerToken, SymbolKind.LexerToken, SymbolKind.BuiltInMode, SymbolKind.LexerMode,
+            SymbolKind.BuiltInChannel, SymbolKind.TokenChannel, SymbolKind.ParserRule
+        ]) {
             if (this.localSymbols.has(kind)) {
                 for (let pair of this.localSymbols.get(kind)) {
                     result.push({ kind: kind, name: pair[0], source: this.owner.sourceId, definition: definitionForContext(pair[1], true) });
@@ -179,16 +189,34 @@ export class SymbolTable {
 
         // If told so do the same for all our dependencies.
         if (includeDependencies) {
-            for (let dep of this.dependencies) {
-                let depSymbols = dep.listSymbols(includeDependencies);
-                result = result.concat(depSymbols);
-            }
+            this.dependencies.forEach((value: number, key: SymbolTable) => {
+                let depSymbols = key.listSymbols(includeDependencies);
+                result.push(...depSymbols);
+            });
         }
         return result;
     }
 
-    private dependencies: SymbolTable[] = [];
+    public getReferenceCount(symbol: string): number {
+        if (this.symbolReferences.has(symbol)) {
+            return this.symbolReferences.get(symbol);
+        } else {
+            return 0;
+        }
+    }
+
+    public countReference(symbol: string) {
+        let reference = this.symbolReferences.get(symbol);
+        if (reference) {
+            this.symbolReferences.set(symbol, reference + 1);
+        } else {
+            this.symbolReferences.set(symbol, 1);
+        }
+    }
+
+    private dependencies: Map<SymbolTable, number> = new Map(); // Used like a set.
     private localSymbols: SymbolStore = new Map();
+    private symbolReferences: Map<string, number> = new Map();
 
     private static globalSymbols: SymbolStore = new Map([
         [SymbolKind.BuiltInChannel, new Map([['DEFAULT_TOKEN_CHANNEL', null], ["HIDDEN", null]])],
@@ -197,6 +225,9 @@ export class SymbolTable {
     ]);
 };
 
+/**
+ * Returns the definition info for the given rule context. Exported as required by listeners.
+ */
 export function definitionForContext(ctx: ParserRuleContext, keepQuotes: boolean): Definition | undefined {
     if (!ctx)
         return undefined;

@@ -23,10 +23,11 @@ export class SemanticListener implements ANTLRv4ParserListener {
 
     exitTerminalRule(ctx: TerminalRuleContext) {
         let tokenRef: TerminalNode;
-        try { tokenRef = ctx.TOKEN_REF() } catch (e) {} // Temporary workaround for incomplete antlr4ts implementation.
+        try { tokenRef = ctx.TOKEN_REF() } catch (e) { } // Temporary workaround for incomplete antlr4ts implementation.
         if (tokenRef) {
             let symbol = tokenRef.getText();
             this.checkSymbolExistance(true, SymbolGroupKind.TokenRef, symbol, "Unknown token reference", tokenRef.getSymbol());
+            this.symbolTable.countReference(symbol);
         }
     }
 
@@ -34,38 +35,42 @@ export class SemanticListener implements ANTLRv4ParserListener {
         let ruleRef = ctx.RULE_REF()
         let symbol = ruleRef.getText();
         this.checkSymbolExistance(true, SymbolGroupKind.RuleRef, symbol, "Unknown parser rule", ruleRef.getSymbol());
-
+        this.symbolTable.countReference(symbol);
     }
 
     exitSetElement(ctx: SetElementContext) {
         let tokenRef: TerminalNode;
-        try { tokenRef = ctx.TOKEN_REF() } catch (e) {}
+        try { tokenRef = ctx.TOKEN_REF() } catch (e) { }
         if (tokenRef) {
             let symbol = tokenRef.getText();
             this.checkSymbolExistance(true, SymbolGroupKind.TokenRef, symbol, "Unknown token reference", tokenRef.getSymbol());
+            this.symbolTable.countReference(symbol);
         }
     }
 
     exitLexerCommand(ctx: LexerCommandContext) {
-        if (ctx.lexerCommandExpr() && ctx.lexerCommandExpr().identifier()) {
-            let name = ctx.lexerCommandName().getText();
-            let kind = SymbolGroupKind.TokenRef;
+        try {
+            if (ctx.lexerCommandExpr() && ctx.lexerCommandExpr().identifier()) {
+                let name = ctx.lexerCommandName().getText();
+                let kind = SymbolGroupKind.TokenRef;
 
-            let value = name.toLowerCase();
-            if (value == "pushmode" || value == "mode") {
-                name = "mode";
-                kind = SymbolGroupKind.LexerMode;
-            } else if (value == "channel") {
-                kind = SymbolGroupKind.TokenChannel;
+                let value = name.toLowerCase();
+                if (value == "pushmode" || value == "mode") {
+                    name = "mode";
+                    kind = SymbolGroupKind.LexerMode;
+                } else if (value == "channel") {
+                    kind = SymbolGroupKind.TokenChannel;
+                }
+                let symbol = ctx.lexerCommandExpr().identifier().getText();
+                this.checkSymbolExistance(true, kind, symbol, "Unknown " + name, ctx.lexerCommandExpr().identifier().start);
+                this.symbolTable.countReference(symbol);
             }
-            let symbol = ctx.lexerCommandExpr().identifier().getText();
-            this.checkSymbolExistance(true, kind, symbol, "Unknown " + name, ctx.lexerCommandExpr().identifier().start);
-        }
+        } catch (e) { }
     }
 
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
         let tokenRef: TerminalNode;
-        try { tokenRef = ctx.TOKEN_REF() } catch (e) {}
+        try { tokenRef = ctx.TOKEN_REF() } catch (e) { }
         if (tokenRef) {
             let symbol = tokenRef.getText();
             if (this.seenSymbols.has(symbol)) {
@@ -104,7 +109,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
         }
     }
 
-    reportDuplicateSymbol(symbol: string, offendingToken: Token, previousToken: Token) {
+    protected reportDuplicateSymbol(symbol: string, offendingToken: Token, previousToken: Token) {
         let entry: DiagnosticEntry = {
             type: DiagnosticType.Error,
             message: "Duplicate symbol '" + symbol + "'",

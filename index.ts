@@ -106,9 +106,9 @@ export class AntlrLanguageSupport {
     }
 
     private parseGrammar(contextEntry: ContextEntry, file: string, source: string) {
-        var oldDependencies = contextEntry.dependencies.slice();
+        let oldDependencies = contextEntry.dependencies.slice();
         contextEntry.dependencies.length = 0;
-        var newDependencies = contextEntry.context.parse(source);
+        let newDependencies = contextEntry.context.parse(source);
 
         for (let dep of newDependencies) {
             let depContext = this.loadDependency(contextEntry, file, dep);
@@ -124,7 +124,7 @@ export class AntlrLanguageSupport {
     }
 
     private getContext(file: string, source?: string | undefined): SourceContext {
-        var contextEntry = this.sourceContexts.get(file);
+        let contextEntry = this.sourceContexts.get(file);
         if (!contextEntry) {
             return this.loadGrammar(file, source);
         }
@@ -163,18 +163,28 @@ export class AntlrLanguageSupport {
         return contextEntry.context;
     }
 
-    public releaseGrammar(file: string) {
+    private internalReleaseGrammar(file: string, referencing?: ContextEntry) {
         var contextEntry = this.sourceContexts.get(file);
-        if (contextEntry != undefined) {
+        if (contextEntry) {
+            if (referencing) {
+                // If a referencing context is given remove this one from the reference's dependencies list,
+                // which in turn will remove the referencing context from the dependency's referencing list.
+                referencing.context.removeDependency(contextEntry.context);
+            }
+
             contextEntry.refCount--;
             if (contextEntry.refCount == 0) {
                 this.sourceContexts.delete(file);
 
                 // Release also all dependencies.
                 for (let dep of contextEntry.dependencies)
-                    this.releaseGrammar(dep);
+                    this.internalReleaseGrammar(dep, contextEntry);
             }
         }
+    }
+
+    public releaseGrammar(file: string) {
+        this.internalReleaseGrammar(file);
     }
 
     public infoForSymbol(file: string, column: number, row: number): SymbolInfo | undefined {
@@ -192,4 +202,15 @@ export class AntlrLanguageSupport {
         return context.getDiagnostics();
     };
 
+    /**
+     * Count how many times a symbol has been referenced. The given file must contain the definition of this symbol.
+     */
+    public countReferences(file: string, symbol: string): number {
+        var context = this.getContext(file);
+        var result: number = 0;
+        for (let reference of context.references) {
+            result += reference.getReferenceCount(symbol);
+        }
+        return result;
+    }
 }

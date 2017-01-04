@@ -28,6 +28,7 @@ import { SemanticListener } from './SemanticListener';
 // One source context per file. Source contexts can reference each other (e.g. for symbol lookups).
 export class SourceContext {
     public symbolTable: SymbolTable = new SymbolTable(this);
+    public references: SourceContext[] = []; // Contexts referencing us.
 
     constructor(public sourceId: string) {
     }
@@ -111,18 +112,46 @@ export class SourceContext {
     }
 
     public addDependency(context: SourceContext) {
+        // Check for mutual inclusion. Since dependencies are organized like a mesh
+        // we use a work pipeline to check all relevant referencing contexts.
+        var pipeline: SourceContext[] = [context];
+        while (pipeline.length > 0) {
+            let current = pipeline.shift();
+            if (current.references.indexOf(this) > -1) {
+                return; // Already in the list.
+                // TODO: add diagnostic entry for this case.
+            }
+
+            pipeline.push(...current.references);
+        }
+        context.references.push(this);
         this.symbolTable.addDependency(context.symbolTable);
+    }
+
+    /**
+     * Remove the given context from our list of dependencies.
+     */
+    public removeDependency(context: SourceContext) {
+        let index = context.references.indexOf(this);
+        if (index > -1) {
+            context.references.splice(index, 1);
+        }
+        this.symbolTable.removeDependency(context.symbolTable);
+    }
+
+    public getReferenceCount(symbol: string): number {
+        return this.symbolTable.getReferenceCount(symbol);
     }
 
     protected getSymbolInfo(symbol: string): SymbolInfo | undefined {
         return this.symbolTable.getSymbolInfo(symbol);
     }
 
-    private tree: ParserRuleContext; // The root context for the last parse run.
+    private tree: ParserRuleContext; // The root context from the last parse run.
     private imports: string[] = []; // Updated on each parse run.
 
     private diagnostics: DiagnosticEntry[] = [];
-    private semanticChecksDone: boolean = false;
+    private semanticChecksDone: boolean = false; // Includes determining reference counts.
 
     private errorListener: ContextErrorListener = new ContextErrorListener(this.diagnostics);
 };

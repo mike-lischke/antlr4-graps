@@ -16,8 +16,8 @@ var backend: AntlrLanguageSupport;
 
 describe('antlr4-graps', function () {
 
-  describe('Create backend', function () {
-    it("", function () {
+  describe('Base Handling', function () {
+    it("Create Backend", function () {
       backend = new AntlrLanguageSupport();
       expect(backend).to.be.a("object");
 
@@ -28,18 +28,14 @@ describe('antlr4-graps', function () {
       expect(backend).to.have.property("listSymbols");
       expect(backend).to.have.property("getDiagnostics");
     });
-  });
 
-  var c1: SourceContext;
-  describe('loadGrammar()', function () {
-    it('', function () {
+    var c1: SourceContext;
+    it('Load Grammar', function () {
       c1 = backend.loadGrammar("test/t.g4");
       expect(c1).to.be.an.instanceOf(SourceContext);
     });
-  });
 
-  describe('unloadGrammar()', function () {
-    it("", function () {
+    it("Unload grammar", function () {
       backend.releaseGrammar("test/t.g4");
       var context = backend.loadGrammar("test/t.g"); // Non-existing grammar.
       expect(context).to.be.an.instanceOf(SourceContext);
@@ -53,8 +49,8 @@ describe('antlr4-graps', function () {
     });
   });
 
-  describe('infoForSymbol()', function () {
-    it('', function () {
+  describe('Symbol Info Retrieval (t.g4)', function () {
+    it('infoForSymbol', function () {
       var info = backend.infoForSymbol("test/t.g4", 7, 2);
       expect(info.name).to.equal("B");
       expect(info.source).to.equal("t.g4");
@@ -65,10 +61,8 @@ describe('antlr4-graps', function () {
       expect(info.definition.end.column).to.equal(6);
       expect(info.definition.end.row).to.equal(7);
     });
-  });
 
-  describe('listSymbols()', function () {
-    it('', function () {
+    it('listSymbols', function () {
       let symbols = backend.listSymbols("test/t.g4", true);
       expect(symbols.length).to.equal(6);
 
@@ -82,10 +76,8 @@ describe('antlr4-graps', function () {
       expect(info.definition.end.column).to.equal(12);
       expect(info.definition.end.row).to.equal(2);
     });
-  });
 
-  describe('getDiagnostics()', function () {
-    it('', function () {
+    it('getDiagnostics', function () {
       let diagnostics = backend.getDiagnostics("test/t.g4");
       expect(diagnostics.length).to.equal(2);
 
@@ -100,10 +92,8 @@ describe('antlr4-graps', function () {
       expect(diagnostics[1].row).to.equal(8);
 
     });
-  });
 
-  describe('reparse()', function () {
-    it('', function () {
+    it('reparse', function () {
       backend.reparse("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
       let diagnostics = backend.getDiagnostics("test/t.g4");
 
@@ -133,6 +123,31 @@ describe('antlr4-graps', function () {
       expect(diagnostics[1].length).to.equal(1);
       expect(diagnostics[1].column).to.equal(8);
       expect(diagnostics[1].row).to.equal(2);
+    });
+  });
+
+  describe('Symbol Info Retrieval (TParser.g4)', function () {
+    it('Symbol Listing', function () {
+      backend.loadGrammar("test/TParser.g4");
+      let symbols = backend.listSymbols("test/TParser.g4", true);
+      expect(symbols.length).to.equal(51);
+
+      let info = symbols[48];
+      expect(info.name).to.equal("Mode2");
+      expect(info.source).to.equal("TLexer.g4");
+      expect(info.kind).to.equal(SymbolKind.LexerMode);
+      expect(info.definition.text).to.equal("mode Mode2;");
+      expect(info.definition.start.column).to.equal(0);
+      expect(info.definition.start.row).to.equal(85);
+      expect(info.definition.end.column).to.equal(10);
+      expect(info.definition.end.row).to.equal(85);
+    });
+
+    it('Diagnostics', function () {
+      backend.getDiagnostics("test/TParser.g4"); // This also updates the symbol reference counts.
+      let refCount = backend.countReferences("test/TLexer.g4", "Semicolon");
+      expect(refCount).to.equal(4);
+      backend.releaseGrammar("test/TParser.g4");
     });
   });
 
