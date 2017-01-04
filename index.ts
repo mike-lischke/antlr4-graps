@@ -48,7 +48,7 @@ export class SymbolInfo {
     kind: SymbolKind;
     name: string;
     source: string;
-    definition: Definition;
+    definition: Definition | undefined;
 };
 
 export enum DiagnosticType {
@@ -140,7 +140,7 @@ export class AntlrLanguageSupport {
     }
 
     public loadGrammar(file: string, source?: string | undefined): SourceContext {
-        var contextEntry: ContextEntry = this.sourceContexts.get(file);
+        var contextEntry = this.sourceContexts.get(file);
         if (!contextEntry) {
             if (!source) {
                 try {

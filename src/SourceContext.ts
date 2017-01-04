@@ -34,9 +34,9 @@ export class SourceContext {
     }
 
     public infoForSymbolAtPosition(column: number, row: number): SymbolInfo | undefined {
-        let terminal = terminalFromPosition(this.tree, column, row);
+        let terminal = terminalFromPosition(this.tree!, column, row);
         if (!terminal) {
-            return null;
+            return undefined;
         }
 
         // We only want to show info for symbols in specific contexts.
@@ -75,7 +75,7 @@ export class SourceContext {
         parser.setErrorHandler(new BailErrorStrategy());
         parser.getInterpreter().setPredictionMode(PredictionMode.SLL);
 
-        this.tree = null;
+        this.tree = undefined;
         this.semanticChecksDone = false;
         this.diagnostics.length = 0;
         this.imports.length = 0;
@@ -105,7 +105,7 @@ export class SourceContext {
         if (!this.semanticChecksDone) {
             this.semanticChecksDone = true;
             let semanticListener = new SemanticListener(this.diagnostics, this.symbolTable);
-            ParseTreeWalker.DEFAULT.walk(semanticListener, this.tree);
+            ParseTreeWalker.DEFAULT.walk(semanticListener, this.tree!);
         }
 
         return this.diagnostics;
@@ -117,6 +117,10 @@ export class SourceContext {
         var pipeline: SourceContext[] = [context];
         while (pipeline.length > 0) {
             let current = pipeline.shift();
+            if (!current) {
+                continue;
+            }
+
             if (current.references.indexOf(this) > -1) {
                 return; // Already in the list.
                 // TODO: add diagnostic entry for this case.
@@ -147,7 +151,7 @@ export class SourceContext {
         return this.symbolTable.getSymbolInfo(symbol);
     }
 
-    private tree: ParserRuleContext; // The root context from the last parse run.
+    private tree: ParserRuleContext | undefined; // The root context from the last parse run.
     private imports: string[] = []; // Updated on each parse run.
 
     private diagnostics: DiagnosticEntry[] = [];

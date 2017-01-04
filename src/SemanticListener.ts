@@ -22,7 +22,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
     constructor(private diagnostics: DiagnosticEntry[], private symbolTable: SymbolTable) { }
 
     exitTerminalRule(ctx: TerminalRuleContext) {
-        let tokenRef: TerminalNode;
+        let tokenRef;
         try { tokenRef = ctx.TOKEN_REF() } catch (e) { } // Temporary workaround for incomplete antlr4ts implementation.
         if (tokenRef) {
             let symbol = tokenRef.getText();
@@ -39,7 +39,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
     }
 
     exitSetElement(ctx: SetElementContext) {
-        let tokenRef: TerminalNode;
+        let tokenRef;
         try { tokenRef = ctx.TOKEN_REF() } catch (e) { }
         if (tokenRef) {
             let symbol = tokenRef.getText();
@@ -69,15 +69,15 @@ export class SemanticListener implements ANTLRv4ParserListener {
     }
 
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
-        let tokenRef: TerminalNode;
+        let tokenRef;
         try { tokenRef = ctx.TOKEN_REF() } catch (e) { }
         if (tokenRef) {
             let symbol = tokenRef.getText();
             if (this.seenSymbols.has(symbol)) {
-                this.reportDuplicateSymbol(symbol, tokenRef.getSymbol(), this.seenSymbols.get(symbol));
+                this.reportDuplicateSymbol(symbol, tokenRef.getSymbol(), this.seenSymbols.get(symbol)!);
             } else if (this.symbolTable.symbolExists(symbol, SymbolKind.LexerToken, SymbolScope.DependencyOnly)) {
                 let symbolContext = this.symbolTable.contextForSymbol(symbol, SymbolKind.LexerToken, SymbolScope.DependencyOnly);
-                this.reportDuplicateSymbol(symbol, tokenRef.getSymbol(), symbolContext.start);
+                this.reportDuplicateSymbol(symbol, tokenRef.getSymbol(), symbolContext!.start);
             } else {
                 this.seenSymbols.set(symbol, tokenRef.getSymbol());
             }
@@ -87,10 +87,10 @@ export class SemanticListener implements ANTLRv4ParserListener {
     exitParserRuleSpec(ctx: ParserRuleSpecContext) {
         let symbol = ctx.RULE_REF().getText();
         if (this.seenSymbols.has(symbol)) {
-            this.reportDuplicateSymbol(symbol, ctx.RULE_REF().getSymbol(), this.seenSymbols.get(symbol));
+            this.reportDuplicateSymbol(symbol, ctx.RULE_REF().getSymbol(), this.seenSymbols.get(symbol)!);
         } else if (this.symbolTable.symbolExists(symbol, SymbolKind.ParserRule, SymbolScope.DependencyOnly)) {
             let symbolContext = this.symbolTable.contextForSymbol(symbol, SymbolKind.ParserRule, SymbolScope.DependencyOnly);
-            this.reportDuplicateSymbol(symbol, ctx.RULE_REF().getSymbol(), symbolContext.start);
+            this.reportDuplicateSymbol(symbol, ctx.RULE_REF().getSymbol(), symbolContext!.start);
         } else {
             this.seenSymbols.set(symbol, ctx.RULE_REF().getSymbol());
         }

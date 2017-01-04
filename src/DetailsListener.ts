@@ -20,11 +20,11 @@ export class DetailsListener implements ANTLRv4ParserListener {
     constructor(private symbolTable: SymbolTable, private imports: string[]) {}
 
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
-        let tokenRef: TerminalNode;
+        let tokenRef;
         try { tokenRef = ctx.TOKEN_REF() } catch (e) {}
         if (tokenRef) {
             let symbol: string = tokenRef.getText();
-            let fragment: TerminalNode;
+            let fragment;
             try { fragment = ctx.FRAGMENT() } catch (e) {}
             if (fragment) {
                 this.symbolTable.addSymbol(SymbolKind.FragmentLexerToken, symbol, ctx);
@@ -64,7 +64,7 @@ export class DetailsListener implements ANTLRv4ParserListener {
 
     exitDelegateGrammar(ctx: DelegateGrammarContext) {
         let context = ctx.identifier()[ctx.identifier().length - 1];
-        let name = definitionForContext(context, false).text;
+        let name = definitionForContext(context, false)!.text;
         this.imports.push(name);
         this.symbolTable.addSymbol(SymbolKind.Import, name, ctx);
     }

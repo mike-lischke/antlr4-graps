@@ -14,7 +14,7 @@ import { SymbolKind, SymbolScope, SymbolGroupKind, SymbolInfo, Definition } from
 import { SourceContext } from './SourceContext';
 import { ANTLRv4Parser, ModeSpecContext, GrammarSpecContext } from '../parser/ANTLRv4Parser';
 
-type SymbolStore = Map<SymbolKind, Map<string, ParserRuleContext>>;
+type SymbolStore = Map<SymbolKind, Map<string, ParserRuleContext | undefined>>;
 
 export class SymbolTable {
     public tree: ParserRuleContext; // Set by the owning source context after each parse run.
@@ -48,17 +48,17 @@ export class SymbolTable {
 
     public symbolExists(symbol: string, kind: SymbolKind, scope: SymbolScope): boolean {
         // Single kind lookup.
-        if (SymbolTable.globalSymbols.has(kind) && SymbolTable.globalSymbols.get(kind).has(symbol))
+        if (SymbolTable.globalSymbols.has(kind) && SymbolTable.globalSymbols.get(kind)!.has(symbol))
             return true;
 
         if (scope == SymbolScope.LocalOnly || scope == SymbolScope.Full) {
-            if (this.localSymbols.has(kind) && this.localSymbols.get(kind).has(symbol))
+            if (this.localSymbols.has(kind) && this.localSymbols.get(kind)!.has(symbol))
                 return true;
         }
 
         if (scope == SymbolScope.DependencyOnly || scope == SymbolScope.Full) {
             for (let pair of this.dependencies) {
-                if (pair[0].localSymbols.has(kind) && pair[0].localSymbols.get(kind).has(symbol)) {
+                if (pair[0].localSymbols.has(kind) && pair[0].localSymbols.get(kind)!.has(symbol)) {
                     return true;
                 }
             }
@@ -103,7 +103,7 @@ export class SymbolTable {
     }
 
     public contextForSymbol(symbol: string, kind: SymbolKind, scope: SymbolScope): ParserRuleContext | undefined {
-        if (!SymbolTable.globalSymbols.has(kind) || !SymbolTable.globalSymbols.get(kind).has(symbol))
+        if (!SymbolTable.globalSymbols.has(kind) || !SymbolTable.globalSymbols.get(kind)!.has(symbol))
             return undefined; // No context available for global symbols.
 
         if (scope == SymbolScope.LocalOnly || scope == SymbolScope.Full) {
@@ -130,7 +130,7 @@ export class SymbolTable {
                     kind: pair[0],
                     name: symbol,
                     source: "ANTLR runtime",
-                    definition: definitionForContext(null, true)
+                    definition: definitionForContext(undefined, true)
                 };
 
         for (let pair of this.localSymbols) {
@@ -163,7 +163,7 @@ export class SymbolTable {
 
         // Nothing in our table, so try the dependencies in order of appearance (effectively implementing rule overrides this way).
         for (let pair of this.dependencies) {
-            let result: SymbolInfo = pair[0].getSymbolInfo(symbol);
+            let result = pair[0].getSymbolInfo(symbol);
             if (result)
                 return result;
         }
@@ -181,7 +181,7 @@ export class SymbolTable {
             SymbolKind.BuiltInChannel, SymbolKind.TokenChannel, SymbolKind.ParserRule
         ]) {
             if (this.localSymbols.has(kind)) {
-                for (let pair of this.localSymbols.get(kind)) {
+                for (let pair of this.localSymbols.get(kind)!) {
                     result.push({ kind: kind, name: pair[0], source: this.owner.sourceId, definition: definitionForContext(pair[1], true) });
                 }
             }
@@ -199,7 +199,7 @@ export class SymbolTable {
 
     public getReferenceCount(symbol: string): number {
         if (this.symbolReferences.has(symbol)) {
-            return this.symbolReferences.get(symbol);
+            return this.symbolReferences.get(symbol)!;
         } else {
             return 0;
         }
@@ -219,29 +219,29 @@ export class SymbolTable {
     private symbolReferences: Map<string, number> = new Map();
 
     private static globalSymbols: SymbolStore = new Map([
-        [SymbolKind.BuiltInChannel, new Map([['DEFAULT_TOKEN_CHANNEL', null], ["HIDDEN", null]])],
-        [SymbolKind.BuiltInLexerToken, new Map([['EOF', null]])],
-        [SymbolKind.BuiltInMode, new Map([['DEFAULT_MODE', null]])]
+        [SymbolKind.BuiltInChannel, new Map([['DEFAULT_TOKEN_CHANNEL', undefined], ["HIDDEN", undefined]])],
+        [SymbolKind.BuiltInLexerToken, new Map([['EOF', undefined]])],
+        [SymbolKind.BuiltInMode, new Map([['DEFAULT_MODE', undefined]])]
     ]);
 };
 
 /**
  * Returns the definition info for the given rule context. Exported as required by listeners.
  */
-export function definitionForContext(ctx: ParserRuleContext, keepQuotes: boolean): Definition | undefined {
+export function definitionForContext(ctx: ParserRuleContext | undefined, keepQuotes: boolean): Definition | undefined {
     if (!ctx)
         return undefined;
 
-    let cs: CharStream = ctx.start.getTokenSource().getInputStream();
+    let cs: CharStream = ctx.start.getTokenSource()!.getInputStream()!;
 
     var result: Definition = {
         text: "",
         start: { column: ctx.start.getCharPositionInLine(), row: ctx.start.getLine() },
-        end: { column: ctx.stop.getCharPositionInLine(), row: ctx.stop.getLine() }
+        end: { column: ctx.stop!.getCharPositionInLine(), row: ctx.stop!.getLine() }
     };
 
     let start = ctx.start.getStartIndex();
-    let stop = ctx.stop.getStopIndex();
+    let stop = ctx.stop!.getStopIndex();
 
     // For mode definitions we only need the init line, not all the lexer rules following it.
     if (ctx.getRuleIndex() == ANTLRv4Parser.RULE_modeSpec) {

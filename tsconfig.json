@@ -11,7 +11,8 @@
         "inlineSources": true,
         "isolatedModules": false,
 		"allowSyntheticDefaultImports": true,
-		"experimentalDecorators": true
+		"experimentalDecorators": true,
+		"strictNullChecks": true
 	},
 	"include": [
 		"src/**/*.ts", "parser/**/*.ts", "test/**/*.ts"
