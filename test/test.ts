@@ -148,8 +148,12 @@ describe('antlr4-graps', function () {
 
     it('Diagnostics', function () {
       backend.getDiagnostics("test/TParser.g4"); // This also updates the symbol reference counts.
+      backend.getDiagnostics("test/TLexer.g4");
       let refCount = backend.countReferences("test/TLexer.g4", "Semicolon");
       expect(refCount).to.equal(4);
+
+      refCount = backend.countReferences("test/TLexer.g4", "Bar");
+      expect(refCount).to.equal(2);
       backend.releaseGrammar("test/TParser.g4");
     });
   });

@@ -207,7 +207,7 @@ export class AntlrLanguageSupport {
      */
     public countReferences(file: string, symbol: string): number {
         var context = this.getContext(file);
-        var result: number = 0;
+        var result: number = context.getReferenceCount(symbol);
         for (let reference of context.references) {
             result += reference.getReferenceCount(symbol);
         }

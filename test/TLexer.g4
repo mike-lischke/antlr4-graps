@@ -38,7 +38,7 @@ void myBarLexerAction() { /* do something*/ };
 channels { CommentsChannel, DirectiveChannel }
 
 tokens {
-	DUMMY	
+	DUMMY
 }
 
 Return: 'return';
@@ -68,11 +68,11 @@ QuestionMark: '?';
 Comma: ',' -> skip;
 Dollar: '$' -> more, mode(Mode1);
 Ampersand: '&' -> type(DUMMY);
- 
+
 String: '"' .*? '"';
 Foo: {canTestFoo()}? 'foo' {isItFoo()}? { myFooLexerAction(); };
 Bar: 'bar' {isItBar()}? { myBarLexerAction(); };
-Any: Foo Dot Bar? DotDot Baz;
+Any: Foo Dot Bar? DotDot Baz Bar;
 
 Comment : '#' ~[\r\n]* '\r'? '\n' -> channel(CommentsChannel);
 WS: [ \t\r\n]+ -> channel(99);

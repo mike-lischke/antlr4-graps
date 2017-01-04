@@ -263,16 +263,4 @@ I'd love to see code contributions, so that the module evolves faster.
 
 ##Release Notes
 
-###1.2.6 (Jan 4, 2017)
-Added ability to count symbol references + stability improvements. Enabled strict null checks and updated code for that.
-
-###1.2.1 (Jan 1, 2017)
-Fixed tokenVocab handling.
-
-###1.1.0 (Sept 25, 2016)
-Introduced SymbolKind and updated the XCode project.
-
-###1.0.6 (Sept 16, 2016)
-
-###1.0.0 (Sept 4, 2016)
-Initial release
+For release details see [Git history](https://github.com/mike-lischke/antlr-graps).
