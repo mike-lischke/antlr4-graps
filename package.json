@@ -1,6 +1,6 @@
 {
   "name": "antlr4-graps",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "description": "ANTLR grammar parsing services",
   "main": "out/index.js",
   "scripts": {

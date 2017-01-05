@@ -77,7 +77,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
                 this.reportDuplicateSymbol(symbol, tokenRef.getSymbol(), this.seenSymbols.get(symbol)!);
             } else if (this.symbolTable.symbolExists(symbol, SymbolKind.LexerToken, SymbolScope.DependencyOnly)) {
                 let symbolContext = this.symbolTable.contextForSymbol(symbol, SymbolKind.LexerToken, SymbolScope.DependencyOnly);
-                this.reportDuplicateSymbol(symbol, tokenRef.getSymbol(), symbolContext!.start);
+                this.reportDuplicateSymbol(symbol, tokenRef.getSymbol(), symbolContext ? symbolContext.start : undefined);
             } else {
                 this.seenSymbols.set(symbol, tokenRef.getSymbol());
             }
@@ -90,7 +90,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
             this.reportDuplicateSymbol(symbol, ctx.RULE_REF().getSymbol(), this.seenSymbols.get(symbol)!);
         } else if (this.symbolTable.symbolExists(symbol, SymbolKind.ParserRule, SymbolScope.DependencyOnly)) {
             let symbolContext = this.symbolTable.contextForSymbol(symbol, SymbolKind.ParserRule, SymbolScope.DependencyOnly);
-            this.reportDuplicateSymbol(symbol, ctx.RULE_REF().getSymbol(), symbolContext!.start);
+            this.reportDuplicateSymbol(symbol, ctx.RULE_REF().getSymbol(), symbolContext ? symbolContext.start : undefined);
         } else {
             this.seenSymbols.set(symbol, ctx.RULE_REF().getSymbol());
         }
@@ -109,7 +109,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
         }
     }
 
-    protected reportDuplicateSymbol(symbol: string, offendingToken: Token, previousToken: Token) {
+    protected reportDuplicateSymbol(symbol: string, offendingToken: Token, previousToken: Token | undefined) {
         let entry: DiagnosticEntry = {
             type: DiagnosticType.Error,
             message: "Duplicate symbol '" + symbol + "'",

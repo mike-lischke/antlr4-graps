@@ -263,4 +263,4 @@ I'd love to see code contributions, so that the module evolves faster.
 
 ##Release Notes
 
-For release details see [Git history](https://github.com/mike-lischke/antlr-graps).
+For release details see [Git commit history](https://github.com/mike-lischke/antlr-graps/commits/master).
