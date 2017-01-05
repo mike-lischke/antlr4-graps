@@ -7,6 +7,8 @@
 
 "use strict";
 
+import fs = require("fs");
+
 import { expect, should, assert } from 'chai';
 
 import { AntlrLanguageSupport, SymbolKind } from "../index";
@@ -146,9 +148,20 @@ describe('antlr4-graps', function () {
       expect(info.definition!.end.row).to.equal(85);
     });
 
+    it('Editing', function () {
+      // "Edit" the source. This will release the lexer reference and reload it.
+      // If that doesn't work we'll get a lot of unknown-symbol errors (for all lexer symbols).
+      let source = fs.readFileSync("test/TParser.g4", 'utf8');
+      backend.reparse("test/TParser.g4", source + "\nblah: any idarray;");
+
+      let parserDiags = backend.getDiagnostics("test/TParser.g4"); // This also updates the symbol reference counts.
+      expect(parserDiags.length).to.be.equal(0);
+    });
+
     it('Diagnostics', function () {
-      backend.getDiagnostics("test/TParser.g4"); // This also updates the symbol reference counts.
-      backend.getDiagnostics("test/TLexer.g4");
+      let lexerDiags = backend.getDiagnostics("test/TLexer.g4");
+      expect(lexerDiags.length).to.be.equal(0);
+
       let refCount = backend.countReferences("test/TLexer.g4", "Semicolon");
       expect(refCount).to.equal(4);
 
@@ -156,6 +169,7 @@ describe('antlr4-graps', function () {
       expect(refCount).to.equal(2);
       backend.releaseGrammar("test/TParser.g4");
     });
+
   });
 
 });

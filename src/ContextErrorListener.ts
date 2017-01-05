@@ -26,7 +26,7 @@ export class ContextErrorListener extends BaseErrorListener {
             row: line,
             length: 1
         }
-        if (offendingSymbol != undefined) {
+        if (offendingSymbol) {
             error.length = offendingSymbol.getStopIndex() - offendingSymbol.getStartIndex() + 1;
         }
         this.errorList.push(error);

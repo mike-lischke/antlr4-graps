@@ -22,6 +22,11 @@ export class SymbolTable {
     constructor(private owner: SourceContext) { };
 
     public clear() {
+        // Before clearing the dependencies make sure the owners are updated.
+        for (let pair of this.dependencies) {
+            this.owner.removeDependency(pair[0].owner);
+        }
+
         this.dependencies.clear();
         this.localSymbols.clear();
         this.symbolReferences.clear();
