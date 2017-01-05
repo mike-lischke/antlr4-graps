@@ -52,6 +52,7 @@ export class SourceContext {
             case ANTLRv4Parser.RULE_optionValue:
             case ANTLRv4Parser.RULE_delegateGrammar:
             case ANTLRv4Parser.RULE_modeSpec:
+            case ANTLRv4Parser.RULE_setElement:
                 return this.getSymbolInfo(terminal.getText());
         }
 

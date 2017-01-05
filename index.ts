@@ -81,6 +81,15 @@ export class AntlrLanguageSupport {
     constructor() {
     }
 
+    /**
+     * Info for unit tests.
+     */
+    public getSelfDiagnostics() {
+        return {
+            "contextCount": this.sourceContexts.keys.length
+        }
+    }
+
     private loadDependency(contextEntry: ContextEntry, baseFile: string, depName: string): SourceContext | undefined {
         // The dependency file must be located in the same folder as the base file.
         var basePath = path.dirname(baseFile);

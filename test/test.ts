@@ -169,7 +169,27 @@ describe('antlr4-graps', function () {
       expect(refCount).to.equal(2);
       backend.releaseGrammar("test/TParser.g4");
     });
+  });
 
+  describe('Bugs', function () {
+    it("Lexer token in a set-element context", function () {
+      var info = backend.infoForSymbol("test/TParser.g4", 48, 93);
+      assert(info);
+      expect(info!.name).to.equal("Semicolon");
+      expect(info!.source).to.equal("TLexer.g4");
+      expect(info!.kind).to.equal(SymbolKind.LexerToken);
+      assert(info!.definition);
+      expect(info!.definition!.text).to.equal("Semicolon: \';\';");
+      expect(info!.definition!.start.column).to.equal(0);
+      expect(info!.definition!.start.row).to.equal(59);
+      expect(info!.definition!.end.column).to.equal(14);
+      expect(info!.definition!.end.row).to.equal(59);
+
+debugger
+      backend.releaseGrammar("test/TParser.g4");
+      var selfDiags = backend.getSelfDiagnostics();
+      expect(selfDiags.contextCount).to.equal(0);
+    });
   });
 
 });
