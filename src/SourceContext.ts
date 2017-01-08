@@ -41,11 +41,11 @@ export class SourceContext {
 
         // We only want to show info for symbols in specific contexts.
         let parent = (terminal.parent as ParserRuleContext);
-        if (parent.getRuleIndex() == ANTLRv4Parser.RULE_identifier) {
+        if (parent.ruleIndex == ANTLRv4Parser.RULE_identifier) {
             parent = (parent.parent as ParserRuleContext);
         }
 
-        switch (parent.getRuleIndex()) {
+        switch (parent.ruleIndex) {
             case ANTLRv4Parser.RULE_ruleref:
             case ANTLRv4Parser.RULE_terminalRule:
             case ANTLRv4Parser.RULE_lexerCommandExpr:
@@ -53,7 +53,7 @@ export class SourceContext {
             case ANTLRv4Parser.RULE_delegateGrammar:
             case ANTLRv4Parser.RULE_modeSpec:
             case ANTLRv4Parser.RULE_setElement:
-                return this.getSymbolInfo(terminal.getText());
+                return this.getSymbolInfo(terminal.text);
         }
 
         return undefined;
@@ -73,8 +73,8 @@ export class SourceContext {
         let parser = new ANTLRv4Parser(tokenStream);
         parser.removeErrorListeners();
         parser.addErrorListener(this.errorListener);
-        parser.setErrorHandler(new BailErrorStrategy());
-        parser.getInterpreter().setPredictionMode(PredictionMode.SLL);
+        parser.errorHandler = new BailErrorStrategy();
+        parser.interpreter.setPredictionMode(PredictionMode.SLL);
 
         this.tree = undefined;
         this.semanticChecksDone = false;
@@ -87,8 +87,8 @@ export class SourceContext {
             if (e instanceof ParseCancellationException) {
                 tokenStream.reset();
                 parser.reset();
-                parser.setErrorHandler(new DefaultErrorStrategy());
-                parser.getInterpreter().setPredictionMode(PredictionMode.LL);
+                parser.errorHandler = new DefaultErrorStrategy();
+                parser.interpreter.setPredictionMode(PredictionMode.LL);
                 this.tree = parser.grammarSpec();
             } else {
                 throw e;
@@ -169,12 +169,12 @@ function terminalFromPosition(root: ParseTree, column: number, row: number): Ter
     // Does the root node actually contain the position? If not we don't need to look further.
     if (root instanceof TerminalNode) {
         let terminal: TerminalNode = <TerminalNode>root;
-        let token = terminal.getSymbol();
-        if (token.getLine() != row)
+        let token = terminal.symbol;
+        if (token.line != row)
             return undefined;
 
-        let tokenStop = token.getCharPositionInLine() + (token.getStopIndex() - token.getStartIndex() + 1);
-        if (token.getCharPositionInLine() <= column && tokenStop >= column) {
+        let tokenStop = token.charPositionInLine + (token.stopIndex - token.startIndex + 1);
+        if (token.charPositionInLine <= column && tokenStop >= column) {
             return terminal;
         }
         return undefined;
@@ -184,16 +184,16 @@ function terminalFromPosition(root: ParseTree, column: number, row: number): Ter
             return undefined;
         }
 
-        if (context.start.getLine() > row || (context.start.getLine() == row && column < context.start.getCharPositionInLine())) {
+        if (context.start.line > row || (context.start.line == row && column < context.start.charPositionInLine)) {
             return undefined;
         }
 
-        let tokenStop = context.stop.getCharPositionInLine() + (context.stop.getStopIndex() - context.stop.getStartIndex() + 1);
-        if (context.stop.getLine() < row || (context.stop.getLine() == row && tokenStop < column)) {
+        let tokenStop = context.stop.charPositionInLine + (context.stop.stopIndex - context.stop.startIndex + 1);
+        if (context.stop.line < row || (context.stop.line == row && tokenStop < column)) {
             return undefined;
         }
 
-        for (var i = 0; i < context.getChildCount(); ++i) {
+        for (var i = 0; i < context.childCount; ++i) {
             let result = terminalFromPosition(context.getChild(i), column, row);
             if (result) {
                 return result;

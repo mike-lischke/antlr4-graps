@@ -237,33 +237,33 @@ export function definitionForContext(ctx: ParserRuleContext | undefined, keepQuo
     if (!ctx)
         return undefined;
 
-    let cs: CharStream = ctx.start.getTokenSource()!.getInputStream()!;
+    let cs: CharStream = ctx.start.tokenSource!.inputStream!;
 
     var result: Definition = {
         text: "",
-        start: { column: ctx.start.getCharPositionInLine(), row: ctx.start.getLine() },
-        end: { column: ctx.stop!.getCharPositionInLine(), row: ctx.stop!.getLine() }
+        start: { column: ctx.start.charPositionInLine, row: ctx.start.line },
+        end: { column: ctx.stop!.charPositionInLine, row: ctx.stop!.line }
     };
 
-    let start = ctx.start.getStartIndex();
-    let stop = ctx.stop!.getStopIndex();
+    let start = ctx.start.startIndex;
+    let stop = ctx.stop!.stopIndex;
 
     // For mode definitions we only need the init line, not all the lexer rules following it.
-    if (ctx.getRuleIndex() == ANTLRv4Parser.RULE_modeSpec) {
+    if (ctx.ruleIndex == ANTLRv4Parser.RULE_modeSpec) {
         let modeSpec: ModeSpecContext = <ModeSpecContext>ctx;
-        stop = modeSpec.SEMI().getSymbol().getStopIndex();
-        result.end.column = modeSpec.SEMI().getSymbol().getCharPositionInLine();
-        result.end.row = modeSpec.SEMI().getSymbol().getLine();
-    } else if (ctx.getRuleIndex() == ANTLRv4Parser.RULE_grammarSpec) {
+        stop = modeSpec.SEMI().symbol.stopIndex;
+        result.end.column = modeSpec.SEMI().symbol.charPositionInLine;
+        result.end.row = modeSpec.SEMI().symbol.line;
+    } else if (ctx.ruleIndex == ANTLRv4Parser.RULE_grammarSpec) {
         // Similar for entire grammars. We only need the introducer line here.
         let grammarSpec: GrammarSpecContext = <GrammarSpecContext>ctx;
-        stop = grammarSpec.SEMI().getSymbol().getStopIndex();
-        result.end.column = grammarSpec.SEMI().getSymbol().getCharPositionInLine();
-        result.end.row = grammarSpec.SEMI().getSymbol().getLine();
+        stop = grammarSpec.SEMI().symbol.stopIndex;
+        result.end.column = grammarSpec.SEMI().symbol.charPositionInLine;
+        result.end.row = grammarSpec.SEMI().symbol.line;
 
-        start = grammarSpec.grammarType().start.getStartIndex();
-        result.start.column = grammarSpec.grammarType().start.getCharPositionInLine();
-        result.start.row = grammarSpec.grammarType().start.getLine();
+        start = grammarSpec.grammarType().start.startIndex;
+        result.start.column = grammarSpec.grammarType().start.charPositionInLine;
+        result.start.row = grammarSpec.grammarType().start.line;
     }
 
     result.text = cs.getText(new Interval(start, stop));

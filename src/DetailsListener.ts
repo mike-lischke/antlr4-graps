@@ -23,7 +23,7 @@ export class DetailsListener implements ANTLRv4ParserListener {
         let tokenRef;
         try { tokenRef = ctx.TOKEN_REF() } catch (e) {}
         if (tokenRef) {
-            let symbol: string = tokenRef.getText();
+            let symbol: string = tokenRef.text;
             let fragment;
             try { fragment = ctx.FRAGMENT() } catch (e) {}
             if (fragment) {
@@ -35,14 +35,14 @@ export class DetailsListener implements ANTLRv4ParserListener {
     }
 
     exitParserRuleSpec(ctx: ParserRuleSpecContext) {
-        let symbol = ctx.RULE_REF().getText();
+        let symbol = ctx.RULE_REF().text;
         this.symbolTable.addSymbol(SymbolKind.ParserRule, symbol, ctx);
     }
 
     exitTokensSpec(ctx: TokensSpecContext) {
         if (ctx.idList() != null) {
-            for (let identifier of ctx.idList().identifier()) {
-                let symbol = identifier.getText();
+            for (let identifier of ctx.idList()!.identifier()) {
+                let symbol = identifier.text;
                 this.symbolTable.addSymbol(SymbolKind.VirtualLexerToken, symbol, ctx);
             }
         }
@@ -50,15 +50,15 @@ export class DetailsListener implements ANTLRv4ParserListener {
 
     exitChannelsSpec(ctx: ChannelsSpecContext) {
         if (ctx.idList() != null) {
-            for (let identifier of ctx.idList().identifier()) {
-                let symbol = identifier.getText();
+            for (let identifier of ctx.idList()!.identifier()) {
+                let symbol = identifier.text;
                 this.symbolTable.addSymbol(SymbolKind.TokenChannel, symbol, ctx);
             }
         }
     }
 
     exitModeSpec(ctx: ModeSpecContext) {
-        let symbol = ctx.identifier().getText();
+        let symbol = ctx.identifier().text;
         this.symbolTable.addSymbol(SymbolKind.LexerMode, symbol, ctx);
     }
 
@@ -70,9 +70,9 @@ export class DetailsListener implements ANTLRv4ParserListener {
     }
 
     exitOption(ctx: OptionContext) {
-        let option = ctx.identifier().getText();
+        let option = ctx.identifier().text;
         if (option.toLocaleLowerCase() == "tokenvocab") {
-            let name = ctx.optionValue().getText();
+            let name = ctx.optionValue().text;
             this.imports.push(name);
             this.symbolTable.addSymbol(SymbolKind.TokenVocab, name, ctx);
         }
