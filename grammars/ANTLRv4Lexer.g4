@@ -42,8 +42,8 @@ options
    
 import ANTLRv4LexBasic;
 
-@postinclude {
-#include "LexerAdaptor.h"
+@beforeLexer {
+import { LexerAdaptor } from './LexerAdaptor';
 }
 
 // Standard set of fragments
@@ -106,7 +106,7 @@ UNTERMINATED_STRING_LITERAL
 // are contained within square brackets.
 
 BEGIN_ARGUMENT
-   : LBrack{ handleBeginArgument(); };
+   : LBrack{ this.handleBeginArgument(); };
    
 // -------------------------
 // Actions
@@ -377,7 +377,7 @@ ARGUMENT_CHAR_LITERAL
    ;
 
 END_ARGUMENT
-   : RBrack{ handleEndArgument(); };
+   : RBrack{ this.handleEndArgument(); };
       
 // added this to return non-EOF token type here. EOF does something weird
 UNTERMINATED_ARGUMENT
@@ -427,7 +427,7 @@ ACTION_LINE_COMMENT
    ;
 
 END_ACTION
-   : RBrace{ handleEndAction(); };
+   : RBrace{ this.handleEndAction(); };
 
 UNTERMINATED_ACTION
    : EOF -> popMode

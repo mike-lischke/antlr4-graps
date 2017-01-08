@@ -15,6 +15,9 @@ import { VocabularyImpl } from 'antlr4ts/VocabularyImpl';
 import * as Utils from 'antlr4ts/misc/Utils';
 
 
+import { LexerAdaptor } from './LexerAdaptor';
+
+
 export class ANTLRv4Lexer extends LexerAdaptor {
 	public static readonly TOKEN_REF=1;
 	public static readonly RULE_REF=2;
@@ -182,21 +185,21 @@ export class ANTLRv4Lexer extends LexerAdaptor {
 	private BEGIN_ARGUMENT_action(_localctx: RuleContext, actionIndex: number): void {
 		switch (actionIndex) {
 		case 0:
-			 handleBeginArgument(); 
+			 this.handleBeginArgument(); 
 			break;
 		}
 	}
 	private END_ARGUMENT_action(_localctx: RuleContext, actionIndex: number): void {
 		switch (actionIndex) {
 		case 1:
-			 handleEndArgument(); 
+			 this.handleEndArgument(); 
 			break;
 		}
 	}
 	private END_ACTION_action(_localctx: RuleContext, actionIndex: number): void {
 		switch (actionIndex) {
 		case 2:
-			 handleEndAction(); 
+			 this.handleEndAction(); 
 			break;
 		}
 	}
