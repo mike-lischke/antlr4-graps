@@ -20,12 +20,10 @@ export class DetailsListener implements ANTLRv4ParserListener {
     constructor(private symbolTable: SymbolTable, private imports: string[]) {}
 
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
-        let tokenRef;
-        try { tokenRef = ctx.TOKEN_REF() } catch (e) {}
+        let tokenRef = ctx.TOKEN_REF();
         if (tokenRef) {
             let symbol: string = tokenRef.text;
-            let fragment;
-            try { fragment = ctx.FRAGMENT() } catch (e) {}
+            let fragment = ctx.FRAGMENT();
             if (fragment) {
                 this.symbolTable.addSymbol(SymbolKind.FragmentLexerToken, symbol, ctx);
             } else {

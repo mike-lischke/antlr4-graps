@@ -22,8 +22,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
     constructor(private diagnostics: DiagnosticEntry[], private symbolTable: SymbolTable) { }
 
     exitTerminalRule(ctx: TerminalRuleContext) {
-        let tokenRef;
-        try { tokenRef = ctx.TOKEN_REF() } catch (e) { } // Temporary workaround for incomplete antlr4ts implementation.
+        let tokenRef = ctx.TOKEN_REF();
         if (tokenRef) {
             let symbol = tokenRef.text;
             this.checkSymbolExistance(true, SymbolGroupKind.TokenRef, symbol, "Unknown token reference", tokenRef.symbol);
@@ -39,8 +38,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
     }
 
     exitSetElement(ctx: SetElementContext) {
-        let tokenRef;
-        try { tokenRef = ctx.TOKEN_REF() } catch (e) { }
+        let tokenRef = ctx.TOKEN_REF();
         if (tokenRef) {
             let symbol = tokenRef.text;
             this.checkSymbolExistance(true, SymbolGroupKind.TokenRef, symbol, "Unknown token reference", tokenRef.symbol);
@@ -71,8 +69,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
     }
 
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
-        let tokenRef;
-        try { tokenRef = ctx.TOKEN_REF() } catch (e) { }
+        let tokenRef = ctx.TOKEN_REF();
         if (tokenRef) {
             let symbol = tokenRef.text;
             let seenSymbol = this.seenSymbols.get(symbol);
