@@ -103,12 +103,12 @@ describe('antlr4-graps', function () {
 
       expect(diagnostics.length).to.equal(4);
 
-      expect(diagnostics[0].message).to.equal("mismatched input \'::\' expecting {\'options\', COLON, AT}");
+      expect(diagnostics[0].message).to.equal("mismatched input '::' expecting {BEGIN_ARGUMENT, 'options', 'returns', 'locals', 'throws', COLON, AT}");
       expect(diagnostics[0].length).to.equal(2);
       expect(diagnostics[0].column).to.equal(12);
       expect(diagnostics[0].row).to.equal(1);
 
-      expect(diagnostics[1].message).to.equal("mismatched input \'|\' expecting {\'options\', COLON, AT}");
+      expect(diagnostics[1].message).to.equal("mismatched input '|' expecting {BEGIN_ARGUMENT, 'options', 'returns', 'locals', 'throws', COLON, AT}");
       expect(diagnostics[1].length).to.equal(1);
       expect(diagnostics[1].column).to.equal(0);
       expect(diagnostics[1].row).to.equal(2);
