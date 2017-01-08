@@ -40,8 +40,9 @@ export class DetailsListener implements ANTLRv4ParserListener {
     }
 
     exitTokensSpec(ctx: TokensSpecContext) {
-        if (ctx.idList() != null) {
-            for (let identifier of ctx.idList()!.identifier()) {
+        let idList = ctx.idList();
+        if (idList) {
+            for (let identifier of idList.identifier()) {
                 let symbol = identifier.text;
                 this.symbolTable.addSymbol(SymbolKind.VirtualLexerToken, symbol, ctx);
             }
@@ -49,8 +50,9 @@ export class DetailsListener implements ANTLRv4ParserListener {
     }
 
     exitChannelsSpec(ctx: ChannelsSpecContext) {
-        if (ctx.idList() != null) {
-            for (let identifier of ctx.idList()!.identifier()) {
+        let idList = ctx.idList();
+        if (idList) {
+            for (let identifier of idList.identifier()) {
                 let symbol = identifier.text;
                 this.symbolTable.addSymbol(SymbolKind.TokenChannel, symbol, ctx);
             }

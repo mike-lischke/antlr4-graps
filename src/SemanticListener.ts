@@ -50,7 +50,9 @@ export class SemanticListener implements ANTLRv4ParserListener {
 
     exitLexerCommand(ctx: LexerCommandContext) {
         try {
-            if (ctx.lexerCommandExpr() && ctx.lexerCommandExpr()!.identifier()) {
+            let lexerCommandExpr = ctx.lexerCommandExpr();
+            let lexerCommandExprId = lexerCommandExpr ? lexerCommandExpr.identifier() : undefined;
+            if (lexerCommandExprId) {
                 let name = ctx.lexerCommandName().text;
                 let kind = SymbolGroupKind.TokenRef;
 
@@ -61,8 +63,8 @@ export class SemanticListener implements ANTLRv4ParserListener {
                 } else if (value == "channel") {
                     kind = SymbolGroupKind.TokenChannel;
                 }
-                let symbol = ctx.lexerCommandExpr()!.identifier()!.text;
-                this.checkSymbolExistance(true, kind, symbol, "Unknown " + name, ctx.lexerCommandExpr()!.identifier()!.start);
+                let symbol = lexerCommandExprId.text;
+                this.checkSymbolExistance(true, kind, symbol, "Unknown " + name, lexerCommandExprId.start);
                 this.symbolTable.countReference(symbol);
             }
         } catch (e) { }
@@ -73,8 +75,9 @@ export class SemanticListener implements ANTLRv4ParserListener {
         try { tokenRef = ctx.TOKEN_REF() } catch (e) { }
         if (tokenRef) {
             let symbol = tokenRef.text;
-            if (this.seenSymbols.has(symbol)) {
-                this.reportDuplicateSymbol(symbol, tokenRef.symbol, this.seenSymbols.get(symbol)!);
+            let seenSymbol = this.seenSymbols.get(symbol);
+            if (seenSymbol) {
+                this.reportDuplicateSymbol(symbol, tokenRef.symbol, seenSymbol);
             } else if (this.symbolTable.symbolExists(symbol, SymbolKind.LexerToken, SymbolScope.DependencyOnly)) {
                 let symbolContext = this.symbolTable.contextForSymbol(symbol, SymbolKind.LexerToken, SymbolScope.DependencyOnly);
                 this.reportDuplicateSymbol(symbol, tokenRef.symbol, symbolContext ? symbolContext.start : undefined);
@@ -86,8 +89,9 @@ export class SemanticListener implements ANTLRv4ParserListener {
 
     exitParserRuleSpec(ctx: ParserRuleSpecContext) {
         let symbol = ctx.RULE_REF().text;
-        if (this.seenSymbols.has(symbol)) {
-            this.reportDuplicateSymbol(symbol, ctx.RULE_REF().symbol, this.seenSymbols.get(symbol)!);
+        let seenSymbol = this.seenSymbols.get(symbol);
+        if (seenSymbol) {
+            this.reportDuplicateSymbol(symbol, ctx.RULE_REF().symbol, seenSymbol);
         } else if (this.symbolTable.symbolExists(symbol, SymbolKind.ParserRule, SymbolScope.DependencyOnly)) {
             let symbolContext = this.symbolTable.contextForSymbol(symbol, SymbolKind.ParserRule, SymbolScope.DependencyOnly);
             this.reportDuplicateSymbol(symbol, ctx.RULE_REF().symbol, symbolContext ? symbolContext.start : undefined);

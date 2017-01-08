@@ -53,17 +53,20 @@ export class SymbolTable {
 
     public symbolExists(symbol: string, kind: SymbolKind, scope: SymbolScope): boolean {
         // Single kind lookup.
-        if (SymbolTable.globalSymbols.has(kind) && SymbolTable.globalSymbols.get(kind)!.has(symbol))
+        let globalSymbol = SymbolTable.globalSymbols.get(kind);
+        if (globalSymbol && globalSymbol.has(symbol))
             return true;
 
         if (scope == SymbolScope.LocalOnly || scope == SymbolScope.Full) {
-            if (this.localSymbols.has(kind) && this.localSymbols.get(kind)!.has(symbol))
+            let localSymbol = this.localSymbols.get(kind);
+            if (localSymbol && localSymbol.has(symbol))
                 return true;
         }
 
         if (scope == SymbolScope.DependencyOnly || scope == SymbolScope.Full) {
             for (let pair of this.dependencies) {
-                if (pair[0].localSymbols.has(kind) && pair[0].localSymbols.get(kind)!.has(symbol)) {
+                let dependencySymbol = pair[0].localSymbols.get(kind);
+                if (dependencySymbol && dependencySymbol.has(symbol)) {
                     return true;
                 }
             }
@@ -108,7 +111,8 @@ export class SymbolTable {
     }
 
     public contextForSymbol(symbol: string, kind: SymbolKind, scope: SymbolScope): ParserRuleContext | undefined {
-        if (!SymbolTable.globalSymbols.has(kind) || !SymbolTable.globalSymbols.get(kind)!.has(symbol))
+        let globalSymbol = SymbolTable.globalSymbols.get(kind);
+        if (!globalSymbol || !globalSymbol.has(symbol))
             return undefined; // No context available for global symbols.
 
         if (scope == SymbolScope.LocalOnly || scope == SymbolScope.Full) {
@@ -185,8 +189,9 @@ export class SymbolTable {
             SymbolKind.FragmentLexerToken, SymbolKind.LexerToken, SymbolKind.BuiltInMode, SymbolKind.LexerMode,
             SymbolKind.BuiltInChannel, SymbolKind.TokenChannel, SymbolKind.ParserRule
         ]) {
-            if (this.localSymbols.has(kind)) {
-                for (let pair of this.localSymbols.get(kind)!) {
+            let symbols = this.localSymbols.get(kind);
+            if (symbols) {
+                for (let pair of symbols) {
                     result.push({ kind: kind, name: pair[0], source: this.owner.sourceId, definition: definitionForContext(pair[1], true) });
                 }
             }
@@ -203,8 +208,9 @@ export class SymbolTable {
     }
 
     public getReferenceCount(symbol: string): number {
-        if (this.symbolReferences.has(symbol)) {
-            return this.symbolReferences.get(symbol)!;
+        let reference = this.symbolReferences.get(symbol);
+        if (reference) {
+            return reference;
         } else {
             return 0;
         }
