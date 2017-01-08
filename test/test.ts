@@ -185,7 +185,6 @@ describe('antlr4-graps', function () {
       expect(info!.definition!.end.column).to.equal(14);
       expect(info!.definition!.end.row).to.equal(59);
 
-debugger
       backend.releaseGrammar("test/TParser.g4");
       var selfDiags = backend.getSelfDiagnostics();
       expect(selfDiags.contextCount).to.equal(0);

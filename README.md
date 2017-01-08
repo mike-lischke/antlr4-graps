@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/mike-lischke/antlr-graps.svg?branch=master)](https://travis-ci.org/mike-lischke/antlr-graps)
 
-ANTLR4 graps (Grammar Parsing Service) is a TypeScript node module (tested with node 6) using the [TypeScript ANTLR runtime](https://github.com/tunnelvisionlabs/antlr4ts) (antlr4ts) created by Sam Harwell. At the time being this runtime is still considered alpha, while it works already quite well.
+ANTLR4 graps (Grammar Parsing Service) is a TypeScript node module (tested with last 2 node.js versions) using the [TypeScript ANTLR runtime](https://github.com/tunnelvisionlabs/antlr4ts) (antlr4ts) created by Sam Harwell. At the time being this runtime is still considered alpha, while it works already quite well.
 
 ## Usage
 
@@ -254,10 +254,13 @@ When looking for dependencies a simple search for .g and .g4 files is applied to
 ##What's next?
 The module is in a pretty good shape now and fully functional, but there are ideas to add more functionality, like:
 
-- More semantic checks (e.g. indirect left-recursion and other warning/error conditions as detected by ANTLR)
-- Support for code completion.
-- Automatic code formatting.
-- Linting support?
+* Call tree visualization.
+* Rail-road diagrams for rules.
+* More semantic checks (e.g. indirect left-recursion and other warning/error conditions as detected by ANTLR)
+* Support for code completion.
+* Automatic code formatting.
+* Linting support?
+* Test rig?
 
 I'd love to see code contributions, so that the module evolves faster.
 

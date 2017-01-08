@@ -47,25 +47,23 @@ export class SemanticListener implements ANTLRv4ParserListener {
     }
 
     exitLexerCommand(ctx: LexerCommandContext) {
-        try {
-            let lexerCommandExpr = ctx.lexerCommandExpr();
-            let lexerCommandExprId = lexerCommandExpr ? lexerCommandExpr.identifier() : undefined;
-            if (lexerCommandExprId) {
-                let name = ctx.lexerCommandName().text;
-                let kind = SymbolGroupKind.TokenRef;
+        let lexerCommandExpr = ctx.lexerCommandExpr();
+        let lexerCommandExprId = lexerCommandExpr ? lexerCommandExpr.identifier() : undefined;
+        if (lexerCommandExprId) {
+            let name = ctx.lexerCommandName().text;
+            let kind = SymbolGroupKind.TokenRef;
 
-                let value = name.toLowerCase();
-                if (value == "pushmode" || value == "mode") {
-                    name = "mode";
-                    kind = SymbolGroupKind.LexerMode;
-                } else if (value == "channel") {
-                    kind = SymbolGroupKind.TokenChannel;
-                }
-                let symbol = lexerCommandExprId.text;
-                this.checkSymbolExistance(true, kind, symbol, "Unknown " + name, lexerCommandExprId.start);
-                this.symbolTable.countReference(symbol);
+            let value = name.toLowerCase();
+            if (value == "pushmode" || value == "mode") {
+                name = "mode";
+                kind = SymbolGroupKind.LexerMode;
+            } else if (value == "channel") {
+                kind = SymbolGroupKind.TokenChannel;
             }
-        } catch (e) { }
+            let symbol = lexerCommandExprId.text;
+            this.checkSymbolExistance(true, kind, symbol, "Unknown " + name, lexerCommandExprId.start);
+            this.symbolTable.countReference(symbol);
+        }
     }
 
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
