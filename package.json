@@ -18,7 +18,7 @@
     "grammar"
   ],
   "dependencies": {
-    "antlr4ts": "=0.4.0-alpha.3"
+    "antlr4ts": "=0.4.0-alpha.4"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",
