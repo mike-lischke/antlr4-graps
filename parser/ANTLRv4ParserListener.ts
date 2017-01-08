@@ -1,4 +1,4 @@
-// Generated from ANTLRv4Parser.g4 by ANTLR 4.5.4-SNAPSHOT
+// Generated from grammars/ANTLRv4Parser.g4 by ANTLR 4.6-SNAPSHOT
 
 
 import { ParseTreeListener } from 'antlr4ts/tree/ParseTreeListener';
@@ -66,6 +66,7 @@ import { TerminalRuleContext } from './ANTLRv4Parser';
 import { ElementOptionsContext } from './ANTLRv4Parser';
 import { ElementOptionContext } from './ANTLRv4Parser';
 import { IdentifierContext } from './ANTLRv4Parser';
+
 
 /**
  * This interface defines a complete listener for a parse tree produced by
@@ -765,3 +766,4 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 */
 	exitIdentifier?: (ctx: IdentifierContext) => void;
 }
+

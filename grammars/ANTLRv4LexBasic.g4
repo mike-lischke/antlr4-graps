@@ -34,7 +34,7 @@
  *	-- generalized for inclusion into the ANTLRv4 grammar distribution
  * 
  */
-lexer grammar LexBasic;
+lexer grammar ANTLRv4LexBasic;
 
 // ======================================================
 // Lexer fragments

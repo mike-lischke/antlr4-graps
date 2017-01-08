@@ -1,4 +1,4 @@
-// Generated from grammars/ANTLRv4LexBasic.g4 by ANTLR 4.5.4-SNAPSHOT
+// Generated from grammars/ANTLRv4LexBasic.g4 by ANTLR 4.6-SNAPSHOT
 
 
 import { ATN } from 'antlr4ts/atn/ATN';
@@ -13,6 +13,7 @@ import { Vocabulary } from 'antlr4ts/Vocabulary';
 import { VocabularyImpl } from 'antlr4ts/VocabularyImpl';
 
 import * as Utils from 'antlr4ts/misc/Utils';
+
 
 export class ANTLRv4LexBasic extends Lexer {
 	public static readonly modeNames: string[] = [
@@ -37,7 +38,7 @@ export class ANTLRv4LexBasic extends Lexer {
 
 	@Override
 	@NotNull
-	public getVocabulary(): Vocabulary {
+	public get vocabulary(): Vocabulary {
 		return ANTLRv4LexBasic.VOCABULARY;
 	}
 
@@ -48,16 +49,16 @@ export class ANTLRv4LexBasic extends Lexer {
 	}
 
 	@Override
-	public getGrammarFileName(): string { return "ANTLRv4LexBasic.g4"; }
+	public get grammarFileName(): string { return "ANTLRv4LexBasic.g4"; }
 
 	@Override
-	public getRuleNames(): string[] { return ANTLRv4LexBasic.ruleNames; }
+	public get ruleNames(): string[] { return ANTLRv4LexBasic.ruleNames; }
 
 	@Override
-	public getSerializedATN(): string { return ANTLRv4LexBasic._serializedATN; }
+	public get serializedATN(): string { return ANTLRv4LexBasic._serializedATN; }
 
 	@Override
-	public getModeNames(): string[] { return ANTLRv4LexBasic.modeNames; }
+	public get modeNames(): string[] { return ANTLRv4LexBasic.modeNames; }
 
 	public static readonly _serializedATN: string =
 		"\x03\uAF6F\u8320\u479D\uB75C\u4880\u1605\u191C\uAB37\x02\x02\u0130\b\x01"+
@@ -201,3 +202,4 @@ export class ANTLRv4LexBasic extends Lexer {
 	}
 
 }
+
