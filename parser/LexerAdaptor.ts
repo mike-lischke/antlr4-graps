@@ -44,15 +44,15 @@ export abstract class LexerAdaptor extends Lexer {
 
     protected handleEndArgument() {
         this.popMode();
-        if (this._modeStack.size() > 0) {
-            this.setType(ANTLRv4Lexer.ARGUMENT_CONTENT);
+        if (this._modeStack.size > 0) {
+            this.type = ANTLRv4Lexer.ARGUMENT_CONTENT;
         }
     }
 
     protected handleEndAction() {
         this.popMode();
-        if (this._modeStack.size() > 0) {
-            this.setType(ANTLRv4Lexer.ACTION_CONTENT);
+        if (this._modeStack.size > 0) {
+            this.type = ANTLRv4Lexer.ACTION_CONTENT;
         }
     }
 }

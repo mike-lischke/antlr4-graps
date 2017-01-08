@@ -4,6 +4,7 @@
   "description": "ANTLR grammar parsing services",
   "main": "out/index.js",
   "scripts": {
+    "antlr4ts": "antlr4ts grammars/ANTLRv4LexBasic.g4 grammars/ANTLRv4Lexer.g4 grammars/ANTLRv4Parser.g4 -o parser -visitor",
     "postinstall": "tsc",
     "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register"
   },
@@ -17,7 +18,7 @@
     "grammar"
   ],
   "dependencies": {
-    "antlr4ts": ">=0.4.0-alpha.2"
+    "antlr4ts": "=0.4.0-alpha.3"
   },
   "devDependencies": {
     "@types/chai": "^3.4.34",
