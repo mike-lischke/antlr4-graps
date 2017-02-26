@@ -10,39 +10,48 @@
 import { TerminalNode } from 'antlr4ts/tree';
 
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
-import { LexerRuleSpecContext, ParserRuleSpecContext, TokensSpecContext, ChannelsSpecContext,
-    ModeSpecContext, DelegateGrammarContext, OptionContext } from '../parser/ANTLRv4Parser';
+import {
+    LexerRuleSpecContext, ParserRuleSpecContext, TokensSpecContext, ChannelsSpecContext,
+    ModeSpecContext, DelegateGrammarContext, OptionContext
+} from '../parser/ANTLRv4Parser';
 
 import { SymbolKind } from '../index';
-import { SymbolTable, definitionForContext } from './SymbolTable';
+import {
+    GrapsSymbolTable, FragmentLexerTokenSymbol, LexerTokenSymbol, ParserRuleSymbol, VirtualLexerTokenSymbol,
+    TokenChannelSymbol, LexerModeSymbol, ImportSymbol, TokenVocabSymbol, definitionForContext
+} from './GrapsSymbolTable';
 
 export class DetailsListener implements ANTLRv4ParserListener {
-    constructor(private symbolTable: SymbolTable, private imports: string[]) {}
+    constructor(private symbolTable: GrapsSymbolTable, private imports: string[]) { }
 
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
         let tokenRef = ctx.TOKEN_REF();
         if (tokenRef) {
-            let symbol: string = tokenRef.text;
-            let fragment = ctx.FRAGMENT();
-            if (fragment) {
-                this.symbolTable.addSymbol(SymbolKind.FragmentLexerToken, symbol, ctx);
+            if (ctx.FRAGMENT()) {
+                let symbol = this.symbolTable.addNewSymbolOfType(FragmentLexerTokenSymbol, undefined, tokenRef.text);
+                symbol.context = ctx;
             } else {
-                this.symbolTable.addSymbol(SymbolKind.LexerToken, symbol, ctx);
+                let symbol = this.symbolTable.addNewSymbolOfType(LexerTokenSymbol, undefined, tokenRef.text);
+                symbol.context = ctx;
             }
         }
     }
 
     exitParserRuleSpec(ctx: ParserRuleSpecContext) {
-        let symbol = ctx.RULE_REF().text;
-        this.symbolTable.addSymbol(SymbolKind.ParserRule, symbol, ctx);
+        let name = ctx.RULE_REF().text;
+        if (this.symbolTable.resolve(name)) {
+            return; // Duplicate symbols are handled in the semantic phase.
+        }
+        let symbol = this.symbolTable.addNewSymbolOfType(ParserRuleSymbol, undefined, ctx.RULE_REF().text);
+        symbol.context = ctx;
     }
 
     exitTokensSpec(ctx: TokensSpecContext) {
         let idList = ctx.idList();
         if (idList) {
             for (let identifier of idList.identifier()) {
-                let symbol = identifier.text;
-                this.symbolTable.addSymbol(SymbolKind.VirtualLexerToken, symbol, ctx);
+                let symbol = this.symbolTable.addNewSymbolOfType(VirtualLexerTokenSymbol, undefined, identifier.text);
+                symbol.context = ctx;
             }
         }
     }
@@ -51,30 +60,32 @@ export class DetailsListener implements ANTLRv4ParserListener {
         let idList = ctx.idList();
         if (idList) {
             for (let identifier of idList.identifier()) {
-                let symbol = identifier.text;
-                this.symbolTable.addSymbol(SymbolKind.TokenChannel, symbol, ctx);
+                let symbol = this.symbolTable.addNewSymbolOfType(TokenChannelSymbol, undefined, identifier.text);
+                symbol.context = ctx;
             }
         }
     }
 
     exitModeSpec(ctx: ModeSpecContext) {
-        let symbol = ctx.identifier().text;
-        this.symbolTable.addSymbol(SymbolKind.LexerMode, symbol, ctx);
+        let symbol = this.symbolTable.addNewSymbolOfType(LexerModeSymbol, undefined, ctx.identifier().text);
+        symbol.context = ctx;
     }
 
     exitDelegateGrammar(ctx: DelegateGrammarContext) {
         let context = ctx.identifier()[ctx.identifier().length - 1];
-        let name = definitionForContext(context, false)!.text;
+        let name = definitionForContext(context, false) !.text;
+        let symbol = this.symbolTable.addNewSymbolOfType(ImportSymbol, undefined, name);
+        symbol.context = ctx;
         this.imports.push(name);
-        this.symbolTable.addSymbol(SymbolKind.Import, name, ctx);
     }
 
     exitOption(ctx: OptionContext) {
         let option = ctx.identifier().text;
         if (option.toLocaleLowerCase() == "tokenvocab") {
             let name = ctx.optionValue().text;
+            let symbol = this.symbolTable.addNewSymbolOfType(TokenVocabSymbol, undefined, name);
+            symbol.context = ctx;
             this.imports.push(name);
-            this.symbolTable.addSymbol(SymbolKind.TokenVocab, name, ctx);
         }
     }
 

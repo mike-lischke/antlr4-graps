@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016 Mike Lischke
+ * Copyright (c) 2016, 2017 Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -9,12 +9,6 @@
 
 import fs = require('fs');
 import path = require('path');
-
-export enum SymbolScope {
-    LocalOnly,
-    DependencyOnly,
-    Full
-}
 
 export enum SymbolGroupKind { // Multiple symbol kinds can be involved in a symbol lookup.
     TokenRef,
@@ -203,7 +197,7 @@ export class AntlrLanguageSupport {
 
     public listSymbols(file: string, fullList: boolean): SymbolInfo[] {
         var context = this.getContext(file);
-        return context.listSymbols(fullList);
+        return context.listSymbols(!fullList);
     };
 
     public getDiagnostics(file: string): DiagnosticEntry[] {

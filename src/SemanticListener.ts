@@ -7,8 +7,8 @@
 
 "use strict";
 
-import { SymbolGroupKind, SymbolScope, SymbolKind, DiagnosticEntry, DiagnosticType } from '../index';
-import { SymbolTable } from './SymbolTable';
+import { SymbolGroupKind, SymbolKind, DiagnosticEntry, DiagnosticType } from '../index';
+import { GrapsSymbolTable, LexerTokenSymbol, ParserRuleSymbol } from './GrapsSymbolTable';
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import {
     TerminalRuleContext, RulerefContext, SetElementContext, LexerCommandContext, LexerRuleSpecContext,
@@ -19,8 +19,9 @@ import { Token } from 'antlr4ts';
 import { TerminalNode } from 'antlr4ts/tree';
 
 export class SemanticListener implements ANTLRv4ParserListener {
-    constructor(private diagnostics: DiagnosticEntry[], private symbolTable: SymbolTable) { }
+    constructor(private diagnostics: DiagnosticEntry[], private symbolTable: GrapsSymbolTable) { }
 
+    // Check references to other lexer tokens.
     exitTerminalRule(ctx: TerminalRuleContext) {
         let tokenRef = ctx.TOKEN_REF();
         if (tokenRef) {
@@ -30,6 +31,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
         }
     }
 
+    // Check references to other parser rules.
     exitRuleref(ctx: RulerefContext) {
         let ruleRef = ctx.RULE_REF()
         let symbol = ruleRef.text;
@@ -37,6 +39,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
         this.symbolTable.countReference(symbol);
     }
 
+    // Check references to other lexer tokens.
     exitSetElement(ctx: SetElementContext) {
         let tokenRef = ctx.TOKEN_REF();
         if (tokenRef) {
@@ -46,6 +49,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
         }
     }
 
+    // Check references to modes + channels in lexer actions.
     exitLexerCommand(ctx: LexerCommandContext) {
         let lexerCommandExpr = ctx.lexerCommandExpr();
         let lexerCommandExprId = lexerCommandExpr ? lexerCommandExpr.identifier() : undefined;
@@ -66,37 +70,49 @@ export class SemanticListener implements ANTLRv4ParserListener {
         }
     }
 
+    // Check definition of a lexer token.
     exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
         let tokenRef = ctx.TOKEN_REF();
-        if (tokenRef) {
-            let symbol = tokenRef.text;
-            let seenSymbol = this.seenSymbols.get(symbol);
-            if (seenSymbol) {
-                this.reportDuplicateSymbol(symbol, tokenRef.symbol, seenSymbol);
-            } else if (this.symbolTable.symbolExists(symbol, SymbolKind.LexerToken, SymbolScope.DependencyOnly)) {
-                let symbolContext = this.symbolTable.contextForSymbol(symbol, SymbolKind.LexerToken, SymbolScope.DependencyOnly);
-                this.reportDuplicateSymbol(symbol, tokenRef.symbol, symbolContext ? symbolContext.start : undefined);
+        let name = tokenRef.text;
+
+        // The symbol table already contains an entry for this symbol. So we can only partially use that
+        // for duplicate checks. `seenSymbols` tracks occurences for symbols in the main symbol table.
+        let seenSymbol = this.seenSymbols.get(name);
+        if (seenSymbol) {
+            this.reportDuplicateSymbol(name, tokenRef.symbol, seenSymbol);
+        } else {
+            // Check if there are dependencies which already have this symbol, expressed by the fact
+            // that the found symbol is not defined in the main symbol table.
+            let symbol = this.symbolTable.resolve(name) as LexerTokenSymbol;
+            if (symbol.getRoot() != this.symbolTable) {
+                this.reportDuplicateSymbol(name, tokenRef.symbol, symbol.context ? symbol.context.start : undefined);
             } else {
-                this.seenSymbols.set(symbol, tokenRef.symbol);
+                // Otherwise we haven't come accross this symbol yet.
+                this.seenSymbols.set(name, tokenRef.symbol);
             }
         }
     }
 
+    // Check definition of a parser rule.
     exitParserRuleSpec(ctx: ParserRuleSpecContext) {
-        let symbol = ctx.RULE_REF().text;
-        let seenSymbol = this.seenSymbols.get(symbol);
+        // Same processing here as for lexer rules.
+        let ruleRef = ctx.RULE_REF();
+        let name = ruleRef.text;
+        let seenSymbol = this.seenSymbols.get(name);
         if (seenSymbol) {
-            this.reportDuplicateSymbol(symbol, ctx.RULE_REF().symbol, seenSymbol);
-        } else if (this.symbolTable.symbolExists(symbol, SymbolKind.ParserRule, SymbolScope.DependencyOnly)) {
-            let symbolContext = this.symbolTable.contextForSymbol(symbol, SymbolKind.ParserRule, SymbolScope.DependencyOnly);
-            this.reportDuplicateSymbol(symbol, ctx.RULE_REF().symbol, symbolContext ? symbolContext.start : undefined);
+            this.reportDuplicateSymbol(name, ruleRef.symbol, seenSymbol);
         } else {
-            this.seenSymbols.set(symbol, ctx.RULE_REF().symbol);
+            let symbol = this.symbolTable.resolve(name) as ParserRuleSymbol;
+            if (symbol.getRoot() != this.symbolTable) {
+                this.reportDuplicateSymbol(name, ruleRef.symbol, symbol.context ? symbol.context.start : undefined);
+            } else {
+                this.seenSymbols.set(name, ruleRef.symbol);
+            }
         }
     }
 
     protected checkSymbolExistance(mustExist: boolean, kind: SymbolGroupKind, symbol: string, message: string, offendingToken: Token) {
-        if (this.symbolTable.symbolExistsInGroup(symbol, kind, SymbolScope.Full) != mustExist) {
+        if (this.symbolTable.symbolExistsInGroup(symbol, kind, false) != mustExist) {
             let entry: DiagnosticEntry = {
                 type: DiagnosticType.Error,
                 message: message + " '" + symbol + "'",

@@ -21,16 +21,22 @@ import { ANTLRv4Lexer } from '../parser/ANTLRv4Lexer';
 import { SymbolKind, SymbolInfo, DiagnosticEntry, DiagnosticType } from '../index';
 
 import { ContextErrorListener } from './ContextErrorListener';
-import { SymbolTable } from './SymbolTable';
+import { GrapsSymbolTable, BuiltInChannelSymbol, BuiltInLexerTokenSymbol, BuiltInModeSymbol } from './GrapsSymbolTable';
 import { DetailsListener } from './DetailsListener';
 import { SemanticListener } from './SemanticListener';
 
 // One source context per file. Source contexts can reference each other (e.g. for symbol lookups).
 export class SourceContext {
-    public symbolTable: SymbolTable = new SymbolTable(this);
+    public symbolTable: GrapsSymbolTable = new GrapsSymbolTable("Context", this);
     public references: SourceContext[] = []; // Contexts referencing us.
 
     constructor(public sourceId: string) {
+        // Initialize static global symbol table, if not yet done.
+        if (!SourceContext.globalSymbols.resolve("EOF")) {
+            SourceContext.globalSymbols.addNewSymbolOfType(BuiltInChannelSymbol, undefined, "DEFAULT_TOKEN_CHANNEL");
+            SourceContext.globalSymbols.addNewSymbolOfType(BuiltInLexerTokenSymbol, undefined, "EOF");
+            SourceContext.globalSymbols.addNewSymbolOfType(BuiltInModeSymbol, undefined, "DEFAULT_MODE");
+        }
     }
 
     public infoForSymbolAtPosition(column: number, row: number): SymbolInfo | undefined {
@@ -80,7 +86,9 @@ export class SourceContext {
         this.semanticChecksDone = false;
         this.diagnostics.length = 0;
         this.imports.length = 0;
+
         this.symbolTable.clear();
+        this.symbolTable.addDependencies(SourceContext.globalSymbols);
         try {
             this.tree = parser.grammarSpec();
         } catch (e) {
@@ -130,7 +138,7 @@ export class SourceContext {
             pipeline.push(...current.references);
         }
         context.references.push(this);
-        this.symbolTable.addDependency(context.symbolTable);
+        this.symbolTable.addDependencies(context.symbolTable);
     }
 
     /**
@@ -151,6 +159,8 @@ export class SourceContext {
     protected getSymbolInfo(symbol: string): SymbolInfo | undefined {
         return this.symbolTable.getSymbolInfo(symbol);
     }
+
+    private static globalSymbols = new GrapsSymbolTable("Global Symbols");
 
     private tree: ParserRuleContext | undefined; // The root context from the last parse run.
     private imports: string[] = []; // Updated on each parse run.

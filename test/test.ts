@@ -68,9 +68,9 @@ describe('antlr4-graps', function () {
 
     it('listSymbols', function () {
       let symbols = backend.listSymbols("test/t.g4", true);
-      expect(symbols.length).to.equal(6);
+      expect(symbols.length).to.equal(9);
 
-      let info = symbols[4];
+      let info = symbols[7];
       expect(info.name).to.equal("x");
       expect(info.source).to.equal("t.g4");
       expect(info.kind).to.equal(SymbolKind.ParserRule);
@@ -134,9 +134,9 @@ describe('antlr4-graps', function () {
     it('Symbol Listing', function () {
       backend.loadGrammar("test/TParser.g4");
       let symbols = backend.listSymbols("test/TParser.g4", true);
-      expect(symbols.length).to.equal(51);
+      expect(symbols.length).to.equal(57);
 
-      let info = symbols[48];
+      let info = symbols[39];
       expect(info.name).to.equal("Mode2");
       expect(info.source).to.equal("TLexer.g4");
       expect(info.kind).to.equal(SymbolKind.LexerMode);
