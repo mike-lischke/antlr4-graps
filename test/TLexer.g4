@@ -75,7 +75,8 @@ Bar: 'bar' {isItBar()}? { myBarLexerAction(); };
 Any: Foo Dot Bar? DotDot Baz Bar;
 
 Comment : '#' ~[\r\n]* '\r'? '\n' -> channel(CommentsChannel);
-WS: [ \t\r\n]+ -> channel(99);
+WS: [\r\n]+ -> channel(99);
+WS2: [ \t]+ -> channel(HIDDEN);
 
 fragment Baz: 'Baz';
 

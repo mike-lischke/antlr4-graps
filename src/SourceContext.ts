@@ -34,6 +34,7 @@ export class SourceContext {
         // Initialize static global symbol table, if not yet done.
         if (!SourceContext.globalSymbols.resolve("EOF")) {
             SourceContext.globalSymbols.addNewSymbolOfType(BuiltInChannelSymbol, undefined, "DEFAULT_TOKEN_CHANNEL");
+            SourceContext.globalSymbols.addNewSymbolOfType(BuiltInChannelSymbol, undefined, "HIDDEN");
             SourceContext.globalSymbols.addNewSymbolOfType(BuiltInLexerTokenSymbol, undefined, "EOF");
             SourceContext.globalSymbols.addNewSymbolOfType(BuiltInModeSymbol, undefined, "DEFAULT_MODE");
         }
