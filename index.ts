@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017 Mike Lischke
+ * Copyright (c) 2016, 2017, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -58,6 +58,16 @@ export class DiagnosticEntry {
     column: number;
     row: number;
     length: number;
+};
+
+/**
+ * All references to rules tokens and string literals for parser and lexer rules.
+ * For lexer rules only the tokens member may contain values. That array is empty for virtual tokens.
+ */
+export class DependencyNode {
+    rules: number[];
+    tokens: number[];
+    literals: string[];
 };
 
 class ContextEntry {
@@ -200,6 +210,11 @@ export class AntlrLanguageSupport {
         return context.listSymbols(!fullList);
     };
 
+    public getCodeCompletionCandidates(file: string, column: number, row: number): SymbolInfo[] {
+        var context = this.getContext(file);
+        return context.getCodeCompletionCandidates(column, row);
+    };
+
     public getDiagnostics(file: string): DiagnosticEntry[] {
         var context = this.getContext(file);
         return context.getDiagnostics();
@@ -216,4 +231,26 @@ export class AntlrLanguageSupport {
         }
         return result;
     }
+
+    public getDependencyGraph(file: string): Map<number, DependencyNode> {
+        var context = this.getContext(file);
+        return context.getDependencyGraph();
+    }
+
+    public getRRDScript(file: string, rule: string): string {
+        var context = this.getContext(file);
+
+        let result = context.getRRDScript(rule);
+        if (!result) {
+            for (let reference of context.references) {
+                result = reference.getRRDScript(rule);
+                if (result) {
+                    return result;
+                }
+            }
+            return "";
+        }
+        return result!;
+    };
+
 }

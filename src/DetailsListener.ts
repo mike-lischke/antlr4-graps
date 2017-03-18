@@ -1,13 +1,11 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017 Mike Lischke
+ * Copyright (c) 2016, 2017, Mike Lischke
  *
  * See LICENSE file for more info.
  */
 
 "use strict";
-
-import { TerminalNode } from 'antlr4ts/tree';
 
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import {

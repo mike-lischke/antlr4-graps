@@ -13,7 +13,7 @@ import { Interval } from 'antlr4ts/misc';
 import { ANTLRv4Lexer } from './ANTLRv4Lexer';
 
 export abstract class LexerAdaptor extends Lexer {
-    private _currentRuleType : number = Token.INVALID_TYPE;
+    private currentRuleType : number = Token.INVALID_TYPE;
 
     public emit(): Token {
         if (this._type == ANTLRv4Lexer.ID) {
@@ -24,17 +24,17 @@ export abstract class LexerAdaptor extends Lexer {
                 this._type = ANTLRv4Lexer.RULE_REF;
             }
 
-            if (this._currentRuleType == Token.INVALID_TYPE) { // if outside of rule def
-                this._currentRuleType = this._type; // set to inside lexer or parser rule
+            if (this.currentRuleType == Token.INVALID_TYPE) { // if outside of rule def
+                this.currentRuleType = this._type; // set to inside lexer or parser rule
             }
         } else if (this._type == ANTLRv4Lexer.SEMI) { // exit rule def
-            this._currentRuleType = Token.INVALID_TYPE;
+            this.currentRuleType = Token.INVALID_TYPE;
         }
         return super.emit();
     }
 
     protected handleBeginArgument() {
-        if (this._currentRuleType == ANTLRv4Lexer.TOKEN_REF) {
+        if (this.currentRuleType == ANTLRv4Lexer.TOKEN_REF) {
             this.pushMode(ANTLRv4Lexer.LexerCharSet);
             this.more();
         } else {

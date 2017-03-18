@@ -11,7 +11,7 @@ import { ParserRuleContext, CharStream } from 'antlr4ts';
 import { Interval } from 'antlr4ts/misc';
 import { SymbolTable, Symbol } from "antlr4-c3";
 
-import { SymbolKind, SymbolGroupKind, SymbolInfo, Definition } from '../index';
+import { SymbolKind, SymbolGroupKind, SymbolInfo, Definition, DependencyNode } from '../index';
 import { SourceContext } from './SourceContext';
 import { ANTLRv4Parser, ModeSpecContext, GrammarSpecContext } from '../parser/ANTLRv4Parser';
 
@@ -19,6 +19,8 @@ type SymbolStore = Map<SymbolKind, Map<string, ParserRuleContext | undefined>>;
 
 export class GrapsSymbolTable extends SymbolTable {
     public tree: ParserRuleContext; // Set by the owning source context after each parse run.
+
+    private symbolDependencyGraph: Map<number, DependencyNode>;
 
     constructor(name: string, private owner?: SourceContext) {
         super(name);

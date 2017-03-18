@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017 Mike Lischke
+ * Copyright (c) 2016, 2017, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -162,32 +162,50 @@ describe('antlr4-graps', function () {
       let lexerDiags = backend.getDiagnostics("test/TLexer.g4");
       expect(lexerDiags.length, "Test 9.1").to.be.equal(0);
 
-      let refCount = backend.countReferences("test/TLexer.g4", "Semicolon");
+      let refCount = backend.countReferences("test/TParser.g4", "Semicolon");
       expect(refCount, "Test 9.2").to.equal(4);
 
       refCount = backend.countReferences("test/TLexer.g4", "Bar");
       expect(refCount, "Test 9.3").to.equal(2);
       backend.releaseGrammar("test/TParser.g4");
     });
+
+    it("RRD diagram", function () {
+      let diagram = backend.getRRDScript("test/TParser.g4", "Any");
+      expect(diagram, "Test 15.1").to.equal("Diagram(Choice(0, Sequence(Terminal('Foo'), Terminal('Dot'), " +
+        "Optional(Terminal('Bar')), Terminal('DotDot'), Terminal('Baz'), Terminal('Bar')))).addTo()");
+
+      diagram = backend.getRRDScript("test/TParser.g4", "idarray");
+      expect(diagram, "Test 15.2").to.equal("ComplexDiagram(Choice(0, Sequence(Terminal('OpenCurly'), " +
+        "NonTerminal('id'), ZeroOrMore(Choice(0, Sequence(Terminal('Comma'), NonTerminal('id')))), Terminal('CloseCurly')))).addTo()");
+
+      diagram = backend.getRRDScript("test/TParser.g4", "expr");
+      expect(diagram, "Test 15.2").to.equal("ComplexDiagram(Choice(0, Sequence(NonTerminal('expr'), Terminal('Star'), " +
+        "NonTerminal('expr')), Sequence(NonTerminal('expr'), Terminal('Plus'), NonTerminal('expr')), Sequence(Terminal" +
+        "('OpenPar'), NonTerminal('expr'), Terminal('ClosePar')), Sequence(NonTerminal('expr'), Terminal('QuestionMark'), " +
+        "NonTerminal('expr'), Terminal('Colon'), NonTerminal('expr')), Sequence(NonTerminal('expr'), Terminal('Equal'), " +
+        "NonTerminal('expr')), Sequence(NonTerminal('id')), Sequence(NonTerminal('flowControl')), Sequence(Terminal('INT')), " +
+        "Sequence(Terminal('String')))).addTo()");
+    });
   });
 
-  describe('Bugs', function () {
+  describe('Test for Bugs', function () {
     it("Lexer token in a set-element context", function () {
       var info = backend.infoForSymbol("test/TParser.g4", 48, 93);
-      assert(info, "Test 10.1");
-      expect(info!.name, "Test 10.2").to.equal("Semicolon");
-      expect(info!.source, "Test 10.3").to.equal("TLexer.g4");
-      expect(info!.kind, "Test 10.4").to.equal(SymbolKind.LexerToken);
-      assert(info!.definition, "Test 10.5");
-      expect(info!.definition!.text, "Test 10.6").to.equal("Semicolon: \';\';");
-      expect(info!.definition!.start.column, "Test 10.7").to.equal(0);
-      expect(info!.definition!.start.row, "Test 10.8").to.equal(59);
-      expect(info!.definition!.end.column, "Test 10.9").to.equal(14);
-      expect(info!.definition!.end.row, "Test 10.10").to.equal(59);
+      assert(info, "Test 20.1");
+      expect(info!.name, "Test 20.2").to.equal("Semicolon");
+      expect(info!.source, "Test 20.3").to.equal("TLexer.g4");
+      expect(info!.kind, "Test 20.4").to.equal(SymbolKind.LexerToken);
+      assert(info!.definition, "Test 20.5");
+      expect(info!.definition!.text, "Test 20.6").to.equal("Semicolon: \';\';");
+      expect(info!.definition!.start.column, "Test 20.7").to.equal(0);
+      expect(info!.definition!.start.row, "Test 20.8").to.equal(59);
+      expect(info!.definition!.end.column, "Test 20.9").to.equal(14);
+      expect(info!.definition!.end.row, "Test 20.10").to.equal(59);
 
       backend.releaseGrammar("test/TParser.g4");
       var selfDiags = backend.getSelfDiagnostics();
-      expect(selfDiags.contextCount, "Test 10.11").to.equal(0);
+      expect(selfDiags.contextCount, "Test 20.11").to.equal(0);
     });
   });
 
