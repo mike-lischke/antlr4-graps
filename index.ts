@@ -220,6 +220,11 @@ export class AntlrLanguageSupport {
         return context.getDiagnostics();
     };
 
+    public ruleFromPosition(file: string,  column: number, row: number): string {
+        var context = this.getContext(file);
+        return context.ruleFromPosition(column, row);
+    }
+
     /**
      * Count how many times a symbol has been referenced. The given file must contain the definition of this symbol.
      */

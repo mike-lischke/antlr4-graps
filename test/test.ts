@@ -146,6 +146,22 @@ describe('antlr4-graps', function () {
       expect(info.definition!.start.row, "Test 7.8").to.equal(86);
       expect(info.definition!.end.column, "Test 7.9").to.equal(10);
       expect(info.definition!.end.row, "Test 7.10").to.equal(86);
+
+      let ruleName = backend.ruleFromPosition("test/TParser.g4", 37, 103);
+      expect(ruleName, "Test 7.11").to.equal("expr");
+      ruleName = backend.ruleFromPosition("test/TParser.g4", 100, 123);
+      expect(ruleName, "Test 7.12").to.equal("");
+      ruleName = backend.ruleFromPosition("test/TParser.g4", 2, 119);
+      expect(ruleName, "Test 7.13").to.equal("any");
+      ruleName = backend.ruleFromPosition("test/TParser.g4", 103, 82);
+      expect(ruleName, "Test 7.14").to.equal("unused");
+      ruleName = backend.ruleFromPosition("test/TParser.g4", 64, 68);
+      expect(ruleName, "Test 7.15").to.equal("");
+
+      ruleName = backend.ruleFromPosition("test/TLexer.g4", 62, 77);
+      expect(ruleName, "Test 7.16").to.equal("Comment");
+      ruleName = backend.ruleFromPosition("test/TLexer.g4", 0, 50);
+      expect(ruleName, "Test 7.16").to.equal("ID");
     });
 
     it('Editing', function () {
@@ -187,6 +203,7 @@ describe('antlr4-graps', function () {
         "NonTerminal('expr')), Sequence(NonTerminal('id')), Sequence(NonTerminal('flowControl')), Sequence(Terminal('INT')), " +
         "Sequence(Terminal('String')))).addTo()");
     });
+
   });
 
   describe('Test for Bugs', function () {

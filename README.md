@@ -254,6 +254,12 @@ This function is the starting point for all kind of semantic processing, includi
 
 -----
 
+> `function AntlrLanguageSupport.ruleFromPosition(file: string,  column: number, row: number): string`
+>
+> Returns the name of the rule at the given position.
+
+-----
+
 ## Testing
 
 The module contains a simple test setup, which you can run from the module root folder by running mocha from a console. Since the module uses TypeScript you first have to transpile the code to JavaScript. You can do this with a call to `tsc`, but better is to launch the tests with additional parameters like this:

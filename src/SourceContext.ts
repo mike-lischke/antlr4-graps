@@ -17,7 +17,7 @@ import { ParseTreeWalker, TerminalNode, ParseTree } from 'antlr4ts/tree';
 
 import { CodeCompletionCore } from "antlr4-c3";
 
-import { ANTLRv4Parser } from '../parser/ANTLRv4Parser';
+import { ANTLRv4Parser, ParserRuleSpecContext, LexerRuleSpecContext } from '../parser/ANTLRv4Parser';
 import { ANTLRv4Lexer } from '../parser/ANTLRv4Lexer';
 
 import { SymbolKind, SymbolInfo, DiagnosticEntry, DiagnosticType, DependencyNode } from '../index';
@@ -204,6 +204,26 @@ export class SourceContext {
 
     public getReferenceCount(symbol: string): number {
         return this.symbolTable.getReferenceCount(symbol);
+    }
+
+    public ruleFromPosition(column: number, row: number): string {
+        let terminal = terminalFromPosition(this.tree!, column, row);
+        if (!terminal) {
+            return "";
+        }
+
+        let parent: ParserRuleContext | undefined = (terminal.parent as ParserRuleContext);
+        while (parent && parent.ruleIndex != ANTLRv4Parser.RULE_parserRuleSpec && parent.ruleIndex != ANTLRv4Parser.RULE_lexerRuleSpec) {
+            parent = parent.parent;
+        }
+
+        if (parent) {
+            if (parent.ruleIndex == ANTLRv4Parser.RULE_parserRuleSpec) {
+                return (parent as ParserRuleSpecContext).RULE_REF().text;
+            }
+            return (parent as LexerRuleSpecContext).TOKEN_REF().text;
+        }
+        return "";
     }
 
     protected getSymbolInfo(symbol: string): SymbolInfo | undefined {
