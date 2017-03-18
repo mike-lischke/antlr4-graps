@@ -271,9 +271,7 @@ When looking for dependencies a simple search for .g and .g4 files is applied to
 The module is in a pretty good shape now and fully functional, but there are ideas to add more functionality, like:
 
 * Call tree visualization.
-* Rail-road diagrams for rules.
 * More semantic checks (e.g. indirect left-recursion and other warning/error conditions as detected by ANTLR)
-* Support for code completion.
 * Automatic code formatting.
 * Linting support?
 * Test rig?
