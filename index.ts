@@ -61,12 +61,13 @@ export class DiagnosticEntry {
 };
 
 /**
- * All references to rules tokens and string literals for parser and lexer rules.
- * For lexer rules only the tokens member may contain values. That array is empty for virtual tokens.
+ * All references of a rule (both lexer and parser) to other rules and string literals.
+ * Lexer rules obviously cannot have any parser rule reference. String literals are mostly interesting
+ * for parser rules to check for implicit lexer tokens.
  */
-export class DependencyNode {
-    rules: number[];
-    tokens: number[];
+export class ReferenceNode {
+    rules: string[];
+    tokens: string[];
     literals: string[];
 };
 
@@ -237,9 +238,9 @@ export class AntlrLanguageSupport {
         return result;
     }
 
-    public getDependencyGraph(file: string): Map<number, DependencyNode> {
+    public getReferenceGraph(file: string): Map<string, ReferenceNode> {
         var context = this.getContext(file);
-        return context.getDependencyGraph();
+        return context.getReferenceGraph();
     }
 
     public getRRDScript(file: string, rule: string): string {

@@ -109,7 +109,7 @@ expr: expr Star expr
 ;
 
 flowControl:
-	Return expr # Return
+	(Return expr | 'return') # Return
 	| Continue # Continue
 ;
 

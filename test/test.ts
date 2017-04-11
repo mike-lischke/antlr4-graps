@@ -185,23 +185,42 @@ describe('antlr4-graps', function () {
       expect(refCount, "Test 9.3").to.equal(2);
       backend.releaseGrammar("test/TParser.g4");
     });
+  });
+
+  describe('Advanced symbol informations', function () {
 
     it("RRD diagram", function () {
       let diagram = backend.getRRDScript("test/TParser.g4", "Any");
-      expect(diagram, "Test 15.1").to.equal("Diagram(Choice(0, Sequence(Terminal('Foo'), Terminal('Dot'), " +
+      expect(diagram, "Test 10.1").to.equal("Diagram(Choice(0, Sequence(Terminal('Foo'), Terminal('Dot'), " +
         "Optional(Terminal('Bar')), Terminal('DotDot'), Terminal('Baz'), Terminal('Bar')))).addTo()");
 
       diagram = backend.getRRDScript("test/TParser.g4", "idarray");
-      expect(diagram, "Test 15.2").to.equal("ComplexDiagram(Choice(0, Sequence(Terminal('OpenCurly'), " +
+      expect(diagram, "Test 10.2").to.equal("ComplexDiagram(Choice(0, Sequence(Terminal('OpenCurly'), " +
         "NonTerminal('id'), ZeroOrMore(Choice(0, Sequence(Terminal('Comma'), NonTerminal('id')))), Terminal('CloseCurly')))).addTo()");
 
       diagram = backend.getRRDScript("test/TParser.g4", "expr");
-      expect(diagram, "Test 15.2").to.equal("ComplexDiagram(Choice(0, Sequence(NonTerminal('expr'), Terminal('Star'), " +
+      expect(diagram, "Test 10.2").to.equal("ComplexDiagram(Choice(0, Sequence(NonTerminal('expr'), Terminal('Star'), " +
         "NonTerminal('expr')), Sequence(NonTerminal('expr'), Terminal('Plus'), NonTerminal('expr')), Sequence(Terminal" +
         "('OpenPar'), NonTerminal('expr'), Terminal('ClosePar')), Sequence(NonTerminal('expr'), Terminal('QuestionMark'), " +
         "NonTerminal('expr'), Terminal('Colon'), NonTerminal('expr')), Sequence(NonTerminal('expr'), Terminal('Equal'), " +
         "NonTerminal('expr')), Sequence(NonTerminal('id')), Sequence(NonTerminal('flowControl')), Sequence(Terminal('INT')), " +
         "Sequence(Terminal('String')))).addTo()");
+    });
+
+    it("Reference Graph", function () {
+      let graph = backend.getReferenceGraph("test/TParser.g4");
+      expect(graph.size, "Test 11.1").to.equal(13);
+      expect(graph.has("expr"), "Test 11.2");
+      expect(graph.get("expr")!.tokens.length, "Test 11.3").to.equal(9);
+      expect(graph.get("expr")!.tokens[4], "Test 11.4").to.equal("QuestionMark");
+
+      expect(graph.has("flowControl"), "Test 11.5");
+      expect(graph.get("flowControl")!.rules.length, "Test 11.6").to.equal(1);
+      expect(graph.get("flowControl")!.tokens.length, "Test 11.7").to.equal(2);
+      expect(graph.get("flowControl")!.literals.length, "Test 11.8").to.equal(1);
+      expect(graph.get("flowControl")!.rules[0], "Test 11.9").to.equal("expr");
+      expect(graph.get("flowControl")!.tokens[1], "Test 11.10").to.equal("Continue");
+      expect(graph.get("flowControl")!.literals[0], "Test 11.11").to.equal("return");
     });
 
   });

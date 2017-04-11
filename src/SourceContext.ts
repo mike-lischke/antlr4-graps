@@ -15,15 +15,17 @@ import { PredictionMode } from 'antlr4ts/atn';
 import { ParseCancellationException } from 'antlr4ts/misc';
 import { ParseTreeWalker, TerminalNode, ParseTree } from 'antlr4ts/tree';
 
-import { CodeCompletionCore } from "antlr4-c3";
+import { CodeCompletionCore, Symbol, ScopedSymbol, LiteralSymbol } from "antlr4-c3";
 
 import { ANTLRv4Parser, ParserRuleSpecContext, LexerRuleSpecContext } from '../parser/ANTLRv4Parser';
 import { ANTLRv4Lexer } from '../parser/ANTLRv4Lexer';
 
-import { SymbolKind, SymbolInfo, DiagnosticEntry, DiagnosticType, DependencyNode } from '../index';
+import { SymbolKind, SymbolInfo, DiagnosticEntry, DiagnosticType, ReferenceNode } from '../index';
 
 import { ContextErrorListener } from './ContextErrorListener';
-import { GrapsSymbolTable, BuiltInChannelSymbol, BuiltInLexerTokenSymbol, BuiltInModeSymbol } from './GrapsSymbolTable';
+import {
+    GrapsSymbolTable, BuiltInChannelSymbol, BuiltInLexerTokenSymbol, BuiltInModeSymbol, LexerTokenSymbol, ParserRuleSymbol
+} from './GrapsSymbolTable';
 import { DetailsListener } from './DetailsListener';
 import { SemanticListener } from './SemanticListener';
 import { RuleVisitor } from './RuleVisitor';
@@ -44,8 +46,8 @@ export class SourceContext {
     }
 
     public infoForSymbolAtPosition(column: number, row: number): SymbolInfo | undefined {
-        let terminal = terminalFromPosition(this.tree!, column, row);
-        if (!terminal) {
+        let terminal = parseTreeFromPosition(this.tree!, column, row);
+        if (!terminal || !(terminal instanceof TerminalNode)) {
             return undefined;
         }
 
@@ -158,10 +160,31 @@ export class SourceContext {
         return this.diagnostics;
     }
 
-    public getDependencyGraph(): Map<number, DependencyNode> {
+    // Returns all rules with a reference count of 0.
+    public getUnreferencedRules(): string[] {
+        return this.symbolTable.getUnreferencedSymbols();
+    }
+
+    public getReferenceGraph(): Map<string, ReferenceNode> {
         this.runSemanticAnalysisIfNeeded();
 
-        return this.dependencyGraph;
+        let result = new Map();
+        for (let symbol of this.symbolTable.getAllSymbols(Symbol, true)) {
+            if (symbol instanceof ParserRuleSymbol || symbol instanceof LexerTokenSymbol) {
+                let entry: ReferenceNode = { rules: [], tokens: [], literals: [] };
+                for (let child of symbol.getAllSymbols(ParserRuleSymbol, true)) {
+                    entry.rules.push(child.name);
+                }
+                for (let child of symbol.getAllSymbols(LexerTokenSymbol, true)) {
+                    entry.tokens.push(child.name);
+                }
+                for (let child of symbol.getAllSymbols(LiteralSymbol, true)) {
+                    entry.literals.push(child.name);
+                }
+               result.set(symbol.name, entry);
+            }
+        }
+        return result;
     }
 
     public getRRDScript(ruleName: string): string | undefined {
@@ -207,21 +230,21 @@ export class SourceContext {
     }
 
     public ruleFromPosition(column: number, row: number): string {
-        let terminal = terminalFromPosition(this.tree!, column, row);
+        let terminal = parseTreeFromPosition(this.tree!, column, row);
         if (!terminal) {
             return "";
         }
 
-        let parent: ParserRuleContext | undefined = (terminal.parent as ParserRuleContext);
-        while (parent && parent.ruleIndex != ANTLRv4Parser.RULE_parserRuleSpec && parent.ruleIndex != ANTLRv4Parser.RULE_lexerRuleSpec) {
-            parent = parent.parent;
+        let context: ParserRuleContext | undefined = (terminal as ParserRuleContext);
+        while (context && context.ruleIndex != ANTLRv4Parser.RULE_parserRuleSpec && context.ruleIndex != ANTLRv4Parser.RULE_lexerRuleSpec) {
+            context = context.parent;
         }
 
-        if (parent) {
-            if (parent.ruleIndex == ANTLRv4Parser.RULE_parserRuleSpec) {
-                return (parent as ParserRuleSpecContext).RULE_REF().text;
+        if (context) {
+            if (context.ruleIndex == ANTLRv4Parser.RULE_parserRuleSpec) {
+                return (context as ParserRuleSpecContext).RULE_REF().text;
             }
-            return (parent as LexerRuleSpecContext).TOKEN_REF().text;
+            return (context as LexerRuleSpecContext).TOKEN_REF().text;
         }
         return "";
     }
@@ -234,7 +257,6 @@ export class SourceContext {
         if (!this.semanticAnalysisDone) {
             this.semanticAnalysisDone = true;
             //this.diagnostics.length = 0; We would lose our syntax error from last parse run.
-            this.dependencyGraph = new Map();
             this.rrdScripts = new Map();
             let semanticListener = new SemanticListener(this.diagnostics, this.symbolTable);
             ParseTreeWalker.DEFAULT.walk(semanticListener, this.tree!);
@@ -252,7 +274,6 @@ export class SourceContext {
     private imports: string[] = []; // Updated on each parse run.
 
     private diagnostics: DiagnosticEntry[] = [];
-    private dependencyGraph: Map<number, DependencyNode>;
     private rrdScripts: Map<string, string>;
     private semanticAnalysisDone: boolean = false; // Includes determining reference counts.
 
@@ -260,12 +281,12 @@ export class SourceContext {
 };
 
 /**
- * Returns the terminal node at the given position, or null if there is no terminal at that position.
+ * Returns the parse tree which covers the given position or undefined if none could be found.
  */
-function terminalFromPosition(root: ParseTree, column: number, row: number): TerminalNode | undefined {
+function parseTreeFromPosition(root: ParseTree, column: number, row: number): ParseTree | undefined {
     // Does the root node actually contain the position? If not we don't need to look further.
     if (root instanceof TerminalNode) {
-        let terminal: TerminalNode = <TerminalNode>root;
+        let terminal = (root as TerminalNode);
         let token = terminal.symbol;
         if (token.line != row)
             return undefined;
@@ -290,14 +311,15 @@ function terminalFromPosition(root: ParseTree, column: number, row: number): Ter
             return undefined;
         }
 
-        for (var i = 0; i < context.childCount; ++i) {
-            let result = terminalFromPosition(context.getChild(i), column, row);
-            if (result) {
-                return result;
+        if (context.children) {
+            for (let child of context.children) {
+                let result = parseTreeFromPosition(child, column, row);
+                if (result) {
+                    return result;
+                }
             }
         }
+        return context;
 
     }
-
-    return undefined;
 }

@@ -1,7 +1,7 @@
 // Generated from grammars/ANTLRv4Parser.g4 by ANTLR 4.6-SNAPSHOT
 
 
-import { AbstractParseTreeVisitor } from 'antlr4ts/tree/AbstractParseTreeVisitor';
+import { ParseTreeVisitor } from 'antlr4ts/tree/ParseTreeVisitor';
 
 import { GrammarSpecContext } from './ANTLRv4Parser';
 import { GrammarTypeContext } from './ANTLRv4Parser';
@@ -75,11 +75,7 @@ import { IdentifierContext } from './ANTLRv4Parser';
  * @param <Result> The return type of the visit operation. Use `void` for
  * operations with no return type.
  */
-export class ANTLRv4ParserVisitor<Result> extends AbstractParseTreeVisitor<Result> {
-	protected defaultResult(): Result {
-		return {} as Result;
-	}
-
+export interface ANTLRv4ParserVisitor<Result> extends ParseTreeVisitor<Result> {
 	/**
 	 * Visit a parse tree produced by `ANTLRv4Parser.grammarSpec`.
 	 * @param ctx the parse tree

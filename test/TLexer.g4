@@ -48,7 +48,7 @@ INT: Digit+;
 Digit: [0-9];
 
 ID: LETTER (LETTER | '0'..'9')*;
-fragment LETTER : [a-zA-Z\u0080-\uFFFF];
+fragment LETTER: [a-zA-Z\u0080-\uFFFF];
 
 LessThan: '<';
 GreaterThan:  '>';

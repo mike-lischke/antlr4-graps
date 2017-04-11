@@ -25,7 +25,7 @@
 
 "use strict";
 
-import { TerminalNode, ParseTree } from "antlr4ts/tree";
+import { AbstractParseTreeVisitor, TerminalNode, ParseTree } from "antlr4ts/tree";
 import { ANTLRv4ParserVisitor } from "../parser/ANTLRv4ParserVisitor";
 import { ANTLRv4Lexer } from "../parser/ANTLRv4Lexer";
 import {
@@ -37,13 +37,17 @@ import {
     RuleBlockContext, LexerRuleBlockContext
 } from "../parser/ANTLRv4Parser";
 
-export class RuleVisitor extends ANTLRv4ParserVisitor<string> {
+export class RuleVisitor extends AbstractParseTreeVisitor<string> implements ANTLRv4ParserVisitor<string> {
 
     constructor(private scripts: Map<string, string>) {
         super();
     }
 
-    visitParserRuleSpec = function (ctx: ParserRuleSpecContext): string {
+    defaultResult(): string {
+        return "";
+    }
+
+    visitParserRuleSpec(ctx: ParserRuleSpecContext): string {
         if (!ctx.tryGetRuleContext(0, RuleBlockContext)) {
             return "# Syntax Error #";
         }
