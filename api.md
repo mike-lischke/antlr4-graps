@@ -2,269 +2,109 @@
 
 ## Usage
 
-After installation (usually via `npm install antlr4-graps`) you can do a first test using `ts-node` (which you also have to install). Here's such a session to demonstrate the use of the module (run from the root folder of the antlr4-graps module):
+In order to start using antlr4-graps you have to import it as usual and create an instance of the `AntlrLanguageSupport` class, which then provides all the functionality.
 
-```bash
-antlr4-graps Mike$ ts-node
-```
-```typescript
-> var graps = require(".");
-'use strict'
->
-> console.log(graps);
-{ SymbolKind:
-   { TokenVocab: 0,
-     Import: 1,
-     BuiltInLexerToken: 2,
-     VirtualLexerToken: 3,
-     FragmentLexerToken: 4,
-     LexerToken: 5,
-     BuiltInMode: 6,
-     LexerMode: 7,
-     BuiltInChannel: 8,
-     TokenChannel: 9,
-     ParserRule: 10 },
-  DiagnosticType:
-   { '0': 'Hint',
-     '1': 'Info',
-     '2': 'Warning',
-     '3': 'Error',
-     Hint: 0,
-     Info: 1,
-     Warning: 2,
-     Error: 3 },
-  DiagnosticEntry: [Function: DiagnosticEntry],
-  AntlrLanguageSupport: [Function: AntlrLanguageSupport] }
-undefined
->
-> import { AntlrLanguageSupport } from "./src/index";
-undefined
-> var backend = new AntlrLanguageSupport();
-undefined
->
-> console.log(backend.listSymbols("test/t.g4", true));
-[ { kind: 5,
-    name: 'D',
-    source: 't.g4',
-    definition: { text: 'D: \'D\';', start: [Object], end: [Object] } },
-  { kind: 5,
-    name: 'A',
-    source: 't.g4',
-    definition: { text: 'A: \'A\';', start: [Object], end: [Object] } },
-  { kind: 5,
-    name: 'B',
-    source: 't.g4',
-    definition: { text: 'B: \'B\';', start: [Object], end: [Object] } },
-  { kind: 5,
-    name: 'C',
-    source: 't.g4',
-    definition:
-     { text: 'C: \'C\' -> channel(BLAH);',
-       start: [Object],
-       end: [Object] } },
-  { kind: 10,
-    name: 'x',
-    source: 't.g4',
-    definition: { text: 'x: A | B | C;', start: [Object], end: [Object] } },
-  { kind: 10,
-    name: 'y',
-    source: 't.g4',
-    definition: { text: 'y: ZZ;', start: [Object], end: [Object] } } ]
-undefined
-> backend.releaseGrammar("test/t.g4");
-undefined
->
-> backend.reparse("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
-undefined
->
-> console.log(backend.getDiagnostics("test/t.g4"));
-[ DiagnosticEntry {
-    type: 3,
-    message: 'mismatched input \'::\' expecting {\'options\', COLON, AT}',
-    column: 12,
-    row: 1,
-    length: 2 },
-  DiagnosticEntry {
-    type: 3,
-    message: 'mismatched input \'|\' expecting {\'options\', COLON, AT}',
-    column: 0,
-    row: 2,
-    length: 1 },
-  DiagnosticEntry {
-    type: 3,
-    message: 'mismatched input \';\' expecting {\'options\', COLON, AT}',
-    column: 3,
-    row: 2,
-    length: 1 },
-  { type: 3,
-    message: 'Duplicate symbol \'c\'',
-    column: 5,
-    row: 2,
-    length: 1 } ]
-undefined
->
-> backend.reparse("test/t.g4", "grammar A; a: b \n| c; c: b+;");
-> undefined
->
-> console.log(backend.getDiagnostics("test/t.g4"));
-[ { type: 3,
-    message: 'Unknown parser rule \'b\'',
-    position: { character: 14, line: 1 },
-    length: 1 },
-  { type: 3,
-    message: 'Unknown parser rule \'b\'',
-    position: { character: 8, line: 2 },
-    length: 1 } ]
+```javascript
+let graps = require(".");
+let backend = new graps.AntlrLanguageSupport("")
 ```
 
-The module exports a central class (**AntlrLanguageSupport**), which provides all the main functionality. It takes care to load additional dependencies when you load a grammar (token vocabularies and imports) and it takes care not to load a grammar multiple times. Instead an internal reference counter is maintained. That also means that every call to `loadGrammar` must be paired with a call to `releaseGrammar` to avoid leaking grammar instances. Note that `loadGrammar` is also called implicitely if you call any of the information functions without having loaded the given grammar first. So, better do an explicit `loadGrammar` call to ensure memory is not held longer than necessary.
+The constructor takes a path which is used as a search path for grammars. The backend takes care to load additional dependencies when you load a grammar (token vocabularies and imports) and also not to load a grammar multiple times. Instead an internal reference counter is maintained. That also means that every call to `loadGrammar` must be paired with a call to `releaseGrammar` to avoid leaking grammar instances. Note that `loadGrammar` is also called implicitely if you call any of the information functions without having loaded the given grammar first. So, better do an explicit `loadGrammar` call to ensure memory is not held longer than necessary.
 
-The module uses the given file name mostly to identify a source context, not so much to get the source from that file. Only if you call `loadGrammar()` without the source parameter the file name is used to open that file and load its content. However, the file name is also used to resolve dependencies, by using its base path to locate the other grammar files (they all have to be in the same folder).
-
-In the node session above you can see how to call the available APIs and what their output is. The diagnostic report is executed for 2 different scenarios, one with a syntax error (and partially dubious follow up errors) and one returning results from the semantic check when syntactically everything is correct (e.g. missing symbols).
-
-## Symbol Kinds
-
-The module uses an enum to denote the kind of a symbol. Use this to check what type of symbol has been returned by the symbol retrieval functions.
-
-```typescript
-enum SymbolKind {
-    TokenVocab,
-    Import,
-    BuiltInLexerToken,
-    VirtualLexerToken,
-    FragmentLexerToken,
-    LexerToken,
-    BuiltInMode,
-    LexerMode,
-    BuiltInChannel,
-    TokenChannel,
-    ParserRule
-};
-```
-
-## Diagnostic Types
-
-The module also uses an enum to denote the type of diagnostic entries (returned by `getDiagnostics`):
-
-```typescript
-enum DiagnosticType {
-    Hint,
-    Info,
-    Warning,
-    Error
-}
-```
+The file name you pass to all API functions is mostly used to identify a source context, not so much to get the source code from that file, hence you could use any unique identifier there. However, when you call a function for a file that has not been loaded the given string is interpreted as file name and the library tries to load content from that file. The file name is also used to resolve dependencies (if a grammar cannot be found in the library/search folder), by using its base path to locate the other grammar files. So better stick with file names there.
 
 ## Available APIs
 
-> `function AntlrLanguageSupport.loadGrammar(file: string[, source: string])`
+> `function AntlrLanguageSupport.loadGrammar(fileName[, source])`
 >
-> Loads a grammar source from either the given file or, if specified, from the source parameter. If an explicit source is given then the file content will be ignored. The file name however is used to identify the internally managed source context and dependency references. A call to this function will not load any additional source, if there was a previous call to loadGrammar with the same file name (e.g. via dependency resolution). It will then only increase the internal ref counter. Calls to `loadGrammar()` must always be paired by a `releaseGrammar()` or the source context will stay in memory until the module is unloaded.
+> Loads a grammar source from either the given file (a string) or, if specified, from the source parameter (also a string). If an explicit source is given then the file content will be ignored. The file name however is used to identify the internally managed source context and dependency references. A call to this function will not load any additional source, if there was a previous call to loadGrammar with the same file name (e.g. via dependency resolution). It will then only increase the internal ref counter. Calls to `loadGrammar()` must always be paired by a `releaseGrammar()` or the source context will stay in memory until the module is unloaded.
 >
 
 -----
 
-> `function AntlrLanguageSupport.releaseGrammar(file: string)`
+> `function AntlrLanguageSupport.releaseGrammar(fileName)`
 >
-> Decreases the ref counter for the given file and if that reaches zero unloads the source context and releases all it's dependencies (which might lead to unloading them too if they are no longer referenced anywhere else).
+> Decreases the ref counter for the given file and if that reaches zero unloads the source context and releases all it's dependencies (which might lead to unloading them too if they are no longer referenced anywhere else). You should call this function also when you want to unload a grammar after you called any of the other functions without a `loadGrammar()` call first, because grammars are loaded implicitly if not done explicitly by this function.
 
 -----
 
-> `function AntlrLanguageSupport.reparse(file: string, source: string)`
+> `function AntlrLanguageSupport.reparse(fileName, source)`
 >
 > Used to update symbol information for a given file (e.g. after an edit action). It is not necessary that the file already has all the changes. Only `source` is used as source for the grammar code. This function will also update all dependencies, by releasing no longer used ones and loading new ones, if required.
 
 -----
 
-> `function AntlrLanguageSupport.infoForSymbol(file: string, column: number, row: number): SymbolInfo | undefined`
+> `function AntlrLanguageSupport.infoForSymbol(fileName, column, row, limitToChildren)`
 >
-> Returns informations about the symbol at the given position.
->
-> The result is an object with these members:
->
->```typescript
->class Definition {
->    text: string;
->    start: { column: number, row: number };
->    end: { column: number, row: number };
->};
->
->class SymbolInfo {
->    kind: SymbolKind;
->    name: string;
->    source: string;
->    definition: Definition;
->};
->```
+> Returns informations about the symbol at the given position or `undefined` if no symbol could be found. The column and row params are numbers, while `limitToChildren` is a boolean (default is `true`) that indicates to consider only child symbols in specific contexts (rules, options, sets, lexer modes), which is important to limit lookup to symbols usage, not definition. If set to `false` any symbol found at that position is returned.
 
 -----
 
-> `function AntlrLanguageSupport.listSymbols(file: string): SymbolInfo[]`
+> `function AntlrLanguageSupport.enclosingRangeForSymbol(fileName, column, row, ruleScope)`
 >
-> Returns a list of all symbols defined in the given file (or grammar if parsed from a string). The result is an array of symbol objects (like the ones returned by `infoForSymbol()`).
+> Returns a lexical range (start row/column, end row/column) of the scoped symbol that contains the given position. A scoped symbol is a symbol that can contain other symbols (e.g. a rule block, rule parameter blocks, options or token blocks). Setting `ruleScope` to `true` (default is `false`) causes the parse tree walker to stop not on the most inner block but always on a rule (or semantically equivalent) block (semantically equivalent are for instance token + option blocks). If no symbol could be found the result is undefined.
 
 -----
 
-> `function AntlrLanguageSupport.getDiagnostics(file: string): DiagnosticEntry[]`
+> `function AntlrLanguageSupport.listSymbols(fileName)`
 >
-> Returns a list of diagnostic records (e.g. syntax errors). Syntax error messages are generated by ANTLR itself and passed on unchanged currently. Semantic errors are mostly about symbol validity. A lookup is done for each found symbol (parser rule, lexer token, channel + mode) in a parse unit in all symbols (including those from imported grammars).
->
->```typescript
->class DiagnosticEntry {
->    type: DiagnosticType;
->    message: string;
->    column: number;
->    row: number;
->    length: number;
->};
->```
-
-This function is the starting point for all kind of semantic processing, including reference counting and symbol checks. It should usually be called after a `reparse` call, to update the internal informations.
+> Returns a list of all symbols defined in the given file (or grammar if parsed from a string). The result is an array of symbol objects (like the one returned by `infoForSymbol()`).
 
 -----
 
-> `function AntlrLanguageSupport.countReferences(file: string, symbol: string): number`
+> `function AntlrLanguageSupport.getCodeCompletionCandidates(fileName, column, row): SymbolInfo[]`
 >
-> Returns the number of references for a given symbol. In order to speed up processing a few conditions must be met to make this work:
+> Returns an array of `SymbolInfo` objects which represent symbols that are possible input at the given input position.
+>
+> Note: the code completion implementation is still in experimental status, so expect problems there. Use it with small grammars only.
+
+-----
+
+> `function AntlrLanguageSupport.getDiagnostics(fileName: string)`
+>
+> Returns a list of diagnostic records (e.g. syntax errors) for the given file as an array of `DiagnosticEntry` objects. The diagnostics are produced by 2 sources. One is the backend itself, which can check for syntax errors, duplicate or missing symbols and simimlar problems. Once a generation run was triggered the internal diagnostics list is dismissed and instead all issues reported by the ANTLR jar are collected. This allows for basic issue reporting while editing (which shouldn't constantly generate parser files) and full info after generation (e.g. on save of a document). Should there be a problem with running generation (or the user doesn't want that) there is at least some diagnostic info.
+
+-----
+
+> `function AntlrLanguageSupport.ruleFromPosition(fileName,  column, row)`
+>
+> Returns the name of the rule at the given position. Useful when you plan to get further informations about a specific rule (e.g. railroad diagrams). If there is no rule the result is undefined.
+
+-----
+
+> `function AntlrLanguageSupport.countReferences(fileName, symbol)`
+>
+> Returns the number of references for a given symbol (a string). Following conditions apply:
 >
 > * The symbol must be defined in the file passed to this function.
-> * The return value only includes reference counts from those contexts which have actually been loaded.
+> * The return value only includes reference counts from those contexts which are currently loaded.
 
 -----
 
-> `function AntlrLanguageSupport.getCodeCompletionCandidates(file: string, column: number, row: number): SymbolInfo[]`
+> `function AntlrLanguageSupport.getReferenceGraph(fileName)`
 >
-> Returns a list of symbols that are possible input at the given input position.
+> Returns a map with rule relationships, that is mappings of rule name (lexer + parser rules) to an `ReferenceNode` object with referenced rules, tokens and string literals. This can be used e.g. for call graphs.
 
 -----
 
-> `function AntlrLanguageSupport.ruleFromPosition(file: string,  column: number, row: number): string`
+> `function AntlrLanguageSupport.getRRDScript(fileName, rule): string`
 >
-> Returns the name of the rule at the given position. Useful when you plan to get further informations about a specific rule (e.g. railroad diagram).
+> Returns a text snippet that can be processed by the [railroad-diagrams.js](http://github.com/tabatkins/railroad-diagrams) script to generate rail road diagrams. The rule name passed in can be a lexer or parser rule in the given file or any of its dependencies.
 
 -----
 
-> `function AntlrLanguageSupport.getRRDScript(file: string, rule: string): string`
+> `function AntlrLanguageSupport.generate(fileName, options: GenerationOptions)`
 >
-> Returns a text snippet that can be processed by the [railroad-diagrams.js](http://github.com/tabatkins/railroad-diagrams) script to generate rail road diagrams. The rule name passed in can be a lexer or parser rule in the given file or any of it's dependencies. As usual, dependencies must be loaded first for this kind of lookup. Typical output looks like this:
->
->```
->Diagram(Choice(0, Sequence(Terminal('Foo'), Terminal('Dot'), Optional(Terminal('Bar')), Terminal('DotDot'), Terminal('Baz'), Terminal('Bar')))).addTo()
->```
-
------
-
-> `function AntlrLanguageSupport.getReferenceGraph(file: string): Map<string, ReferenceNode>`
->
-> Returns a map with rule relationships. It is keyed by the rule name (lexer + parser rules) and provides an object with referenced rules, tokens and string literals. This can be used e.g. for call graphs. The references class is defined as:
+> This function generates parsers and associated files using one of the ANTLR jars shipped with this module. There are 2 jars, one just for the typescript target and one for all other supported target languages. Both jars are custom built snapshots, not the official downloads, but you can specify a different jar in the generation options. The jar for non-typescript targets not only generates parser files but also interpreter data. This data is used to setup parser + lexer interpreters for testing/debugging (done transparently as part of the `generate()` call, but only if the target language is not Typescript).
 > 
-> ```typescript
->class ReferenceNode {
->    rules: string[];
->    tokens: string[];
->    literals: string[];
->};
->```
+> The `options` parameter is an object with various optional parameters, like a dedicated library dir, an output dir and other settings for the ANTLR tool.
+> 
+> The function returns a promise carrying a string array. The strings contain names of all affected files in the generation process. You can then directly iterate over that array to request diagnostic informations for each file.
+
+-----
+
+> `function AntlrLanguageSupport.getATNGraph(fileName, rule): ATNGraphData | undefined`
+>
+> This is a special purpose function, not so frequently used. It returns an `ATNGraphData` object which describes nodes and links of a graph that represents the ATN structure of a given rule. This is another set of data to allow a visual presentation of the rules (beside the railroad diagrams and the rule graph), but is mostly useful for ANTLR developers only.
 
 -----

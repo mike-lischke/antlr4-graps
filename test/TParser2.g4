@@ -1,7 +1,7 @@
-parser grammar TParser;
+parser grammar TParser2;
 
-     options { // Indentation by intention.
-	tokenVocab = TLexer;
+options {
+	tokenVocab = TLexer2;
 }
 
 // These are all supported parser sections:

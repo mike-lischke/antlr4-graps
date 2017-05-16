@@ -349,11 +349,11 @@ WS
 // errors.
 //
 // Comment this rule out to allow the error to be propagated to the parser
-
+/*
 ERRCHAR
    : . -> channel (HIDDEN)
    ;
-
+*/
 // ======================================================
 // Lexer modes
 // -------------------------

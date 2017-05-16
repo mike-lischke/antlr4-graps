@@ -19,15 +19,13 @@ export class ContextErrorListener extends BaseErrorListener {
     syntaxError<T extends Token>(recognizer: Recognizer<T, any>, offendingSymbol: T | undefined, line: number,
         charPositionInLine: number, msg: string, e: RecognitionException | undefined) {
 
-        var error: DiagnosticEntry = {
+        let error: DiagnosticEntry = {
             type: DiagnosticType.Error,
             message: msg,
-            column: charPositionInLine,
-            row: line,
-            length: 1
+            range: { start: { column: charPositionInLine, row: line }, end: { column: charPositionInLine + 1, row: line }}
         }
         if (offendingSymbol) {
-            error.length = offendingSymbol.stopIndex - offendingSymbol.startIndex + 1;
+            error.range.end.column = charPositionInLine + offendingSymbol.stopIndex - offendingSymbol.startIndex + 1;
         }
         this.errorList.push(error);
     }

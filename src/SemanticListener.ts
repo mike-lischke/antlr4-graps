@@ -116,9 +116,15 @@ export class SemanticListener implements ANTLRv4ParserListener {
             let entry: DiagnosticEntry = {
                 type: DiagnosticType.Error,
                 message: message + " '" + symbol + "'",
-                column: offendingToken.charPositionInLine,
-                row: offendingToken.line,
-                length: offendingToken.stopIndex - offendingToken.startIndex + 1
+                range: {
+                    start: {
+                        column: offendingToken.charPositionInLine,
+                        row: offendingToken.line },
+                    end: {
+                        column: offendingToken.charPositionInLine + offendingToken.stopIndex - offendingToken.startIndex + 1,
+                        row: offendingToken.line
+                    }
+                }
             }
             this.diagnostics.push(entry);
         }
@@ -128,9 +134,16 @@ export class SemanticListener implements ANTLRv4ParserListener {
         let entry: DiagnosticEntry = {
             type: DiagnosticType.Error,
             message: "Duplicate symbol '" + symbol + "'",
-            column: offendingToken.charPositionInLine,
-            row: offendingToken.line,
-            length: offendingToken.stopIndex - offendingToken.startIndex + 1
+            range: {
+                start: {
+                    column: offendingToken.charPositionInLine,
+                    row: offendingToken.line
+                },
+                end: {
+                    column: offendingToken.charPositionInLine + offendingToken.stopIndex - offendingToken.startIndex + 1,
+                    row: offendingToken.line
+                }
+            }
         }
         this.diagnostics.push(entry);
     }

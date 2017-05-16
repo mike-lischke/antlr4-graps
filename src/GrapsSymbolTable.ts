@@ -9,7 +9,7 @@
 
 import { ParserRuleContext, CharStream } from 'antlr4ts';
 import { Interval } from 'antlr4ts/misc';
-import { SymbolTable, Symbol, ScopedSymbol } from "antlr4-c3";
+import { SymbolTable, Symbol, ScopedSymbol, SymbolTableOptions } from "antlr4-c3";
 
 import { SymbolKind, SymbolGroupKind, SymbolInfo, Definition } from '../index';
 import { SourceContext } from './SourceContext';
@@ -20,8 +20,8 @@ type SymbolStore = Map<SymbolKind, Map<string, ParserRuleContext | undefined>>;
 export class GrapsSymbolTable extends SymbolTable {
     public tree: ParserRuleContext; // Set by the owning source context after each parse run.
 
-    constructor(name: string, private owner?: SourceContext) {
-        super(name);
+    constructor(name: string, options: SymbolTableOptions, private owner?: SourceContext) {
+        super(name, options);
     };
 
     public clear() {
@@ -148,11 +148,11 @@ export class GrapsSymbolTable extends SymbolTable {
             });
         }
 
-        let root = symbol.getRoot() as GrapsSymbolTable;
+        let symbolTable = symbol.getSymbolTable() as GrapsSymbolTable;
         return {
             kind: kind,
             name: symbol.name,
-            source: (symbol.context && root.owner) ? root.owner.sourceId : "ANTLR runtime",
+            source: (symbol.context && symbolTable && symbolTable.owner) ? symbolTable.owner.sourceId : "ANTLR runtime",
             definition: definitionForContext(symbol.context, true)
         };
 
@@ -297,8 +297,10 @@ export function definitionForContext(ctx: ParserRuleContext | undefined, keepQuo
 
     var result: Definition = {
         text: "",
-        start: { column: ctx.start.charPositionInLine, row: ctx.start.line },
-        end: { column: ctx.stop!.charPositionInLine, row: ctx.stop!.line }
+        range: {
+            start: { column: ctx.start.charPositionInLine, row: ctx.start.line },
+            end: { column: ctx.stop!.charPositionInLine, row: ctx.stop!.line }
+        }
     };
 
     let start = ctx.start.startIndex;
@@ -308,18 +310,18 @@ export function definitionForContext(ctx: ParserRuleContext | undefined, keepQuo
     if (ctx.ruleIndex == ANTLRv4Parser.RULE_modeSpec) {
         let modeSpec: ModeSpecContext = <ModeSpecContext>ctx;
         stop = modeSpec.SEMI().symbol.stopIndex;
-        result.end.column = modeSpec.SEMI().symbol.charPositionInLine;
-        result.end.row = modeSpec.SEMI().symbol.line;
+        result.range.end.column = modeSpec.SEMI().symbol.charPositionInLine;
+        result.range.end.row = modeSpec.SEMI().symbol.line;
     } else if (ctx.ruleIndex == ANTLRv4Parser.RULE_grammarSpec) {
         // Similar for entire grammars. We only need the introducer line here.
         let grammarSpec: GrammarSpecContext = <GrammarSpecContext>ctx;
         stop = grammarSpec.SEMI().symbol.stopIndex;
-        result.end.column = grammarSpec.SEMI().symbol.charPositionInLine;
-        result.end.row = grammarSpec.SEMI().symbol.line;
+        result.range.end.column = grammarSpec.SEMI().symbol.charPositionInLine;
+        result.range.end.row = grammarSpec.SEMI().symbol.line;
 
         start = grammarSpec.grammarType().start.startIndex;
-        result.start.column = grammarSpec.grammarType().start.charPositionInLine;
-        result.start.row = grammarSpec.grammarType().start.line;
+        result.range.start.column = grammarSpec.grammarType().start.charPositionInLine;
+        result.range.start.row = grammarSpec.grammarType().start.line;
     }
 
     result.text = cs.getText(new Interval(start, stop));

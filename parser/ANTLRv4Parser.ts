@@ -1,4 +1,4 @@
-// Generated from grammars/ANTLRv4Parser.g4 by ANTLR 4.6-SNAPSHOT
+// Generated from ANTLRv4Parser.g4 by ANTLR 4.6-SNAPSHOT
 
 
 import { ATN } from 'antlr4ts/atn/ATN';
@@ -81,14 +81,13 @@ export class ANTLRv4Parser extends Parser {
 	public static readonly NOT=51;
 	public static readonly ID=52;
 	public static readonly WS=53;
-	public static readonly ERRCHAR=54;
-	public static readonly END_ARGUMENT=55;
-	public static readonly UNTERMINATED_ARGUMENT=56;
-	public static readonly ARGUMENT_CONTENT=57;
-	public static readonly END_ACTION=58;
-	public static readonly UNTERMINATED_ACTION=59;
-	public static readonly ACTION_CONTENT=60;
-	public static readonly UNTERMINATED_CHAR_SET=61;
+	public static readonly END_ARGUMENT=54;
+	public static readonly UNTERMINATED_ARGUMENT=55;
+	public static readonly ARGUMENT_CONTENT=56;
+	public static readonly END_ACTION=57;
+	public static readonly UNTERMINATED_ACTION=58;
+	public static readonly ACTION_CONTENT=59;
+	public static readonly UNTERMINATED_CHAR_SET=60;
 	public static readonly RULE_grammarSpec = 0;
 	public static readonly RULE_grammarType = 1;
 	public static readonly RULE_prequelConstruct = 2;
@@ -183,9 +182,9 @@ export class ANTLRv4Parser extends Parser {
 		"RETURNS", "LOCALS", "THROWS", "CATCH", "FINALLY", "MODE", "COLON", "COLONCOLON", 
 		"COMMA", "SEMI", "LPAREN", "RPAREN", "LBRACE", "RBRACE", "RARROW", "LT", 
 		"GT", "ASSIGN", "QUESTION", "STAR", "PLUS_ASSIGN", "PLUS", "OR", "DOLLAR", 
-		"RANGE", "DOT", "AT", "POUND", "NOT", "ID", "WS", "ERRCHAR", "END_ARGUMENT", 
-		"UNTERMINATED_ARGUMENT", "ARGUMENT_CONTENT", "END_ACTION", "UNTERMINATED_ACTION", 
-		"ACTION_CONTENT", "UNTERMINATED_CHAR_SET"
+		"RANGE", "DOT", "AT", "POUND", "NOT", "ID", "WS", "END_ARGUMENT", "UNTERMINATED_ARGUMENT", 
+		"ARGUMENT_CONTENT", "END_ACTION", "UNTERMINATED_ACTION", "ACTION_CONTENT", 
+		"UNTERMINATED_CHAR_SET"
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(ANTLRv4Parser._LITERAL_NAMES, ANTLRv4Parser._SYMBOLIC_NAMES, []);
 
@@ -608,7 +607,6 @@ export class ANTLRv4Parser extends Parser {
 				this.identifier();
 				}
 				break;
-
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
@@ -1037,7 +1035,6 @@ export class ANTLRv4Parser extends Parser {
 				this.parserRuleSpec();
 				}
 				break;
-
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
@@ -1868,7 +1865,6 @@ export class ANTLRv4Parser extends Parser {
 
 				}
 				break;
-
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
@@ -1886,7 +1882,6 @@ export class ANTLRv4Parser extends Parser {
 
 				}
 				break;
-
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
@@ -1904,7 +1899,6 @@ export class ANTLRv4Parser extends Parser {
 
 				}
 				break;
-
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
@@ -2092,7 +2086,6 @@ export class ANTLRv4Parser extends Parser {
 				this.match(ANTLRv4Parser.RPAREN);
 				}
 				break;
-
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
@@ -2355,7 +2348,6 @@ export class ANTLRv4Parser extends Parser {
 				}
 				}
 				break;
-
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
@@ -2391,7 +2383,6 @@ export class ANTLRv4Parser extends Parser {
 				}
 				}
 				break;
-
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
@@ -2399,7 +2390,6 @@ export class ANTLRv4Parser extends Parser {
 				this.ebnf();
 				}
 				break;
-
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
@@ -2648,7 +2638,6 @@ export class ANTLRv4Parser extends Parser {
 				this.characterRange();
 				}
 				break;
-
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
@@ -2656,7 +2645,6 @@ export class ANTLRv4Parser extends Parser {
 				this.terminalRule();
 				}
 				break;
-
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
@@ -2664,7 +2652,6 @@ export class ANTLRv4Parser extends Parser {
 				this.notSet();
 				}
 				break;
-
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
@@ -2672,7 +2659,6 @@ export class ANTLRv4Parser extends Parser {
 				this.match(ANTLRv4Parser.LEXER_CHAR_SET);
 				}
 				break;
-
 			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
@@ -2722,7 +2708,6 @@ export class ANTLRv4Parser extends Parser {
 				this.characterRange();
 				}
 				break;
-
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
@@ -2730,7 +2715,6 @@ export class ANTLRv4Parser extends Parser {
 				this.terminalRule();
 				}
 				break;
-
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
@@ -2738,7 +2722,6 @@ export class ANTLRv4Parser extends Parser {
 				this.ruleref();
 				}
 				break;
-
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
@@ -2746,7 +2729,6 @@ export class ANTLRv4Parser extends Parser {
 				this.notSet();
 				}
 				break;
-
 			case 5:
 				this.enterOuterAlt(_localctx, 5);
 				{
@@ -2797,7 +2779,6 @@ export class ANTLRv4Parser extends Parser {
 				this.setElement();
 				}
 				break;
-
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
@@ -2895,7 +2876,6 @@ export class ANTLRv4Parser extends Parser {
 
 				}
 				break;
-
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
@@ -2913,7 +2893,6 @@ export class ANTLRv4Parser extends Parser {
 
 				}
 				break;
-
 			case 3:
 				this.enterOuterAlt(_localctx, 3);
 				{
@@ -2921,7 +2900,6 @@ export class ANTLRv4Parser extends Parser {
 				this.characterRange();
 				}
 				break;
-
 			case 4:
 				this.enterOuterAlt(_localctx, 4);
 				{
@@ -3206,7 +3184,6 @@ export class ANTLRv4Parser extends Parser {
 				this.identifier();
 				}
 				break;
-
 			case 2:
 				this.enterOuterAlt(_localctx, 2);
 				{
@@ -3290,7 +3267,7 @@ export class ANTLRv4Parser extends Parser {
 
 	private static readonly _serializedATNSegments: number = 2;
 	private static readonly _serializedATNSegment0: string =
-		"\x03\uAF6F\u8320\u479D\uB75C\u4880\u1605\u191C\uAB37\x03?\u0283\x04\x02"+
+		"\x03\uAF6F\u8320\u479D\uB75C\u4880\u1605\u191C\uAB37\x03>\u0283\x04\x02"+
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07"+
 		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x04\v\t\v\x04\f\t\f\x04\r\t\r\x04"+
 		"\x0E\t\x0E\x04\x0F\t\x0F\x04\x10\t\x10\x04\x11\t\x11\x04\x12\t\x12\x04"+
@@ -3426,13 +3403,13 @@ export class ANTLRv4Parser extends Parser {
 		"\x05\x1C\x0F\x02\xF6\x19\x03\x02\x02\x02\xF7\xFB\x05~@\x02\xF8\xFB\x07"+
 		"\x13\x02\x02\xF9\xFB\x07\x14\x02\x02\xFA\xF7\x03\x02\x02\x02\xFA\xF8\x03"+
 		"\x02\x02\x02\xFA\xF9\x03\x02\x02\x02\xFB\x1B\x03\x02\x02\x02\xFC\u0100"+
-		"\x07\r\x02\x02\xFD\xFF\x07>\x02\x02\xFE\xFD\x03\x02\x02\x02\xFF\u0102"+
+		"\x07\r\x02\x02\xFD\xFF\x07=\x02\x02\xFE\xFD\x03\x02\x02\x02\xFF\u0102"+
 		"\x03\x02\x02\x02\u0100\xFE\x03\x02\x02\x02\u0100\u0101\x03\x02\x02\x02"+
 		"\u0101\u0103\x03\x02\x02\x02\u0102\u0100\x03\x02\x02\x02\u0103\u0104\x07"+
-		"<\x02\x02\u0104\x1D\x03\x02\x02\x02\u0105\u0109\x07\f\x02\x02\u0106\u0108"+
-		"\x07;\x02\x02\u0107\u0106\x03\x02\x02\x02\u0108\u010B\x03\x02\x02\x02"+
+		";\x02\x02\u0104\x1D\x03\x02\x02\x02\u0105\u0109\x07\f\x02\x02\u0106\u0108"+
+		"\x07:\x02\x02\u0107\u0106\x03\x02\x02\x02\u0108\u010B\x03\x02\x02\x02"+
 		"\u0109\u0107\x03\x02\x02\x02\u0109\u010A\x03\x02\x02\x02\u010A\u010C\x03"+
-		"\x02\x02\x02\u010B\u0109\x03\x02\x02\x02\u010C\u010D\x079\x02\x02\u010D"+
+		"\x02\x02\x02\u010B\u0109\x03\x02\x02\x02\u010C\u010D\x078\x02\x02\u010D"+
 		"\x1F\x03\x02\x02\x02\u010E\u010F\x07\x1E\x02\x02\u010F\u0110\x05~@\x02"+
 		"\u0110\u0114\x07\"\x02\x02\u0111\u0113\x05B\"\x02\u0112\u0111\x03\x02"+
 		"\x02\x02\u0113\u0116\x03\x02\x02\x02\u0114\u0112\x03\x02\x02\x02\u0114"+

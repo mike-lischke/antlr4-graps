@@ -1,4 +1,4 @@
-// Generated from grammars/ANTLRv4Parser.g4 by ANTLR 4.6-SNAPSHOT
+// Generated from ANTLRv4Parser.g4 by ANTLR 4.6-SNAPSHOT
 
 
 import { ParseTreeListener } from 'antlr4ts/tree/ParseTreeListener';
@@ -83,7 +83,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitGrammarSpec?: (ctx: GrammarSpecContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.grammarType`.
 	 * @param ctx the parse tree
@@ -94,7 +93,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitGrammarType?: (ctx: GrammarTypeContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.prequelConstruct`.
 	 * @param ctx the parse tree
@@ -105,7 +103,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitPrequelConstruct?: (ctx: PrequelConstructContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.optionsSpec`.
 	 * @param ctx the parse tree
@@ -116,7 +113,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitOptionsSpec?: (ctx: OptionsSpecContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.option`.
 	 * @param ctx the parse tree
@@ -127,7 +123,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitOption?: (ctx: OptionContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.optionValue`.
 	 * @param ctx the parse tree
@@ -138,7 +133,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitOptionValue?: (ctx: OptionValueContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.delegateGrammars`.
 	 * @param ctx the parse tree
@@ -149,7 +143,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitDelegateGrammars?: (ctx: DelegateGrammarsContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.delegateGrammar`.
 	 * @param ctx the parse tree
@@ -160,7 +153,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitDelegateGrammar?: (ctx: DelegateGrammarContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.tokensSpec`.
 	 * @param ctx the parse tree
@@ -171,7 +163,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTokensSpec?: (ctx: TokensSpecContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.channelsSpec`.
 	 * @param ctx the parse tree
@@ -182,7 +173,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitChannelsSpec?: (ctx: ChannelsSpecContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.idList`.
 	 * @param ctx the parse tree
@@ -193,7 +183,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitIdList?: (ctx: IdListContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.namedAction`.
 	 * @param ctx the parse tree
@@ -204,7 +193,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitNamedAction?: (ctx: NamedActionContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.actionScopeName`.
 	 * @param ctx the parse tree
@@ -215,7 +203,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitActionScopeName?: (ctx: ActionScopeNameContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.actionBlock`.
 	 * @param ctx the parse tree
@@ -226,7 +213,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitActionBlock?: (ctx: ActionBlockContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.argActionBlock`.
 	 * @param ctx the parse tree
@@ -237,7 +223,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitArgActionBlock?: (ctx: ArgActionBlockContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.modeSpec`.
 	 * @param ctx the parse tree
@@ -248,7 +233,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitModeSpec?: (ctx: ModeSpecContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.rules`.
 	 * @param ctx the parse tree
@@ -259,7 +243,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRules?: (ctx: RulesContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.ruleSpec`.
 	 * @param ctx the parse tree
@@ -270,7 +253,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRuleSpec?: (ctx: RuleSpecContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.parserRuleSpec`.
 	 * @param ctx the parse tree
@@ -281,7 +263,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitParserRuleSpec?: (ctx: ParserRuleSpecContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.exceptionGroup`.
 	 * @param ctx the parse tree
@@ -292,7 +273,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitExceptionGroup?: (ctx: ExceptionGroupContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.exceptionHandler`.
 	 * @param ctx the parse tree
@@ -303,7 +283,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitExceptionHandler?: (ctx: ExceptionHandlerContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.finallyClause`.
 	 * @param ctx the parse tree
@@ -314,7 +293,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitFinallyClause?: (ctx: FinallyClauseContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.rulePrequel`.
 	 * @param ctx the parse tree
@@ -325,7 +303,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRulePrequel?: (ctx: RulePrequelContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.ruleReturns`.
 	 * @param ctx the parse tree
@@ -336,7 +313,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRuleReturns?: (ctx: RuleReturnsContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.throwsSpec`.
 	 * @param ctx the parse tree
@@ -347,7 +323,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitThrowsSpec?: (ctx: ThrowsSpecContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.localsSpec`.
 	 * @param ctx the parse tree
@@ -358,7 +333,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLocalsSpec?: (ctx: LocalsSpecContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.ruleAction`.
 	 * @param ctx the parse tree
@@ -369,7 +343,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRuleAction?: (ctx: RuleActionContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.ruleModifiers`.
 	 * @param ctx the parse tree
@@ -380,7 +353,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRuleModifiers?: (ctx: RuleModifiersContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.ruleModifier`.
 	 * @param ctx the parse tree
@@ -391,7 +363,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRuleModifier?: (ctx: RuleModifierContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.ruleBlock`.
 	 * @param ctx the parse tree
@@ -402,7 +373,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRuleBlock?: (ctx: RuleBlockContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.ruleAltList`.
 	 * @param ctx the parse tree
@@ -413,7 +383,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRuleAltList?: (ctx: RuleAltListContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.labeledAlt`.
 	 * @param ctx the parse tree
@@ -424,7 +393,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLabeledAlt?: (ctx: LabeledAltContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerRuleSpec`.
 	 * @param ctx the parse tree
@@ -435,7 +403,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerRuleSpec?: (ctx: LexerRuleSpecContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerRuleBlock`.
 	 * @param ctx the parse tree
@@ -446,7 +413,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerRuleBlock?: (ctx: LexerRuleBlockContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerAltList`.
 	 * @param ctx the parse tree
@@ -457,7 +423,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerAltList?: (ctx: LexerAltListContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerAlt`.
 	 * @param ctx the parse tree
@@ -468,7 +433,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerAlt?: (ctx: LexerAltContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerElements`.
 	 * @param ctx the parse tree
@@ -479,7 +443,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerElements?: (ctx: LexerElementsContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerElement`.
 	 * @param ctx the parse tree
@@ -490,7 +453,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerElement?: (ctx: LexerElementContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.labeledLexerElement`.
 	 * @param ctx the parse tree
@@ -501,7 +463,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLabeledLexerElement?: (ctx: LabeledLexerElementContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerBlock`.
 	 * @param ctx the parse tree
@@ -512,7 +473,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerBlock?: (ctx: LexerBlockContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerCommands`.
 	 * @param ctx the parse tree
@@ -523,7 +483,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerCommands?: (ctx: LexerCommandsContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerCommand`.
 	 * @param ctx the parse tree
@@ -534,7 +493,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerCommand?: (ctx: LexerCommandContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerCommandName`.
 	 * @param ctx the parse tree
@@ -545,7 +503,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerCommandName?: (ctx: LexerCommandNameContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerCommandExpr`.
 	 * @param ctx the parse tree
@@ -556,7 +513,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerCommandExpr?: (ctx: LexerCommandExprContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.altList`.
 	 * @param ctx the parse tree
@@ -567,7 +523,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAltList?: (ctx: AltListContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.alternative`.
 	 * @param ctx the parse tree
@@ -578,7 +533,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAlternative?: (ctx: AlternativeContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.element`.
 	 * @param ctx the parse tree
@@ -589,7 +543,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitElement?: (ctx: ElementContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.labeledElement`.
 	 * @param ctx the parse tree
@@ -600,7 +553,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLabeledElement?: (ctx: LabeledElementContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.ebnf`.
 	 * @param ctx the parse tree
@@ -611,7 +563,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitEbnf?: (ctx: EbnfContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.blockSuffix`.
 	 * @param ctx the parse tree
@@ -622,7 +573,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitBlockSuffix?: (ctx: BlockSuffixContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.ebnfSuffix`.
 	 * @param ctx the parse tree
@@ -633,7 +583,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitEbnfSuffix?: (ctx: EbnfSuffixContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.lexerAtom`.
 	 * @param ctx the parse tree
@@ -644,7 +593,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitLexerAtom?: (ctx: LexerAtomContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.atom`.
 	 * @param ctx the parse tree
@@ -655,7 +603,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitAtom?: (ctx: AtomContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.notSet`.
 	 * @param ctx the parse tree
@@ -666,7 +613,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitNotSet?: (ctx: NotSetContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.blockSet`.
 	 * @param ctx the parse tree
@@ -677,7 +623,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitBlockSet?: (ctx: BlockSetContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.setElement`.
 	 * @param ctx the parse tree
@@ -688,7 +633,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitSetElement?: (ctx: SetElementContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.block`.
 	 * @param ctx the parse tree
@@ -699,7 +643,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitBlock?: (ctx: BlockContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.ruleref`.
 	 * @param ctx the parse tree
@@ -710,7 +653,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRuleref?: (ctx: RulerefContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.characterRange`.
 	 * @param ctx the parse tree
@@ -721,7 +663,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitCharacterRange?: (ctx: CharacterRangeContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.terminalRule`.
 	 * @param ctx the parse tree
@@ -732,7 +673,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitTerminalRule?: (ctx: TerminalRuleContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.elementOptions`.
 	 * @param ctx the parse tree
@@ -743,7 +683,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitElementOptions?: (ctx: ElementOptionsContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.elementOption`.
 	 * @param ctx the parse tree
@@ -754,7 +693,6 @@ export interface ANTLRv4ParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitElementOption?: (ctx: ElementOptionContext) => void;
-
 	/**
 	 * Enter a parse tree produced by `ANTLRv4Parser.identifier`.
 	 * @param ctx the parse tree
