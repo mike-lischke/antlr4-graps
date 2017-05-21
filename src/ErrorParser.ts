@@ -82,7 +82,6 @@ export class ErrorParser {
 		[154, /rule (\w+)/],
 		[155, /rule (\w+)/],
 		[156, /sequence (\w+)/],
-		[157, /rule (\w+)/],
 		[158, /rule (\w+)/],
 		[159, /name (\w+)/],
 		[161, /channel (\w+)/],
@@ -113,7 +112,7 @@ export class ErrorParser {
      * Converts errors genrated by the ANTLR tool into our diagnostics structure for reporting.
      */
 	public convertErrorsToDiagnostics(text: string): boolean {
-		console.log(text);
+		//console.log(text);
 
 		let lines = text.split("\n");
 		for (let line of lines) {
@@ -204,7 +203,6 @@ export class ErrorParser {
 							case 154: // "rule <arg> contains an optional block with at least one alternative that can match an empty string", ErrorSeverity.WARNING
 							case 155: // "rule <arg> contains a lexer command with an unrecognized constant value; lexer interpreters may produce incorrect output", ErrorSeverity.WARNING
 							case 156: // "invalid escape sequence <arg>", ErrorSeverity.WARNING
-							case 157: // "rule <arg> contains an assoc terminal option in an unrecognized location", ErrorSeverity.WARNING
 							case 158: // "fragment rule <arg> contains an action or command which can never be executed", ErrorSeverity.WARNING
 							case 159: // "cannot declare a rule with reserved name <arg>", ErrorSeverity.ERROR
 							case 160: // "cannot find tokens file <arg>", ErrorSeverity.ERROR
@@ -269,6 +267,14 @@ export class ErrorParser {
 								break;
 							}
 
+							case 83: { // "unsupported option <arg>", ErrorSeverity.WARNING
+								let matches = /unsupported option (\w+)/.exec(errorText);
+								if (matches) {
+									range.end.column += matches[1].length - 1;
+								}
+								break;
+							}
+
 							case 105: { // "reference to undefined grammar in rule reference: <arg>.<arg2>", ErrorSeverity.ERROR
 								let matches = /reference: (\w+).(\w+)/.exec(errorText);
 								if (matches) {
@@ -288,6 +294,10 @@ export class ErrorParser {
 								}
 								break;
 							}
+
+							case 157: // "rule <arg> contains an assoc terminal option in an unrecognized location", ErrorSeverity.WARNING
+								range.end.column += "assoc".length - 1;
+								break;
 
 							case 204: // "{...}?=> explicitly gated semantic predicates are deprecated in ANTLR 4; use {...}? instead", ErrorSeverity.WARNING
 								range.end.column += 7; // Arbitrary length, we have no info how long the predicate is.
@@ -337,13 +347,6 @@ export class ErrorParser {
 								this.addGenericDiagnosis(errorText, DiagnosticType.Error, context);
 								break;
 
-							case 83: { // "unsupported option <arg>", ErrorSeverity.WARNING
-								let matches = /unsupported option (\w+)/.exec(errorText);
-								if (matches) {
-									this.addDiagnosticsForSymbols([matches[1]], errorText, DiagnosticType.Warning, context);
-								}
-								break;
-							}
 							case 119: { // "The following sets of rules are mutually left-recursive <arg:{c| [<c:{r|<r.name>}; separator=\", \">]}; separator=\" and \">", ErrorSeverity.ERROR
 								let matches = /\[([^\]]+)]/.exec(errorText);
 								if (matches) {

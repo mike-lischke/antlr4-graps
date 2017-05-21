@@ -36,7 +36,7 @@ You can find details about (interactive) use and all available public functions 
 
 ## Testing
 
-The module contains a simple test setup in the code repository, which you can run from the module root folder by running `mocha` from a console. Since the module uses TypeScript you first have to transpile the code to JavaScript. You can do this with a call to `tsc`, but better is to launch the tests with additional parameters like this:
+The repository contains a test setup, which you can execute from the module root folder by running `mocha` in a terminal. Since the module uses TypeScript you first have to transpile the code to JavaScript. You can do this with a call to `tsc`, but better is to launch the tests with additional parameters like this:
 
 ```bash
 mocha --compilers ts:ts-node/register,tsx:ts-node/register

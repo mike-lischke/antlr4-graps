@@ -237,12 +237,11 @@ describe('antlr4-graps:', function () {
         "NonTerminal('id'), ZeroOrMore(Choice(0, Sequence(Terminal('Comma'), NonTerminal('id')))), Terminal('CloseCurly')))).addTo()");
 
       diagram = backend.getRRDScript("test/TParser.g4", "expr");
-      expect(diagram, "Test 3").to.equal("ComplexDiagram(Choice(0, Sequence(NonTerminal('expr'), Terminal('Star'), " +
-        "NonTerminal('expr')), Sequence(NonTerminal('expr'), Terminal('Plus'), NonTerminal('expr')), Sequence(Terminal" +
-        "('OpenPar'), NonTerminal('expr'), Terminal('ClosePar')), Sequence(NonTerminal('expr'), Terminal('QuestionMark'), " +
-        "NonTerminal('expr'), Terminal('Colon'), NonTerminal('expr')), Sequence(NonTerminal('expr'), Terminal('Equal'), " +
-        "NonTerminal('expr')), Sequence(NonTerminal('id')), Sequence(NonTerminal('flowControl')), Sequence(Terminal('INT')), " +
-        "Sequence(Terminal('String')))).addTo()");
+      expect(diagram, "Test 3").to.equal("ComplexDiagram(Choice(0, Sequence(NonTerminal('expr'), Terminal('Star'), NonTerminal('expr'))," +
+        " Sequence(NonTerminal('expr'), Terminal('Plus'), NonTerminal('expr')), Sequence(Terminal('OpenPar'), NonTerminal('expr'), " +
+        "Terminal('ClosePar')), Sequence(Comment('<assoc=right>'), NonTerminal('expr'), Terminal('QuestionMark'), NonTerminal('expr'), " +
+        "Terminal('Colon'), NonTerminal('expr')), Sequence(Comment('<assoc=right>'), NonTerminal('expr'), Terminal('Equal'), NonTerminal('expr'))," +
+        " Sequence(NonTerminal('id')), Sequence(NonTerminal('flowControl')), Sequence(Terminal('INT')), Sequence(Terminal('String')))).addTo()");
     });
 
     it("Reference Graph", function () {
