@@ -19,7 +19,7 @@ import {
     ParserInterpreter, CharStream, RuleContext, ParserRuleContext
 } from 'antlr4ts';
 import { PredictionMode, ATNState, RuleTransition, TransitionType, ATNStateType } from 'antlr4ts/atn';
-import { ParseCancellationException } from 'antlr4ts/misc';
+import { ParseCancellationException, IntervalSet } from 'antlr4ts/misc';
 import { ParseTreeWalker, TerminalNode, ParseTree } from 'antlr4ts/tree';
 
 import { CodeCompletionCore, Symbol, ScopedSymbol, LiteralSymbol } from "antlr4-c3";
@@ -478,17 +478,18 @@ export class SourceContext {
                 };
                 if (transition.isEpsilon) {
                     link.labels.push("ε");
-                } else {
-                    if (transition.label) {
+                } else if (transition.label) {
+                    if (isLexerRule) {
+                        // Lexer rules can be defined for a large range of characters (even the full Unicode range).
+                        // We hance return a compact form here instead of listing every character.
+                        link.labels = this.intervalSetToStrings(transition.label);
+                    } else {
                         for (let label of transition.label.toList()) {
-                            if (isLexerRule) {
-                                link.labels.push("'" + String.fromCharCode(label) + "'");
-                            } else {
-                                link.labels.push(vocabulary.getDisplayName(label));
-                            }
+                            link.labels.push(vocabulary.getDisplayName(label));
                         }
                     }
                 }
+
                 result.links.push(link);
 
                 let nextState: ATNState;
@@ -580,6 +581,46 @@ export class SourceContext {
             let data = InterpreterDataReader.parseFile(parserFile);
             this.parserInterpreter = new ParserInterpreter(this.fileName, data.vocabulary, data.ruleNames, data.atn, this.tokens!)
         }
+
+    }
+
+    /**
+     * Convert an interval set in a list of ranges, consumable by a human.
+     * @param set The set to convert.
+     * @return A list of strings, one for each defined interval.
+     */
+    private intervalSetToStrings(set: IntervalSet): string[] {
+        let result: string[] = [];
+
+        /**
+         * Return a readable representation of a code point. The input can be anything from the
+         * full Unicode range.
+         * @param char The code point to convert.
+         */
+        function characterRepresentation(char: number): string {
+            // Unfortunately JS/TS has no means to determine the Unicode class of a character,
+            // so we are very limited here. For now we return a quoted character for a code point if
+            // in the printable ANSI char range (but not latin extended A + B), otherwise a Unicode escape code.
+            if (char < 0) {
+                return "EOF";
+            }
+
+            if ((char >= 0x21 && char <= 0x7F) || (char >= 0xA1 && char <= 0xFF)) {
+                return "'" + String.fromCharCode(char) + "'";
+            }
+
+            return "\\u" + char.toString(16).toUpperCase();
+        }
+
+        for (let interval of set.intervals) {
+            let entry = characterRepresentation(interval.a);
+            if (interval.a !== interval.b) {
+                entry += " - " + characterRepresentation(interval.b);
+            }
+            result.push(entry);
+        }
+
+        return result;
     }
 
     private static globalSymbols = new GrapsSymbolTable("Global Symbols", { allowDuplicateSymbols: false });
