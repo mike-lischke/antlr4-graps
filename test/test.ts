@@ -378,14 +378,22 @@ describe('antlr4-graps:', function () {
 
         expect(statGraph, "Test 30").to.be.instanceof(ATNGraphData);
         expect(statGraph!.nodes.length, "Test 31").to.equal(15);
+        expect(statGraph!.nodes[0].id.toString(), "Test 32").to.equal(statGraph!.nodes[0].name);
         expect(statGraph!.nodes[0].name, "Test 32").to.equal("12");
         expect(statGraph!.nodes[0].type, "Test 33").to.equal(2);
+        expect(statGraph!.nodes[7].id.toString(), "Test 34").to.equal(statGraph!.nodes[7].name);
         expect(statGraph!.nodes[7].name, "Test 34").to.equal("82");
         expect(statGraph!.nodes[7].type, "Test 35").to.equal(1);
         expect(statGraph!.nodes[11].name, "Test 36").to.equal("85");
         expect(statGraph!.nodes[11].type, "Test 37").to.equal(1);
         expect(statGraph!.nodes[14].name, "Test 38").to.equal("88");
         expect(statGraph!.nodes[14].type, "Test 39").to.equal(8);
+        expect(statGraph!.nodes[3].name, "Test 38").to.equal("expr");
+        expect(statGraph!.nodes[3].id, "Test 39").to.equal(-1);
+        expect(statGraph!.nodes[6].name, "Test 38").to.equal("expr");
+        expect(statGraph!.nodes[6].id, "Test 39").to.equal(-2);
+        expect(statGraph!.nodes[10].name, "Test 38").to.equal("expr");
+        expect(statGraph!.nodes[10].id, "Test 39").to.equal(-3);
 
         expect(statGraph!.links.length, "Test 40").to.equal(15);
         expect(statGraph!.links[1].source, "Test 41").to.equal(13);

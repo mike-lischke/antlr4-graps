@@ -440,12 +440,13 @@ export class SourceContext {
         result.links = [];
         result.nodes = [];
         let stateToIndex = new Map<number, number>();
+        let currentRuleIndex = -1;
 
         // First collect all ATN states that belong to this rule, so we can reference them in our links list.
         for (let state of atn.states) {
             if (state.ruleIndex == ruleIndex) {
                 stateToIndex.set(state.stateNumber, result.nodes.length);
-                result.nodes.push({ name: state.stateNumber.toString(), type: state.stateType });
+                result.nodes.push({ id: state.stateNumber, name: state.stateNumber.toString(), type: state.stateType });
 
                 let transitions = state.getTransitions();
                 // If this state transits to a new rule create also a fake node for that rule.
@@ -453,7 +454,7 @@ export class SourceContext {
                     let marker = state.stateNumber * transitions[0].target.stateNumber;
                     stateToIndex.set(marker, result.nodes.length);
                     // Type 13 is a fake type denoting a rule. It's one beyond the highest ATNStateType values.
-                    result.nodes.push({ name: ruleNames[transitions[0].target.ruleIndex], type: 13 });
+                    result.nodes.push({ id: currentRuleIndex--, name: ruleNames[transitions[0].target.ruleIndex], type: 13 });
                 }
             }
         }
