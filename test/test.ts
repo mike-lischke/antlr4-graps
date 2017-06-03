@@ -17,7 +17,7 @@ var backend: AntlrLanguageSupport;
 describe('antlr4-graps:', function () {
 
   describe('Base Handling:', function () {
-    it("Create Backend", function () {
+    it("Create Backend", function (done) {
       backend = new AntlrLanguageSupport(".");
       expect(backend, "Test 1").to.be.a("object");
 
@@ -27,15 +27,19 @@ describe('antlr4-graps:', function () {
       expect(backend, "Test 5").to.have.property("infoForSymbol");
       expect(backend, "Test 6").to.have.property("listSymbols");
       expect(backend, "Test 7").to.have.property("getDiagnostics");
+
+      done();
     });
 
     var c1: SourceContext;
-    it('Load Grammar', function () {
+    it('Load Grammar', function (done) {
       c1 = backend.loadGrammar("test/t.g4");
       expect(c1, "Test 1").to.be.an.instanceOf(SourceContext);
+
+      done();
     });
 
-    it("Unload grammar", function () {
+    it("Unload grammar", function (done) {
       backend.releaseGrammar("test/t.g4");
       var context = backend.loadGrammar("test/t.g"); // Non-existing grammar.
       expect(context, "Test 1").to.be.an.instanceOf(SourceContext);
@@ -46,11 +50,13 @@ describe('antlr4-graps:', function () {
       context = backend.loadGrammar("test/t.g4");
       expect(context, "Test 3").to.equal(c1);
       backend.releaseGrammar("test/t.g4");
+
+      done();
     });
   });
 
   describe('Symbol Info Retrieval (t.g4):', function () {
-    it('infoForSymbol', function () {
+    it('infoForSymbol', function (done) {
       var info = backend.infoForSymbol("test/t.g4", 7, 2, true);
       assert(info);
       expect(info!.name, "Test 1").to.equal("B");
@@ -62,9 +68,11 @@ describe('antlr4-graps:', function () {
       expect(info!.definition!.range.start.row, "Test 6").to.equal(7);
       expect(info!.definition!.range.end.column, "Test 7").to.equal(6);
       expect(info!.definition!.range.end.row, "Test 8").to.equal(7);
+
+      done();
     });
 
-    it('listSymbols', function () {
+    it('listSymbols', function (done) {
       let symbols = backend.listSymbols("test/t.g4", true);
       expect(symbols.length, "Test 1").to.equal(10);
 
@@ -77,9 +85,11 @@ describe('antlr4-graps:', function () {
       expect(info.definition!.range.start.row, "Test 7").to.equal(2);
       expect(info.definition!.range.end.column, "Test 8").to.equal(12);
       expect(info.definition!.range.end.row, "Test 9").to.equal(2);
+
+      done();
     });
 
-    it('getDiagnostics', function () {
+    it('getDiagnostics', function (done) {
       let diagnostics = backend.getDiagnostics("test/t.g4");
       expect(diagnostics.length, "Test 1").to.equal(2);
 
@@ -95,9 +105,10 @@ describe('antlr4-graps:', function () {
       expect(diagnostics[1].range.end.column, "Test 10").to.equal(22);
       expect(diagnostics[1].range.end.row, "Test 11").to.equal(8);
 
+      done();
     });
 
-    it('reparse', function () {
+    it('reparse', function (done) {
       backend.reparse("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
       let diagnostics = backend.getDiagnostics("test/t.g4");
 
@@ -131,11 +142,13 @@ describe('antlr4-graps:', function () {
       expect(diagnostics[1].range.start.row, "Test 20").to.equal(2);
       expect(diagnostics[1].range.end.column, "Test 21").to.equal(9);
       expect(diagnostics[1].range.end.row, "Test 22").to.equal(2);
+
+      done();
     });
   });
 
   describe('Symbol Info Retrieval (TParser.g4):', function () {
-    it('Symbol Listing', function () {
+    it('Symbol Listing', function (done) {
       backend.loadGrammar("test/TParser.g4");
       let symbols = backend.listSymbols("test/TParser.g4", true);
       expect(symbols.length, "Test 1").to.equal(60);
@@ -166,9 +179,11 @@ describe('antlr4-graps:', function () {
       expect(ruleName, "Test 16").to.equal("Comment");
       ruleName = backend.ruleFromPosition("test/TLexer.g4", 0, 50);
       expect(ruleName, "Test 16").to.equal("ID");
+
+      done();
     });
 
-    it('Editing', function () {
+    it('Editing', function (done) {
       // "Edit" the source. This will release the lexer reference and reload it.
       // If that doesn't work we'll get a lot of unknown-symbol errors (for all lexer symbols).
       let source = fs.readFileSync("test/TParser.g4", 'utf8');
@@ -176,9 +191,11 @@ describe('antlr4-graps:', function () {
 
       let parserDiags = backend.getDiagnostics("test/TParser.g4"); // This also updates the symbol reference counts.
       expect(parserDiags.length, "Test 1").to.be.equal(0);
+
+      done();
     });
 
-    it('getDiagnostics', function () {
+    it('getDiagnostics', function (done) {
       let lexerDiags = backend.getDiagnostics("test/TLexer.g4");
       expect(lexerDiags.length, "Test 1").to.be.equal(0);
 
@@ -188,9 +205,11 @@ describe('antlr4-graps:', function () {
       refCount = backend.countReferences("test/TLexer.g4", "Bar");
       expect(refCount, "Test 3").to.equal(2);
       backend.releaseGrammar("test/TParser.g4");
+
+      done();
     });
 
-    it("Symbol ranges", function() {
+    it("Symbol ranges", function(done) {
       let range = backend.enclosingRangeForSymbol("test/TParser.g4", 100, 4); // options {} block
       expect(range, "Test 1").not.to.be.undefined;
       expect(range!.start.row, "Test 2").to.equal(3);
@@ -222,12 +241,13 @@ describe('antlr4-graps:', function () {
       expect(range!.end.row, "Test 20").to.equal(90);
       expect(range!.end.column, "Test 21").to.equal(0);
 
+      done();
     });
   });
 
   describe('Advanced Symbol Informations:', function () {
 
-    it("RRD diagram", function () {
+    it("RRD diagram", function (done) {
       let diagram = backend.getRRDScript("test/TParser.g4", "Any");
       expect(diagram, "Test 1").to.equal("Diagram(Choice(0, Sequence(Terminal('Foo'), Terminal('Dot'), " +
         "Optional(Terminal('Bar')), Terminal('DotDot'), Terminal('Baz'), Terminal('Bar')))).addTo()");
@@ -242,9 +262,11 @@ describe('antlr4-graps:', function () {
         "Terminal('ClosePar')), Sequence(Comment('<assoc=right>'), NonTerminal('expr'), Terminal('QuestionMark'), NonTerminal('expr'), " +
         "Terminal('Colon'), NonTerminal('expr')), Sequence(Comment('<assoc=right>'), NonTerminal('expr'), Terminal('Equal'), NonTerminal('expr'))," +
         " Sequence(NonTerminal('id')), Sequence(NonTerminal('flowControl')), Sequence(Terminal('INT')), Sequence(Terminal('String')))).addTo()");
+
+      done();
     });
 
-    it("Reference Graph", function () {
+    it("Reference Graph", function (done) {
       let graph = backend.getReferenceGraph("test/TParser.g4");
       expect(graph.size, "Test 1").to.equal(13);
       expect(graph.has("expr"), "Test 2");
@@ -258,6 +280,8 @@ describe('antlr4-graps:', function () {
       expect(graph.get("flowControl")!.rules[0], "Test 9").to.equal("expr");
       expect(graph.get("flowControl")!.tokens[1], "Test 10").to.equal("Continue");
       expect(graph.get("flowControl")!.literals[0], "Test 11").to.equal("return");
+
+      done();
     });
 
   });
@@ -305,7 +329,7 @@ describe('antlr4-graps:', function () {
         deleteFolderRecursive("generated");
         backend.releaseGrammar("grammars/ANTLRv4Parser.g4");
       }
-    });
+    }).timeout(5000);
   });
 
   describe('Code Generation:', function () {
@@ -435,6 +459,7 @@ describe('antlr4-graps:', function () {
         fs.mkdirSync("generated");
         fs.mkdirSync("generated/test");
       }
+
       let result = await backend.generate("test/TParser.g4", {
         baseDir: __dirname + "/../..",
         libDir: "generated/test",
@@ -488,7 +513,7 @@ describe('antlr4-graps:', function () {
         backend.releaseGrammar("test/t2.g4");
         deleteFolderRecursive("generated");
       }
-    });
+    }).timeout(5000);
 
     it('Generation with errors, split grammar (C++)', async function () {
       try {
@@ -506,11 +531,10 @@ describe('antlr4-graps:', function () {
         deleteFolderRecursive("generated");
       }
     });
-
   });
 
   describe('Test for Bugs:', function () {
-    it("Lexer token in a set-element context", function () {
+    it("Lexer token in a set-element context", function (done) {
       var info = backend.infoForSymbol("test/TParser.g4", 48, 93, true);
       assert(info, "Test 1");
       expect(info!.name, "Test 2").to.equal("Semicolon");
@@ -526,9 +550,10 @@ describe('antlr4-graps:', function () {
       backend.releaseGrammar("test/TParser.g4");
       var selfDiags = backend.getSelfDiagnostics();
       expect(selfDiags.contextCount, "Test 11").to.equal(0);
+
+      done();
     });
   });
-
 });
 
 let deleteFolderRecursive = function (path: string) {
