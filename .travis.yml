@@ -3,6 +3,7 @@ node_js:
   - "stable"
   - "6"
 
+jdk: openjdk6
 sudo: false
 
 install:

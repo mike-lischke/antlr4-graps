@@ -19,18 +19,18 @@ import { DFA } from "antlr4ts/dfa/DFA";
 export class CompatibleATNDeserializer extends ATNDeserializer {
 	private static readonly BASE_SERIALIZED_UUID2: UUID = UUID.fromString("E4178468-DF95-44D0-AD87-F22A5D5FB6D3");
 	private static readonly ADDED_LEXER_ACTIONS2: UUID = UUID.fromString("AB35191A-1603-487E-B75A-479B831EAF6D");
-	private static readonly ADDED_UNICODE_SMP: UUID = UUID.fromString("59627784-3BE5-417A-B9EB-8131A7286089");
+	private static readonly ADDED_UNICODE_SMP2: UUID = UUID.fromString("59627784-3BE5-417A-B9EB-8131A7286089");
 
 	private static readonly SUPPORTED_UUIDS2: UUID[] = [
 		CompatibleATNDeserializer.BASE_SERIALIZED_UUID2,
 		CompatibleATNDeserializer.ADDED_LEXER_ACTIONS2,
-		CompatibleATNDeserializer.ADDED_UNICODE_SMP
+		CompatibleATNDeserializer.ADDED_UNICODE_SMP2
 	];
 
 	/**
 	 * This is the current serialized UUID.
 	 */
-	private static readonly SERIALIZED_UUID2: UUID = CompatibleATNDeserializer.ADDED_UNICODE_SMP;
+	private static readonly SERIALIZED_UUID2: UUID = CompatibleATNDeserializer.ADDED_UNICODE_SMP2;
 
 	@NotNull
 	private readonly deserializationOptions2: ATNDeserializationOptions;
@@ -203,12 +203,12 @@ export class CompatibleATNDeserializer extends ATNDeserializer {
 		// SETS
 		//
 		let sets: IntervalSet[] = [];
-		p = this.readSets(data, p, sets, false);
+		p = this.readSets2(data, p, sets, false);
 
 		// Next, if the ATN was serialized with the Unicode SMP feature,
 		// deserialize sets with 32-bit arguments <= U+10FFFF.
-		if (this.isFeatureSupported(CompatibleATNDeserializer.ADDED_UNICODE_SMP, uuid)) {
-			p = this.readSets(data, p, sets, true);
+		if (this.isFeatureSupported(CompatibleATNDeserializer.ADDED_UNICODE_SMP2, uuid)) {
+			p = this.readSets2(data, p, sets, true);
 		}
 
 		//
@@ -493,7 +493,7 @@ export class CompatibleATNDeserializer extends ATNDeserializer {
 		return atn;
 	}
 
-	private readSets(data: Uint16Array, p: number, sets: IntervalSet[], read32: boolean): number {
+	private readSets2(data: Uint16Array, p: number, sets: IntervalSet[], read32: boolean): number {
 		let nsets: number = ATNDeserializer.toInt(data[p++]);
 		for (let i = 0; i < nsets; i++) {
 			let nintervals: number = ATNDeserializer.toInt(data[p]);

@@ -201,7 +201,7 @@ export class SourceContext {
             this.tree = this.parser.grammarSpec();
         } catch (e) {
             if (e instanceof ParseCancellationException) {
-                tokenStream.reset();
+                tokenStream.seek(0);
                 this.parser.reset();
                 this.parser.errorHandler = new DefaultErrorStrategy();
                 this.parser.interpreter.setPredictionMode(PredictionMode.LL);

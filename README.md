@@ -8,7 +8,7 @@ ANTLR4 graps (Grammar Parsing Service) is a TypeScript node module using the [Ty
 
 ## Features
 
-At its core the module manages source contexts for each ANTLR4 grammar source an applications provides (usually files, but can also be strings in memory). It manages grammar dependencies and automatically loads them as required (either from the same folder as the requesting grammar or from a common lib folder).
+At its core this module manages source contexts for each ANTLR4 grammar source an application provides (usually files, but can also be strings in memory). It manages grammar dependencies and automatically loads them as required (either from the same folder as the requesting grammar or from a common lib folder).
 
 A context is identfied by a unique string, which is usually the absolute file name, but can be any unique string (e.g. a UUID). Using a file name has the advantage that the module can load file content transparently, if no grammar code is given as string (especially important for dependencies).
 
@@ -18,7 +18,7 @@ Here's a feature summary of the module:
 
 * semi-automatic grammar management (manual loading/unloading of a main grammar, automatic loading of dependencies)
 * (re)parsing of a grammar (and its dependencies), which collects internal diagnostics
-* symbol lookup at a given position, rule name from position, enclosing range (the outer rule or block containing a symbol)
+* symbol lookup at a given position, rule name from position, enclosing range (the outer rule or the block containing a symbol)
 * listing of all found symbols
 * syntactic and semantic diagnostics (e.g. duplicate symbols, unknown symbols)
 * symbol reference counts (usage counts), unreferenced rules
@@ -36,7 +36,7 @@ You can find details about (interactive) use and all available public functions 
 
 ## Testing
 
-The repository contains a test setup, which you can execute from the module root folder by running `mocha` in a terminal. Since the module uses TypeScript you first have to transpile the code to JavaScript. You can do this with a call to `tsc`, but better is to launch the tests with additional parameters like this:
+The GIT repository contains a test setup, which you can execute from the module root folder by running `mocha` in a terminal. Since the module uses TypeScript you first have to transpile the code to JavaScript. You can do this with a call to `tsc`, but better is to launch the tests with additional parameters like this:
 
 ```bash
 mocha --compilers ts:ts-node/register,tsx:ts-node/register
@@ -52,11 +52,9 @@ Also, the code completion feature is not fully ready yet and needs some improvem
 ## What's next?
 
 * Automatic code formatting
-* Find usages
 * Refactoring: extract rule, rename items, comment selected lines, remove left recursion
 * Templates (for frequently used rules like whitespace, ID etc.)
 * Live grammar interpreter for grammar preview
-    * Automatic setup on grammar saving
     * Specify test input (file or a string) + a start rule
     * Token list
     * Parse tree display

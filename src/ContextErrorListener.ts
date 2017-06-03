@@ -7,13 +7,12 @@
 
 "use strict";
 
-import { BaseErrorListener, Token, Recognizer, RecognitionException } from 'antlr4ts';
+import { ANTLRErrorListener, Token, Recognizer, RecognitionException } from 'antlr4ts';
 
 import { DiagnosticEntry, DiagnosticType } from '../index';
 
-export class ContextErrorListener extends BaseErrorListener {
+export class ContextErrorListener implements ANTLRErrorListener<any> {
     constructor(private errorList: DiagnosticEntry[]) {
-        super();
     }
 
     syntaxError<T extends Token>(recognizer: Recognizer<T, any>, offendingSymbol: T | undefined, line: number,

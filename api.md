@@ -52,7 +52,7 @@ The file name you pass to all API functions is mostly used to identify a source 
 
 -----
 
-> `function AntlrLanguageSupport.getCodeCompletionCandidates(fileName, column, row): SymbolInfo[]`
+> `function AntlrLanguageSupport.getCodeCompletionCandidates(fileName, column, row)`
 >
 > Returns an array of `SymbolInfo` objects which represent symbols that are possible input at the given input position.
 >
@@ -96,9 +96,9 @@ The file name you pass to all API functions is mostly used to identify a source 
 > `function AntlrLanguageSupport.generate(fileName, options: GenerationOptions)`
 >
 > This function generates parsers and associated files using one of the ANTLR jars shipped with this module. There are 2 jars, one just for the typescript target and one for all other supported target languages. Both jars are custom built snapshots, not the official downloads, but you can specify a different jar in the generation options. The jar for non-typescript targets not only generates parser files but also interpreter data. This data is used to setup parser + lexer interpreters for testing/debugging (done transparently as part of the `generate()` call, but only if the target language is not Typescript).
-> 
+>
 > The `options` parameter is an object with various optional parameters, like a dedicated library dir, an output dir and other settings for the ANTLR tool.
-> 
+>
 > The function returns a promise carrying a string array. The strings contain names of all affected files in the generation process. You can then directly iterate over that array to request diagnostic informations for each file.
 
 -----
