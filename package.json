@@ -8,7 +8,7 @@
     "antlr4ts": "antlr4ts grammars/ANTLRv4LexBasic.g4 grammars/ANTLRv4Lexer.g4 grammars/ANTLRv4Parser.g4 -o parser -visitor",
     "prepublish": "tsc",
     "install": "tsc",
-    "test": "mocha --compilers ts:ts-node/register,tsx:ts-node/register"
+    "test": "tsc && mocha out/test"
   },
   "repository": {
     "type": "git",
