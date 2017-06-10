@@ -32,17 +32,17 @@ Here's a feature summary of the module:
 
 ## Usage
 
-You can find details about (interactive) use and all available public functions and structures in the [api reference file](api.md).
+You can find details about use and all available public functions and structures in the [api reference file](api.md).
 
 ## Testing
 
-The GIT repository contains a test setup, which you can execute from the module root folder by running `mocha` in a terminal. Since the module uses TypeScript you first have to transpile the code to JavaScript. You can do this with a call to `tsc`, but better is to launch the tests with additional parameters like this:
+The GIT repository contains a test setup, which allows to run unit tests (via `mocha`). Simply execute:
 
 ```bash
-mocha --compilers ts:ts-node/register,tsx:ts-node/register
+npm test
 ```
 
-Additionally, there is a 'Mocha' setup for Visual Studio Code, which even allows to debug the tests. Tests are however not shipped in the published node module.
+Additionally, there is a `mocha` setup for Visual Studio Code, which even allows to debug the tests. Tests are however not shipped in the published node module.
 
 ## Known Issues
 see [bug tracker](https://github.com/mike-lischke/antlr-graps/issues)
@@ -51,14 +51,11 @@ Also, the code completion feature is not fully ready yet and needs some improvem
 
 ## What's next?
 
+* Improve code completion
 * Automatic code formatting
 * Refactoring: extract rule, rename items, comment selected lines, remove left recursion
 * Templates (for frequently used rules like whitespace, ID etc.)
-* Live grammar interpreter for grammar preview
-    * Specify test input (file or a string) + a start rule
-    * Token list
-    * Parse tree display
-    * Call stack
+* Support for debugging
 
 I'd love to see code contributions, to make the module evolve quicker.
 

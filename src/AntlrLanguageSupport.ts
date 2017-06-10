@@ -21,6 +21,7 @@ export enum SymbolGroupKind { // Multiple symbol kinds can be involved in a symb
 };
 
 export enum SymbolKind {
+    Keyword,
     TokenVocab,
     Import,
     BuiltInLexerToken,
@@ -31,7 +32,9 @@ export enum SymbolKind {
     LexerMode,
     BuiltInChannel,
     TokenChannel,
-    ParserRule
+    ParserRule,
+    Action,
+    Predicate
 };
 
 export class LexicalRange {

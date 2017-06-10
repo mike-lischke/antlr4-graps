@@ -5,7 +5,7 @@
 In order to start using antlr4-graps you have to import it as usual and create an instance of the `AntlrLanguageSupport` class, which then provides all the functionality.
 
 ```javascript
-let graps = require(".");
+let graps = require("antlr4-graps");
 let backend = new graps.AntlrLanguageSupport("")
 ```
 

@@ -1,4 +1,4 @@
-// Generated from ANTLRv4LexBasic.g4 by ANTLR 4.6-SNAPSHOT
+// Generated from grammars/ANTLRv4LexBasic.g4 by ANTLR 4.6-SNAPSHOT
 
 
 import { ATN } from 'antlr4ts/atn/ATN';

@@ -1,4 +1,4 @@
-// Generated from ANTLRv4Lexer.g4 by ANTLR 4.6-SNAPSHOT
+// Generated from grammars/ANTLRv4Lexer.g4 by ANTLR 4.6-SNAPSHOT
 
 
 import { ATN } from 'antlr4ts/atn/ATN';
@@ -87,56 +87,56 @@ export class ANTLRv4Lexer extends LexerAdaptor {
 	public static readonly Channels=5;
 	public static readonly LexerCharSet=6;
 	public static readonly modeNames: string[] = [
-		"DEFAULT_MODE", "Argument", "Action", "Options", "Tokens", "Channels",
+		"DEFAULT_MODE", "Argument", "Action", "Options", "Tokens", "Channels", 
 		"LexerCharSet"
 	];
 
 	public static readonly ruleNames: string[] = [
-		"DOC_COMMENT", "BLOCK_COMMENT", "LINE_COMMENT", "INT", "STRING_LITERAL",
-		"UNTERMINATED_STRING_LITERAL", "BEGIN_ARGUMENT", "BEGIN_ACTION", "OPTIONS",
-		"TOKENS", "CHANNELS", "IMPORT", "FRAGMENT", "LEXER", "PARSER", "GRAMMAR",
-		"PROTECTED", "PUBLIC", "PRIVATE", "RETURNS", "LOCALS", "THROWS", "CATCH",
-		"FINALLY", "MODE", "COLON", "COLONCOLON", "COMMA", "SEMI", "LPAREN", "RPAREN",
-		"LBRACE", "RBRACE", "RARROW", "LT", "GT", "ASSIGN", "QUESTION", "STAR",
-		"PLUS_ASSIGN", "PLUS", "OR", "DOLLAR", "RANGE", "DOT", "AT", "POUND",
-		"NOT", "ID", "WS", "Ws", "Hws", "Vws", "BlockComment", "DocComment", "LineComment",
-		"EscSeq", "EscAny", "UnicodeEsc", "DecimalNumeral", "HexDigit", "DecDigit",
-		"BoolLiteral", "CharLiteral", "SQuoteLiteral", "DQuoteLiteral", "USQuoteLiteral",
-		"NameChar", "NameStartChar", "Int", "Esc", "Colon", "DColon", "SQuote",
-		"DQuote", "LParen", "RParen", "LBrace", "RBrace", "LBrack", "RBrack",
-		"RArrow", "Lt", "Gt", "Equal", "Question", "Star", "Plus", "PlusAssign",
-		"Underscore", "Pipe", "Dollar", "Comma", "Semi", "Dot", "Range", "At",
-		"Pound", "Tilde", "NESTED_ARGUMENT", "ARGUMENT_ESCAPE", "ARGUMENT_STRING_LITERAL",
-		"ARGUMENT_CHAR_LITERAL", "END_ARGUMENT", "UNTERMINATED_ARGUMENT", "ARGUMENT_CONTENT",
-		"NESTED_ACTION", "ACTION_ESCAPE", "ACTION_STRING_LITERAL", "ACTION_CHAR_LITERAL",
-		"ACTION_DOC_COMMENT", "ACTION_BLOCK_COMMENT", "ACTION_LINE_COMMENT", "END_ACTION",
-		"UNTERMINATED_ACTION", "ACTION_CONTENT", "OPT_DOC_COMMENT", "OPT_BLOCK_COMMENT",
-		"OPT_LINE_COMMENT", "OPT_LBRACE", "OPT_RBRACE", "OPT_ID", "OPT_DOT", "OPT_ASSIGN",
-		"OPT_STRING_LITERAL", "OPT_INT", "OPT_STAR", "OPT_SEMI", "OPT_WS", "TOK_DOC_COMMENT",
-		"TOK_BLOCK_COMMENT", "TOK_LINE_COMMENT", "TOK_LBRACE", "TOK_RBRACE", "TOK_ID",
-		"TOK_DOT", "TOK_COMMA", "TOK_WS", "CHN_DOC_COMMENT", "CHN_BLOCK_COMMENT",
-		"CHN_LINE_COMMENT", "CHN_LBRACE", "CHN_RBRACE", "CHN_ID", "CHN_DOT", "CHN_COMMA",
-		"CHN_WS", "LEXER_CHAR_SET_BODY", "LEXER_CHAR_SET", "UNTERMINATED_CHAR_SET",
+		"DOC_COMMENT", "BLOCK_COMMENT", "LINE_COMMENT", "INT", "STRING_LITERAL", 
+		"UNTERMINATED_STRING_LITERAL", "BEGIN_ARGUMENT", "BEGIN_ACTION", "OPTIONS", 
+		"TOKENS", "CHANNELS", "IMPORT", "FRAGMENT", "LEXER", "PARSER", "GRAMMAR", 
+		"PROTECTED", "PUBLIC", "PRIVATE", "RETURNS", "LOCALS", "THROWS", "CATCH", 
+		"FINALLY", "MODE", "COLON", "COLONCOLON", "COMMA", "SEMI", "LPAREN", "RPAREN", 
+		"LBRACE", "RBRACE", "RARROW", "LT", "GT", "ASSIGN", "QUESTION", "STAR", 
+		"PLUS_ASSIGN", "PLUS", "OR", "DOLLAR", "RANGE", "DOT", "AT", "POUND", 
+		"NOT", "ID", "WS", "Ws", "Hws", "Vws", "BlockComment", "DocComment", "LineComment", 
+		"EscSeq", "EscAny", "UnicodeEsc", "DecimalNumeral", "HexDigit", "DecDigit", 
+		"BoolLiteral", "CharLiteral", "SQuoteLiteral", "DQuoteLiteral", "USQuoteLiteral", 
+		"NameChar", "NameStartChar", "Int", "Esc", "Colon", "DColon", "SQuote", 
+		"DQuote", "LParen", "RParen", "LBrace", "RBrace", "LBrack", "RBrack", 
+		"RArrow", "Lt", "Gt", "Equal", "Question", "Star", "Plus", "PlusAssign", 
+		"Underscore", "Pipe", "Dollar", "Comma", "Semi", "Dot", "Range", "At", 
+		"Pound", "Tilde", "NESTED_ARGUMENT", "ARGUMENT_ESCAPE", "ARGUMENT_STRING_LITERAL", 
+		"ARGUMENT_CHAR_LITERAL", "END_ARGUMENT", "UNTERMINATED_ARGUMENT", "ARGUMENT_CONTENT", 
+		"NESTED_ACTION", "ACTION_ESCAPE", "ACTION_STRING_LITERAL", "ACTION_CHAR_LITERAL", 
+		"ACTION_DOC_COMMENT", "ACTION_BLOCK_COMMENT", "ACTION_LINE_COMMENT", "END_ACTION", 
+		"UNTERMINATED_ACTION", "ACTION_CONTENT", "OPT_DOC_COMMENT", "OPT_BLOCK_COMMENT", 
+		"OPT_LINE_COMMENT", "OPT_LBRACE", "OPT_RBRACE", "OPT_ID", "OPT_DOT", "OPT_ASSIGN", 
+		"OPT_STRING_LITERAL", "OPT_INT", "OPT_STAR", "OPT_SEMI", "OPT_WS", "TOK_DOC_COMMENT", 
+		"TOK_BLOCK_COMMENT", "TOK_LINE_COMMENT", "TOK_LBRACE", "TOK_RBRACE", "TOK_ID", 
+		"TOK_DOT", "TOK_COMMA", "TOK_WS", "CHN_DOC_COMMENT", "CHN_BLOCK_COMMENT", 
+		"CHN_LINE_COMMENT", "CHN_LBRACE", "CHN_RBRACE", "CHN_ID", "CHN_DOT", "CHN_COMMA", 
+		"CHN_WS", "LEXER_CHAR_SET_BODY", "LEXER_CHAR_SET", "UNTERMINATED_CHAR_SET", 
 		"Id"
 	];
 
 	private static readonly _LITERAL_NAMES: (string | undefined)[] = [
-		undefined, undefined, undefined, undefined, undefined, undefined, undefined,
-		undefined, undefined, undefined, undefined, undefined, "'options'", "'tokens'",
-		"'channels'", "'import'", "'fragment'", "'lexer'", "'parser'", "'grammar'",
-		"'protected'", "'public'", "'private'", "'returns'", "'locals'", "'throws'",
+		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
+		undefined, undefined, undefined, undefined, undefined, "'options'", "'tokens'", 
+		"'channels'", "'import'", "'fragment'", "'lexer'", "'parser'", "'grammar'", 
+		"'protected'", "'public'", "'private'", "'returns'", "'locals'", "'throws'", 
 		"'catch'", "'finally'", "'mode'"
 	];
 	private static readonly _SYMBOLIC_NAMES: (string | undefined)[] = [
-		undefined, "TOKEN_REF", "RULE_REF", "LEXER_CHAR_SET", "DOC_COMMENT", "BLOCK_COMMENT",
-		"LINE_COMMENT", "INT", "STRING_LITERAL", "UNTERMINATED_STRING_LITERAL",
-		"BEGIN_ARGUMENT", "BEGIN_ACTION", "OPTIONS", "TOKENS", "CHANNELS", "IMPORT",
-		"FRAGMENT", "LEXER", "PARSER", "GRAMMAR", "PROTECTED", "PUBLIC", "PRIVATE",
-		"RETURNS", "LOCALS", "THROWS", "CATCH", "FINALLY", "MODE", "COLON", "COLONCOLON",
-		"COMMA", "SEMI", "LPAREN", "RPAREN", "LBRACE", "RBRACE", "RARROW", "LT",
-		"GT", "ASSIGN", "QUESTION", "STAR", "PLUS_ASSIGN", "PLUS", "OR", "DOLLAR",
-		"RANGE", "DOT", "AT", "POUND", "NOT", "ID", "WS", "END_ARGUMENT", "UNTERMINATED_ARGUMENT",
-		"ARGUMENT_CONTENT", "END_ACTION", "UNTERMINATED_ACTION", "ACTION_CONTENT",
+		undefined, "TOKEN_REF", "RULE_REF", "LEXER_CHAR_SET", "DOC_COMMENT", "BLOCK_COMMENT", 
+		"LINE_COMMENT", "INT", "STRING_LITERAL", "UNTERMINATED_STRING_LITERAL", 
+		"BEGIN_ARGUMENT", "BEGIN_ACTION", "OPTIONS", "TOKENS", "CHANNELS", "IMPORT", 
+		"FRAGMENT", "LEXER", "PARSER", "GRAMMAR", "PROTECTED", "PUBLIC", "PRIVATE", 
+		"RETURNS", "LOCALS", "THROWS", "CATCH", "FINALLY", "MODE", "COLON", "COLONCOLON", 
+		"COMMA", "SEMI", "LPAREN", "RPAREN", "LBRACE", "RBRACE", "RARROW", "LT", 
+		"GT", "ASSIGN", "QUESTION", "STAR", "PLUS_ASSIGN", "PLUS", "OR", "DOLLAR", 
+		"RANGE", "DOT", "AT", "POUND", "NOT", "ID", "WS", "END_ARGUMENT", "UNTERMINATED_ARGUMENT", 
+		"ARGUMENT_CONTENT", "END_ACTION", "UNTERMINATED_ACTION", "ACTION_CONTENT", 
 		"UNTERMINATED_CHAR_SET"
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(ANTLRv4Lexer._LITERAL_NAMES, ANTLRv4Lexer._SYMBOLIC_NAMES, []);
@@ -182,21 +182,21 @@ export class ANTLRv4Lexer extends LexerAdaptor {
 	private BEGIN_ARGUMENT_action(_localctx: RuleContext, actionIndex: number): void {
 		switch (actionIndex) {
 		case 0:
-			 this.handleBeginArgument();
+			 this.handleBeginArgument(); 
 			break;
 		}
 	}
 	private END_ARGUMENT_action(_localctx: RuleContext, actionIndex: number): void {
 		switch (actionIndex) {
 		case 1:
-			 this.handleEndArgument();
+			 this.handleEndArgument(); 
 			break;
 		}
 	}
 	private END_ACTION_action(_localctx: RuleContext, actionIndex: number): void {
 		switch (actionIndex) {
 		case 2:
-			 this.handleEndAction();
+			 this.handleEndAction(); 
 			break;
 		}
 	}

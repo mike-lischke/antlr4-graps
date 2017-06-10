@@ -39,7 +39,7 @@ lexer grammar ANTLRv4Lexer;
 
 options
    { superClass = LexerAdaptor; }
-   
+
 import ANTLRv4LexBasic;
 
 @beforeLexer {
@@ -107,7 +107,7 @@ UNTERMINATED_STRING_LITERAL
 
 BEGIN_ARGUMENT
    : LBrack{ this.handleBeginArgument(); };
-   
+
 // -------------------------
 // Actions
 
@@ -378,7 +378,7 @@ ARGUMENT_CHAR_LITERAL
 
 END_ARGUMENT
    : RBrack{ this.handleEndArgument(); };
-      
+
 // added this to return non-EOF token type here. EOF does something weird
 UNTERMINATED_ARGUMENT
    : EOF -> popMode
