@@ -153,7 +153,8 @@ export class GrapsSymbolTable extends SymbolTable {
             kind: kind,
             name: symbol.name,
             source: (symbol.context && symbolTable && symbolTable.owner) ? symbolTable.owner.sourceId : "ANTLR runtime",
-            definition: definitionForContext(symbol.context, true)
+            definition: definitionForContext(symbol.context, true),
+            description: undefined
         };
 
     }
@@ -168,7 +169,8 @@ export class GrapsSymbolTable extends SymbolTable {
                 kind: this.getKindFromSymbol(symbol),
                 name: symbol.name,
                 source: root.owner ? root.owner.sourceId : "ANTLR runtime",
-                definition: definitionForContext(symbol.context, true)
+                definition: definitionForContext(symbol.context, true),
+                description: undefined
             });
         }
         return result;

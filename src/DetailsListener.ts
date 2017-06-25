@@ -10,7 +10,7 @@
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import {
     LexerRuleSpecContext, ParserRuleSpecContext, TokensSpecContext, ChannelsSpecContext,
-    ModeSpecContext, DelegateGrammarContext, OptionContext, TerminalRuleContext, RulerefContext
+    ModeSpecContext, DelegateGrammarContext, OptionContext, TerminalRuleContext, RulerefContext, OptionValueContext
 } from '../parser/ANTLRv4Parser';
 
 import { SymbolKind } from '../index';
@@ -108,7 +108,7 @@ export class DetailsListener implements ANTLRv4ParserListener {
 
     exitOption(ctx: OptionContext) {
         let option = ctx.identifier().text;
-        if (option.toLocaleLowerCase() == "tokenvocab") {
+        if (option.toLocaleLowerCase() == "tokenvocab" && ctx.tryGetRuleContext(0, OptionValueContext)) {
             let name = ctx.optionValue().text;
             let symbol = this.symbolTable.addNewSymbolOfType(TokenVocabSymbol, undefined, name);
             symbol.context = ctx;

@@ -34,7 +34,9 @@ export enum SymbolKind {
     TokenChannel,
     ParserRule,
     Action,
-    Predicate
+    Predicate,
+    Operator,
+    Option
 };
 
 export class LexicalRange {
@@ -53,6 +55,7 @@ export class SymbolInfo {
     name: string;
     source: string;
     definition: Definition | undefined;
+    description: string | undefined; // Used for code completion. Provides a small description for certain symbols.
 };
 
 export enum DiagnosticType {
@@ -116,6 +119,7 @@ class ContextEntry {
     context: SourceContext;
     refCount: number;
     dependencies: string[] = [];
+    grammar: string; // The grammar file name.
 };
 
 export class AntlrLanguageSupport {
@@ -134,10 +138,10 @@ export class AntlrLanguageSupport {
         }
     }
 
-    private loadDependency(contextEntry: ContextEntry, baseFile: string, depName: string): SourceContext | undefined {
+    private loadDependency(contextEntry: ContextEntry, depName: string): SourceContext | undefined {
         // The given import dir is used to locate the dependency (either relative to the base path or via an absolute path).
         // If we cannot find the grammar file that way we try the base folder.
-        let basePath = path.dirname(baseFile);
+        let basePath = path.dirname(contextEntry.grammar);
         let fullPath = path.isAbsolute(this.importDir) ? this.importDir : path.join(basePath, this.importDir);
         try {
             let depPath = fullPath + "/" + depName + ".g4";
@@ -179,13 +183,13 @@ export class AntlrLanguageSupport {
         return undefined;
     }
 
-    private parseGrammar(contextEntry: ContextEntry, file: string, source: string) {
+    private parseGrammar(contextEntry: ContextEntry) {
         let oldDependencies = contextEntry.dependencies.slice();
         contextEntry.dependencies.length = 0;
-        let newDependencies = contextEntry.context.parse(source);
+        let newDependencies = contextEntry.context.parse();
 
         for (let dep of newDependencies) {
-            let depContext = this.loadDependency(contextEntry, file, dep);
+            let depContext = this.loadDependency(contextEntry, dep);
             if (depContext)
                 contextEntry.context.addDependency(depContext);
         }
@@ -205,12 +209,26 @@ export class AntlrLanguageSupport {
         return contextEntry.context;
     }
 
-    public reparse(fileName: string, source: string) {
+    /**
+     * Call this to refresh the internal input stream as a preparation to a reparse call
+     * or for code completion.
+     * Does nothing if no grammar has been loaded for that file name.
+     */
+    public setText(fileName: string, source: string) {
         var contextEntry = this.sourceContexts.get(fileName);
-        if (!contextEntry) // Not yet loaded?
-            this.loadGrammar(fileName, source);
-        else
-            this.parseGrammar(contextEntry, fileName, source);
+        if (contextEntry) {
+            contextEntry.context.setText(source);
+        }
+    }
+
+    /**
+     * Triggers a parse run for the given file name. This grammar must have been loaded before.
+     */
+    public reparse(fileName: string) {
+        var contextEntry = this.sourceContexts.get(fileName);
+        if (contextEntry) {
+            this.parseGrammar(contextEntry);
+        }
     }
 
     public loadGrammar(fileName: string, source?: string): SourceContext {
@@ -226,12 +244,13 @@ export class AntlrLanguageSupport {
             }
 
             var context = new SourceContext(fileName);
-            contextEntry = { context: context, refCount: 0, dependencies: [] };
+            contextEntry = { context: context, refCount: 0, dependencies: [], grammar: fileName };
             this.sourceContexts.set(fileName, contextEntry);
 
             // Do an initial parse run and load all dependencies of this context
             // and pass their references to this context.
-            this.parseGrammar(contextEntry, fileName, source);
+            context.setText(source);
+            this.parseGrammar(contextEntry);
         }
         contextEntry.refCount++;
         return contextEntry.context;

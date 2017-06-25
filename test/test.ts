@@ -109,7 +109,8 @@ describe('antlr4-graps:', function () {
     });
 
     it('reparse', function (done) {
-      backend.reparse("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
+      backend.setText("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
+      backend.reparse("test/t.g4");
       let diagnostics = backend.getDiagnostics("test/t.g4");
 
       expect(diagnostics.length, "Test 1").to.equal(4);
@@ -126,7 +127,8 @@ describe('antlr4-graps:', function () {
       expect(diagnostics[1].range.end.column, "Test 10").to.equal(1);
       expect(diagnostics[1].range.end.row, "Test 11").to.equal(2);
 
-      backend.reparse("test/t.g4", "grammar A; a: b \n| c; c: b+;");
+      backend.setText("test/t.g4", "grammar A; a: b \n| c; c: b+;")
+      backend.reparse("test/t.g4");
       diagnostics = backend.getDiagnostics("test/t.g4");
 
       expect(diagnostics.length, "Test 12").to.equal(2);
@@ -187,7 +189,8 @@ describe('antlr4-graps:', function () {
       // "Edit" the source. This will release the lexer reference and reload it.
       // If that doesn't work we'll get a lot of unknown-symbol errors (for all lexer symbols).
       let source = fs.readFileSync("test/TParser.g4", 'utf8');
-      backend.reparse("test/TParser.g4", source + "\nblah: any idarray;");
+      backend.setText("test/TParser.g4", source + "\nblah: any idarray;");
+      backend.reparse("test/TParser.g4");
 
       let parserDiags = backend.getDiagnostics("test/TParser.g4"); // This also updates the symbol reference counts.
       expect(parserDiags.length, "Test 1").to.be.equal(0);

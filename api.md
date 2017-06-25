@@ -28,9 +28,19 @@ The file name you pass to all API functions is mostly used to identify a source 
 
 -----
 
-> `function AntlrLanguageSupport.reparse(fileName, source)`
+> `function AntlrLanguageSupport.setText(fileName, source)`
 >
-> Used to update symbol information for a given file (e.g. after an edit action). It is not necessary that the file already has all the changes. Only `source` is used as source for the grammar code. This function will also update all dependencies, by releasing no longer used ones and loading new ones, if required.
+> Call this function when the text of the grammar has changed. This is fast enough to be called on every keypress (and should be called like that to keep the internal input stream up to date for code completion). No heavy processing happens here.
+> 
+> Does nothing if the grammar with the given file name hasn't been loaded yet.
+
+-----
+
+> `function AntlrLanguageSupport.reparse(fileName)`
+>
+> Used to update symbol information for a given file (e.g. after an edit action). You should have called `setText()` at least once before calling this method in order to have internal state set up properly.
+> 
+> Does nothing if the grammar with the given file name hasn't been loaded yet.
 
 -----
 
@@ -54,15 +64,17 @@ The file name you pass to all API functions is mostly used to identify a source 
 
 > `function AntlrLanguageSupport.getCodeCompletionCandidates(fileName, column, row)`
 >
-> Returns an array of `SymbolInfo` objects which represent symbols that are possible input at the given input position.
+> Returns an array of `SymbolInfo` objects which represent symbols that are possible input at the given input position. You should have called `setText()` at least once before calling this method in order to have internal state set up properly.
 >
-> Note: the code completion implementation is still in experimental status, so expect problems there. Use it with small grammars only.
+> Note: the code completion implementation is still in incomplete state, so expect problems there (especially slowness with big grammars).
+> 
+> Does nothing if the grammar with the given file name hasn't been loaded yet.
 
 -----
 
 > `function AntlrLanguageSupport.getDiagnostics(fileName: string)`
 >
-> Returns a list of diagnostic records (e.g. syntax errors) for the given file as an array of `DiagnosticEntry` objects. The diagnostics are produced by 2 sources. One is the backend itself, which can check for syntax errors, duplicate or missing symbols and simimlar problems. Once a generation run was triggered the internal diagnostics list is dismissed and instead all issues reported by the ANTLR jar are collected. This allows for basic issue reporting while editing (which shouldn't constantly generate parser files) and full info after generation (e.g. on save of a document). Should there be a problem with running generation (or the user doesn't want that) there is at least some diagnostic info.
+> Returns a list of diagnostic records (e.g. syntax errors) for the given file as an array of `DiagnosticEntry` objects. The diagnostics are produced by 2 sources. One is the backend itself, which can check for syntax errors, duplicate or missing symbols and simimlar problems. Once a generation run was triggered the internal diagnostics list is dismissed and instead all issues reported by the ANTLR4 jar are collected. This allows for basic issue reporting while editing (which shouldn't constantly generate parser files) and full info after generation (e.g. on save of a document). Should there be a problem with running generation (or the user doesn't want that) there is at least some diagnostic info.
 
 -----
 
