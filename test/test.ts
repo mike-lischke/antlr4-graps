@@ -332,7 +332,7 @@ describe('antlr4-graps:', function () {
         deleteFolderRecursive("generated");
         backend.releaseGrammar("grammars/ANTLRv4Parser.g4");
       }
-    }).timeout(5000);
+    }).timeout(20000);
   });
 
   describe('Code Generation:', function () {
@@ -355,7 +355,7 @@ describe('antlr4-graps:', function () {
 
         // Don't remove the generated data. Need it for the next test.
       }
-    });
+    }).timeout(20000);
 
     it("Interpreter load with existing data, split grammar", async function () {
       expect(fs.existsSync("generated/"), "Test 1");
@@ -444,7 +444,7 @@ describe('antlr4-graps:', function () {
         backend.releaseGrammar("test/TParser.g4");
         deleteFolderRecursive("generated");
       }
-    });
+    }).timeout(20000);
 
     it("Interpreter load w/o existing data, split grammar", async function () {
       let result = await backend.generate("test/TParser.g4", { outputDir: "generated", language: "CSharp", loadOnly: true });
@@ -453,7 +453,7 @@ describe('antlr4-graps:', function () {
 
       var graph = backend.getATNGraph("test/TParser.g4", "stat");
       expect(graph, "Test 3").to.be.undefined;
-    });
+    }).timeout(20000);
 
     it("A generation run with settings, split grammar (typescript)", async function () {
       // The typescript target requires a different tool jar.
@@ -484,7 +484,7 @@ describe('antlr4-graps:', function () {
       } finally {
         deleteFolderRecursive("generated");
       }
-    });
+    }).timeout(20000);
 
     it('Generation with semantic error, combined grammar (C++)', async function () {
       try {
@@ -501,7 +501,7 @@ describe('antlr4-graps:', function () {
         backend.releaseGrammar("test/t2.g4");
         deleteFolderRecursive("generated");
       }
-    });
+    }).timeout(20000);
 
     it('Generation with Java exception, combined grammar (Java)', async function () {
       // Testing a grammar with an awful lot of (implicit) lexer tokens.
@@ -516,7 +516,7 @@ describe('antlr4-graps:', function () {
         backend.releaseGrammar("test/t2.g4");
         deleteFolderRecursive("generated");
       }
-    }).timeout(5000);
+    }).timeout(20000);
 
     it('Generation with errors, split grammar (C++)', async function () {
       try {
@@ -533,7 +533,7 @@ describe('antlr4-graps:', function () {
         backend.releaseGrammar("test/TLexer2.g4");
         deleteFolderRecursive("generated");
       }
-    });
+    }).timeout(20000);
   });
 
   describe('Test for Bugs:', function () {
