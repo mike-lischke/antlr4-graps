@@ -7,7 +7,7 @@
   "scripts": {
     "antlr4ts": "antlr4ts grammars/ANTLRv4LexBasic.g4 grammars/ANTLRv4Lexer.g4 grammars/ANTLRv4Parser.g4 -o parser -visitor",
     "prepublishOnly": "npm run test",
-    "test": "npm install typescript && tsc && npm install mocha && mocha out/test"
+    "test": "tsc && mocha out/test"
   },
   "repository": {
     "type": "git",
@@ -25,11 +25,10 @@
   "devDependencies": {
     "@types/chai": "^3.5.2",
     "@types/mocha": "^2.2.41",
-    "@types/node": "^7.0.32",
+    "@types/node": "^7.0.33",
     "chai": "^3.5.0",
     "mocha": "^3.4.2",
-    "ts-node": "^3.1.0",
-    "typescript": "^2.4.0"
+    "typescript": "~2.3.4"
   },
   "author": "Mike Lischke",
   "license": "MIT"

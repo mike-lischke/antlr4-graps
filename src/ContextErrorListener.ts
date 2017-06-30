@@ -15,9 +15,8 @@ export class ContextErrorListener implements ANTLRErrorListener<any> {
     constructor(private errorList: DiagnosticEntry[]) {
     }
 
-    syntaxError<T extends Token>(recognizer: Recognizer<T, any>, offendingSymbol: T | undefined, line: number,
-        charPositionInLine: number, msg: string, e: RecognitionException | undefined) {
-
+    syntaxError = function(recognizer: Recognizer<Token, any>, offendingSymbol: Token | undefined, line: number,
+        charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
         let error: DiagnosticEntry = {
             type: DiagnosticType.Error,
             message: msg,

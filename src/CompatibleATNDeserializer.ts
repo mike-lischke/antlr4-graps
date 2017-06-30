@@ -35,7 +35,7 @@ export class CompatibleATNDeserializer extends ATNDeserializer {
 	@NotNull
 	private readonly deserializationOptions2: ATNDeserializationOptions;
 
-	constructor(@NotNull deserializationOptions?: ATNDeserializationOptions) {
+	constructor(deserializationOptions?: ATNDeserializationOptions) {
 		super(deserializationOptions);
 		if (deserializationOptions == null) {
 			deserializationOptions = ATNDeserializationOptions.defaultOptions;
@@ -52,7 +52,7 @@ export class CompatibleATNDeserializer extends ATNDeserializer {
         return CompatibleATNDeserializer.SUPPORTED_UUIDS2.findIndex(e => e.equals(actualUuid)) >= featureIndex;
     }
 
-	deserialize(@NotNull data: Uint16Array): ATN {
+	deserialize(data: Uint16Array): ATN {
 		data = data.slice(0);
 
 		// Each Uint16 value in data is shifted by +2 at the entry to this method. This is an encoding optimization
