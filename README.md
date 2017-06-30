@@ -23,9 +23,9 @@ Here's a feature summary of the module:
 * syntactic and semantic diagnostics (e.g. duplicate symbols, unknown symbols)
 * symbol reference counts (usage counts), unreferenced rules
 * a reference graph for all symbols
-* code completion candidates (experimental feature, use only with small grammars)
+* code completion candidates (fairly stable now, might be a bit slow for large grammars)
 * railroad diagrams for rules
-* parser generation, including interpreter data generation, with flexible configuration (listeners, visitors, search folder etc.)
+* parser generation, including interpreter data generation, with flexible configuration (listeners, visitors, search/lib folder etc.)
 * full semantic checks and reports by code generation (e.g. left-recursive rule detection etc.)
 * built-in interpreters for parse runs without the need to compile the generated parser (not yet finished)
 * ATN graph (nodes and links describing the ATN structure for a given rule)

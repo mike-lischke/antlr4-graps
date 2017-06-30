@@ -6,6 +6,10 @@ node_js:
 jdk: openjdk6
 sudo: false
 
+branches:
+  only:
+    - master
+
 install:
-  - npm update
+  - npm uninstall typescript --no-save
   - npm install
