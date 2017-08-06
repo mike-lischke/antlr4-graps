@@ -31,7 +31,7 @@ The file name you pass to all API functions is mostly used to identify a source 
 > `function AntlrLanguageSupport.setText(fileName, source)`
 >
 > Call this function when the text of the grammar has changed. This is fast enough to be called on every keypress (and should be called like that to keep the internal input stream up to date for code completion). No heavy processing happens here.
-> 
+>
 > Does nothing if the grammar with the given file name hasn't been loaded yet.
 
 -----
@@ -39,7 +39,7 @@ The file name you pass to all API functions is mostly used to identify a source 
 > `function AntlrLanguageSupport.reparse(fileName)`
 >
 > Used to update symbol information for a given file (e.g. after an edit action). You should have called `setText()` at least once before calling this method in order to have internal state set up properly.
-> 
+>
 > Does nothing if the grammar with the given file name hasn't been loaded yet.
 
 -----
@@ -67,7 +67,7 @@ The file name you pass to all API functions is mostly used to identify a source 
 > Returns an array of `SymbolInfo` objects which represent symbols that are possible input at the given input position. You should have called `setText()` at least once before calling this method in order to have internal state set up properly.
 >
 > Note: the code completion implementation is still in incomplete state, so expect problems there (especially slowness with big grammars).
-> 
+>
 > Does nothing if the grammar with the given file name hasn't been loaded yet.
 
 -----
@@ -80,7 +80,7 @@ The file name you pass to all API functions is mostly used to identify a source 
 
 > `function AntlrLanguageSupport.ruleFromPosition(fileName,  column, row)`
 >
-> Returns the name of the rule at the given position. Useful when you plan to get further informations about a specific rule (e.g. railroad diagrams). If there is no rule the result is undefined.
+> Returns a tuple (name, index) of the rule at the given position. Useful when you plan to get further informations about a specific rule (e.g. railroad diagrams). If there is no rule the result is undefined.
 
 -----
 

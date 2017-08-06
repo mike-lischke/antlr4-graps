@@ -533,7 +533,7 @@ export class SourceContext {
         return this.symbolTable.getReferenceCount(symbol);
     }
 
-    public ruleFromPosition(column: number, row: number): string | undefined {
+    public ruleFromPosition(column: number, row: number): [string, number] | undefined {
         let terminal = parseTreeFromPosition(this.tree!, column, row);
         if (!terminal) {
             return;
@@ -546,9 +546,9 @@ export class SourceContext {
 
         if (context) {
             if (context.ruleIndex == ANTLRv4Parser.RULE_parserRuleSpec) {
-                return (context as ParserRuleSpecContext).RULE_REF().text;
+                return [(context as ParserRuleSpecContext).RULE_REF().text, context.ruleIndex];
             }
-            return (context as LexerRuleSpecContext).TOKEN_REF().text;
+            return [(context as LexerRuleSpecContext).TOKEN_REF().text, context.ruleIndex];
         }
         return;
     }
