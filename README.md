@@ -29,6 +29,7 @@ Here's a feature summary of the module:
 * full semantic checks and reports by code generation (e.g. left-recursive rule detection etc.)
 * built-in interpreters for parse runs without the need to compile the generated parser (not yet finished)
 * ATN graph (nodes and links describing the ATN structure for a given rule)
+* Sentence generation (random or all-path generation of sentences that are valid for a given grammar), mostly used for testing and grammar review.
 
 ## Usage
 
@@ -61,4 +62,55 @@ I'd love to see code contributions, to make the module evolve quicker.
 
 ## Release Notes
 
-For release details see [Git commit history](https://github.com/mike-lischke/antlr-graps/commits/master).
+### 1.3.7
+- Added support for sentence generation
+
+### 1.3.6
+- Travis build fixes
+- Code completion improvements which now make this feature actually usable.
+
+### 1.3.3
+- Improvements for RRD scripts.
+- Improvements for ATN graph scripts.
+
+### 1.3.2
+- antlr4-graps now ships with custom builds of antlr4 and antlr4-typescript jars, to be able to generate code.
+- Added code generation support for grammars.
+- Typscript code is no longer published.
+- Added special ATN deserializer class for the typescript runtime that allows to load standard ATN data (antlr4ts uses an extended version).
+- Added parser for antlr4 error message, which allows to integrate them into the module's diagnostics.
+- Added ATN graph generation support.
+- Doc updated to describe JS code, not TS code.
+
+### 1.3.0
+- Added support for symbol references (e.g. for references graphs).
+- Updated doc and added unit tests for that.
+
+### 1.2.15
+- Now using antlr4-c3 for code completion + symbol tables.
+- Added support for railroad diagrams.
+
+### 1.2.10
+- Updates for new antlr4ts version.
+
+### 1.2.6
+- Improved documenation
+- Added token reference count support.
+- New unit tests added for that.
+- Enabled strict null checks for TS code.
+
+### 1.2.1
+- Radical change: switched from C++ to TypeScript backend (antlr4ts).
+- Added more unit tests
+- Better organization of exported types.
+- Improved readme.md.
+- `npm test` works now.
+
+### 1.1.10
+- Improved symbol information, introduced SymbolKind enum.
+
+### 1.0.9
+- Visual Studio build fixes (C++).
+
+### 1.0.6 Initial Release
+This was the first public release (yet with a C++ backend). Implements the base project structure (source contexts).

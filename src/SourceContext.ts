@@ -18,17 +18,24 @@ import {
     ANTLRInputStream, CommonTokenStream, BailErrorStrategy, DefaultErrorStrategy, Token, LexerInterpreter,
     ParserInterpreter, CharStream, RuleContext, ParserRuleContext, CommonToken
 } from 'antlr4ts';
-import { PredictionMode, ATNState, RuleTransition, TransitionType, ATNStateType } from 'antlr4ts/atn';
+import {
+    PredictionMode, ATNState, RuleTransition, TransitionType, ATNStateType, BlockStartState, DecisionState,
+    RuleStopState, PlusBlockStartState, StarLoopEntryState, RuleStartState
+} from 'antlr4ts/atn';
 import { ParseCancellationException, IntervalSet } from 'antlr4ts/misc';
 import { ParseTreeWalker, TerminalNode, ParseTree } from 'antlr4ts/tree';
 
 import { CodeCompletionCore, Symbol, ScopedSymbol, LiteralSymbol } from "antlr4-c3";
 
-import { ANTLRv4Parser, ParserRuleSpecContext, LexerRuleSpecContext, GrammarSpecContext, RuleSpecContext, OptionsSpecContext, TokensSpecContext } from '../parser/ANTLRv4Parser';
+import {
+    ANTLRv4Parser, ParserRuleSpecContext, LexerRuleSpecContext, GrammarSpecContext, RuleSpecContext, OptionsSpecContext,
+    TokensSpecContext
+} from '../parser/ANTLRv4Parser';
 import { ANTLRv4Lexer } from '../parser/ANTLRv4Lexer';
 
 import {
-    SymbolKind, SymbolInfo, DiagnosticEntry, DiagnosticType, ReferenceNode, ATNGraphData, GenerationOptions
+    SymbolKind, SymbolInfo, DiagnosticEntry, DiagnosticType, ReferenceNode, ATNGraphData, GenerationOptions,
+    SentenceGenerationOptions
 } from './AntlrLanguageSupport';
 
 import { ContextErrorListener } from './ContextErrorListener';
@@ -40,10 +47,12 @@ import { InterpreterDataReader } from "./InterpreterDataReader";
 import { ErrorParser } from "./ErrorParser";
 
 import {
-    GrapsSymbolTable, BuiltInChannelSymbol, BuiltInLexerTokenSymbol, BuiltInModeSymbol, ParserRuleSymbol, VirtualLexerTokenSymbol, FragmentLexerTokenSymbol, LexerTokenSymbol
+    GrapsSymbolTable, BuiltInChannelSymbol, BuiltInLexerTokenSymbol, BuiltInModeSymbol, ParserRuleSymbol,
+    VirtualLexerTokenSymbol, FragmentLexerTokenSymbol, LexerTokenSymbol
 } from "./GrapsSymbolTable";
 
 import { LexicalRange } from "../index";
+import { SentenceGenerator } from "./SentenceGenerator";
 
 enum GrammarType { Unknown, Parser, Lexer, Combined };
 
@@ -737,6 +746,43 @@ export class SourceContext {
         }
 
         return result;
+    }
+
+    /**
+     * Generates strings that are valid input for the managed grammar.
+     *
+     * @param options The settings controlling the generation.
+     * @param defined A map of rule names and the output string to use for them (instead of walking the ATN).
+     * @returns A list of strings with sentences that this grammar would successfully parsed.
+     */
+    public generateSentences(options: SentenceGenerationOptions, definitions?: Map<string, string>): string[] {
+        if (!this.lexerInterpreter || !this.parserInterpreter) {
+            // Requires a generation run.
+            return [];
+        }
+        let isLexerRule = options.startRule[0] == options.startRule[0].toUpperCase();
+
+        let generator = new SentenceGenerator(this.lexerInterpreter.atn, this.lexerInterpreter.getRuleIndexMap(),
+            this.lexerInterpreter.vocabulary, this.lexerInterpreter.ruleNames, this.parserInterpreter.ruleNames);
+
+        let lexerRuleIndexMap = this.lexerInterpreter.getRuleIndexMap();
+        let parserRuleIndexMap = this.parserInterpreter.getRuleIndexMap();
+        let start: RuleStartState;
+        if (isLexerRule) {
+            let index = lexerRuleIndexMap.get(options.startRule);
+            if (index == undefined) {
+                return [];
+            }
+            start = this.lexerInterpreter.atn.ruleToStartState[index];
+        } else {
+            let index = parserRuleIndexMap.get(options.startRule);
+            if (index == undefined) {
+                return [];
+            }
+            start = this.parserInterpreter.atn.ruleToStartState[index];
+        }
+
+        return generator.generate(options, start, definitions);
     }
 
     public getSymbolInfo(symbol: string): SymbolInfo | undefined {
