@@ -62,7 +62,7 @@ I'd love to see code contributions, to make the module evolve quicker.
 
 ## Release Notes
 
-### 1.3.8
+### 1.3.9
 - Return also the rule index from `ruleFromPosition`
 
 ### 1.3.7

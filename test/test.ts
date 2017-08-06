@@ -166,16 +166,16 @@ describe('antlr4-graps:', function () {
             expect(info.definition!.range.end.column, "Test 9").to.equal(10);
             expect(info.definition!.range.end.row, "Test 10").to.equal(86);
 
-            let [ruleName, ruleIndex] = backend.ruleFromPosition("test/TParser.g4", 37, 103)!;
+            let [ruleName, ruleIndex] = backend.ruleFromPosition("test/TParser.g4", 37, 103);
             expect(ruleName, "Test 11").to.equal("expr");
-            let result = backend.ruleFromPosition("test/TParser.g4", 100, 123);
-            expect(result, "Test 12").to.be.undefined;
+            [ruleName, ruleIndex] = backend.ruleFromPosition("test/TParser.g4", 100, 123);
+            expect(ruleName, "Test 12").to.be.undefined;
             [ruleName, ruleIndex] = backend.ruleFromPosition("test/TParser.g4", 2, 119)!;
             expect(ruleName, "Test 13").to.equal("any");
             [ruleName, ruleIndex] = backend.ruleFromPosition("test/TParser.g4", 103, 82)!;
             expect(ruleName, "Test 14").to.equal("unused");
-            result = backend.ruleFromPosition("test/TParser.g4", 64, 68);
-            expect(result, "Test 15").to.be.undefined;
+            [ruleName, ruleIndex] = backend.ruleFromPosition("test/TParser.g4", 64, 68);
+            expect(ruleName, "Test 15").to.be.undefined;
 
             [ruleName, ruleIndex] = backend.ruleFromPosition("test/TLexer.g4", 62, 77)!;
             expect(ruleName, "Test 16").to.equal("Comment");

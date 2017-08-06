@@ -326,7 +326,7 @@ export class AntlrLanguageSupport {
         return context.getDiagnostics();
     };
 
-    public ruleFromPosition(fileName: string, column: number, row: number): [string, number] | undefined {
+    public ruleFromPosition(fileName: string, column: number, row: number): [string | undefined, number | undefined ]{
         var context = this.getContext(fileName);
         return context.ruleFromPosition(column, row);
     }
