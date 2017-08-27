@@ -132,6 +132,44 @@ export interface SentenceGenerationOptions {
     allPaths?: boolean;      // If false a single alt in a list is randomly choosen. If true sentences for all possible alts are generated (default: false).
 };
 
+/**
+ * Options for grammar text formatting. Most names, values and meanings have been taken from clang-format
+ * (http://clang.llvm.org/docs/ClangFormatStyleOptions.html), but may have slight variations tailored towards ANTLR grammars.
+ * Deviations from that are mentioned in comments, otherwise see clang-format and the documentation for descriptions + examples.
+ */
+export interface FormattingOptions {
+    alignConsecutiveDeclarations?: boolean; // Default: false.
+    alignTrailingComments?: boolean; // Default: false
+    allowShortBlocksOnASingleLine?: boolean; // Default: true;
+    breakBeforeBraces?: boolean; // When true start predicates and actions on a new line. Default: false.
+    columnLimit?: number; // Default: 100 chars.
+    continuationIndentWidth?: number; // Default: same as indentWith.
+    indentWidth?: number; // Default: 4 chars.
+    keepEmptyLinesAtTheStartOfBlocks?: boolean; // Default: false.
+    maxEmptyLinesToKeep?: number; // Default: 1.
+    reflowComments?: boolean; // Default: true.
+    spaceBeforeAssignmentOperators?: boolean; // Default: true
+    tabWidth?: number; // Default: 4.
+    useTab?: boolean; // Default: true.
+
+    // Values not found in clang-format:
+
+    // When true aligns a rule colon with the alt symbols, otherwise keeps it as trailing symbol after the rule name.
+    // Default: false.
+    alignColon?: boolean;
+    allowShortRulesOnASingleLine?: boolean; // Like allowShortBlocksOnASingleLine, but for entire rules. Default: true.
+    alignTrailingPredicates?: boolean;      // Like alignTrailingComments, but for trailing predicates. Default: true.
+
+    // Place semicolon behind last code token or on an own line. If on own line: don't indent, indent or align to
+    //last alt char. Default: ownLine.
+    alignSemicolon?: "trailing" | "ownLine" | "ownLineIndent" | "ownLineAlign";
+    breakBeforeParens?: boolean;            // For blocks: if true puts opening parenthesis on an own line. Default: false.
+
+    // Place rule internals (return value, local variables, @init, @after) all on a single line, if true. Default: false.
+    ruleInternalsOnSingleLine?: boolean;
+    minEmptyLines?: number; // Between top level elements, how many empty lines must exist? Default: 0.
+};
+
 class ContextEntry {
     context: SourceContext;
     refCount: number;
@@ -302,10 +340,6 @@ export class AntlrLanguageSupport {
         return context.infoForSymbolAtPosition(column, row, limitToChildren);
     };
 
-    /**
-     * Returns the lexical range of the closest symbol scope that covers the given location.
-     * @param ruleScope if true find the enclosing rule (if any) and return it's range, instead of the directly enclosing scope.
-     */
     public enclosingRangeForSymbol(fileName: string, column: number, row: number, ruleScope: boolean = false): LexicalRange | undefined {
         var context = this.getContext(fileName);
         return context.enclosingRangeForSymbol(column, row, ruleScope);
@@ -390,5 +424,10 @@ export class AntlrLanguageSupport {
     public generateSentences(fileName: string, options: SentenceGenerationOptions, definitions?: Map<string, string>): string[] {
         var context = this.getContext(fileName);
         return context.generateSentences(options, definitions);
+    }
+
+    public formatGrammar(fileName: string, options: FormattingOptions, range: LexicalRange): [string, LexicalRange] {
+        var context = this.getContext(fileName);
+        return context.formatGrammar(options, range);
     }
 }

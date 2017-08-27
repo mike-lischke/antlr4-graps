@@ -50,10 +50,6 @@ if($val.text.compareTo("0")!=0) throw new InputMismatchException(this);
  ******************************************************************************/
 grammar CPP14;
 
-@header {
-	import { InputMismatchException } from 'antlr4ts/InputMismatchException';
-}
-
 /*Basic concepts*/
 translationunit
 :
@@ -95,7 +91,7 @@ qualifiedid
 nestednamespecifier
 :
 	'::'
-	| typename '::'
+	| thetypename '::'
 	| namespacename '::'
 	| decltypespecifier '::'
 	| nestednamespecifier Identifier '::'
@@ -172,12 +168,12 @@ postfixexpression
 	| postfixexpression '->' pseudodestructorname
 	| postfixexpression '++'
 	| postfixexpression '--'
-	| Dynamic_cast '<' typeid '>' '(' expression ')'
-	| Static_cast '<' typeid '>' '(' expression ')'
-	| Reinterpret_cast '<' typeid '>' '(' expression ')'
-	| Const_cast '<' typeid '>' '(' expression ')'
+	| Dynamic_cast '<' thetypeid '>' '(' expression ')'
+	| Static_cast '<' thetypeid '>' '(' expression ')'
+	| Reinterpret_cast '<' thetypeid '>' '(' expression ')'
+	| Const_cast '<' thetypeid '>' '(' expression ')'
 	| Typeid '(' expression ')'
-	| Typeid '(' typeid ')'
+	| Typeid '(' thetypeid ')'
 ;
 
 expressionlist
@@ -187,9 +183,9 @@ expressionlist
 
 pseudodestructorname
 :
-	nestednamespecifier? typename '::' '~' typename
-	| nestednamespecifier Template simpletemplateid '::' '~' typename
-	| nestednamespecifier? '~' typename
+	nestednamespecifier? thetypename '::' '~' thetypename
+	| nestednamespecifier Template simpletemplateid '::' '~' thetypename
+	| nestednamespecifier? '~' thetypename
 	| '~' decltypespecifier
 ;
 
@@ -200,9 +196,9 @@ unaryexpression
 	| '--' castexpression
 	| unaryoperator castexpression
 	| Sizeof unaryexpression
-	| Sizeof '(' typeid ')'
+	| Sizeof '(' thetypeid ')'
 	| Sizeof '...' '(' Identifier ')'
-	| Alignof '(' typeid ')'
+	| Alignof '(' thetypeid ')'
 	| noexceptexpression
 	| newexpression
 	| deleteexpression
@@ -222,7 +218,7 @@ unaryoperator
 newexpression
 :
 	'::'? New newplacement? newtypeid newinitializer?
-	| '::'? New newplacement? '(' typeid ')' newinitializer?
+	| '::'? New newplacement? '(' thetypeid ')' newinitializer?
 ;
 
 newplacement
@@ -267,7 +263,7 @@ noexceptexpression
 castexpression
 :
 	unaryexpression
-	| '(' typeid ')' castexpression
+	| '(' thetypeid ')' castexpression
 ;
 
 pmexpression
@@ -506,7 +502,7 @@ blockdeclaration
 
 aliasdeclaration
 :
-	Using Identifier attributespecifierseq? '=' typeid ';'
+	Using Identifier attributespecifierseq? '=' thetypeid ';'
 ;
 
 simpledeclaration
@@ -596,7 +592,7 @@ trailingtypespecifierseq
 
 simpletypespecifier
 :
-	nestednamespecifier? typename
+	nestednamespecifier? thetypename
 	| nestednamespecifier Template simpletemplateid
 	| Char
 	| Char16
@@ -615,7 +611,7 @@ simpletypespecifier
 	| decltypespecifier
 ;
 
-typename
+thetypename
 :
 	classname
 	| enumname
@@ -782,7 +778,7 @@ attributespecifier
 
 alignmentspecifier
 :
-	Alignas '(' typeid '...'? ')'
+	Alignas '(' thetypeid '...'? ')'
 	| Alignas '(' constantexpression '...'? ')'
 ;
 
@@ -907,7 +903,7 @@ declaratorid
 	'...'? idexpression
 ;
 
-typeid
+thetypeid
 :
 	typespecifierseq abstractdeclarator?
 ;
@@ -1098,7 +1094,7 @@ purespecifier:
 purespecifier
 :
 	Assign val = Octalliteral
-	{if($val.text != "0") throw new InputMismatchException(this);}
+	{if($val.text.compareTo("0")!=0) throw new InputMismatchException(this);}
 
 ;
 
@@ -1181,7 +1177,7 @@ meminitializerid
 /*Overloading*/
 operatorfunctionid
 :
-	Operator operator
+	Operator theoperator
 ;
 
 literaloperatorid
@@ -1211,9 +1207,9 @@ templateparameter
 typeparameter
 :
 	Class '...'? Identifier?
-	| Class Identifier? '=' typeid
+	| Class Identifier? '=' thetypeid
 	| Typename '...'? Identifier?
-	| Typename Identifier? '=' typeid
+	| Typename Identifier? '=' thetypeid
 	| Template '<' templateparameterlist '>' Class '...'? Identifier?
 	| Template '<' templateparameterlist '>' Class Identifier? '=' idexpression
 ;
@@ -1243,7 +1239,7 @@ templateargumentlist
 
 templateargument
 :
-	typeid
+	thetypeid
 	| constantexpression
 	| idexpression
 ;
@@ -1310,8 +1306,8 @@ dynamicexceptionspecification
 
 typeidlist
 :
-	typeid '...'?
-	| typeidlist ',' typeid '...'?
+	thetypeid '...'?
+	| typeidlist ',' thetypeid '...'?
 ;
 
 noexceptspecification
@@ -1958,7 +1954,7 @@ Ellipsis
 	'...'
 ;
 
-operator
+theoperator
 :
 	New
 	| Delete

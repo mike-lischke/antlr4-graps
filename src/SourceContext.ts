@@ -35,7 +35,7 @@ import { ANTLRv4Lexer } from '../parser/ANTLRv4Lexer';
 
 import {
     SymbolKind, SymbolInfo, DiagnosticEntry, DiagnosticType, ReferenceNode, ATNGraphData, GenerationOptions,
-    SentenceGenerationOptions
+    SentenceGenerationOptions, FormattingOptions
 } from './AntlrLanguageSupport';
 
 import { ContextErrorListener } from './ContextErrorListener';
@@ -53,6 +53,7 @@ import {
 
 import { LexicalRange } from "../index";
 import { SentenceGenerator } from "./SentenceGenerator";
+import { GrammarFormatter } from "./Formatter";
 
 enum GrammarType { Unknown, Parser, Lexer, Combined };
 
@@ -108,6 +109,10 @@ export class SourceContext {
         return undefined;
     }
 
+    /**
+     * Returns the lexical range of the closest symbol scope that covers the given location.
+     * @param ruleScope if true find the enclosing rule (if any) and return it's range, instead of the directly enclosing scope.
+     */
     public enclosingRangeForSymbol(column: number, row: number, ruleScope: boolean): LexicalRange | undefined {
         let context = parseTreeFromPosition(this.tree!, column, row);
         if (!context) {
@@ -282,7 +287,7 @@ export class SourceContext {
                     break;
 
                 default: {
-                    let value = this.parser.vocabulary.getDisplayName(type);
+                    let value = this.parser!.vocabulary.getDisplayName(type);
                     info.kind = SymbolKind.Keyword;
                     info.name = value[0] === "'" ? value.substr(1, value.length - 2) : value; // Remove quotes.
                     break;
@@ -403,16 +408,16 @@ export class SourceContext {
         lexer.removeErrorListeners();
         lexer.addErrorListener(this.errorListener);
         this.tokenStream = new CommonTokenStream(lexer);
-        this.parser = new ANTLRv4Parser(this.tokenStream);
-        this.parser.removeErrorListeners();
-        this.parser.addErrorListener(this.errorListener);
+        this.parser = undefined;
     }
 
     public parse(): string[] {
         // Rewind the input stream for a new parse run.
         // Might be unnecessary when we just created that via setText.
         this.tokenStream.seek(0);
-        this.parser.reset();
+        this.parser = new ANTLRv4Parser(this.tokenStream);
+        this.parser.removeErrorListeners();
+        this.parser.addErrorListener(this.errorListener);
 
         this.parser.errorHandler = new BailErrorStrategy();
         this.parser.interpreter.setPredictionMode(PredictionMode.SLL);
@@ -764,7 +769,7 @@ export class SourceContext {
      *
      * @param options The settings controlling the generation.
      * @param defined A map of rule names and the output string to use for them (instead of walking the ATN).
-     * @returns A list of strings with sentences that this grammar would successfully parsed.
+     * @returns A list of strings with sentences that this grammar would successfully parse.
      */
     public generateSentences(options: SentenceGenerationOptions, definitions?: Map<string, string>): string[] {
         if (!this.lexerInterpreter || !this.parserInterpreter) {
@@ -798,6 +803,13 @@ export class SourceContext {
 
     public getSymbolInfo(symbol: string): SymbolInfo | undefined {
         return this.symbolTable.getSymbolInfo(symbol);
+    }
+
+    public formatGrammar(options: FormattingOptions, range: LexicalRange): [string, LexicalRange] {
+        this.tokenStream.fill();
+        let tokens = this.tokenStream.getTokens();
+        let formatter = new GrammarFormatter(tokens);
+        return formatter.formatGrammar(options, range);
     }
 
     private runSemanticAnalysisIfNeeded() {
@@ -918,7 +930,7 @@ export class SourceContext {
     // Grammar parsing infrastructure.
     private grammarType: GrammarType;
     private tokenStream: CommonTokenStream;
-    private parser: ANTLRv4Parser;
+    private parser: ANTLRv4Parser | undefined;
     private errorListener: ContextErrorListener = new ContextErrorListener(this.diagnostics);
 
     private tree: GrammarSpecContext | undefined; // The root context from the last parse run.
