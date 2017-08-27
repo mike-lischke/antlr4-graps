@@ -10,17 +10,28 @@
 import { FormattingOptions, LexicalRange } from "../index";
 
 import { Token } from "antlr4ts";
+import { Interval } from "antlr4ts/misc";
+
 import { ANTLRv4Lexer } from "../parser/ANTLRv4Lexer";
 
-enum InsertTokenType {
-    // Positive values are indices into this.tokens.
+// The result list is a collection of insert markers which direct the text generation process.
+// Such a marker either is an index into the source token list (if >= 0) or marks special behavior.
+enum InsertMarker {
+    // Token markers.
+    // EOF is -1
     LineBreak = -2,
     Space = -3,
     Tab = -4,
 
+    // Markers for a group of elements.
     Whitespace = -100,
     Comment = -101,
-    WhitespaceEraser = -102 // Marker for any comming whitespace to be ignored.
+
+    // Action markers.
+    WhitespaceEraser = -102, // Marker for any comming whitespace to be ignored.
+
+    // Block marker.
+    Range = -1000 // Indirect index into a range table.
 }
 
 export class GrammarFormatter {
@@ -52,17 +63,17 @@ export class GrammarFormatter {
     }
 
     /** Is the value at the given index in the token list of the given type? */
-    private entryIs(index: number, type: InsertTokenType): boolean {
+    private entryIs(index: number, marker: InsertMarker): boolean {
         if (index < 0 || index >= this.tokenList.length) {
             return false;
         }
 
         const entry = this.tokenList[index];
-        switch (type) {
-            case InsertTokenType.Whitespace:
-                return entry == InsertTokenType.LineBreak || entry == InsertTokenType.Space || entry == InsertTokenType.Tab;
+        switch (marker) {
+            case InsertMarker.Whitespace:
+                return entry == InsertMarker.LineBreak || entry == InsertMarker.Space || entry == InsertMarker.Tab;
 
-            case InsertTokenType.Comment: {
+            case InsertMarker.Comment: {
                 if (entry < 0) {
                     return false;
                 }
@@ -73,29 +84,29 @@ export class GrammarFormatter {
 
             default: {
                 if (entry < 0) {
-                    return entry == type;
+                    return entry == marker;
                 }
                 const token = this.tokens[entry];
-                return token.type == type;
+                return token.type == marker;
             }
         }
     }
 
-    private lastEntryIs(type: InsertTokenType): boolean {
-        return this.entryIs(this.tokenList.length - 1, type);
+    private lastEntryIs(marker: InsertMarker): boolean {
+        return this.entryIs(this.tokenList.length - 1, marker);
     }
 
     /**
      * Skips over all comments and whitespaces backwards and checks the value of the value after that.
      * @param type A token type to check for.
      */
-    private lastCodeTokenIs(type: number): boolean {
+    private lastCodeTokenIs(marker: InsertMarker): boolean {
         let i = this.tokenList.length - 1;
         while (i >= 0) {
-            if (!this.entryIs(i, InsertTokenType.WhitespaceEraser)
-                && !this.entryIs(i, InsertTokenType.Whitespace)
-                && !this.entryIs(i, InsertTokenType.LineBreak)
-                && !this.entryIs(i, InsertTokenType.Comment)) {
+            if (!this.entryIs(i, InsertMarker.WhitespaceEraser)
+                && !this.entryIs(i, InsertMarker.Whitespace)
+                && !this.entryIs(i, InsertMarker.LineBreak)
+                && !this.entryIs(i, InsertMarker.Comment)) {
                 break;
             }
             --i;
@@ -103,7 +114,7 @@ export class GrammarFormatter {
         if (i < 0) {
             return false;
         }
-        return this.tokens[this.tokenList[i]].type == type;
+        return this.tokens[this.tokenList[i]].type == marker;
     }
 
     /**
@@ -113,10 +124,10 @@ export class GrammarFormatter {
     private isFirstNonWhitespaceTokenOnLine(): boolean {
         let i = this.tokenList.length - 1;
         while (i >= 0) {
-            if (this.entryIs(i, InsertTokenType.LineBreak)) {
+            if (this.entryIs(i, InsertMarker.LineBreak)) {
                 return true;
             }
-            if (!this.entryIs(i, InsertTokenType.Whitespace)) {
+            if (!this.entryIs(i, InsertMarker.Whitespace)) {
                 return false;
             }
             --i;
@@ -125,12 +136,16 @@ export class GrammarFormatter {
     }
 
     private removeLastEntry() {
+        if (this.formattingDisabled) {
+            return;
+        }
+
         let lastEntry = this.tokenList[this.tokenList.length - 1];
         this.tokenList.pop();
         switch (lastEntry) {
-            case InsertTokenType.WhitespaceEraser:
+            case InsertMarker.WhitespaceEraser:
                 break; // Ignore.
-            case InsertTokenType.LineBreak:
+            case InsertMarker.LineBreak:
                 --this.currentLine;
                 break;
             default:
@@ -146,7 +161,11 @@ export class GrammarFormatter {
      * @param tokenList The list to work on.
      */
     private removeTrailingLineBreaks() {
-        while (this.lastEntryIs(InsertTokenType.LineBreak)) {
+        if (this.formattingDisabled) {
+            return;
+        }
+
+        while (this.lastEntryIs(InsertMarker.LineBreak)) {
             this.removeLastEntry();
         }
     }
@@ -156,27 +175,38 @@ export class GrammarFormatter {
      * @param tokenList The list to work on.
      */
     private removeTrailingWhitespaces() {
-        while (this.lastEntryIs(InsertTokenType.Whitespace)) {
+        if (this.formattingDisabled) {
+            return;
+        }
+
+        while (this.lastEntryIs(InsertMarker.Whitespace)) {
             this.removeLastEntry();
         }
     }
 
     private pushCurrentIndentation() {
+        if (this.formattingDisabled) {
+            return;
+        }
+
         console.assert(this.currentColumn == 0, "Current column cannot be > 0 when setting new indentation");
 
         if (this.options.useTab) {
-            this.tokenList.push(...Array(this.currentIndentation).fill(InsertTokenType.Tab));
+            this.tokenList.push(...Array(this.currentIndentation).fill(InsertMarker.Tab));
         } else {
-            this.tokenList.push(...Array(this.currentIndentation * this.options.tabWidth!).fill(InsertTokenType.Space));
+            this.tokenList.push(...Array(this.currentIndentation * this.options.tabWidth!).fill(InsertMarker.Space));
         }
         this.currentColumn = this.currentIndentation * this.options.tabWidth!;
     }
 
     /**
-     * Inserts the given type into the result list, but checks if the entry before `index` is a single line comment.
+     * Inserts the given marker into the result list, but checks if the entry before `index` is a single line comment.
      * If that's the case we need special handling here.
      */
-    private insert(index: number, type: InsertTokenType) {
+    private insert(index: number, marker: InsertMarker) {
+        if (this.formattingDisabled) {
+            return;
+        }
 
         let self = this;
 
@@ -189,17 +219,17 @@ export class GrammarFormatter {
                 self.currentLine += parts.length - 1;
                 self.currentColumn = parts[parts.length - 1].length; // TODO: should probably handle tabs here.
             }
-            self.tokenList.splice(index, 0, type);
+            self.tokenList.splice(index, 0, marker);
         }
 
-        switch (type) {
-            case InsertTokenType.WhitespaceEraser: { // Doesn't move current position.
-                this.tokenList.splice(index, 0, type);
+        switch (marker) {
+            case InsertMarker.WhitespaceEraser: { // Doesn't move current position.
+                this.tokenList.splice(index, 0, marker);
                 break;
             }
 
-            case InsertTokenType.LineBreak: {
-                this.tokenList.splice(index, 0, type);
+            case InsertMarker.LineBreak: {
+                this.tokenList.splice(index, 0, marker);
                 ++this.currentLine;
                 this.currentColumn = 0;
                 break;
@@ -209,16 +239,8 @@ export class GrammarFormatter {
                 var doDefault = true;
 
                 var token: Token | undefined;
-                if (type >= 0) {
-                    token = this.tokens[type];
-                    if (token.text!.indexOf("\n") > 0) {
-                        // We come here if formatting is disabled, so we need to handle linebreaks in whitespaces
-                        // here before going to the line comment special handling.
-                        this.tokenList.splice(index, 0, type);
-                        ++this.currentLine;
-                        this.currentColumn = 0;
-                        break;
-                    }
+                if (marker >= 0) {
+                    token = this.tokens[marker];
                 }
 
                 const insertLength = token ? token.stopIndex - token.startIndex + 1 : 1;
@@ -232,9 +254,9 @@ export class GrammarFormatter {
                             this.lineBreakPending = false;
                             ++this.currentLine;
                             this.currentColumn = 0;
-                            this.tokenList.push(InsertTokenType.LineBreak);
+                            this.tokenList.push(InsertMarker.LineBreak);
                             this.pushCurrentIndentation();
-                            this.tokenList.push(type);
+                            this.tokenList.push(marker);
 
                             if (token.type == ANTLRv4Lexer.BLOCK_COMMENT) {
                                 insertBlock(token);
@@ -243,7 +265,7 @@ export class GrammarFormatter {
                             }
                         } else {
                             // Not a comment that should be added, so move the new entry *before* the line comment.
-                            this.tokenList.splice(this.tokenList.length - 1, 0, type);
+                            this.tokenList.splice(this.tokenList.length - 1, 0, marker);
                             this.currentColumn += insertLength;
                         }
                     } // Values < 0 can be ignored here (shouldn't be added after a line comment).
@@ -261,7 +283,7 @@ export class GrammarFormatter {
                         }
 
                         case ANTLRv4Lexer.ACTION_CONTENT: { // Action content can contain line breaks.
-                            insertBlock(this.tokens[type]);
+                            insertBlock(this.tokens[marker]);
                             doDefault = false;
                             break;
                         }
@@ -269,7 +291,7 @@ export class GrammarFormatter {
                 }
 
                 if (doDefault) {
-                    this.tokenList.splice(index, 0, type);
+                    this.tokenList.splice(index, 0, marker);
                     this.currentColumn += insertLength;
                 }
 
@@ -278,20 +300,57 @@ export class GrammarFormatter {
         }
     }
 
-    private add(type: InsertTokenType) {
-        this.insert(this.tokenList.length, type);
+    private add(marker: InsertMarker) {
+        this.insert(this.tokenList.length, marker);
+    }
+
+    /**
+     * Computes the new column offset we get when adding the given text.
+     * There must be no linebreaks in the text.
+     */
+    private updateCurrentColumn(text: string) {
+        for (let char of text) {
+            if (char == "\t") {
+                // Round up column offset to next tab stop.
+                let offsetToNextTabStop = this.options.tabWidth! - (this.currentColumn % this.options.tabWidth!);
+                this.currentColumn += offsetToNextTabStop;
+            } else {
+                ++this.currentColumn;
+            }
+        }
+    }
+
+    /**
+     * Used only for real tokens (indices), e.g. in non-formatting mode.
+     * Inserts a range for the given start and end markers.
+     * No processing takes place, except for line/column updates.
+     */
+    private addRaw(start: InsertMarker, stop: InsertMarker) {
+        let interval = Interval.of(this.tokens[start].startIndex, this.tokens[stop].stopIndex);
+        let text = this.tokens[0].inputStream!.getText(interval);
+
+        if (text.indexOf("\n") >= 0) {
+            let parts = text.split("\n");
+            this.currentColumn = 0;
+            this.currentLine += parts.length - 1;
+            this.updateCurrentColumn(parts[parts.length - 1]);
+        } else {
+            this.updateCurrentColumn(text);
+        }
+        this.ranges.push([start, stop]);
+        this.tokenList.push(InsertMarker.Range - this.currentRangeIndex++);
     }
 
     private addSpace() {
-        if (!this.lastEntryIs(InsertTokenType.Space)) {
-            this.insert(this.tokenList.length, InsertTokenType.Space);
+        if (!this.lastEntryIs(InsertMarker.Space)) {
+            this.insert(this.tokenList.length, InsertMarker.Space);
         }
     }
 
     private addLineBreak() {
         this.lineBreakPending = false;
         if (this.singleLineBlockNesting == 0) {
-            this.insert(this.tokenList.length, InsertTokenType.LineBreak);
+            this.insert(this.tokenList.length, InsertMarker.LineBreak);
         }
     }
 
@@ -301,35 +360,47 @@ export class GrammarFormatter {
      * @param type The type to insert.
      * @param whitSpace If true insert also a space (before the inserted type).
      */
-    private insertAfterLastFullToken(type: InsertTokenType, withSpace: boolean) {
+    private insertAfterLastFullToken(marker: InsertMarker, withSpace: boolean) {
+        if (this.formattingDisabled) {
+            return;
+        }
+
         let i = this.tokenList.length - 1;
         while (i > 0) {
-            if (!this.entryIs(i, InsertTokenType.Whitespace) && !this.entryIs(i, InsertTokenType.Comment)) {
+            if (!this.entryIs(i, InsertMarker.Whitespace) && !this.entryIs(i, InsertMarker.Comment)) {
                 break;
             }
             --i;
         }
 
         if (i > 0) {
-            let newEntries = [type];
+            let newEntries = [marker];
             if (withSpace) {
-                newEntries.unshift(InsertTokenType.Space);
+                newEntries.unshift(InsertMarker.Space);
             }
             this.tokenList.splice(i + 1, 0, ...newEntries);
         }
     }
 
+    /**
+     * Ensure there are at least as many empty lines as specified in the options,
+     * but not more than max empty lines.
+     */
     private ensureMinEmptyLines(): void {
+        if (this.formattingDisabled) {
+            return;
+        }
+
         if (this.options.minEmptyLines! > 0) {
-            let lineBreakCount = this.options.minEmptyLines! + 1;
+            let lineBreakCount = Math.min(this.options.minEmptyLines!, this.options.maxEmptyLinesToKeep!) + 1;
             for (let i = this.tokenList.length - 1; i > 0 && lineBreakCount > 0; --i) {
-                if (this.entryIs(i, InsertTokenType.LineBreak)) {
+                if (this.entryIs(i, InsertMarker.LineBreak)) {
                     --lineBreakCount;
                 } else {
                     break;
                 }
             }
-            this.tokenList.push(...Array(lineBreakCount).fill(InsertTokenType.LineBreak));
+            this.tokenList.push(...Array(lineBreakCount).fill(InsertMarker.LineBreak));
             this.currentLine += lineBreakCount;
         }
     }
@@ -463,21 +534,29 @@ export class GrammarFormatter {
     }
 
     public formatGrammar(options: FormattingOptions, range: LexicalRange): [string, LexicalRange] {
-        this.tokenList = [];
-        this.currentIndentation = 0;
         this.setDefaultOptions();
         this.options = Object.assign(this.options, options); // Overwrite default values with passed in values.
 
-        let coalesceWhitespaces = false; // Set in situations where we don't want more than a single space char.
-        let inBraces = false; // Set between {} (e.g. in options and tokens blocks).
-        let inRule = false;   // Set when we are processing a lexer or parser rule.
-        let inNamedAction = false;
-        let inLexerCommand = false;
-        let formattingDisabled = false;
+        this.tokenList = [];
+        this.currentIndentation = 0;
+        this.singleLineBlockNesting = 0
+
+        this.ranges = [];
+        this.currentRangeIndex = 0;
 
         // Position info of the target text.
         this.currentColumn = 0;
         this.currentLine = 0;
+        this.lineBreakPending = false;
+        this.formattingDisabled = false;
+
+        let coalesceWhitespaces = false; // Set in situations where we don't want more than a single space char.
+        let inBraces = false; // Set between {} (e.g. in options and action blocks).
+        let inRule = false;   // Set when we are processing a lexer or parser rule.
+        let inNamedAction = false;
+        let inLexerCommand = false;
+        let inCatchFinally = false;
+        let rangeStart = 0;
 
         // Outside of braces is the grammar introducer command the only one ending in a semicolon.
         // We must not format that like rules, so we add a special state only for this entry.
@@ -486,38 +565,18 @@ export class GrammarFormatter {
         for (let i = 0; i < this.tokens.length; ++i) {
             let token = this.tokens[i];
 
-            if (formattingDisabled) {
-                if (token.type == ANTLRv4Lexer.LINE_COMMENT || token.type == ANTLRv4Lexer.BLOCK_COMMENT) {
-                    // See if we can switch formatting on again.
-                    let text = token.text!;
-                    if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
-                        text = text.substr(1, text.length - 2);
-                    } else {
-                        text = text.substr(2, text.length - 4);
-                    }
-                    if (text.trim() == "antlr-format on") {
-                        formattingDisabled = false;
-                    }
-                }
-
-                if (formattingDisabled) {
-                    this.add(i);
-                    continue;
-                }
-            }
-
             // If no whitespace is coming up we don't need the eraser marker anymore.
-            if (token.type != ANTLRv4Lexer.WS && this.lastEntryIs(InsertTokenType.WhitespaceEraser)) {
+            if (token.type != ANTLRv4Lexer.WS && this.lastEntryIs(InsertMarker.WhitespaceEraser)) {
                 this.tokenList.pop();
             }
 
             switch (token.type) {
                 case ANTLRv4Lexer.WS: {
-                    if (i == 0) {
+                    if (i == 0 || this.formattingDisabled) {
                         // Ignore leading whitespaces at the beginning of the grammar.
                         break;
                     }
-                    if (this.lastEntryIs(InsertTokenType.WhitespaceEraser)) {
+                    if (this.lastEntryIs(InsertMarker.WhitespaceEraser)) {
                         // And ignore these incomming whitespaces if there is an eraser marker.
                         this.tokenList.pop();
                         break;
@@ -528,7 +587,7 @@ export class GrammarFormatter {
                     if (coalesceWhitespaces || (this.singleLineBlockNesting > 0) || text.indexOf("\n") < 0) {
                         // Spaces only. Cannot be at the start of a line, so simply convert them to a single space
                         // unless we need to align following text.
-                        if (!this.lastEntryIs(InsertTokenType.Whitespace)) {
+                        if (!this.lastEntryIs(InsertMarker.Whitespace)) {
                             this.addSpace();
                         }
                         break;
@@ -537,12 +596,10 @@ export class GrammarFormatter {
                     let parts = text.split("\n");
 
                     // Take into account any linebreaks that are already in the pipeline.
-                    if (this.lineBreakPending) {
-                        this.lineBreakPending = false;
-                    }
+                    this.handlePendingLinebreak();
                     let j = this.tokenList.length - 1;
                     while (j >= 0) {
-                        if (this.entryIs(j, InsertTokenType.LineBreak)) {
+                        if (this.entryIs(j, InsertMarker.LineBreak)) {
                             parts.unshift("");
                         } else {
                             break;
@@ -553,7 +610,7 @@ export class GrammarFormatter {
                     this.removeTrailingWhitespaces();
 
                     let breakCount = parts.length - 1 <= this.options.maxEmptyLinesToKeep! ? parts.length - 1 : this.options.maxEmptyLinesToKeep! + 1;
-                    this.tokenList.push(...Array(breakCount).fill(InsertTokenType.LineBreak));
+                    this.tokenList.push(...Array(breakCount).fill(InsertMarker.LineBreak));
                     this.currentLine += breakCount;
                     this.currentColumn = 0;
 
@@ -590,8 +647,8 @@ export class GrammarFormatter {
                         }
                     } else {
                         this.add(i);
-                        this.lineBreakPending = true;
                     }
+                    this.lineBreakPending = true;
 
                     // Set to 0 regardless of what it was when entering here.
                     // This way we can better handle unbalanced nested blocks.
@@ -639,58 +696,79 @@ export class GrammarFormatter {
                 }
 
                 case ANTLRv4Lexer.BEGIN_ACTION: {
+                    if (this.formattingDisabled) {
+                        break;
+                    }
+
                     this.handlePendingLinebreak();
-                    this.add(i);
-                    break;
-                }
+                    this.add(i++);
+                    if (inCatchFinally && this.tokens[i].text !== "\n") {
+                        this.addLineBreak();
+                    }
 
-                case ANTLRv4Lexer.ACTION_CONTENT: {
-                    this.add(i);
-                    break;
-                }
+                    // Find the argument end token.
+                    let startIndex = i;
+                    while (this.tokens[i].type != Token.EOF && this.tokens[i].type != ANTLRv4Lexer.END_ACTION) {
+                        ++i;
+                    }
 
-                case ANTLRv4Lexer.END_ACTION: {
+                    // Add a new range for the action code.
+                    this.addRaw(startIndex, i - 1);
+                    if (inCatchFinally && this.tokens[i - 1].text !== "\n") {
+                        this.addLineBreak();
+                    }
+                    this.add(i);
+
                     if (!inRule) {
                         inNamedAction = false;
                         coalesceWhitespaces = false;
                         this.lineBreakPending = true;
                     }
-                    this.add(i);
+                    inCatchFinally = false;
+
                     break;
                 }
 
                 case ANTLRv4Lexer.BLOCK_COMMENT:
                 case ANTLRv4Lexer.DOC_COMMENT:
                 case ANTLRv4Lexer.LINE_COMMENT: {
+                    var text: string | undefined;
+                    if (token.type != ANTLRv4Lexer.DOC_COMMENT) {
+                        text = token.text!;
+                        if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
+                            text = text.substr(2, text.length - 2).trim();
+                        } else {
+                            text = text.substr(2, text.length - 4).trim();
+                        }
+                    }
+
+                    if (this.formattingDisabled && text === "antlr-format on") {
+                        this.formattingDisabled = false;
+                        this.addRaw(rangeStart, i - 1);
+                    }
+
                     // If this comment is at the beginning of a line at top level with no
                     // comment on the previous line then make sure we have the requested number
                     // of empty lines in the code.
                     if (this.currentIndentation == 0
-                        && this.lastEntryIs(InsertTokenType.LineBreak)
-                        && !this.entryIs(this.tokenList.length - 2, InsertTokenType.Comment)) {
+                        && this.lastEntryIs(InsertMarker.LineBreak)
+                        && !this.entryIs(this.tokenList.length - 2, InsertMarker.Comment)) {
                         this.ensureMinEmptyLines();
+                    } else if (!this.lastEntryIs(InsertMarker.Whitespace)) {
+                        this.addSpace();
                     }
 
                     this.add(i);
                     if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
-                        this.lineBreakPending = true;
+                        //this.lineBreakPending = true;
                     } else {
                         this.addSpace();
                     }
 
-                    // Finally check if formatting should be switched off.
-                    if (token.type != ANTLRv4Lexer.DOC_COMMENT) {
-                        let text = token.text!;
-                        if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
-                            text = text.substr(2, text.length - 2);
-                        } else {
-                            text = text.substr(2, text.length - 4);
-                        }
-                        if (text.trim() == "antlr-format off") {
-                            this.lineBreakPending = false;
-                            this.add(InsertTokenType.WhitespaceEraser);
-                            formattingDisabled = true;
-                        }
+                    if (text === "antlr-format off") {
+                        this.lineBreakPending = false;
+                        this.formattingDisabled = true;
+                        rangeStart = i + 1; // The comment has already been added.
                     }
 
                     break;
@@ -699,18 +777,18 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.ASSIGN:
                 case ANTLRv4Lexer.PLUS_ASSIGN: {
                     if (this.options.spaceBeforeAssignmentOperators) {
-                        if (!this.lastEntryIs(InsertTokenType.Whitespace)) {
+                        if (!this.lastEntryIs(InsertMarker.Whitespace)) {
                             this.addSpace();
                         }
                         this.add(i);
                         this.addSpace();
                     } else {
-                        if (this.lastEntryIs(InsertTokenType.Whitespace)) {
+                        if (this.lastEntryIs(InsertMarker.Whitespace)) {
                             this.removeLastEntry();
                         }
                         this.add(i);
                     }
-                    this.add(InsertTokenType.WhitespaceEraser);
+                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -732,7 +810,7 @@ export class GrammarFormatter {
                     }
 
                     this.add(i);
-                    this.add(InsertTokenType.WhitespaceEraser);
+                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -755,7 +833,7 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.COLONCOLON:
                     this.removeTrailingWhitespaces();
                     this.add(i);
-                    this.add(InsertTokenType.WhitespaceEraser);
+                    this.add(InsertMarker.WhitespaceEraser);
                     break;
 
                 case ANTLRv4Lexer.FRAGMENT:
@@ -764,7 +842,7 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.PUBLIC:
                 case ANTLRv4Lexer.TOKEN_REF:
                 case ANTLRv4Lexer.RULE_REF: {
-                    if (!inNamedAction) {
+                    if (!inNamedAction && !inBraces) {
                         inRule = true;
                     }
                     // fall through
@@ -784,7 +862,7 @@ export class GrammarFormatter {
                     if (!inLexerCommand) {
                         this.addSpace();
                     }
-                    this.add(InsertTokenType.WhitespaceEraser);
+                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -868,22 +946,39 @@ export class GrammarFormatter {
 
                 case ANTLRv4Lexer.RARROW: {
                     inLexerCommand = true;
-                    if (!this.lastEntryIs(InsertTokenType.Space)) {
+                    if (!this.lastEntryIs(InsertMarker.Space)) {
                         this.addSpace();
                     }
                     this.add(i);
                     this.addSpace();
-                    this.add(InsertTokenType.WhitespaceEraser);
+                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
                 case ANTLRv4Lexer.BEGIN_ARGUMENT: {
+                    if (this.formattingDisabled) {
+                        break;
+                    }
+
                     this.removeTrailingWhitespaces();
-                    // fall through
+                    this.add(i++);
+
+                    // Find the argument end token.
+                    let startIndex = i;
+                    while (this.tokens[i].type != Token.EOF && this.tokens[i].type != ANTLRv4Lexer.END_ARGUMENT) {
+                        ++i;
+                    }
+
+                    // Add a new range for the action code.
+                    this.addRaw(startIndex, i);
+                    break;
                 }
 
-                case ANTLRv4Lexer.ARGUMENT_CONTENT:
-                case ANTLRv4Lexer.END_ARGUMENT: {
+                case ANTLRv4Lexer.CATCH:
+                case ANTLRv4Lexer.FINALLY: {
+                    inCatchFinally = true;
+                    this.removeTrailingWhitespaces();
+                    this.addLineBreak();
                     this.add(i);
                     break;
                 }
@@ -899,14 +994,6 @@ export class GrammarFormatter {
                         this.pushCurrentIndentation();
                         --this.currentIndentation;
                     }
-                    this.add(i);
-                    break;
-                }
-
-                case ANTLRv4Lexer.CATCH:
-                case ANTLRv4Lexer.FINALLY: {
-                    this.removeTrailingWhitespaces();
-                    this.addLineBreak();
                     this.add(i);
                     break;
                 }
@@ -928,20 +1015,29 @@ export class GrammarFormatter {
         let result = "";
         for (let index of this.tokenList) {
             switch (index) {
-                case InsertTokenType.LineBreak:
+                case InsertMarker.LineBreak:
                     result += "\n";
                     break;
-                case InsertTokenType.Space:
+                case InsertMarker.Space:
                     result += " ";
                     break;
-                case InsertTokenType.Tab:
+                case InsertMarker.Tab:
                     result += "\t";
                     break;
-                case InsertTokenType.WhitespaceEraser: // Ignore.
+                case InsertMarker.WhitespaceEraser: // Ignore.
                     break;
 
                 default:
-                    result += this.tokens[index].text;
+                    if (index <= InsertMarker.Range) {
+                        // Copy an entire block.
+                        let rangeIndex = -(index - InsertMarker.Range);
+                        let startIndex = this.ranges[rangeIndex][0];
+                        let endIndex = this.ranges[rangeIndex][1];
+                        let interval = Interval.of(this.tokens[startIndex].startIndex, this.tokens[endIndex].stopIndex);
+                        result += this.tokens[0].inputStream!.getText(interval);
+                    } else {
+                        result += this.tokens[index].text;
+                    }
                     break;
             }
         }
@@ -949,9 +1045,10 @@ export class GrammarFormatter {
     }
 
     private options: FormattingOptions;
-    private tokenList: number[];
+    private tokenList: InsertMarker[];
     private currentIndentation: number;
-    private lineBreakPending = false; // Insert a line break before the next code token (if not there already).
+    private lineBreakPending: boolean; // Insert a line break before the next code token (if not there already).
+    private formattingDisabled: boolean; // When true no formatting takes place.
 
     private currentLine: number;
     private currentColumn: number;
@@ -960,5 +1057,10 @@ export class GrammarFormatter {
     // this var directs linebreak handling.
     // Note: counting begins on the most outer block that can be formatted on a single line, which is not necessarily
     //       the rule itself.
-    private singleLineBlockNesting = 0;
+    private singleLineBlockNesting: number;
+
+    // A list of index pairs describing start and end of a token sequence in the original token stream.
+    // This is mostly used to avoid having to place a large list of action tokens in the generated list.
+    private ranges: [InsertMarker, InsertMarker][];
+    private currentRangeIndex: InsertMarker; // When scanning a range this contains the start token index.
 }

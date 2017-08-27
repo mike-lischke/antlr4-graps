@@ -154,6 +154,10 @@ export class SourceContext {
     }
 
     public getCodeCompletionCandidates(column: number, row: number): SymbolInfo[] {
+        if (!this.parser) {
+            return [];
+        }
+
         let core = new CodeCompletionCore(this.parser);
         core.showResult = false;
         core.ignoredTokens = new Set([
