@@ -4,15 +4,15 @@
 
 
 
-     options/*Trailing comment.*/
+     options// Trailing comment.
 
        { /*Other comment.*/superClass=
-       Base   ;superClass=Base;
-       /* comment */ superClass = Base; // trailing comment
+       Base1   ;superClass=Base2;
+       /* comment */ superClass = Base3; // trailing comment
        /* another comment */
        superClass
        = /* inline comment */
-       Base
+       Base4
  /* inline comment */
        ;
        // Single line comment, non-trailing
@@ -21,7 +21,10 @@
 //channels { CommentsChannel, DirectiveChannel }
 
 tokens {// Trailing comment.
-	DUMMY
+	DUMMY, Blah, 
+	
+	// Description of these tokens.
+			AnotherToken, YetAnotherOneWithLongName // This is important.
 }
 
 
@@ -66,6 +69,7 @@ void doAfter() {}
 // Appears in line with the other class member definitions in the cpp file.
 @parser::definitions {/* parser definitions section */}
 
+// $antlr-format minEmptyLines 0
 // Additionally there are similar sections for (base)listener and (base)visitor files.
 @parser::listenerpreinclude {/* listener preinclude section */}@parser::listenerpostinclude {/* listener postinclude section */}
 @parser::listenerdeclarations {/* listener public declarations/members section */}
@@ -130,7 +134,7 @@ main: stat+ EOF;
 divide : ID (and_ GreaterThan)? {doesItBlend()}?;
 and_ @init{ doInit(); } @after { doAfter(); } : And ;
 
-conquer: // Coment comment
+conquer: // Comment comment
 	// a description
 	divide+
 	| {doesItBlend()}? and_ { myAction(); } // trailing description
@@ -196,6 +200,7 @@ GreaterThan:  '>';
 Equal: '=';
 And: 'and';
 
+// $antlr-format alignColon: none, alignFirstToken on, alignLexerCommand true
 Colon: ':';
 Semicolon: ';' ;
 Plus: '+';
@@ -208,7 +213,8 @@ CloseCurly: '}';
 QuestionMark: '?';
 Comma: ',' -> skip;
 Dollar: '$';
-Ampersand: '&';// -> type(DUMMY);
+LongLongLongToken: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' -> mode(Blah);
+Ampersand: '&' -> type(DUMMY), mode(Blah);
 
 String: '"' .*? '"';
 Foo: {canTestFoo()}? 'foo' {isItFoo()}? { myFooLexerAction(); };

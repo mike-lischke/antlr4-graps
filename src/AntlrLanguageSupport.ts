@@ -133,12 +133,11 @@ export interface SentenceGenerationOptions {
 };
 
 /**
- * Options for grammar text formatting. Most names, values and meanings have been taken from clang-format
+ * Options for grammar text formatting. Some names, values and meanings have been taken from clang-format
  * (http://clang.llvm.org/docs/ClangFormatStyleOptions.html), but may have slight variations tailored towards ANTLR grammars.
  * Deviations from that are mentioned in comments, otherwise see clang-format and the documentation for descriptions + examples.
  */
 export interface FormattingOptions {
-    alignConsecutiveDeclarations?: boolean; // Default: false.
     alignTrailingComments?: boolean; // Default: false
     allowShortBlocksOnASingleLine?: boolean; // Default: true;
     breakBeforeBraces?: boolean; // When true start predicates and actions on a new line. Default: false.
@@ -154,20 +153,31 @@ export interface FormattingOptions {
 
     // Values not found in clang-format:
 
-    // When true aligns a rule colon with the alt symbols, otherwise keeps it as trailing symbol after the rule name.
-    // Default: false.
-    alignColon?: boolean;
+    // When set to "none" places the colon directly behind the rule name. Trailing alignment aligns colons of consequtive
+    // single line rules (with at least one whitespace between rule name and colon). Hanging alignment moves the
+    // colon to the next line (after the normal indentation, aligning it so with the alt pipe chars), but only
+    // if the rule doesn't qualify to be placed on a single line (if allowShortRulesOnASingleLine is true).
+    // Default: none.
+    alignColon?: "none" | "trailing" | "hanging";
     allowShortRulesOnASingleLine?: boolean; // Like allowShortBlocksOnASingleLine, but for entire rules. Default: true.
-    alignTrailingPredicates?: boolean;      // Like alignTrailingComments, but for trailing predicates. Default: true.
 
-    // Place semicolon behind last code token or on an own line. If on own line: don't indent, indent or align to
-    //last alt char. Default: ownLine.
-    alignSemicolon?: "trailing" | "ownLine" | "ownLineIndent" | "ownLineAlign";
-    breakBeforeParens?: boolean;            // For blocks: if true puts opening parenthesis on an own line. Default: false.
+    // Place semicolon behind last code token or on an own line (with or w/o indentation). Default: ownLine (no indentation).
+    alignSemicolon?: "none" | "ownLine" | "hanging";
+    breakBeforeParens?: boolean; // For blocks: if true puts opening parenthesis on an own line. Default: false.
 
     // Place rule internals (return value, local variables, @init, @after) all on a single line, if true. Default: false.
     ruleInternalsOnSingleLine?: boolean;
     minEmptyLines?: number; // Between top level elements, how many empty lines must exist? Default: 0.
+
+    // When true alignments are organized in groups of lines where they apply. These line groups are separated
+    // by lines where a specific alignment type does not appear. Default: true.
+    groupedAlignments?: boolean;
+    alignFirstToken?: boolean; // Align first token in a rule after the colon. Default: false.
+    alignLexerCommand?: boolean; // Align arrows from lexer commands. Default: false.
+    alignActions?: boolean; // Align actions ({} blocks in rules) and predicates. Default: false.
+
+    // Index signature to allow accessing properties via brackets.
+    [key: string]: boolean | number | string | undefined;
 };
 
 class ContextEntry {

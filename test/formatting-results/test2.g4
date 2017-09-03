@@ -1,11 +1,15 @@
 grammar test2;
 
 
-options /*Trailing comment.*/ { /*Other comment.*/
+options /*Trailing comment.*/ {
+	/*Other comment.*/ superClass = Base;
+
+
 	superClass = Base;
-	superClass = Base; /* comment */
-	superClass = Base; // trailing comment
-	/* another comment */ superClass = /* inline comment */ Base /* inline comment */; // Single line comment, non-trailing
+
+
+	/* comment */ superClass = Base; // trailing comment
+	/* another comment */ superClass = /* inline comment */ Base /* inline comment */; // Single line comment
 	/*final comment*/
 }
 
@@ -77,32 +81,21 @@ void doAfter() {}
   @parser::visitorpostinclude {/* visitor postinclude section */}
     @parser::visitordeclarations {/* visitor public declarations/members section */}
       @parser::visitormembers {/* visitor private declarations/members section */}
-        @parser:: /* antlr-format on */ visitordefinitions {/* visitor definitions section */}
-
+        @parser::/* antlr-format on */ visitordefinitions {/* visitor definitions section */}
 
 @parser::basevisitorpreinclude {/* base visitor preinclude section */}
-
-
 @parser::basevisitorpostinclude {/* base visitor postinclude section */}
-
-
 @parser::basevisitordeclarations {/* base visitor public declarations/members section */}
-
-
 @parser::basevisitormembers {/* base visitor private declarations/members section */}
-
-
 @parser::basevisitordefinitions {/* base visitor definitions section */}
 
-
+// antlr-format minEmptyLines 1
 // These are all supported lexer sections:
 // Lexer file header. Appears at the top of h + cpp files. Use e.g. for copyrights.
 @lexer::header {/* lexer header section */}
 
-
 // Appears before any #include in h + cpp files.
 @lexer::preinclude {/* lexer precinclude section */}
-
 
 // Follows directly after the standard #includes in h + cpp files.
 @lexer::postinclude {
@@ -112,10 +105,8 @@ void doAfter() {}
 #endif
 }
 
-
 // Directly preceds the lexer class declaration in the h file (e.g. for additional types etc.).
 @lexer::context {/* lexer context section */}
-
 
 // Appears in the public part of the lexer in the h file.
 @lexer::members {/* public lexer declarations section */
@@ -126,34 +117,32 @@ void myFooLexerAction() { /* do something*/ };
 void myBarLexerAction() { /* do something*/ };
 }
 
-
 // Appears in the private part of the lexer in the h file.
 @lexer::declarations {/* private lexer declarations/members section */}
-
 
 // Appears in line with the other class member definitions in the cpp file.
 @lexer::definitions {/* lexer definitions section */}
 
-
 // Actual grammar start.
+
 main: stat+ EOF;
 
-
 divide: ID (and_ GreaterThan)? {doesItBlend()}?;
-
 
 and_
 	@init { doInit(); }
 	@after { doAfter(); }: And;
 
+conquer
+	: // Comment comment
 
-conquer: // Coment comment
-	divide+// a description
+	// a description
+	divide+
 	| {doesItBlend()}? and_ { myAction(); } // trailing description
+
 	// another description
 	| ID (LessThan* divide)?? { $ID.text; }
 ; // Unused rule to demonstrate some of the special features.
-
 
 unused[double input = 111]
 	returns[double calculated]
@@ -167,17 +156,14 @@ finally {
   cleanUp();
 }
 
-
-unused2:
-	(unused[1] .)+ (Colon | Semicolon | Plus)? ~Semicolon
+unused2
+	: (unused[1] .)+ (Colon | Semicolon | Plus)? ~Semicolon
 ;
-
 
 stat: expr Equal expr Semicolon | expr Semicolon;
 
-
-expr:
-	expr Star expr
+expr
+	: expr Star expr
 	| expr Plus expr
 	| OpenPar expr ClosePar
 	| <assoc = right> expr QuestionMark expr Colon expr
@@ -188,126 +174,88 @@ expr:
 	| String
 ;
 
-
-flowControl:
-	(Return expr | 'return') # Return
+flowControl
+	: (Return expr | 'return') # Return
 	| Continue # Continue
 ;
 
-
 id: ID;
-
 
 array: OpenCurly el += INT (Comma el += INT)* CloseCurly;
 
-
-idarray:
-	OpenCurly element += id (Comma element += id)* CloseCurly
+idarray
+	: OpenCurly element += id (Comma element += id)* CloseCurly
 ;
-
 
 any: t = .;
 
-
 Return: 'return';
-
 
 Continue: 'continue';
 
-
 INT: Digit+;
-
 
 Digit: [0-9];
 
-
 ID: LETTER (LETTER | '0'..'9')*;
-
 
 fragment LETTER: [a-zA-Z\u0080-\uFFFF];
 
-
 Test: 'abc' | 'def' | 'ghi';
-
 
 LessThan: '<';
 
+// antlr-format alignColon: trailing, groupedAlignments false		
 
-GreaterThan: '>';
+GreaterThan		: '>';
 
+Equal			: '=';
 
-Equal: '=';
+And				: 'and';
 
+Colon			: ':';
 
-And: 'and';
+Semicolon		: ';';
 
+Plus			: '+';
 
-Colon: ':';
+Minus			: '-';
 
+Star			: '*';
 
-Semicolon: ';';
+OpenPar			: '(';
 
+ClosePar		: ')';
 
-Plus: '+';
+OpenCurly		: '{';
 
+CloseCurly		: '}';
 
-Minus: '-';
+QuestionMark	: '?';
 
+Comma			: ',' -> skip;
 
-Star: '*';
+Dollar			: '$';
 
+Ampersand		: '&'; // -> type(DUMMY);
 
-OpenPar: '(';
+String			: '"' .*? '"';
 
-
-ClosePar: ')';
-
-
-OpenCurly: '{';
-
-
-CloseCurly: '}';
-
-
-QuestionMark: '?';
-
-
-Comma: ',' -> skip;
-
-
-Dollar: '$';
-
-
-Ampersand: '&'; // -> type(DUMMY);
-
-
-String: '"' .*? '"';
-
-
-Foo:
-	{canTestFoo()}? 'foo' {isItFoo()}? { myFooLexerAction(); }
+Foo				: {canTestFoo()}? 'foo' {isItFoo()}? { myFooLexerAction(); }
 ;
 
+Bar				: 'bar' {isItBar()}? { myBarLexerAction(); };
 
-Bar: 'bar' {isItBar()}? { myBarLexerAction(); };
+Any				: Foo Dot Bar? DotDot Baz Bar;
 
+Comment			: '#' ~[\r\n]* '\r'? '\n'; // -> channel(CommentsChannel);
 
-Any: Foo Dot Bar? DotDot Baz Bar;
+WS				: [\r\n]+ -> channel(99);
 
+WS2				: [ \t]+ -> channel(HIDDEN);
 
-Comment: '#' ~[\r\n]* '\r'? '\n'; // -> channel(CommentsChannel);
+fragment Baz	: 'Baz';
 
+Dot				: '.';
 
-WS: [\r\n]+ -> channel(99);
-
-
-WS2: [ \t]+ -> channel(HIDDEN);
-
-
-fragment Baz: 'Baz';
-
-
-Dot: '.';
-
-
-DotDot: '..';
+DotDot			: '..';

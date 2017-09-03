@@ -1,11 +1,14 @@
 grammar test1;
 
-options /*Trailing comment.*/ { /*Other comment.*/
-	superClass = Base;
-	superClass = Base;
-	/* comment */ superClass = Base; // trailing comment
+options { // Trailing comment.
+	/*Other comment.*/ superClass = Base1;
+
+	superClass = Base2;
+
+	/* comment */ superClass = Base3; // trailing comment
 	/* another comment */
-	superClass = /* inline comment */ Base /* inline comment */;
+	superClass = /* inline comment */ Base4 /* inline comment */;
+
 	// Single line comment, non-trailing
 	/*final comment*/
 }
@@ -13,7 +16,12 @@ options /*Trailing comment.*/ { /*Other comment.*/
 //channels { CommentsChannel, DirectiveChannel }
 
 tokens { // Trailing comment.
-	DUMMY
+	DUMMY,
+	Blah,
+
+	// Description of these tokens.
+	AnotherToken,
+	YetAnotherOneWithLongName // This is important.
 }
 
 // These are all supported parser sections:
@@ -54,45 +62,30 @@ void doAfter() {}
 // Appears in line with the other class member definitions in the cpp file.
 @parser::definitions {/* parser definitions section */}
 
+// $antlr-format minEmptyLines 0
 // Additionally there are similar sections for (base)listener and (base)visitor files.
 @parser::listenerpreinclude {/* listener preinclude section */}
-
 @parser::listenerpostinclude {/* listener postinclude section */}
-
 @parser::listenerdeclarations {/* listener public declarations/members section */}
-
 @parser::listenermembers {/* listener private declarations/members section */}
-
 @parser::listenerdefinitions {/* listener definitions section */}
 
 @parser::baselistenerpreinclude {/* base listener preinclude section */}
-
 @parser::baselistenerpostinclude {/* base listener postinclude section */}
-
 @parser::baselistenerdeclarations {/* base listener public declarations/members section */}
-
 @parser::baselistenermembers {/* base listener private declarations/members section */}
-
 @parser::baselistenerdefinitions {/* base listener definitions section */}
 
 @parser::visitorpreinclude {/* visitor preinclude section */}
-
 @parser::visitorpostinclude {/* visitor postinclude section */}
-
 @parser::visitordeclarations {/* visitor public declarations/members section */}
-
 @parser::visitormembers {/* visitor private declarations/members section */}
-
 @parser::visitordefinitions {/* visitor definitions section */}
 
 @parser::basevisitorpreinclude {/* base visitor preinclude section */}
-
 @parser::basevisitorpostinclude {/* base visitor postinclude section */}
-
 @parser::basevisitordeclarations {/* base visitor public declarations/members section */}
-
 @parser::basevisitormembers {/* base visitor private declarations/members section */}
-
 @parser::basevisitordefinitions {/* base visitor definitions section */}
 
 // These are all supported lexer sections:
@@ -131,16 +124,15 @@ void myBarLexerAction() { /* do something*/ };
 @lexer::definitions {/* lexer definitions section */}
 
 // Actual grammar start.
-main: stat+ EOF;
-
-divide: ID (and_ GreaterThan)? {doesItBlend()}?;
-
+main	: stat+ EOF;
+divide	: ID (and_ GreaterThan)? {doesItBlend()}?;
 and_
 	@init { doInit(); }
-	@after { doAfter(); }: And;
+	@after { doAfter(); } : And;
 
-conquer: // Coment comment
-	divide+// a description
+conquer : // Comment comment
+	// a description
+	divide+
 	| {doesItBlend()}? and_ { myAction(); } // trailing description
 	// another description
 	| ID (LessThan* divide)?? { $ID.text; }
@@ -151,7 +143,7 @@ unused[double input = 111]
 	returns[double calculated]
 	locals[int _a, double _b, int _c]
 	@init { doInit(); }
-	@after { doAfter(); }: stat;
+	@after { doAfter(); } : stat;
 catch[...] {
   // Replaces the standard exception handling.
 }
@@ -159,13 +151,13 @@ finally {
   cleanUp();
 }
 
-unused2:
+unused2 :
 	(unused[1] .)+ (Colon | Semicolon | Plus)? ~Semicolon
 ;
 
-stat: expr Equal expr Semicolon | expr Semicolon;
+stat : expr Equal expr Semicolon | expr Semicolon;
 
-expr:
+expr :
 	expr Star expr
 	| expr Plus expr
 	| OpenPar expr ClosePar
@@ -177,87 +169,61 @@ expr:
 	| String
 ;
 
-flowControl:
+flowControl :
 	(Return expr | 'return') # Return
 	| Continue # Continue
 ;
 
-id: ID;
-
-array: OpenCurly el += INT (Comma el += INT)* CloseCurly;
-
-idarray:
+id		: ID;
+array	: OpenCurly el += INT (Comma el += INT)* CloseCurly;
+idarray	:
 	OpenCurly element += id (Comma element += id)* CloseCurly
 ;
+any : t = .;
 
-any: t = .;
+Return		: 'return';
+Continue	: 'continue';
 
-Return: 'return';
+INT		: Digit+;
+Digit	: [0-9];
 
-Continue: 'continue';
+ID				: LETTER (LETTER | '0'..'9')*;
+fragment LETTER	: [a-zA-Z\u0080-\uFFFF];
 
-INT: Digit+;
+Test : 'abc' | 'def' | 'ghi';
 
-Digit: [0-9];
+LessThan	: '<';
+GreaterThan	: '>';
+Equal		: '=';
+And			: 'and';
 
-ID: LETTER (LETTER | '0'..'9')*;
+// $antlr-format alignColon: none, alignFirstToken on, alignLexerCommand true
+Colon:				':';
+Semicolon:			';';
+Plus:				'+';
+Minus:				'-';
+Star:				'*';
+OpenPar:			'(';
+ClosePar:			')';
+OpenCurly:			'{';
+CloseCurly:			'}';
+QuestionMark:		'?';
+Comma:				',' -> skip;
+Dollar:				'$';
+LongLongLongToken:	'ABCDEFGHIJKLMNOPQRSTUVWXYZ'	-> mode(Blah);
+Ampersand:			'&'								-> type(DUMMY), mode(Blah);
 
-fragment LETTER: [a-zA-Z\u0080-\uFFFF];
-
-Test: 'abc' | 'def' | 'ghi';
-
-LessThan: '<';
-
-GreaterThan: '>';
-
-Equal: '=';
-
-And: 'and';
-
-Colon: ':';
-
-Semicolon: ';';
-
-Plus: '+';
-
-Minus: '-';
-
-Star: '*';
-
-OpenPar: '(';
-
-ClosePar: ')';
-
-OpenCurly: '{';
-
-CloseCurly: '}';
-
-QuestionMark: '?';
-
-Comma: ',' -> skip;
-
-Dollar: '$';
-
-Ampersand: '&'; // -> type(DUMMY);
-
-String: '"' .*? '"';
-
-Foo:
-	{canTestFoo()}? 'foo' {isItFoo()}? { myFooLexerAction(); }
+String:	'"' .*? '"';
+Foo:	{canTestFoo()}? 'foo' {isItFoo()}? { myFooLexerAction(); }
 ;
+Bar:	'bar' {isItBar()}? { myBarLexerAction(); };
+Any:	Foo Dot Bar? DotDot Baz Bar;
 
-Bar: 'bar' {isItBar()}? { myBarLexerAction(); };
-
-Any: Foo Dot Bar? DotDot Baz Bar;
-
-Comment: '#' ~[\r\n]* '\r'? '\n'; // -> channel(CommentsChannel);
-
-WS: [\r\n]+ -> channel(99);
-
-WS2: [ \t]+ -> channel(HIDDEN);
+Comment:	'#' ~[\r\n]* '\r'? '\n'; // -> channel(CommentsChannel);
+WS:			[\r\n]+	-> channel(99);
+WS2:		[ \t]+	-> channel(HIDDEN);
 
 fragment Baz: 'Baz';
 
-Dot: '.';
-
-DotDot: '..';
+Dot:	'.';
+DotDot:	'..';
