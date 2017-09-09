@@ -222,7 +222,7 @@ Bar: 'bar' {isItBar()}? { myBarLexerAction(); };
 Any: Foo Dot Bar? DotDot Baz Bar;
 
 Comment : '#' ~[\r\n]* '\r'? '\n';// -> channel(CommentsChannel);
-WS: [\r\n]  + -> channel(99);
+WS: [\r\n]  + -> channel(99);  // A custom, but the default channel.
 WS2: [ \t]
 + -> channel(HIDDEN);
 

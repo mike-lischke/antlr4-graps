@@ -283,14 +283,7 @@ export class GrammarFormatter {
                     break;
                 }
 
-                case ANTLRv4Lexer.LINE_COMMENT: {
-                    if (this.options.alignActions) {
-                        this.removeTrailingWhitespaces();
-                        this.addAlignmentEntry(AlignmentType.TrailingComment);
-                    }
-                    // fall through
-                }
-
+                case ANTLRv4Lexer.LINE_COMMENT:
                 case ANTLRv4Lexer.BLOCK_COMMENT: {
                     this.processFormattingCommands(i);
                     // fall through
@@ -339,7 +332,13 @@ export class GrammarFormatter {
                             this.ensureMinEmptyLines();
                             this.pushCurrentIndentation();
                         }
+                    } else if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
+                        if (this.options.alignTrailingComments) {
+                            this.removeTrailingWhitespaces();
+                            this.addAlignmentEntry(AlignmentType.TrailingComment);
+                        }
                     }
+
                     this.add(i);
                     if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
                         if (this.currentIndentation > 0) {
@@ -1092,10 +1091,9 @@ export class GrammarFormatter {
                     break;
                 }
 
-                case ANTLRv4Lexer.LINE_COMMENT:
-                case ANTLRv4Lexer.POUND: {
+                case ANTLRv4Lexer.LINE_COMMENT: {
                     // Single line comments cannot be formatted on a single line (they would hide what follows).
-                    // Same for alt labels. Signal that by a large overall length.
+                    // Signal that by a large overall length.
                     overallLength = 1e100;
                     break;
                 }
@@ -1138,6 +1136,7 @@ export class GrammarFormatter {
             }
         }
 
+        // We should never arrive here, since we bail out above when the block end was found.
         return [containsAlts, overallLength];
     }
 
@@ -1202,10 +1201,8 @@ export class GrammarFormatter {
                                     || groups[2] == "off") {
                                 this.options[groups[1]] = (groups[2] == "true" || groups[2] == "on");
 
-                                if (groups[1] == "groupedAlignments" && this.options.groupedAlignments) {
-                                    // End any ongoing alignment group when switching on grouped alignments.
-                                    // This allows to switch it on and off again immediately to get a different
-                                    // alignment for another set of lines.
+                                if (groups[1] == "groupedAlignments") {
+                                    // End any ongoing alignment group when switching grouped alignments.
                                     for (let entry of this.alignments) {
                                         entry[1].lastLine = -1;
                                         entry[1].groupIndex = -1;
@@ -1333,9 +1330,15 @@ export class GrammarFormatter {
                     columns.push(this.computeColumn(member));
                 }
 
-                // Determine the largest column and bring this up to the next tab stop.
+                // Determine the largest column and bring this up to the next tab stop (if we are using tabs)
+                // or add single space to the longest column and align all others to this position.
+                let useTabs = this.options.useTab;
                 let maxColumn = Math.max(...columns);
-                maxColumn += this.options.tabWidth! - (maxColumn % this.options.tabWidth!);
+                if (useTabs) {
+                    maxColumn += this.options.tabWidth! - (maxColumn % this.options.tabWidth!);
+                } else {
+                    ++maxColumn;
+                }
 
                 // Compute required whitespace inserts and store them in the whitespace list.
                 // Replace the alignment markers in the current group with the indices in that list.
@@ -1343,11 +1346,16 @@ export class GrammarFormatter {
                     let whitespaceIndex = InsertMarker.WhitespaceBlock - this.whitespaceList.length;
                     this.outputPipeline[group[i]] = whitespaceIndex;
 
-                    let tabCount = Math.floor((maxColumn - columns[i]) / this.options.tabWidth!);
-                    if ((maxColumn - columns[i]) % this.options.tabWidth! != 0) {
-                        ++tabCount;
+                    let whitespaces;
+                    if (useTabs) {
+                        let tabCount = Math.floor((maxColumn - columns[i]) / this.options.tabWidth!);
+                        if ((maxColumn - columns[i]) % this.options.tabWidth! != 0) {
+                            ++tabCount;
+                        }
+                        whitespaces = Array(tabCount).fill("\t").join("");
+                    } else {
+                        whitespaces = Array(maxColumn - columns[i]).fill(" ").join("");
                     }
-                    let whitespaces = Array(tabCount).fill("\t").join("");
                     this.whitespaceList.push(whitespaces);
                 }
             }

@@ -64,7 +64,7 @@ void doAfter() {}
 
 
 // Additionally there are similar sections for (base)listener and (base)visitor files.
-// antlr-format off
+// $antlr-format off
 @parser::listenerpreinclude {/* listener preinclude section */}
   @parser::listenerpostinclude {/* listener postinclude section */}
     @parser::listenerdeclarations {/* listener public declarations/members section */}
@@ -81,7 +81,7 @@ void doAfter() {}
   @parser::visitorpostinclude {/* visitor postinclude section */}
     @parser::visitordeclarations {/* visitor public declarations/members section */}
       @parser::visitormembers {/* visitor private declarations/members section */}
-        @parser::/* antlr-format on */ visitordefinitions {/* visitor definitions section */}
+        @parser::/* $antlr-format on */ visitordefinitions {/* visitor definitions section */}
 
 @parser::basevisitorpreinclude {/* base visitor preinclude section */}
 @parser::basevisitorpostinclude {/* base visitor postinclude section */}
@@ -89,7 +89,7 @@ void doAfter() {}
 @parser::basevisitormembers {/* base visitor private declarations/members section */}
 @parser::basevisitordefinitions {/* base visitor definitions section */}
 
-// antlr-format minEmptyLines 1
+// $antlr-format minEmptyLines 1
 // These are all supported lexer sections:
 // Lexer file header. Appears at the top of h + cpp files. Use e.g. for copyrights.
 @lexer::header {/* lexer header section */}
@@ -205,7 +205,7 @@ Test: 'abc' | 'def' | 'ghi';
 
 LessThan: '<';
 
-// antlr-format alignColon: trailing, groupedAlignments false		
+// $antlr-format alignColon: trailing, groupedAlignments false		
 
 GreaterThan		: '>';
 
@@ -241,7 +241,8 @@ Ampersand		: '&'; // -> type(DUMMY);
 
 String			: '"' .*? '"';
 
-Foo				: {canTestFoo()}? 'foo' {isItFoo()}? { myFooLexerAction(); }
+Foo				:
+	{canTestFoo()}? 'foo' {isItFoo()}? { myFooLexerAction(); }
 ;
 
 Bar				: 'bar' {isItBar()}? { myBarLexerAction(); };
