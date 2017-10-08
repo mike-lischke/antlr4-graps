@@ -155,14 +155,19 @@ export interface FormattingOptions {
 
     // When set to "none" places the colon directly behind the rule name. Trailing alignment aligns colons of consequtive
     // single line rules (with at least one whitespace between rule name and colon). Hanging alignment moves the
-    // colon to the next line (after the normal indentation, aligning it so with the alt pipe chars), but only
-    // if the rule doesn't qualify to be placed on a single line (if allowShortRulesOnASingleLine is true).
+    // colon to the next line (after the normal indentation, aligning it so with the alt pipe chars).
     // Default: none.
-    alignColon?: "none" | "trailing" | "hanging";
+    alignColons?: "none" | "trailing" | "hanging";
+
+    // When `allowShortRulesOnASingleLine` is true and `alignColon` is set to "hanging" this setting determines which gets
+    // precedence. If true (the default) a rule is placed on a single line if it fits, ignoring the "hanging" setting.
+    singleLineOverrulesHangingColon?: boolean;
     allowShortRulesOnASingleLine?: boolean; // Like allowShortBlocksOnASingleLine, but for entire rules. Default: true.
 
     // Place semicolon behind last code token or on an own line (with or w/o indentation). Default: ownLine (no indentation).
-    alignSemicolon?: "none" | "ownLine" | "hanging";
+    // This setting has no effect for non-rule commands that end with a semicolon (e.g. "grammar Test;", "import Blah;" etc.).
+    // Such commands are always placed on a single line.
+    alignSemicolons?: "none" | "ownLine" | "hanging";
     breakBeforeParens?: boolean; // For blocks: if true puts opening parenthesis on an own line. Default: false.
 
     // Place rule internals (return value, local variables, @init, @after) all on a single line, if true. Default: false.
@@ -172,9 +177,15 @@ export interface FormattingOptions {
     // When true alignments are organized in groups of lines where they apply. These line groups are separated
     // by lines where a specific alignment type does not appear. Default: true.
     groupedAlignments?: boolean;
-    alignFirstToken?: boolean; // Align first token in a rule after the colon. Default: false.
-    alignLexerCommand?: boolean; // Align arrows from lexer commands. Default: false.
+    alignFirstTokens?: boolean; // Align first token in a rule after the colon. Default: false.
+    alignLexerCommands?: boolean; // Align arrows from lexer commands. Default: false.
     alignActions?: boolean; // Align actions ({} blocks in rules) and predicates. Default: false.
+    alignLabels?: boolean; // Align alt labels (# name). Default: false.
+
+    // When true a single alignment for labels, actions, lexer commands and trailing comments is used instead of
+    // individual alignments for each type. This avoids large whitespace runs if you have a mix of these types.
+    // Setting alignTrailers disables the individual alignment settings of the mentioned types.
+    alignTrailers?: boolean;
 
     // Index signature to allow accessing properties via brackets.
     [key: string]: boolean | number | string | undefined;

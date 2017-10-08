@@ -20,14 +20,18 @@
   ],
   "dependencies": {
     "antlr4-c3": "^1.1.4",
-    "antlr4ts": "^0.4.1-alpha.0"
+    "antlr4ts": "^0.4.1-alpha.0",
+    "fs-extra": "^4.0.2",
+    "glob": "^7.1.2"
   },
   "devDependencies": {
     "@types/chai": "^3.5.2",
-    "@types/mocha": "^2.2.41",
-    "@types/node": "^7.0.39",
+    "@types/glob": "^5.0.32",
+    "@types/mocha": "^2.2.43",
+    "@types/node": "^7.0.43",
+    "@types/fs-extra": "^4.0.2",
     "chai": "^3.5.0",
-    "mocha": "^3.5.0",
+    "mocha": "^3.5.3",
     "typescript": "~2.3.4"
   },
   "author": "Mike Lischke",

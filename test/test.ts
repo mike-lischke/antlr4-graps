@@ -7,7 +7,9 @@
 
 "use strict";
 
-import fs = require("fs");
+import fs = require("fs-extra");
+import glob = require("glob");
+import path = require("path");
 
 import { expect, should, assert } from 'chai';
 import { AntlrLanguageSupport, SourceContext, SymbolKind, ATNGraphData, LexicalRange } from "../index";
@@ -15,10 +17,10 @@ import { AntlrLanguageSupport, SourceContext, SymbolKind, ATNGraphData, LexicalR
 var backend: AntlrLanguageSupport;
 
 describe('antlr4-graps:', function () {
-    backend = new AntlrLanguageSupport(".");
+    backend = new AntlrLanguageSupport("."); // Search path is cwd for this test.
 
     xdescribe('Base Handling:', function () {
-        it("Create Backend", function (done) {
+        it("Create Backend", function () {
             expect(backend, "Test 1").to.be.a("object");
 
             expect(backend, "Test 2").to.have.property("loadGrammar");
@@ -27,19 +29,15 @@ describe('antlr4-graps:', function () {
             expect(backend, "Test 5").to.have.property("infoForSymbol");
             expect(backend, "Test 6").to.have.property("listSymbols");
             expect(backend, "Test 7").to.have.property("getDiagnostics");
-
-            done();
         });
 
         var c1: SourceContext;
-        it('Load Grammar', function (done) {
+        it('Load Grammar', function () {
             c1 = backend.loadGrammar("test/t.g4");
             expect(c1, "Test 1").to.be.an.instanceOf(SourceContext);
-
-            done();
         });
 
-        it("Unload grammar", function (done) {
+        it("Unload grammar", function () {
             backend.releaseGrammar("test/t.g4");
             var context = backend.loadGrammar("test/t.g"); // Non-existing grammar.
             expect(context, "Test 1").to.be.an.instanceOf(SourceContext);
@@ -50,13 +48,11 @@ describe('antlr4-graps:', function () {
             context = backend.loadGrammar("test/t.g4");
             expect(context, "Test 3").to.equal(c1);
             backend.releaseGrammar("test/t.g4");
-
-            done();
         });
     });
 
     xdescribe('Symbol Info Retrieval (t.g4):', function () {
-        it('infoForSymbol', function (done) {
+        it('infoForSymbol', function () {
             var info = backend.infoForSymbol("test/t.g4", 7, 2, true);
             assert(info);
             expect(info!.name, "Test 1").to.equal("B");
@@ -68,11 +64,9 @@ describe('antlr4-graps:', function () {
             expect(info!.definition!.range.start.row, "Test 6").to.equal(7);
             expect(info!.definition!.range.end.column, "Test 7").to.equal(6);
             expect(info!.definition!.range.end.row, "Test 8").to.equal(7);
-
-            done();
         });
 
-        it('listSymbols', function (done) {
+        it('listSymbols', function () {
             let symbols = backend.listSymbols("test/t.g4", true);
             expect(symbols.length, "Test 1").to.equal(10);
 
@@ -85,11 +79,9 @@ describe('antlr4-graps:', function () {
             expect(info.definition!.range.start.row, "Test 7").to.equal(2);
             expect(info.definition!.range.end.column, "Test 8").to.equal(12);
             expect(info.definition!.range.end.row, "Test 9").to.equal(2);
-
-            done();
         });
 
-        it('getDiagnostics', function (done) {
+        it('getDiagnostics', function () {
             let diagnostics = backend.getDiagnostics("test/t.g4");
             expect(diagnostics.length, "Test 1").to.equal(2);
 
@@ -104,11 +96,9 @@ describe('antlr4-graps:', function () {
             expect(diagnostics[1].range.start.row, "Test 9").to.equal(8);
             expect(diagnostics[1].range.end.column, "Test 10").to.equal(22);
             expect(diagnostics[1].range.end.row, "Test 11").to.equal(8);
-
-            done();
         });
 
-        it('reparse', function (done) {
+        it('reparse', function () {
             backend.setText("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
             backend.reparse("test/t.g4");
             let diagnostics = backend.getDiagnostics("test/t.g4");
@@ -144,13 +134,11 @@ describe('antlr4-graps:', function () {
             expect(diagnostics[1].range.start.row, "Test 20").to.equal(2);
             expect(diagnostics[1].range.end.column, "Test 21").to.equal(9);
             expect(diagnostics[1].range.end.row, "Test 22").to.equal(2);
-
-            done();
         });
     });
 
     xdescribe('Symbol Info Retrieval (TParser.g4):', function () {
-        it('Symbol Listing', function (done) {
+        it('Symbol Listing', function () {
             backend.loadGrammar("test/TParser.g4");
             let symbols = backend.listSymbols("test/TParser.g4", true);
             expect(symbols.length, "Test 1").to.equal(60);
@@ -181,11 +169,9 @@ describe('antlr4-graps:', function () {
             expect(ruleName, "Test 16").to.equal("Comment");
             [ruleName, ruleIndex] = backend.ruleFromPosition("test/TLexer.g4", 0, 50)!;
             expect(ruleName, "Test 16").to.equal("ID");
-
-            done();
         });
 
-        it('Editing', function (done) {
+        it('Editing', function () {
             // "Edit" the source. This will release the lexer reference and reload it.
             // If that doesn't work we'll get a lot of unknown-symbol errors (for all lexer symbols).
             let source = fs.readFileSync("test/TParser.g4", 'utf8');
@@ -194,11 +180,9 @@ describe('antlr4-graps:', function () {
 
             let parserDiags = backend.getDiagnostics("test/TParser.g4"); // This also updates the symbol reference counts.
             expect(parserDiags.length, "Test 1").to.be.equal(0);
-
-            done();
         });
 
-        it('getDiagnostics', function (done) {
+        it('getDiagnostics', function () {
             let lexerDiags = backend.getDiagnostics("test/TLexer.g4");
             expect(lexerDiags.length, "Test 1").to.be.equal(0);
 
@@ -208,11 +192,9 @@ describe('antlr4-graps:', function () {
             refCount = backend.countReferences("test/TLexer.g4", "Bar");
             expect(refCount, "Test 3").to.equal(2);
             backend.releaseGrammar("test/TParser.g4");
-
-            done();
         });
 
-        it("Symbol ranges", function (done) {
+        it("Symbol ranges", function () {
             let range = backend.enclosingRangeForSymbol("test/TParser.g4", 100, 4); // options {} block
             expect(range, "Test 1").not.to.be.undefined;
             expect(range!.start.row, "Test 2").to.equal(3);
@@ -243,14 +225,12 @@ describe('antlr4-graps:', function () {
             expect(range!.start.column, "Test 19").to.equal(0);
             expect(range!.end.row, "Test 20").to.equal(90);
             expect(range!.end.column, "Test 21").to.equal(0);
-
-            done();
         });
     });
 
     xdescribe('Advanced Symbol Informations:', function () {
 
-        it("RRD diagram", function (done) {
+        it("RRD diagram", function () {
             let diagram = backend.getRRDScript("test/TParser.g4", "Any");
             expect(diagram, "Test 1").to.equal("Diagram(Choice(0, Sequence(Terminal('Foo'), Terminal('Dot'), " +
                 "Optional(Terminal('Bar')), Terminal('DotDot'), Terminal('Baz'), Terminal('Bar')))).addTo()");
@@ -265,11 +245,9 @@ describe('antlr4-graps:', function () {
                 "Terminal('ClosePar')), Sequence(Comment('<assoc=right>'), NonTerminal('expr'), Terminal('QuestionMark'), NonTerminal('expr'), " +
                 "Terminal('Colon'), NonTerminal('expr')), Sequence(Comment('<assoc=right>'), NonTerminal('expr'), Terminal('Equal'), NonTerminal('expr'))," +
                 " Sequence(NonTerminal('id')), Sequence(NonTerminal('flowControl')), Sequence(Terminal('INT')), Sequence(Terminal('String')))).addTo()");
-
-            done();
         });
 
-        it("Reference Graph", function (done) {
+        it("Reference Graph", function () {
             let graph = backend.getReferenceGraph("test/TParser.g4");
             expect(graph.size, "Test 1").to.equal(13);
             expect(graph.has("expr"), "Test 2");
@@ -283,8 +261,6 @@ describe('antlr4-graps:', function () {
             expect(graph.get("flowControl")!.rules[0], "Test 9").to.equal("expr");
             expect(graph.get("flowControl")!.tokens[1], "Test 10").to.equal("Continue");
             expect(graph.get("flowControl")!.literals[0], "Test 11").to.equal("return");
-
-            done();
         });
 
     });
@@ -329,7 +305,7 @@ describe('antlr4-graps:', function () {
                 expect(graph!.links[2].labels.length, "Test 25").to.equal(1);
                 expect(graph!.links[2].labels[0], "Test 26").to.equal("ε");
             } finally {
-                deleteFolderRecursive("generated");
+                fs.removeSync("generated");
                 backend.releaseGrammar("grammars/ANTLRv4Parser.g4");
             }
         }).timeout(20000);
@@ -442,7 +418,7 @@ describe('antlr4-graps:', function () {
                 expect(statGraph!.links[12].labels[0], "Test 55").to.equal("';'");
             } finally {
                 backend.releaseGrammar("test/TParser.g4");
-                deleteFolderRecursive("generated");
+                fs.removeSync("generated");
             }
         }).timeout(20000);
 
@@ -482,7 +458,7 @@ describe('antlr4-graps:', function () {
                 expect(fs.existsSync("generated/test/TParserBaseLVisitor.ts"), "Test 6");
                 expect(fs.existsSync("generated/test/TParserVisitor.ts"), "Test 7");
             } finally {
-                deleteFolderRecursive("generated");
+                fs.removeSync("generated");
             }
         }).timeout(20000);
 
@@ -499,7 +475,7 @@ describe('antlr4-graps:', function () {
                 expect(parserDiags.length, "Test 2").to.be.equal(3);
             } finally {
                 backend.releaseGrammar("test/t2.g4");
-                deleteFolderRecursive("generated");
+                fs.removeSync("generated");
             }
         }).timeout(20000);
 
@@ -514,7 +490,7 @@ describe('antlr4-graps:', function () {
                 expect(error, "Test 1").to.contain("java.lang.UnsupportedOperationException: Serialized ATN data element 101246 element 11 out of range 0..65535")
             } finally {
                 backend.releaseGrammar("test/t2.g4");
-                deleteFolderRecursive("generated");
+                fs.removeSync("generated");
             }
         }).timeout(20000);
 
@@ -531,13 +507,13 @@ describe('antlr4-graps:', function () {
             } finally {
                 backend.releaseGrammar("test/TParser2.g4");
                 backend.releaseGrammar("test/TLexer2.g4");
-                deleteFolderRecursive("generated");
+                fs.removeSync("generated");
             }
         }).timeout(20000);
     });
 
     xdescribe('Test for Bugs:', function () {
-        it("Lexer token in a set-element context", function (done) {
+        it("Lexer token in a set-element context", function () {
             var info = backend.infoForSymbol("test/TParser.g4", 48, 93, true);
             assert(info, "Test 1");
             expect(info!.name, "Test 2").to.equal("Semicolon");
@@ -553,8 +529,6 @@ describe('antlr4-graps:', function () {
             backend.releaseGrammar("test/TParser.g4");
             var selfDiags = backend.getSelfDiagnostics();
             expect(selfDiags.contextCount, "Test 11").to.equal(0);
-
-            done();
         });
     });
 
@@ -611,58 +585,114 @@ describe('antlr4-graps:', function () {
         after(function () {
             backend.releaseGrammar("test/TParser.g4");
             backend.releaseGrammar("test/TLexer.g4");
-            deleteFolderRecursive("generated");
+            fs.removeSync("generated");
         })
     });
 
     describe("Formatting", function () {
-        it("Special Tests", function () {
+        it("Grammar Mix", function () {
+            //let rules = generateKeywordRules(100);
+            //fs.writeFileSync("test/formatting-results/rules.g4", rules, "utf8");
+
             let text: string;
             let range = new LexicalRange();
             range.start = { column: 0, row: 0 };
-            range.end = { column: 1, row: 10000 };
+            range.end = { column: 1, row: 100000 };
 
-            [text, range] = backend.formatGrammar("test/formatting/test1.g4", {
-                useTab: true,
-                tabWidth: 4,
-                spaceBeforeAssignmentOperators: true,
-                allowShortBlocksOnASingleLine: true,
-                minEmptyLines: 5, // max empty lines default setting will limit that to 1 line.
-            }, range);
+            // Format a big file with all kinds of syntactic elements. Start out with default
+            // fomatting options and change them in the file to test all variations.
+            [text, range] = backend.formatGrammar("test/formatting/raw.g4", {}, range);
 
-            let expected = fs.readFileSync("test/formatting-results/test1.g4", { encoding: "utf8" });
-            expect(text, "Test 1").to.equal(expected);
-
-            range.start = { column: 0, row: 0 };
-            range.end = { column: 1, row: 10000 };
-
-            [text, range] = backend.formatGrammar("test/formatting/test2.g4", {
-                useTab: true,
-                tabWidth: 4,
-                spaceBeforeAssignmentOperators: true,
-                allowShortBlocksOnASingleLine: true,
-                minEmptyLines: 2,
-                maxEmptyLinesToKeep: 2,
-            }, range);
-
-            //fs.writeFileSync("test/formatting-results/test2.g4", text, "utf8");
-            expected = fs.readFileSync("test/formatting-results/test2.g4", { encoding: "utf8" });
-            expect(text, "Test 2").to.equal(expected);
+            fs.writeFileSync("test/formatting-results/raw.g4", text, "utf8");
+            let expected = fs.readFileSync("test/formatting-results/raw.g4", { encoding: "utf8" });
+            expect(expected).to.equal(text);
         });
 
+        xit("ANTLR grammar directory", function () {
+            let files = glob.sync("test/formatting/**/*.g4", {});
+            let counter = 0;
+            for (let file of files) {
+                ++counter;
+                if (counter >= 20)
+                    break;
+
+                let text: string;
+                let range = new LexicalRange();
+                range.start = { column: 0, row: 0 };
+                range.end = { column: 1, row: 100000 };
+
+                [text, range] = backend.formatGrammar(file, {
+                    useTab: false,
+                    tabWidth: 4,
+                    spaceBeforeAssignmentOperators: true,
+                    columnLimit: 120,
+                    allowShortRulesOnASingleLine: true,
+                    alignColons: "hanging",
+                    singleLineOverrulesHangingColon: false,
+                    alignTrailingComments: true,
+                    alignLexerCommands: true,
+                }, range);
+                let output = file.replace("formatting/", "formatting-results/");
+
+                fs.ensureDirSync(path.dirname(output));
+                fs.writeFileSync(output, text, "utf8");
+                let expected = fs.readFileSync(output, { encoding: "utf8" });
+                expect(expected, "Test 1").to.equal(text);
+            }
+        });
     });
 });
 
-function deleteFolderRecursive(path: string) {
-    if (fs.existsSync(path)) {
-        fs.readdirSync(path).forEach(function (file, index) {
-            let curPath = path + "/" + file;
-            if (fs.lstatSync(curPath).isDirectory()) {
-                deleteFolderRecursive(curPath);
+function generateKeywordRules(count: number): string {
+    const chars = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÀÂÃÄÅÈäåõøúûýðŢŴŘŌ0123456789";
+    const startChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let result = "";
+
+    // lexer action (mode, type), trailing comment, validating predicate, action
+    for (let i = 0; i < count; ++i) {
+        let line = "";
+        let identifier = startChars[Math.floor(Math.random() * startChars.length)];
+
+        let idLength = Math.floor(Math.random() * 30) + 3;
+        for (let j = 0; j < idLength; ++j) {
+            identifier += chars[Math.floor(Math.random() * chars.length)];
+        }
+        line += identifier + ":\"" + identifier + "\"";
+
+        let useLexerAction = Math.random() >= 0.75;
+        let useComment = Math.random() < 0.25;
+        let usePredicate = Math.random() > 0.75;
+        let useAction = Math.random() < 0.25;
+
+        if (useAction) {
+            if (usePredicate) {
+                // Both, action and predicate. Make order random too.
+                if (Math.random() < 0.5) {
+                    line += "{domeSomething($text);} ";
+                    line += "{doesItBlend()}? ";
+                } else {
+                    line += "{doesItBlend()}? ";
+                    line += "{domeSomething($text);} ";
+                }
             } else {
-                fs.unlinkSync(curPath);
+                line += "{domeSomething($text);} ";
             }
-        });
-        fs.rmdirSync(path);
+        } else if (usePredicate) {
+            line += "{doesItBlend()}? ";
+        }
+
+        if (useLexerAction) {
+            let type = Math.random() < 0.5 ? "mode" : "type";
+            line += "-> " + type + "(SomethingReallyMeaningful) ";
+        }
+
+        line += ";";
+        if (useComment) {
+            line += " // Specified in the interest of formatting.";
+        }
+
+        result += line + "\n";
     }
-};
+
+    return result;
+}

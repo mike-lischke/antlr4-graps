@@ -50,9 +50,11 @@ function isWhitespaceBlock(marker: InsertMarker): boolean {
 enum AlignmentType {
     Colon,
     FirstToken,
+    Label,
     LexerCommand,
     Action,
-    TrailingComment
+    TrailingComment,
+    Trailers // Align all of label, action, trailing comment and lexer command (whatever comes first).
 }
 
 // Holds line number and group index for a specific alignment. For each alignment type there's an own
@@ -99,9 +101,8 @@ export class GrammarFormatter {
         let inLexerCommand = false; // Ditto for a lexer command (the part starting with ->).
         let inCatchFinally = false; // Ditto for catch/finally blocks.
 
-        // Outside of braces is the grammar introducer command the only one ending in a semicolon.
-        // We must not format that like rules, so we add a special state only for this entry.
-        let introducerDone = false;
+        let inSingleLineRule = false; // Set when an entire rule is placed on a single line.
+        let minLineInsertionPending = false; // Set when the min line setting must be enforced after next line break.
 
         for (let i = 0; i < this.tokens.length; ++i) {
             let token = this.tokens[i];
@@ -117,61 +118,96 @@ export class GrammarFormatter {
                         // Ignore leading whitespaces at the beginning of the grammar.
                         break;
                     }
+
+                    let nextType = this.tokens[i + 1].type;
+                    let localCommentAhead = (nextType == ANTLRv4Lexer.LINE_COMMENT
+                        || nextType == ANTLRv4Lexer.BLOCK_COMMENT || nextType == ANTLRv4Lexer.DOC_COMMENT);
+
                     if (this.lastEntryIs(InsertMarker.WhitespaceEraser)) {
-                        // And ignore these incomming whitespaces if there is an eraser marker.
+                        // And ignore these incomming whitespaces if there is an eraser marker
+                        // (unless comments after a line break follow, which we want to stay on their line).
                         this.outputPipeline.pop();
-                        break;
+
+                        if (!localCommentAhead) {
+                            break;
+                        }
                     }
 
                     // Analyze whitespaces, we can have a mix of tab/space and line breaks here.
                     let text = token.text!.replace("\r\n", "\n");
-                    if (coalesceWhitespaces || text.indexOf("\n") < 0 || this.singleLineBlockNesting > 0) {
-                        if (!this.lastEntryIs(InsertMarker.Whitespace)) {
-                            this.addSpace();
+                    let hasLineBreaks = text.indexOf("\n") >= 0;
+                    if (!localCommentAhead || !hasLineBreaks ) {
+                        if (!hasLineBreaks || coalesceWhitespaces || this.singleLineBlockNesting > 0) {
+                            if (!this.lastEntryIs(InsertMarker.Whitespace)) {
+                                this.addSpace();
+                            }
+                            break;
                         }
-                        break;
                     }
 
                     let parts = text.split("\n");
-
-                    // Take into account any linebreaks that are already in the pipeline.
-                    let j = this.outputPipeline.length - 1;
                     let breakCount = 0;
-                    while (j >= 0 && parts.length > 0) {
-                        if (this.entryIs(j, InsertMarker.LineBreak)) {
-                            ++breakCount;
-                        } else {
-                            break;
-                        }
-                        --j;
-                    }
 
+                    // Limit the number of line breaks before a comment right after a left parenthesis.
+                    if (localCommentAhead && this.lastCodeTokenIs(ANTLRv4Lexer.LPAREN)
+                        && !this.options.keepEmptyLinesAtTheStartOfBlocks) {
+                        breakCount = 1;
+                    } else {
+                        // Take into account any linebreaks that are already in the pipeline.
+                        let j = this.outputPipeline.length - 1;
+                        while (j >= 0) {
+                            if (this.entryIs(j, InsertMarker.LineBreak)) {
+                                ++breakCount;
+                            } else {
+                                break;
+                            }
+                            --j;
+                        }
+
+                        breakCount = Math.max(breakCount, parts.length - 1);
+                        breakCount = Math.min(breakCount, this.options.maxEmptyLinesToKeep! + 1);
+                    }
                     this.removeTrailingWhitespaces();
 
-                    breakCount = Math.max(breakCount, parts.length - 1);
-                    breakCount = Math.min(breakCount, this.options.maxEmptyLinesToKeep! + 1);
                     this.outputPipeline.push(...Array(breakCount).fill(InsertMarker.LineBreak));
                     this.currentLine += breakCount;
                     this.currentColumn = 0;
 
-                    // If the last entry is not empty we got some indentation for the same line.
-                    // Replace this by our current indentation.
-                    if (parts[parts.length - 1].length > 0) {
-                        this.pushCurrentIndentation();
+                    if (minLineInsertionPending) {
+                        minLineInsertionPending = false;
+                        this.ensureMinEmptyLines();
                     }
+                    this.pushCurrentIndentation();
+
                     break;
                 }
 
                 case ANTLRv4Lexer.SEMI: {
                     this.removeTrailingWhitespaces();
-                    if (introducerDone && !inBraces && inRule) {
-                        switch (this.options.alignSemicolon) {
+
+                    // Single line mode here can be caused by 2 situations:
+                    // single line block from the last alt or single line rule.
+                    // In the first case we have to end single line mode now, otherwise
+                    // after the alignment handling.
+                    if (!inSingleLineRule) {
+                        this.singleLineBlockNesting = 0;
+                    }
+
+                    // Even if the rule is on a single line we have to check for semicolon placement,
+                    // because in case of a hanging colon only the body of the rule is on a single line,
+                    // while name and semicolon are placed on own lines.
+                    let canAlignSemicolon = !inSingleLineRule || this.options.alignColons == "hanging";
+                    if (canAlignSemicolon && !inBraces && inRule) {
+                        switch (this.options.alignSemicolons) {
                             case "none":
                                 this.add(i);
                                 break;
-                            case "ownLine":
-                                this.addLineBreak();
+                            case "ownLine": {
+                                let forceNewLine = !this.options.singleLineOverrulesHangingColon
+                                    && this.options.alignColons == "hanging";
+                                this.addLineBreak(forceNewLine);
                                 break;
+                            }
                             case "hanging":
                                 this.addLineBreak();
                                 this.pushCurrentIndentation();
@@ -179,27 +215,26 @@ export class GrammarFormatter {
                         }
 
                         this.add(i);
-                        if (this.currentIndentation > 0) {
-                            --this.currentIndentation;
-                        }
                     } else {
                         this.add(i);
                     }
 
-                    if (!this.nonBreakingTrailerAhead(i)) {
-                        // Add line break only if we don't have a trailing line comment.
-                        this.ensureMinEmptyLines();
-                        if (inBraces) {
-                            this.pushCurrentIndentation();
-                        }
+                    if (!inBraces && this.currentIndentation > 0) {
+                        --this.currentIndentation;
                     }
 
-                    // Set to 0 regardless of what it was when entering here.
-                    // This way we can better handle unbalanced nested blocks.
+                    // Now we can end single line mode in any case (if not done yet above).
                     this.singleLineBlockNesting = 0;
+                    inSingleLineRule = false;
+
+                    if (this.currentIndentation == 0) {
+                        minLineInsertionPending = true;
+                    } else {
+                        this.addLineBreak();
+                        this.pushCurrentIndentation();
+                    }
 
                     coalesceWhitespaces = false;
-                    introducerDone = true;
                     inLexerCommand = false;
                     if (!inBraces) {
                         inRule = false;
@@ -208,7 +243,7 @@ export class GrammarFormatter {
                 }
 
                 case ANTLRv4Lexer.LBRACE: {
-                    if (this.options.breakBeforeBraces) {
+                    if (this.singleLineBlockNesting == 0 && this.options.breakBeforeBraces) {
                         this.removeTrailingWhitespaces();
                         this.addLineBreak();
                         this.pushCurrentIndentation();
@@ -238,7 +273,9 @@ export class GrammarFormatter {
                     }
                     this.pushCurrentIndentation();
                     this.add(i);
-                    this.addLineBreak();
+
+                    minLineInsertionPending = this.currentIndentation == 0;
+
                     inBraces = false;
                     coalesceWhitespaces = false;
                     inRule = false;
@@ -250,8 +287,9 @@ export class GrammarFormatter {
                         break;
                     }
 
-                    if (this.options.alignActions) {
-                        this.removeTrailingWhitespaces();
+                    if (this.options.alignTrailers) {
+                        this.addAlignmentEntry(AlignmentType.Trailers);
+                    } else if (this.options.alignActions) {
                         this.addAlignmentEntry(AlignmentType.Action);
                     }
 
@@ -260,7 +298,7 @@ export class GrammarFormatter {
                         this.addLineBreak();
                     }
 
-                    // Find the argument end token.
+                    // Find the action end token.
                     let startIndex = i;
                     while (this.tokens[i].type != Token.EOF && this.tokens[i].type != ANTLRv4Lexer.END_ACTION) {
                         ++i;
@@ -273,10 +311,10 @@ export class GrammarFormatter {
                     }
                     this.add(i);
 
+                    minLineInsertionPending = this.currentIndentation == 0;
                     if (!inRule) {
                         inNamedAction = false;
                         coalesceWhitespaces = false;
-                        this.addLineBreak();
                     }
                     inCatchFinally = false;
 
@@ -301,7 +339,7 @@ export class GrammarFormatter {
                     }
 
                     if (index > 0 && this.outputPipeline[index] == InsertMarker.LineBreak) {
-                        // Comments starts the line (or even entirely is the line).
+                        /*// Comment starts the line (or even entirely is the line).
                         // See if we are directly after a block start or a comment line,
                         // in which case we don't do additional processing.
                         let afterBlockStart = this.entryIs(index - 1, ANTLRv4Lexer.LBRACE)
@@ -331,10 +369,13 @@ export class GrammarFormatter {
                             }
                             this.ensureMinEmptyLines();
                             this.pushCurrentIndentation();
-                        }
+                        }*/
                     } else if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
-                        if (this.options.alignTrailingComments) {
-                            this.removeTrailingWhitespaces();
+                        // There's something before the comment on the current line.
+                        // Trigger normal alignment handling then.
+                        if (this.options.alignTrailers) {
+                            this.addAlignmentEntry(AlignmentType.Trailers);
+                        } else if (this.options.alignTrailingComments) {
                             this.addAlignmentEntry(AlignmentType.TrailingComment);
                         }
                     }
@@ -393,20 +434,23 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.COLON: {
                     ++this.currentIndentation;
 
-                    let [containsAlts, singleLineLength] = this.getBlockInfo(i);
-                    if (this.options.allowShortRulesOnASingleLine && singleLineLength <= (this.options.columnLimit! / 2 + 3)) {
+                    let [containsAlts, singleLineLength] = this.getBlockInfo(i, new Set([ANTLRv4Lexer.SEMI]));
+                    singleLineLength += this.currentColumn;
+                    if (this.options.allowShortRulesOnASingleLine && singleLineLength <= (2 * this.options.columnLimit! / 3)) {
                         ++this.singleLineBlockNesting;
+                        inSingleLineRule = true;
                     }
 
-                    switch (this.options.alignColon) {
+                    switch (this.options.alignColons) {
                         case "hanging": {
-                            if (this.singleLineBlockNesting == 0) {
-                                this.removeTrailingWhitespaces();
-                                this.addLineBreak();
-                                this.pushCurrentIndentation();
-                                this.add(i);
-                                break;
-                            } // else fall through
+                            this.removeTrailingWhitespaces();
+
+                            let forceNewLine = !this.options.singleLineOverrulesHangingColon;
+                            this.addLineBreak(forceNewLine);
+                            this.pushCurrentIndentation(forceNewLine);
+                            this.add(i);
+                            this.addSpace();
+                            break;
                         }
                         case "none": {
                             this.removeTrailingWhitespaces();
@@ -414,23 +458,30 @@ export class GrammarFormatter {
                             if (!this.nonBreakingTrailerAhead(i)) {
                                 this.addLineBreak();
                                 this.pushCurrentIndentation();
+                            } else {
+                                this.addSpace();
                             }
                             break;
                         }
                         case "trailing": {
                             this.removeTrailingWhitespaces();
-                            this.addAlignmentEntry(AlignmentType.Colon);
+                            if (this.singleLineBlockNesting > 0) {
+                                this.addAlignmentEntry(AlignmentType.Colon);
+                                this.add(InsertMarker.WhitespaceEraser);
+                            }
                             this.add(i);
                             if (!this.nonBreakingTrailerAhead(i)) {
                                 this.addLineBreak();
                                 this.pushCurrentIndentation();
+                            } else {
+                                this.addSpace();
                             }
                             break;
                         }
                     }
 
-                    if (this.options.alignFirstToken) {
-                        this.removeTrailingWhitespaces();
+                    // Aligning the first token only makes sense if the entire rule is on a single line.
+                    if (this.options.alignFirstTokens && this.singleLineBlockNesting > 0) {
                         this.addAlignmentEntry(AlignmentType.FirstToken);
                         this.add(InsertMarker.WhitespaceEraser);
                     }
@@ -444,6 +495,24 @@ export class GrammarFormatter {
                     this.add(InsertMarker.WhitespaceEraser);
                     break;
 
+                case ANTLRv4Lexer.IMPORT:
+                case ANTLRv4Lexer.LEXER:
+                case ANTLRv4Lexer.PARSER:
+                case ANTLRv4Lexer.GRAMMAR:
+                case ANTLRv4Lexer.MODE: {
+                    if (!inNamedAction && !inRule) {
+                        // We increase the current indentation here only to have an easier time
+                        // when handling the ending semicolon. Otherwise we would have to add
+                        // extra checks to know which command the semicolon ends.
+                        ++this.currentIndentation;
+
+                        coalesceWhitespaces = true;
+                        inRule = true;
+                    }
+                    this.add(i);
+                    break;
+                }
+
                 case ANTLRv4Lexer.FRAGMENT:
                 case ANTLRv4Lexer.PRIVATE:
                 case ANTLRv4Lexer.PROTECTED:
@@ -451,23 +520,14 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.TOKEN_REF:
                 case ANTLRv4Lexer.RULE_REF: {
                     if (!inNamedAction && !inBraces) {
-                        if (!inRule && introducerDone && this.currentIndentation == 0) {
-                            this.ensureMinEmptyLines();
-                        }
-
                         inRule = true;
                     }
                     // fall through
                 }
 
-                case ANTLRv4Lexer.IMPORT:
-                case ANTLRv4Lexer.LEXER:
-                case ANTLRv4Lexer.PARSER:
-                case ANTLRv4Lexer.GRAMMAR:
                 case ANTLRv4Lexer.OPTIONS:
                 case ANTLRv4Lexer.TOKENS:
-                case ANTLRv4Lexer.CHANNELS:
-                case ANTLRv4Lexer.MODE: {
+                case ANTLRv4Lexer.CHANNELS: {
                     coalesceWhitespaces = true;
                     this.add(i);
                     if (!inLexerCommand) {
@@ -486,71 +546,128 @@ export class GrammarFormatter {
                 }
 
                 case ANTLRv4Lexer.OR: {
-                    if (this.singleLineBlockNesting == 0) {
-                        this.removeTrailingWhitespaces();
-                        this.addLineBreak();
-                        this.pushCurrentIndentation();
-                    } else {
+                    // Starts a new alt. If we are in the first single line nesting level
+                    // (not to be confused with block nesting, we can have the first single line block
+                    // at, say, block nesting 10), we have to end the current single line block
+                    // (which is the previous alt) and see if we can start a new one.
+                    if (this.singleLineBlockNesting > 1) {
                         this.addSpace();
+                    } else {
+                        if (!inSingleLineRule) {
+                            // If we are in a single line rule block it means we are not ending a
+                            // single line alt block.
+                            this.singleLineBlockNesting = 0;
+
+                            this.removeTrailingWhitespaces();
+                            this.addLineBreak();
+                            this.pushCurrentIndentation();
+
+                            let [containsAlts, singleLineLength] = this.getBlockInfo(i,
+                                new Set([ANTLRv4Lexer.OR, ANTLRv4Lexer.SEMI]));
+
+                            // See if we should enter single line mode.
+                            if ((!containsAlts || this.options.allowShortBlocksOnASingleLine)
+                                && singleLineLength <= (this.options.columnLimit! / 2 + 3)) {
+                                ++this.singleLineBlockNesting;
+                            }
+                        }
                     }
+
                     this.add(i);
                     break;
                 }
 
                 case ANTLRv4Lexer.LPAREN: {
+                    if (inLexerCommand) {
+                        this.add(i);
+                        break;
+                    }
+
                     if (this.singleLineBlockNesting > 0) {
                         // If we are already in single line mode add a nesting level.
-                        ++this.singleLineBlockNesting;
+                        // It's impossible to have a multi line block within a single line block.
+                        // The other way around it's well possible, though.
+                        // See a few lines below why we increase by 2.
+                        this.singleLineBlockNesting += 2;
+                        ++this.currentIndentation;
+                        this.add(i);
                     } else {
-                        // If not see if we should enter single line mode.
-                        let [containsAlts, singleLineLength] = this.getBlockInfo(i);
-                        if ((!containsAlts || this.options.allowShortBlocksOnASingleLine) && singleLineLength <= (this.options.columnLimit! / 2 + 3)) {
-                            ++this.singleLineBlockNesting;
-                        } else {
-                            // Multi-line block formatting starts here.
-                            // Put blocks only on multiple lines if they contain alternatives.
+                        // First check if we can put the entire block on a single line (if the block option is set).
+                        let [containsAlts, singleLineLength] = this.getBlockInfo(i, new Set([ANTLRv4Lexer.RPAREN]));
+                        singleLineLength += this.currentColumn;
+
+                        if (this.options.allowShortBlocksOnASingleLine
+                            && singleLineLength <= (2 * this.options.columnLimit! / 3)) {
+                            // Increase by 2: one for the block and one for the first alt.
+                            // We increase for the alt even if there's no content or only a single alt.
+                            // Doing that simplifies handling when closing the block.
+                            this.singleLineBlockNesting += 2;
+                        }
+
+                        if (this.singleLineBlockNesting == 0) {
                             if (this.options.breakBeforeParens) {
                                 this.removeTrailingWhitespaces();
                                 this.addLineBreak();
                                 this.pushCurrentIndentation();
-                            } else {
-                                this.removeTrailingWhitespaces();
-                                this.addSpace();
                             }
 
                             this.add(i);
                             ++this.currentIndentation;
-                            if (containsAlts) {
-                                this.addLineBreak();
-                                this.pushCurrentIndentation();
+
+                            this.addLineBreak();
+                            this.pushCurrentIndentation();
+
+                            // If the entire block is too long, see if the first alt would fit on a single line.
+                            [containsAlts, singleLineLength] = this.getBlockInfo(i,
+                                new Set([ANTLRv4Lexer.OR, ANTLRv4Lexer.RPAREN]));
+                            if (singleLineLength <= (this.options.columnLimit! / 2 + 3)) {
+                                ++this.singleLineBlockNesting;
                             }
-                            break;
+                        } else {
+                            this.add(i);
+                            ++this.currentIndentation;
                         }
+
                     }
 
-                    this.add(i);
                     break;
                 }
 
                 case ANTLRv4Lexer.RPAREN: {
+                    if (inLexerCommand) {
+                        this.add(i);
+                        break;
+                    }
+
                     if (this.singleLineBlockNesting > 0) {
+                        // If we are in single line mode when we end an alt it means
+                        // the nesting counter was increased for it. Hence we can count down here.
                         --this.singleLineBlockNesting;
-                        this.removeTrailingWhitespaces();
+                    }
+
+                    if (this.currentIndentation > 0) {
+                        --this.currentIndentation;
+                    }
+
+                    this.removeTrailingWhitespaces();
+
+                    // If the single line counter is still > 0 it means the entire block is
+                    // to be formatted on a single line.
+                    if (this.singleLineBlockNesting > 0) {
                         this.add(i);
                     } else {
-                        this.removeTrailingWhitespaces();
                         this.addLineBreak();
-                        if (this.currentIndentation > 0) {
-                            --this.currentIndentation;
-                        }
                         this.pushCurrentIndentation();
                         this.add(i);
 
                         if (!this.nonBreakingTrailerAhead(i)) {
-                            this.addLineBreak();
+                            //this.addLineBreak();
                         }
-                        break;
+                    }
 
+                    if (this.singleLineBlockNesting > 0) {
+                        // Now decrease single line block counter for the closing parenthesis too.
+                        --this.singleLineBlockNesting;
                     }
                     break;
                 }
@@ -563,8 +680,9 @@ export class GrammarFormatter {
 
                 case ANTLRv4Lexer.RARROW: {
                     inLexerCommand = true;
-                    if (this.options.alignLexerCommand) {
-                        this.removeTrailingWhitespaces();
+                    if (this.options.alignTrailers) {
+                        this.addAlignmentEntry(AlignmentType.Trailers);
+                    } else if (this.options.alignLexerCommands) {
                         this.addAlignmentEntry(AlignmentType.LexerCommand);
                     } else {
                         if (!this.lastEntryIs(InsertMarker.Space)) {
@@ -589,6 +707,29 @@ export class GrammarFormatter {
                     } else {
                         this.addSpace();
                     }
+                    break;
+                }
+
+                case ANTLRv4Lexer.POUND: {
+                    // Starting a label. They are not trailing per se, but we treat them so
+                    // if not in single line mode, as they look similar like trailing comments.
+                    let willUseAlignment = false;
+                    if (this.singleLineBlockNesting == 0) {
+                        if (this.options.alignTrailers) {
+                            willUseAlignment = true,
+                            this.addAlignmentEntry(AlignmentType.Trailers);
+                        } else if (this.options.alignLabels) {
+                            willUseAlignment = true,
+                            this.addAlignmentEntry(AlignmentType.Label);
+                        }
+                    }
+
+                    if (!willUseAlignment && !this.lastEntryIs(InsertMarker.Space)) {
+                        this.addSpace();
+                    }
+                    this.add(i);
+                    this.addSpace();
+                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -654,6 +795,7 @@ export class GrammarFormatter {
 
         let result = "";
         let pendingLineComment = -1;
+        let hadErrorOnLine = false;
         for (let entry of this.outputPipeline) {
             switch (entry) {
                 case InsertMarker.LineBreak:
@@ -666,6 +808,7 @@ export class GrammarFormatter {
                         pendingLineComment = -1;
                     }
                     result += "\n";
+                    hadErrorOnLine = false;
                     break;
                 case InsertMarker.Space:
                     result += " ";
@@ -676,7 +819,10 @@ export class GrammarFormatter {
                 case InsertMarker.WhitespaceEraser: // Ignore.
                     break;
                 case InsertMarker.Error:
-                    result += "<<Error encountered>>";
+                    if (!hadErrorOnLine) { // Don't output more than one error per line.
+                        result += "<<Unexpected input or wrong formatter command>>";
+                        hadErrorOnLine = true;
+                    }
                     break;
                 default:
                     if (entry < 0) {
@@ -722,15 +868,18 @@ export class GrammarFormatter {
         this.options.tabWidth = 4;
         this.options.useTab = true;
 
-        this.options.alignColon = "none";
+        this.options.alignColons = "none";
         this.options.allowShortRulesOnASingleLine = true;
-        this.options.alignSemicolon = "ownLine";
+        this.options.alignSemicolons = "ownLine";
+        this.options.singleLineOverrulesHangingColon = true;
         this.options.breakBeforeParens = false;
         this.options.ruleInternalsOnSingleLine = false;
         this.options.minEmptyLines = 0;
         this.options.groupedAlignments = true;
-        this.options.alignFirstToken = false;
+        this.options.alignFirstTokens = false;
+        this.options.alignLexerCommands = false;
         this.options.alignActions = false;
+        this.options.alignTrailers = false;
     }
 
     /** Is the value at the given index in the token list of the given type? */
@@ -861,8 +1010,8 @@ export class GrammarFormatter {
         }
     }
 
-    private pushCurrentIndentation() {
-        if (this.formattingDisabled || this.singleLineBlockNesting > 0) {
+    private pushCurrentIndentation(force: boolean = false) {
+        if (this.formattingDisabled || (!force && this.singleLineBlockNesting > 0)) {
             return;
         }
 
@@ -874,9 +1023,9 @@ export class GrammarFormatter {
         if (this.options.useTab) {
             this.outputPipeline.push(...Array(this.currentIndentation).fill(InsertMarker.Tab));
         } else {
-            this.outputPipeline.push(...Array(this.currentIndentation * this.options.tabWidth!).fill(InsertMarker.Space));
+            this.outputPipeline.push(...Array(this.currentIndentation * this.options.indentWidth!).fill(InsertMarker.Space));
         }
-        this.currentColumn = this.currentIndentation * this.options.tabWidth!;
+        this.currentColumn = this.currentIndentation * this.options.indentWidth!;
     }
 
     /**
@@ -991,8 +1140,8 @@ export class GrammarFormatter {
         }
     }
 
-    private addLineBreak() {
-        if (this.singleLineBlockNesting == 0) {
+    private addLineBreak(force: boolean = false) {
+        if (this.singleLineBlockNesting == 0 || force) {
             // If the current line ends with tabs/spaces, remove them first.
             while (this.lastEntryIs(InsertMarker.Space) || this.lastEntryIs(InsertMarker.Tab)) {
                 this.removeLastEntry();
@@ -1039,22 +1188,23 @@ export class GrammarFormatter {
      *
      * @param i The position to start scanning from. Should point to either a colon or an opening parenthesis.
      */
-    private getBlockInfo(i: number): [boolean, number] {
+    private getBlockInfo(i: number, stoppers: Set<number>): [boolean, number] {
         let containsAlts = false;
         let overallLength = 1;
-        let blockEnd = ANTLRv4Lexer.RPAREN;
-        if (this.tokens[i].type == ANTLRv4Lexer.COLON) {
-            blockEnd = ANTLRv4Lexer.SEMI;
-            ++overallLength; // The space we'll add after the colon.
+        let nestingLevel = 0;
+        let inSet = false;
+
+        let token = this.tokens[i];
+        if (token.type == ANTLRv4Lexer.COLON || token.type == ANTLRv4Lexer.OR) {
+            ++overallLength; // One for the space after these two.
         }
 
-        let nestingLevel = 0;
-
         while (++i < this.tokens.length) {
-            let token = this.tokens[i];
+            token = this.tokens[i];
             switch (token.type) {
                 case ANTLRv4Lexer.WS: {
-                    // Ignore whitespaces. We account for them below.
+                    // Ignore whitespaces here. We pretend there is always a single space char
+                    // between tokens and we will add them below (except for certain tokens).
                     break;
                 }
 
@@ -1065,20 +1215,24 @@ export class GrammarFormatter {
                 }
 
                 case ANTLRv4Lexer.RPAREN: {
+                    // No need to add a space here (we have one from the previous token).
                     ++overallLength;
 
-                    // In unbalanced blocks return if we cannot unwind.
-                    if (nestingLevel == 0
-                        || (nestingLevel == 1 && (blockEnd == ANTLRv4Lexer.RPAREN))) {
+                    if (nestingLevel > 0) {
+                        --nestingLevel;
+                    } else {
+                        // No check here if RPAREN is in the list of stoppers.
+                        // If it is we return. If not and we got an RPAREN at nesting level 0
+                        // we found an unbalanced block and return also.
                         return [containsAlts, overallLength];
                     }
-                    --nestingLevel;
+
                     break;
                 }
 
                 case ANTLRv4Lexer.SEMI: {
                     ++overallLength;
-                    if (blockEnd == ANTLRv4Lexer.SEMI) {
+                    if (stoppers.has(ANTLRv4Lexer.SEMI)) {
                         return [containsAlts, overallLength];
                     }
                     break;
@@ -1094,15 +1248,14 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.LINE_COMMENT: {
                     // Single line comments cannot be formatted on a single line (they would hide what follows).
                     // Signal that by a large overall length.
-                    overallLength = 1e100;
-                    break;
+                    return [containsAlts, 1e100];
                 }
 
                 case ANTLRv4Lexer.BLOCK_COMMENT:
                 case ANTLRv4Lexer.DOC_COMMENT: {
                     // If the comment contains a linebreak we cannot format the block as single line.
                     if (token.text!.indexOf("\n") >= 0) {
-                        overallLength = 1e100;
+                        return [containsAlts, 1e100];
                     } else {
                         overallLength += token.text!.length + 1;
                     }
@@ -1114,7 +1267,7 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.END_ACTION: {
                     // No extra space. These are entire blocks we take over as they are.
                     if (token.text == "\n") {
-                        overallLength = 1e100;
+                        return [containsAlts, 1e100];
                     } else {
                         ++overallLength;
                     }
@@ -1122,8 +1275,18 @@ export class GrammarFormatter {
                 }
 
                 case ANTLRv4Lexer.OR: {
-                    containsAlts = true;
+                    if (nestingLevel == 0) {
+                        if (stoppers.has(ANTLRv4Lexer.OR)) {
+                            return [containsAlts, overallLength];
+                        }
+                        containsAlts = true;
+                    }
                     overallLength += 2;
+                    break;
+                }
+
+                case ANTLRv4Lexer.NOT: {
+                    ++overallLength; // Unary NOT, no space after that.
                     break;
                 }
 
@@ -1152,13 +1315,25 @@ export class GrammarFormatter {
             ++i;
         }
 
-        return this.tokens[i].type == ANTLRv4Lexer.LINE_COMMENT || this.tokens[i].type == ANTLRv4Lexer.RARROW;
+        return this.tokens[i].type == ANTLRv4Lexer.LINE_COMMENT
+            || this.tokens[i].type == ANTLRv4Lexer.RARROW
+            || this.tokens[i].type == ANTLRv4Lexer.LPAREN;
     }
 
     /**
      * Scans the given comment for any of the formatter commands and parses them out.
      */
     private processFormattingCommands(index: number): void {
+
+        let me = this;
+        function resetAlignmentStatus(type: AlignmentType) {
+            let status = me.alignments.get(type);
+            if (status) {
+                status.lastLine = -1;
+                status.groupIndex = -1;
+            }
+        }
+
         let text = this.tokens[index].text!;
         text = text.substr(2, text.length - 2).trim();
         if (text.startsWith("$antlr-format")) {
@@ -1167,6 +1342,9 @@ export class GrammarFormatter {
                 let groups = /(\w+)(?:(?:\s*\:)?\s*)?(\w+|[0-9]+)?/i.exec(entry.trim());
                 if (groups != undefined) {
                     switch (groups[1]) {
+                        case "reset":
+                            this.setDefaultOptions();
+                            break;
                         case "on":
                         case "true":
                             this.formattingDisabled = false;
@@ -1188,12 +1366,14 @@ export class GrammarFormatter {
                         case "spaceBeforeAssignmentOperators":
                         case "useTab":
                         case "allowShortRulesOnASingleLine":
+                        case "singleLineOverrulesHangingColon":
                         case "breakBeforeParens":
                         case "ruleInternalsOnSingleLine":
                         case "groupedAlignments":
-                        case "alignFirstToken":
-                        case "alignLexerCommand":
-                        case "alignActions": {
+                        case "alignFirstTokens":
+                        case "alignLexerCommands":
+                        case "alignActions":
+                        case "alignTrailers": {
                             if (groups.length > 2
                                 && (groups[2] == "true"
                                     || groups[2] == "false")
@@ -1201,12 +1381,32 @@ export class GrammarFormatter {
                                     || groups[2] == "off") {
                                 this.options[groups[1]] = (groups[2] == "true" || groups[2] == "on");
 
-                                if (groups[1] == "groupedAlignments") {
-                                    // End any ongoing alignment group when switching grouped alignments.
-                                    for (let entry of this.alignments) {
-                                        entry[1].lastLine = -1;
-                                        entry[1].groupIndex = -1;
+                                // Some additional handling for alignments. Switching an alignment means
+                                // that the alignment group for that alignment is finished.
+                                switch (groups[1]) {
+                                    case "groupedAlignments": {
+                                        // End all ongoing alignment groups when switching grouped alignments.
+                                        for (let entry of this.alignments) {
+                                            entry[1].lastLine = -1;
+                                            entry[1].groupIndex = -1;
+                                        }
+                                        break;
                                     }
+                                    case "alignTrailingComments":
+                                        resetAlignmentStatus(AlignmentType.TrailingComment);
+                                        break;
+                                    case "alignFirstTokens":
+                                        resetAlignmentStatus(AlignmentType.FirstToken);
+                                        break;
+                                    case "alignLexerCommands":
+                                        resetAlignmentStatus(AlignmentType.LexerCommand);
+                                        break;
+                                    case "alignActions":
+                                        resetAlignmentStatus(AlignmentType.Action);
+                                        break;
+                                    case "alignTrailers":
+                                        resetAlignmentStatus(AlignmentType.Trailers);
+                                        break;
                                 }
                             } else {
                                 this.add(InsertMarker.Error);
@@ -1233,11 +1433,11 @@ export class GrammarFormatter {
                             break;
                         }
 
-                        case "alignColon": {
+                        case "alignColons": {
                             if (groups.length > 2) {
                                 let value = groups[2];
                                 if (value == "none" || value == "trailing" || value == "hanging") {
-                                    this.options.alignColon = value;
+                                    this.options.alignColons = value;
                                 } else {
                                     this.add(InsertMarker.Error);
                                 }
@@ -1246,11 +1446,11 @@ export class GrammarFormatter {
                             }
                             break;
                         }
-                        case "alignSemicolon": {
+                        case "alignSemicolons": {
                             if (groups.length > 2) {
                                 let value = groups[2];
                                 if (value == "none" || value == "ownLine" || value == "hanging") {
-                                    this.options.alignSemicolon = value;
+                                    this.options.alignSemicolons = value;
                                 } else {
                                     this.add(InsertMarker.Error);
                                 }
@@ -1280,27 +1480,36 @@ export class GrammarFormatter {
         }
 
         let status = this.alignments.get(type)!;
-        let startNewGroup = true;
-        if (status.lastLine > -1) {
-            // There's an active group. See if we can append the new entry to it.
-            if (!this.options.groupedAlignments || status.lastLine + 1 == this.currentLine) {
-                // We can extend the active group.
-                startNewGroup = false;
 
-                // Groups consist of indices into the output pipeline.
-                // The insert marker in the pipeline points to the alignment group.
-                this.alignmentGroups[status.groupIndex].push(this.outputPipeline.length);
+        // While we allow multiple different alignment types on a single line, we don't want the same type
+        // more than once on a line.
+        if (status.lastLine != this.currentLine) {
+            while (this.lastEntryIs(InsertMarker.Space)) {
+                this.removeLastEntry();
+            }
+
+            let startNewGroup = true;
+            if (status.lastLine > -1) {
+                // There's an active group. See if we can append the new entry to it.
+                if (!this.options.groupedAlignments || status.lastLine + 1 == this.currentLine) {
+                    // We can extend the active group.
+                    startNewGroup = false;
+
+                    // Groups consist of indices into the output pipeline.
+                    // The insert marker in the pipeline points to the alignment group.
+                    this.alignmentGroups[status.groupIndex].push(this.outputPipeline.length);
+                    this.outputPipeline.push(InsertMarker.Alignment - status.groupIndex);
+                }
+            }
+
+            if (startNewGroup) {
+                status.groupIndex = this.alignmentGroups.length;
+                this.alignmentGroups.push([this.outputPipeline.length]);
                 this.outputPipeline.push(InsertMarker.Alignment - status.groupIndex);
             }
-        }
 
-        if (startNewGroup) {
-            status.groupIndex = this.alignmentGroups.length;
-            this.alignmentGroups.push([this.outputPipeline.length]);
-            this.outputPipeline.push(InsertMarker.Alignment - status.groupIndex);
+            status.lastLine = this.currentLine;
         }
-
-        status.lastLine = this.currentLine;
     }
 
     /**
@@ -1331,7 +1540,7 @@ export class GrammarFormatter {
                 }
 
                 // Determine the largest column and bring this up to the next tab stop (if we are using tabs)
-                // or add single space to the longest column and align all others to this position.
+                // or add a single space to the longest column and align all others to this position.
                 let useTabs = this.options.useTab;
                 let maxColumn = Math.max(...columns);
                 if (useTabs) {
@@ -1363,8 +1572,7 @@ export class GrammarFormatter {
     }
 
     /**
-     * Starting from the given index into the output pipeline this method computes
-     * the column position this entry would be at in it's line.
+     * Determines the column offset of the given entry in the output pipeline.
      */
     private computeColumn(offset: number): number {
         let result = 0;
