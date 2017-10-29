@@ -142,7 +142,7 @@ export interface FormattingOptions {
     allowShortBlocksOnASingleLine?: boolean; // Default: true;
     breakBeforeBraces?: boolean; // When true start predicates and actions on a new line. Default: false.
     columnLimit?: number; // Default: 100 chars.
-    continuationIndentWidth?: number; // Default: same as indentWith.
+    continuationIndentWidth?: number; // For line continuation (only used if useTab is false). Default: same as indentWith.
     indentWidth?: number; // Default: 4 chars.
     keepEmptyLinesAtTheStartOfBlocks?: boolean; // Default: false.
     maxEmptyLinesToKeep?: number; // Default: 1.
@@ -180,7 +180,7 @@ export interface FormattingOptions {
     alignFirstTokens?: boolean; // Align first token in a rule after the colon. Default: false.
     alignLexerCommands?: boolean; // Align arrows from lexer commands. Default: false.
     alignActions?: boolean; // Align actions ({} blocks in rules) and predicates. Default: false.
-    alignLabels?: boolean; // Align alt labels (# name). Default: false.
+    alignLabels?: boolean; // Align alt labels (# name). Default: true.
 
     // When true a single alignment for labels, actions, lexer commands and trailing comments is used instead of
     // individual alignments for each type. This avoids large whitespace runs if you have a mix of these types.

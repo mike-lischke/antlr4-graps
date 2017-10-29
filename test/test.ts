@@ -19,7 +19,7 @@ var backend: AntlrLanguageSupport;
 describe('antlr4-graps:', function () {
     backend = new AntlrLanguageSupport("."); // Search path is cwd for this test.
 
-    xdescribe('Base Handling:', function () {
+    describe('Base Handling:', function () {
         it("Create Backend", function () {
             expect(backend, "Test 1").to.be.a("object");
 
@@ -51,7 +51,7 @@ describe('antlr4-graps:', function () {
         });
     });
 
-    xdescribe('Symbol Info Retrieval (t.g4):', function () {
+    describe('Symbol Info Retrieval (t.g4):', function () {
         it('infoForSymbol', function () {
             var info = backend.infoForSymbol("test/t.g4", 7, 2, true);
             assert(info);
@@ -137,7 +137,7 @@ describe('antlr4-graps:', function () {
         });
     });
 
-    xdescribe('Symbol Info Retrieval (TParser.g4):', function () {
+    describe('Symbol Info Retrieval (TParser.g4):', function () {
         it('Symbol Listing', function () {
             backend.loadGrammar("test/TParser.g4");
             let symbols = backend.listSymbols("test/TParser.g4", true);
@@ -228,7 +228,7 @@ describe('antlr4-graps:', function () {
         });
     });
 
-    xdescribe('Advanced Symbol Informations:', function () {
+    describe('Advanced Symbol Informations:', function () {
 
         it("RRD diagram", function () {
             let diagram = backend.getRRDScript("test/TParser.g4", "Any");
@@ -265,7 +265,7 @@ describe('antlr4-graps:', function () {
 
     });
 
-    xdescribe('ATN Related:', function () {
+    describe('ATN Related:', function () {
         it("ATN Rule Graph, split grammar", async function () {
             // Need code generation here. Details will be tested later. The ATN retrieval will fail
             // anyway when generation fails.
@@ -311,7 +311,7 @@ describe('antlr4-graps:', function () {
         }).timeout(20000);
     });
 
-    xdescribe('Code Generation:', function () {
+    describe('Code Generation:', function () {
         it("A standard generation run (CSharp), split grammar", async function () {
             let result = await backend.generate("test/TParser.g4", { outputDir: "generated", language: "CSharp" });
             expect(result, "Test 1").to.eql(["test/TLexer.g4", "test/TParser.g4"]);
@@ -512,7 +512,7 @@ describe('antlr4-graps:', function () {
         }).timeout(20000);
     });
 
-    xdescribe('Test for Bugs:', function () {
+    describe('Test for Bugs:', function () {
         it("Lexer token in a set-element context", function () {
             var info = backend.infoForSymbol("test/TParser.g4", 48, 93, true);
             assert(info, "Test 1");
@@ -550,7 +550,7 @@ describe('antlr4-graps:', function () {
         // Sentence generation is purely random and hence mostly untestable.
         // Once the interpreter is fully available we can at least generate and parse the result
         // to see if that works ok.
-        xit("Sentence generation", function () {
+        it("Sentence generation", function () {
             this.timeout(60000);
 
             let definitions: Map<string, string> = new Map([
@@ -590,10 +590,7 @@ describe('antlr4-graps:', function () {
     });
 
     describe("Formatting", function () {
-        it("Grammar Mix", function () {
-            //let rules = generateKeywordRules(100);
-            //fs.writeFileSync("test/formatting-results/rules.g4", rules, "utf8");
-
+        it("Formatting with all options (except alignment)", function () {
             let text: string;
             let range = new LexicalRange();
             range.start = { column: 0, row: 0 };
@@ -608,14 +605,34 @@ describe('antlr4-graps:', function () {
             expect(expected).to.equal(text);
         });
 
-        xit("ANTLR grammar directory", function () {
-            let files = glob.sync("test/formatting/**/*.g4", {});
+        it("Alignment formatting", function () {
+            this.timeout(20000);
+            //createAlignmentGrammar();
+
+            let text: string;
+            let range = new LexicalRange();
+            range.start = { column: 0, row: 0 };
+            range.end = { column: 1, row: 100000 };
+
+            // Now load a large file with all possible alignment combinations (75 rules for each permutation),
+            // checking so also the overall performance.
+            [text, range] = backend.formatGrammar("test/formatting/alignment.g4", {}, range);
+
+            fs.writeFileSync("test/formatting-results/alignment.g4", text, "utf8");
+            let expected = fs.readFileSync("test/formatting-results/alignment.g4", { encoding: "utf8" });
+            expect(expected).to.equal(text);
+        });
+
+        /*
+        // This test has been taken out by intention as it difficult to get good results for all grammars
+        // with the same set of settings. Consider it more like a visual smoke test.
+        it("ANTLR grammar directory", function () {
+            this.timeout(20000);
+
+            let files = glob.sync("test/formatting/grammars-v4/**\/*.g4", {});
             let counter = 0;
             for (let file of files) {
                 ++counter;
-                if (counter >= 20)
-                    break;
-
                 let text: string;
                 let range = new LexicalRange();
                 range.start = { column: 0, row: 0 };
@@ -640,59 +657,108 @@ describe('antlr4-graps:', function () {
                 expect(expected, "Test 1").to.equal(text);
             }
         });
+        */
     });
 });
 
-function generateKeywordRules(count: number): string {
-    const chars = "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZÀÂÃÄÅÈäåõøúûýðŢŴŘŌ0123456789";
-    const startChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let result = "";
+/**
+ * Generates the alignment.g4 grammar from formatting options in the alignment-template.g4 file.
+ */
+function createAlignmentGrammar(): void {
+    let grammar = "grammar alignment;\n\n// $antlr-format reset, columnLimit 200\n";
+    let template = fs.readFileSync("test/formatting/alignment-template.g4", { encoding: "utf8" });
+    let sections = template.split("\n");
 
-    // lexer action (mode, type), trailing comment, validating predicate, action
-    for (let i = 0; i < count; ++i) {
-        let line = "";
-        let identifier = startChars[Math.floor(Math.random() * startChars.length)];
+    // For each section create 100 rules with some random parts.
+    for (let section of sections) {
+        grammar += "\n" + section + "\n";
 
-        let idLength = Math.floor(Math.random() * 30) + 3;
-        for (let j = 0; j < idLength; ++j) {
-            identifier += chars[Math.floor(Math.random() * chars.length)];
-        }
-        line += identifier + ":\"" + identifier + "\"";
+        // Make it 50 lexer rules and 25 parser rules (less parser rules as we always use grouped alignments for them).
+        for (let i = 0; i < 30; ++i) {
+            if (i == 0) {
+                grammar += "// $antlr-format groupedAlignments off\n";
+            } else if (i == 15) {
+                grammar += "// $antlr-format groupedAlignments on\n";
+            }
 
-        let useLexerAction = Math.random() >= 0.75;
-        let useComment = Math.random() < 0.25;
-        let usePredicate = Math.random() > 0.75;
-        let useAction = Math.random() < 0.25;
+            let ruleNameFillCount = Math.random() * 25 + 1;
+            let useLexerAction = Math.random() < 0.5;
+            let useComment = Math.random() < 0.5;
+            let usePredicate = Math.random() < 0.5;
+            let useAction = Math.random() < 0.5;
 
-        if (useAction) {
-            if (usePredicate) {
-                // Both, action and predicate. Make order random too.
-                if (Math.random() < 0.5) {
-                    line += "{domeSomething($text);} ";
-                    line += "{doesItBlend()}? ";
+            let filler = "_".repeat(ruleNameFillCount);
+            let line = "Keyword" + filler + i + ":'Keyword" + filler + i + "'";
+
+            if (useAction) {
+                if (usePredicate) {
+                    // Both, action and predicate. Make order random too.
+                    if (Math.random() < 0.5) {
+                        line += "{domeSomething($text);} ";
+                        line += "{doesItBlend()}? ";
+                    } else {
+                        line += "{doesItBlend()}? ";
+                        line += "{domeSomething($text);} ";
+                    }
                 } else {
-                    line += "{doesItBlend()}? ";
                     line += "{domeSomething($text);} ";
                 }
-            } else {
-                line += "{domeSomething($text);} ";
+            } else if (usePredicate) {
+                line += "{doesItBlend()}? ";
             }
-        } else if (usePredicate) {
-            line += "{doesItBlend()}? ";
+
+            if (useLexerAction) {
+                let type = Math.random() < 0.5 ? "mode" : "type";
+                line += "-> " + type + "(SomethingReallyMeaningful) ";
+            }
+
+            line += ";";
+            if (useComment) {
+                line += " // Specified in the interest of formatting.";
+            }
+
+            grammar += line + "\n";
         }
 
-        if (useLexerAction) {
-            let type = Math.random() < 0.5 ? "mode" : "type";
-            line += "-> " + type + "(SomethingReallyMeaningful) ";
-        }
+        grammar += "// $antlr-format groupedAlignments on\n";
+        for (let i = 0; i < 20; ++i) {
+            if (i == 0) {
+                grammar += "// $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false\n";
+            } else if (i == 10) {
+                grammar += "// $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true\n";
+            }
 
-        line += ";";
-        if (useComment) {
-            line += " // Specified in the interest of formatting.";
-        }
+            let ruleNameFillCount = Math.random() * 25 + 1;
+            let useComment = Math.random() < 0.25;
+            let action = Math.random() < 0.25 ? "{doSomething($text);}" : " ";
+            let predicate = Math.random() < 0.25 ? "{doesItBlend}?" : " ";
+            let useLabels = Math.random() < 0.5;
 
-        result += line + "\n";
+            let line = "rule" + "_".repeat(ruleNameFillCount) + i + ": (";
+
+            if (useComment) {
+                line += predicate + "alt1" + action + "ruleA// Mom look, a trailing comment.\n";
+                line += "|" + predicate + "____alt2" + action + "ruleB// And another comment.\n";
+                line += "|" + predicate + "____alt3" + action + "ruleB/* Not aligned comment.*/\n";
+            } else {
+                line += predicate + "alt1" + action + "ruleA|____alt2" + action + "ruleB";
+            }
+            line += ")";
+
+            if (!useLabels) {
+                line += "rule_ | rule__ | rule____ | rule________ ";
+            } else {
+                line += "rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ ";
+            }
+
+            line += action + predicate + ";";
+            if (useComment) {
+                line += " // Final trailing comment.";
+            }
+
+            grammar += line + "\n";
+        }
     }
 
-    return result;
+    fs.writeFileSync("test/formatting/alignment.g4", grammar, "utf8");
 }

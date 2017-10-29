@@ -1,13 +1,57 @@
-grammar raw
-;
+grammar raw;
+
+/**
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+ */
+unusualCode: xyz;
 
 /*
- * LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE
- * LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE
- * LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE
- * LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE
- * LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE
+ Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ associated documentation files (the "Software"), to deal in the Software without restriction,
+ including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ furnished to do so, subject to the following conditions:
+ 
+ The above copyright notice and this permission notice shall be included in all copies or
+ substantial portions of the Software.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
  */
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+// associated documentation files (the "Software"), to deal in the Software without restriction,
+// including without limitation the rights to use, copy, modify, merge, publish, distribute,
+// sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in all copies or
+// substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+// NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// A separate comment.
 
 //-------------------------------------------------------------------------------------------------
 
@@ -18,8 +62,9 @@ options { // Trailing comment, that moves behind the opening brace.
 	/* Another such comment. The previous code moved to an own line. */ superClass = Base3;
 	// trailing comment
 
-	/* Comment stays as it is. No min empty lines set, so no empty line before it. */
-	superClass = /* Multiple lines of a single command with embedded comments is combined to a single line. */ Base4
+	/* Comment stays as it is. Min-empty-line-setting only has an effect on top level elements. */
+	superClass = /* Multiple lines of a single command with embedded comments is combined to a single line. */
+		Base4
 	/* inline comment */;
 	// Single line comment, non-trailing. Stays as is without separator line.
 	/*Standalone comment (indentation needs correction)*/
@@ -67,8 +112,7 @@ tokens { // Trailing comment.
 	YetAnotherOneWithLongName // This is important.
 }
 
-import Blah
-;
+import Blah;
 
 // These are all supported parser sections:
 
@@ -78,10 +122,10 @@ import Blah
 // Appears before any #include in h + cpp files.
 @parser::preinclude {/* parser precinclude section */}
 
-// Appears in the private part of the parser in the h file.
-// The function bodies could also appear in the definitions section, but I want to maximize
-// Java compatibility, so we can also create a Java parser from this grammar.
-// Still, some tweaking is necessary after the Java file generation (e.g. bool -> boolean).
+// Appears in the private part of the parser in the h file. The function bodies could also appear in
+// the definitions section, but I want to maximize Java compatibility, so we can also create a Java
+// parser from this grammar. Still, some tweaking is necessary after the Java file generation (e.g.
+// bool -> boolean).
 @parser::members {
 /* public parser declarations/members section */
 bool myAction() { return true; }
@@ -99,44 +143,21 @@ void doAfter() {}
 
 //------------------------------------------------------------------------------------------------------------------
 // $antlr-format maxEmptyLinesToKeep: 8, minEmptyLines 0
-@parser::listenerpreinclude {/* listener preinclude section */}@parser::listenerpostinclude {/* listener postinclude section */}
+@parser::listenerpreinclude {/* listener preinclude section */}
+@parser::listenerpostinclude {/* listener postinclude section */}
 @parser::listenerdeclarations {/* listener public declarations/members section */}
 @parser::listenermembers {/* listener private declarations/members section */}
 @parser::listenerdefinitions {/* listener definitions section */}
-
-
-
-
-
-
-
-
 @parser::baselistenerpreinclude {/* base listener preinclude section */}
 @parser::baselistenerpostinclude {/* base listener postinclude section */}
 @parser::baselistenerdeclarations {/* base listener public declarations/members section */}
 @parser::baselistenermembers {/* base listener private declarations/members section */}
 @parser::baselistenerdefinitions {/* base listener definitions section */}
-
-
-
-
-
-
-
-
 @parser::visitorpreinclude {/* visitor preinclude section */}
 @parser::visitorpostinclude {/* visitor postinclude section */}
 @parser::visitordeclarations {/* visitor public declarations/members section */}
 @parser::visitormembers {/* visitor private declarations/members section */}
 @parser::visitordefinitions {/* visitor definitions section */}
-
-
-
-
-
-
-
-
 @parser::basevisitorpreinclude {/* base visitor preinclude section */}
 @parser::basevisitorpostinclude {/* base visitor postinclude section */}
 @parser::basevisitordeclarations {/* base visitor public declarations/members section */}
@@ -145,127 +166,121 @@ void doAfter() {}
 
 //------------------------------------------------------------------------------------------------------------------
 // $antlr-format maxEmptyLinesToKeep: 5, minEmptyLines 1
-@parser::listenerpreinclude {/* listener preinclude section */}@parser::listenerpostinclude {/* listener postinclude section */}
+@parser::listenerpreinclude {/* listener preinclude section */} 
 
-@parser::listenerdeclarations {/* listener public declarations/members section */}
+@parser::listenerpostinclude {/* listener postinclude section */} 
 
-@parser::listenermembers {/* listener private declarations/members section */}
+@parser::listenerdeclarations {/* listener public declarations/members section */} 
 
-@parser::listenerdefinitions {/* listener definitions section */}
+@parser::listenermembers {/* listener private declarations/members section */} 
 
+@parser::listenerdefinitions {/* listener definitions section */} 
 
+@parser::baselistenerpreinclude {/* base listener preinclude section */} 
 
+@parser::baselistenerpostinclude {/* base listener postinclude section */} 
 
+@parser::baselistenerdeclarations {/* base listener public declarations/members section */} 
 
-@parser::baselistenerpreinclude {/* base listener preinclude section */}
+@parser::baselistenermembers {/* base listener private declarations/members section */} 
 
-@parser::baselistenerpostinclude {/* base listener postinclude section */}
+@parser::baselistenerdefinitions {/* base listener definitions section */} 
 
-@parser::baselistenerdeclarations {/* base listener public declarations/members section */}
+@parser::visitorpreinclude {/* visitor preinclude section */} 
 
-@parser::baselistenermembers {/* base listener private declarations/members section */}
+@parser::visitorpostinclude {/* visitor postinclude section */} 
 
-@parser::baselistenerdefinitions {/* base listener definitions section */}
+@parser::visitordeclarations {/* visitor public declarations/members section */} 
 
+@parser::visitormembers {/* visitor private declarations/members section */} 
 
+@parser::visitordefinitions {/* visitor definitions section */} 
 
+@parser::basevisitorpreinclude {/* base visitor preinclude section */} 
 
+@parser::basevisitorpostinclude {/* base visitor postinclude section */} 
 
-@parser::visitorpreinclude {/* visitor preinclude section */}
+@parser::basevisitordeclarations {/* base visitor public declarations/members section */} 
 
-@parser::visitorpostinclude {/* visitor postinclude section */}
-
-@parser::visitordeclarations {/* visitor public declarations/members section */}
-
-@parser::visitormembers {/* visitor private declarations/members section */}
-
-@parser::visitordefinitions {/* visitor definitions section */}
-
-
-
-
-
-@parser::basevisitorpreinclude {/* base visitor preinclude section */}
-
-@parser::basevisitorpostinclude {/* base visitor postinclude section */}
-
-@parser::basevisitordeclarations {/* base visitor public declarations/members section */}
-
-@parser::basevisitormembers {/* base visitor private declarations/members section */}
+@parser::basevisitormembers {/* base visitor private declarations/members section */} 
 
 @parser::basevisitordefinitions {/* base visitor definitions section */}
 
 //------------------------------------------------------------------------------------------------------------------
 // $antlr-format maxEmptyLinesToKeep: 3, minEmptyLines 3
-@parser::listenerpreinclude {/* listener preinclude section */}@parser::listenerpostinclude {/* listener postinclude section */}
+@parser::listenerpreinclude {/* listener preinclude section */} 
 
 
 
-@parser::listenerdeclarations {/* listener public declarations/members section */}
+@parser::listenerpostinclude {/* listener postinclude section */} 
 
 
 
-@parser::listenermembers {/* listener private declarations/members section */}
+@parser::listenerdeclarations {/* listener public declarations/members section */} 
 
 
 
-@parser::listenerdefinitions {/* listener definitions section */}
+@parser::listenermembers {/* listener private declarations/members section */} 
 
 
 
-@parser::baselistenerpreinclude {/* base listener preinclude section */}
+@parser::listenerdefinitions {/* listener definitions section */} 
 
 
 
-@parser::baselistenerpostinclude {/* base listener postinclude section */}
+@parser::baselistenerpreinclude {/* base listener preinclude section */} 
 
 
 
-@parser::baselistenerdeclarations {/* base listener public declarations/members section */}
+@parser::baselistenerpostinclude {/* base listener postinclude section */} 
 
 
 
-@parser::baselistenermembers {/* base listener private declarations/members section */}
+@parser::baselistenerdeclarations {/* base listener public declarations/members section */} 
 
 
 
-@parser::baselistenerdefinitions {/* base listener definitions section */}
+@parser::baselistenermembers {/* base listener private declarations/members section */} 
 
 
 
-@parser::visitorpreinclude {/* visitor preinclude section */}
+@parser::baselistenerdefinitions {/* base listener definitions section */} 
 
 
 
-@parser::visitorpostinclude {/* visitor postinclude section */}
+@parser::visitorpreinclude {/* visitor preinclude section */} 
 
 
 
-@parser::visitordeclarations {/* visitor public declarations/members section */}
+@parser::visitorpostinclude {/* visitor postinclude section */} 
 
 
 
-@parser::visitormembers {/* visitor private declarations/members section */}
+@parser::visitordeclarations {/* visitor public declarations/members section */} 
 
 
 
-@parser::visitordefinitions {/* visitor definitions section */}
+@parser::visitormembers {/* visitor private declarations/members section */} 
 
 
 
-@parser::basevisitorpreinclude {/* base visitor preinclude section */}
+@parser::visitordefinitions {/* visitor definitions section */} 
 
 
 
-@parser::basevisitorpostinclude {/* base visitor postinclude section */}
+@parser::basevisitorpreinclude {/* base visitor preinclude section */} 
 
 
 
-@parser::basevisitordeclarations {/* base visitor public declarations/members section */}
+@parser::basevisitorpostinclude {/* base visitor postinclude section */} 
 
 
 
-@parser::basevisitormembers {/* base visitor private declarations/members section */}
+@parser::basevisitordeclarations {/* base visitor public declarations/members section */} 
+
+
+
+@parser::basevisitormembers {/* base visitor private declarations/members section */} 
 
 
 
@@ -275,66 +290,71 @@ void doAfter() {}
 
 //------------------------------------------------------------------------------------------------------------------
 // $antlr-format maxEmptyLinesToKeep: 1, minEmptyLines 5
-@parser::listenerpreinclude {/* listener preinclude section */}@parser::listenerpostinclude {/* listener postinclude section */}
+@parser::listenerpreinclude {/* listener preinclude section */} 
 
-@parser::listenerdeclarations {/* listener public declarations/members section */}
+@parser::listenerpostinclude {/* listener postinclude section */} 
 
-@parser::listenermembers {/* listener private declarations/members section */}
+@parser::listenerdeclarations {/* listener public declarations/members section */} 
 
-@parser::listenerdefinitions {/* listener definitions section */}
+@parser::listenermembers {/* listener private declarations/members section */} 
 
-@parser::baselistenerpreinclude {/* base listener preinclude section */}
+@parser::listenerdefinitions {/* listener definitions section */} 
 
-@parser::baselistenerpostinclude {/* base listener postinclude section */}
+@parser::baselistenerpreinclude {/* base listener preinclude section */} 
 
-@parser::baselistenerdeclarations {/* base listener public declarations/members section */}
+@parser::baselistenerpostinclude {/* base listener postinclude section */} 
 
-@parser::baselistenermembers {/* base listener private declarations/members section */}
+@parser::baselistenerdeclarations {/* base listener public declarations/members section */} 
 
-@parser::baselistenerdefinitions {/* base listener definitions section */}
+@parser::baselistenermembers {/* base listener private declarations/members section */} 
 
-@parser::visitorpreinclude {/* visitor preinclude section */}
+@parser::baselistenerdefinitions {/* base listener definitions section */} 
 
-@parser::visitorpostinclude {/* visitor postinclude section */}
+@parser::visitorpreinclude {/* visitor preinclude section */} 
 
-@parser::visitordeclarations {/* visitor public declarations/members section */}
+@parser::visitorpostinclude {/* visitor postinclude section */} 
 
-@parser::visitormembers {/* visitor private declarations/members section */}
+@parser::visitordeclarations {/* visitor public declarations/members section */} 
 
-@parser::visitordefinitions {/* visitor definitions section */}
+@parser::visitormembers {/* visitor private declarations/members section */} 
 
-@parser::basevisitorpreinclude {/* base visitor preinclude section */}
+@parser::visitordefinitions {/* visitor definitions section */} 
 
-@parser::basevisitorpostinclude {/* base visitor postinclude section */}
+@parser::basevisitorpreinclude {/* base visitor preinclude section */} 
 
-@parser::basevisitordeclarations {/* base visitor public declarations/members section */}
+@parser::basevisitorpostinclude {/* base visitor postinclude section */} 
 
-@parser::basevisitormembers {/* base visitor private declarations/members section */}
+@parser::basevisitordeclarations {/* base visitor public declarations/members section */} 
+
+@parser::basevisitormembers {/* base visitor private declarations/members section */} 
 
 @parser::basevisitordefinitions {/* base visitor definitions section */}
 
 //------------------------------------------------------------------------------------------------------------------
 // $antlr-format maxEmptyLinesToKeep: 0, minEmptyLines 100
-@parser::listenerpreinclude {/* listener preinclude section */}@parser::listenerpostinclude {/* listener postinclude section */}
-@parser::listenerdeclarations {/* listener public declarations/members section */}
-@parser::listenermembers {/* listener private declarations/members section */}
-@parser::listenerdefinitions {/* listener definitions section */}
-@parser::baselistenerpreinclude {/* base listener preinclude section */}
-@parser::baselistenerpostinclude {/* base listener postinclude section */}
-@parser::baselistenerdeclarations {/* base listener public declarations/members section */}
-@parser::baselistenermembers {/* base listener private declarations/members section */}
-@parser::baselistenerdefinitions {/* base listener definitions section */}
-@parser::visitorpreinclude {/* visitor preinclude section */}
-@parser::visitorpostinclude {/* visitor postinclude section */}
-@parser::visitordeclarations {/* visitor public declarations/members section */}
-@parser::visitormembers {/* visitor private declarations/members section */}
-@parser::visitordefinitions {/* visitor definitions section */}
-@parser::basevisitorpreinclude {/* base visitor preinclude section */}
-@parser::basevisitorpostinclude {/* base visitor postinclude section */}
-@parser::basevisitordeclarations {/* base visitor public declarations/members section */}
-@parser::basevisitormembers {/* base visitor private declarations/members section */}
+@parser::listenerpreinclude {/* listener preinclude section */} 
+@parser::listenerpostinclude {/* listener postinclude section */} 
+@parser::listenerdeclarations {/* listener public declarations/members section */} 
+@parser::listenermembers {/* listener private declarations/members section */} 
+@parser::listenerdefinitions {/* listener definitions section */} 
+@parser::baselistenerpreinclude {/* base listener preinclude section */} 
+@parser::baselistenerpostinclude {/* base listener postinclude section */} 
+@parser::baselistenerdeclarations {/* base listener public declarations/members section */} 
+@parser::baselistenermembers {/* base listener private declarations/members section */} 
+@parser::baselistenerdefinitions {/* base listener definitions section */} 
+@parser::visitorpreinclude {/* visitor preinclude section */} 
+@parser::visitorpostinclude {/* visitor postinclude section */} 
+@parser::visitordeclarations {/* visitor public declarations/members section */} 
+@parser::visitormembers {/* visitor private declarations/members section */} 
+@parser::visitordefinitions {/* visitor definitions section */} 
+@parser::basevisitorpreinclude {/* base visitor preinclude section */} 
+@parser::basevisitorpostinclude {/* base visitor postinclude section */} 
+@parser::basevisitordeclarations {/* base visitor public declarations/members section */} 
+@parser::basevisitormembers {/* base visitor private declarations/members section */} 
 @parser::basevisitordefinitions {/* base visitor definitions section */}
 // $antlr-format reset
+rule1: rule2 (COMMA rule2)*;
+rule2: TOKEN1;
 and_
 	@init { doInit(); }
 	@after { doAfter(); }: And;
@@ -361,16 +381,14 @@ finally {
 }
 
 // $antlr-format ruleInternalsOnSingleLine: on
-unused[double input = 111] returns[double calculated] locals[int _a, double _b, int _c] @init { doInit(); } @after { doAfter(); }:
-	stat
-;
+unused[double input = 111] returns[double calculated] locals[int _a, double _b, int _c] @init { doInit(); 
+	} @after { doAfter(); }: stat;
 catch[...] {
   // Replaces the standard exception handling.
 }
 finally {
   cleanUp();
 }
-
 unused2:
 	(unused[1] .)+ (Colon | Semicolon | Plus)? ~Semicolon
 ;
@@ -390,8 +408,8 @@ expr:
 ;
 
 flowControl:
-	(Return expr | 'return') # Return
-	| Continue # Continue
+	(Return expr | 'return')	# Return
+	| Continue					# Continue
 ;
 
 id: ID;
@@ -427,9 +445,11 @@ Foo:	{canTestFoo()}? 'foo' {isItFoo()}? { myFooLexerAction(); };
 Bar:	'bar' {isItBar()}? { myBarLexerAction(); };
 Any:	Foo Dot Bar? DotDot Baz Bar;
 
-Comment:	'#' ~[\r\n]* '\r'? '\n'; // -> channel(CommentsChannel);
-WS:			[\r\n]+	-> channel(99); // A custom, but the default channel.
-WS2:		[ \t]+	-> channel(HIDDEN);
+Comment: '#' ~[\r\n]* '\r'? '\n'; // -> channel(CommentsChannel);
+WS
+	: [\r\n]+ -> channel(99)
+; // A custom, but the default channel.
+WS2: [ \t]+ -> channel(HIDDEN);
 
 // Operators
 EQUAL_OPERATOR:				'='; // Also assign.
@@ -475,11 +495,14 @@ OPEN_CURLY_SYMBOL:	'{';
 CLOSE_CURLY_SYMBOL:	'}';
 UNDERLINE_SYMBOL:	'_';
 
-JSON_SEPARATOR_SYMBOL:			'->' {serverVersion >= 50708}?; // MYSQL
-JSON_UNQUOTED_SEPARATOR_SYMBOL:	'->>' {serverVersion >= 50713}?; // MYSQL
+JSON_SEPARATOR_SYMBOL: '->' {serverVersion >= 50708}?; // MYSQL
+JSON_UNQUOTED_SEPARATOR_SYMBOL
+	: '->>' {serverVersion >= 50713}?
+; // MYSQL
 
-// The MySQL server parser uses custom code in its lexer to allow base alphanum chars (and ._$) as variable name.
-// For this it handles user variables in 2 different ways and we have to model this to match that behavior.
+// The MySQL server parser uses custom code in its lexer to allow base alphanum chars (and ._$) as
+// variable name. For this it handles user variables in 2 different ways and we have to model this
+// to match that behavior.
 AT_SIGN_SYMBOL:	'@';
 AT_TEXT_SUFFIX:	'@' SIMPLE_IDENTIFIER;
 
@@ -525,7 +548,7 @@ BIN_NUMBER:	('0b' [01]+) | ('b\'' [01]+ '\'');
 
 NUMBER: DIGITS { setType(determineNumericType(getText())); };
 
-// $antlr-format reset, groupedAlignments on
+// $antlr-format reset, groupedAlignments on, reflowComments off
 
 /*
    Tokens from MySQL 8.0
@@ -592,7 +615,8 @@ UNDERSCORE_CHARSET:
 // Identifiers might start with a digit, even tho it is discouraged, and may not consist entirely of digits only.
 // All keywords above are automatically excluded.
 IDENTIFIER:
-	DIGITS+ [eE] (LETTER_WHEN_UNQUOTED_NO_DIGIT LETTER_WHEN_UNQUOTED*)? // Have to exclude float pattern, as this rule matches more.
+	DIGITS+ [eE] (LETTER_WHEN_UNQUOTED_NO_DIGIT LETTER_WHEN_UNQUOTED*)? 
+		// Have to exclude float pattern, as this rule matches more.
 	| DIGITS+ LETTER_WITHOUT_FLOAT_PART LETTER_WHEN_UNQUOTED*
 	| LETTER_WHEN_UNQUOTED_NO_DIGIT LETTER_WHEN_UNQUOTED* // INT_NUMBER matches first if there are only digits.
 ;
@@ -949,107 +973,163 @@ handlerDeclaration:
 ;
 
 // $antlr-format columnLimit: 10, continuationIndentWidth:4, indentWidth:4, tabWidth 4, allowShortBlocksOnASingleLine: false, allowShortRulesOnASingleLine true, breakBeforeParens: true, useTab: on
-handlerDeclaration:
+handlerDeclaration
+		:
 	DECLARE_SYMBOL
 	(
 		CONTINUE_SYMBOL
 		|
 		(
 			SHORT
-			| BLOCK
+			|
+				BLOCK
 		)
-		| UNDO_SYMBOL
-	) HANDLER_SYMBOL FOR_SYMBOL handlerCondition
+		|
+			UNDO_SYMBOL
+	)
+		HANDLER_SYMBOL
+		FOR_SYMBOL
+		handlerCondition
 ;
 
 // $antlr-format columnLimit: 10, continuationIndentWidth:4, indentWidth:4, tabWidth 4, allowShortBlocksOnASingleLine: false, allowShortRulesOnASingleLine true, breakBeforeParens: true, useTab: off
-handlerDeclaration:
+handlerDeclaration
+        :
     DECLARE_SYMBOL
     (
         CONTINUE_SYMBOL
         |
         (
             SHORT
-            | BLOCK
+            |
+                BLOCK
         )
-        | UNDO_SYMBOL
-    ) HANDLER_SYMBOL FOR_SYMBOL handlerCondition
+        |
+            UNDO_SYMBOL
+    )
+        HANDLER_SYMBOL
+        FOR_SYMBOL
+        handlerCondition
 ;
 
 // $antlr-format columnLimit: 10, continuationIndentWidth:4, indentWidth:4, tabWidth 4, allowShortBlocksOnASingleLine: false, allowShortRulesOnASingleLine true, breakBeforeParens: false, useTab: on
-handlerDeclaration:
-	DECLARE_SYMBOL (
+handlerDeclaration
+		:
+	DECLARE_SYMBOL
+		(
 		CONTINUE_SYMBOL
-		| (
+		|
+			(
 			SHORT
-			| BLOCK
+			|
+				BLOCK
 		)
-		| UNDO_SYMBOL
-	) HANDLER_SYMBOL FOR_SYMBOL handlerCondition
+		|
+			UNDO_SYMBOL
+	)
+		HANDLER_SYMBOL
+		FOR_SYMBOL
+		handlerCondition
 ;
 
 // $antlr-format columnLimit: 10, continuationIndentWidth:4, indentWidth:4, tabWidth 4, allowShortBlocksOnASingleLine: false, allowShortRulesOnASingleLine true, breakBeforeParens: false, useTab: off
-handlerDeclaration:
-    DECLARE_SYMBOL (
+handlerDeclaration
+        :
+    DECLARE_SYMBOL
+        (
         CONTINUE_SYMBOL
-        | (
+        |
+            (
             SHORT
-            | BLOCK
+            |
+                BLOCK
         )
-        | UNDO_SYMBOL
-    ) HANDLER_SYMBOL FOR_SYMBOL handlerCondition
+        |
+            UNDO_SYMBOL
+    )
+        HANDLER_SYMBOL
+        FOR_SYMBOL
+        handlerCondition
 ;
 
 // $antlr-format columnLimit: 10, continuationIndentWidth:4, indentWidth:4, tabWidth 4, allowShortBlocksOnASingleLine: false, allowShortRulesOnASingleLine false, breakBeforeParens: true, useTab: on
-handlerDeclaration:
+handlerDeclaration
+		:
 	DECLARE_SYMBOL
 	(
 		CONTINUE_SYMBOL
 		|
 		(
 			SHORT
-			| BLOCK
+			|
+				BLOCK
 		)
-		| UNDO_SYMBOL
-	) HANDLER_SYMBOL FOR_SYMBOL handlerCondition
+		|
+			UNDO_SYMBOL
+	)
+		HANDLER_SYMBOL
+		FOR_SYMBOL
+		handlerCondition
 ;
 
 // $antlr-format columnLimit: 10, continuationIndentWidth:4, indentWidth:4, tabWidth 4, allowShortBlocksOnASingleLine: false, allowShortRulesOnASingleLine false, breakBeforeParens: true, useTab: off
-handlerDeclaration:
+handlerDeclaration
+        :
     DECLARE_SYMBOL
     (
         CONTINUE_SYMBOL
         |
         (
             SHORT
-            | BLOCK
+            |
+                BLOCK
         )
-        | UNDO_SYMBOL
-    ) HANDLER_SYMBOL FOR_SYMBOL handlerCondition
+        |
+            UNDO_SYMBOL
+    )
+        HANDLER_SYMBOL
+        FOR_SYMBOL
+        handlerCondition
 ;
 
 // $antlr-format columnLimit: 10, continuationIndentWidth:4, indentWidth:4, tabWidth 4, allowShortBlocksOnASingleLine: false, allowShortRulesOnASingleLine false, breakBeforeParens: false, useTab: on
-handlerDeclaration:
-	DECLARE_SYMBOL (
+handlerDeclaration
+		:
+	DECLARE_SYMBOL
+		(
 		CONTINUE_SYMBOL
-		| (
+		|
+			(
 			SHORT
-			| BLOCK
+			|
+				BLOCK
 		)
-		| UNDO_SYMBOL
-	) HANDLER_SYMBOL FOR_SYMBOL handlerCondition
+		|
+			UNDO_SYMBOL
+	)
+		HANDLER_SYMBOL
+		FOR_SYMBOL
+		handlerCondition
 ;
 
 // $antlr-format columnLimit: 10, continuationIndentWidth:4, indentWidth:4, tabWidth 4, allowShortBlocksOnASingleLine: false, allowShortRulesOnASingleLine false, breakBeforeParens: false, useTab: off
-handlerDeclaration:
-    DECLARE_SYMBOL (
+handlerDeclaration
+        :
+    DECLARE_SYMBOL
+        (
         CONTINUE_SYMBOL
-        | (
+        |
+            (
             SHORT
-            | BLOCK
+            |
+                BLOCK
         )
-        | UNDO_SYMBOL
-    ) HANDLER_SYMBOL FOR_SYMBOL handlerCondition
+        |
+            UNDO_SYMBOL
+    )
+        HANDLER_SYMBOL
+        FOR_SYMBOL
+        handlerCondition
 ;
 
 // Testing block + comment formatting at various column limits. As a side task also spaces around assignments is checked here.
@@ -1065,7 +1145,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1082,7 +1163,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
     )
 ;
@@ -1096,10 +1178,12 @@ ordinaryRule:
         | few
         | alts
     ) (
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut
+        // labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in
+        // voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat
+        // cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1113,10 +1197,12 @@ ordinaryRule:
         | few
         | alts
     ) (
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut
+        // labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in
+        // voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat
+        // cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
     )
 ;
@@ -1134,7 +1220,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1152,7 +1239,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
     )
 ;
@@ -1167,10 +1255,12 @@ ordinaryRule:
         | alts
     ) (
 
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut
+        // labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in
+        // voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat
+        // cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1185,10 +1275,12 @@ ordinaryRule:
         | alts
     ) (
 
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut
+        // labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in
+        // voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat
+        // cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
     )
 ;
@@ -1205,7 +1297,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1222,7 +1315,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
     )
 ;
@@ -1236,10 +1330,12 @@ ordinaryRule:
         | few
         | alts
     ) (
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut
+        // labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in
+        // voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat
+        // cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1253,10 +1349,12 @@ ordinaryRule:
         | few
         | alts
     ) (
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut
+        // labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in
+        // voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat
+        // cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
     )
 ;
@@ -1274,7 +1372,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1292,7 +1391,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
     )
 ;
@@ -1307,10 +1407,12 @@ ordinaryRule:
         | alts
     ) (
 
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut
+        // labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in
+        // voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat
+        // cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1325,10 +1427,12 @@ ordinaryRule:
         | alts
     ) (
 
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut
+        // labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in
+        // voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat
+        // cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
     )
 ;
@@ -1345,7 +1449,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1362,7 +1467,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
     )
 ;
@@ -1376,10 +1482,15 @@ ordinaryRule:
         | few
         | alts
     ) (
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // Lorem ipsum dolor sit amet, consectetur adipisici elit, sed
+        // eiusmod tempor incidunt ut labore et dolore magna aliqua.
+        // Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute
+        // iure reprehenderit in voluptate velit esse cillum dolore eu
+        // fugiat nulla pariatur. Excepteur sint obcaecat cupiditat
+        // non proident, sunt in culpa qui officia deserunt mollit
+        // anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1393,11 +1504,18 @@ ordinaryRule:
         | few
         | alts
     ) (
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
-        | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
+        // Lorem ipsum dolor sit amet, consectetur adipisici
+        // elit, sed eiusmod tempor incidunt ut labore et
+        // dolore magna aliqua. Ut enim ad minim veniam,
+        // quis nostrud exercitation ullamco laboris nisi ut
+        // aliquid ex ea commodi consequat. Quis aute iure
+        // reprehenderit in voluptate velit esse cillum
+        // dolore eu fugiat nulla pariatur. Excepteur sint
+        // obcaecat cupiditat non proident, sunt in culpa
+        // qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
+        | anotherAlt WITH_TOKEN /* and comment */ xyz =
+            ANOTHER_TOKEN
     )
 ;
 
@@ -1414,8 +1532,10 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
-        | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
+        | anotherAlt WITH_TOKEN /* and comment */
+            xyz=ANOTHER_TOKEN
     )
 ;
 
@@ -1432,8 +1552,11 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
-        | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()
+            }
+        | anotherAlt WITH_TOKEN /* and comment */
+            xyz = ANOTHER_TOKEN
     )
 ;
 
@@ -1447,11 +1570,36 @@ ordinaryRule:
         | alts
     ) (
 
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
-        | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
+        /** Lorem ipsum dolor
+         sit amet, consectetur
+         adipisici elit, sed
+         eiusmod tempor
+         incidunt ut labore et
+         dolore magna aliqua.
+         Ut enim ad minim
+         veniam, quis nostrud
+         exercitation ullamco
+         laboris nisi ut
+         aliquid ex ea commodi
+         consequat. Quis aute
+         iure reprehenderit in
+         voluptate velit esse
+         cillum dolore eu
+         fugiat nulla
+         pariatur. Excepteur
+         sint obcaecat
+         cupiditat non
+         proident, sunt in
+         culpa qui officia
+         deserunt mollit anim
+         id est laborum.
+        
+         */
+        anAltWithAnAction {doSomethingUseful()
+            }
+        | anotherAlt
+            WITH_TOKEN /* and comment */
+            xyz=ANOTHER_TOKEN
     )
 ;
 
@@ -1465,11 +1613,69 @@ ordinaryRule:
         | alts
     ) (
 
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
-        | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
+        /**
+         * Lorem
+         * ipsum
+         * dolor sit
+         * amet,
+         * consectetur
+         * adipisici
+         * elit, sed
+         * eiusmod
+         * tempor
+         * incidunt
+         * ut labore
+         * et dolore
+         * magna
+         * aliqua.
+         * Ut enim
+         * ad minim
+         * veniam,
+         * quis
+         * nostrud
+         * exercitation
+         * ullamco
+         * laboris
+         * nisi ut
+         * aliquid
+         * ex ea
+         * commodi
+         * consequat.
+         * Quis aute
+         * iure
+         * reprehenderit
+         * in
+         * voluptate
+         * velit
+         * esse
+         * cillum
+         * dolore eu
+         * fugiat
+         * nulla
+         * pariatur.
+         * Excepteur
+         * sint
+         * obcaecat
+         * cupiditat
+         * non
+         * proident,
+         * sunt in
+         * culpa qui
+         * officia
+         * deserunt
+         * mollit
+         * anim id
+         * est
+         * laborum.
+        
+         */
+        anAltWithAnAction
+            {doSomethingUseful()
+            }
+        | anotherAlt
+            WITH_TOKEN /* and comment */
+            xyz =
+            ANOTHER_TOKEN
     )
 ;
 
@@ -1485,7 +1691,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1502,7 +1709,8 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
     )
 ;
@@ -1516,10 +1724,15 @@ ordinaryRule:
         | few
         | alts
     ) (
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
+        // Lorem ipsum dolor sit amet, consectetur adipisici elit, sed
+        // eiusmod tempor incidunt ut labore et dolore magna aliqua.
+        // Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute
+        // iure reprehenderit in voluptate velit esse cillum dolore eu
+        // fugiat nulla pariatur. Excepteur sint obcaecat cupiditat
+        // non proident, sunt in culpa qui officia deserunt mollit
+        // anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
         | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
     )
 ;
@@ -1533,11 +1746,18 @@ ordinaryRule:
         | few
         | alts
     ) (
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
-        | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
+        // Lorem ipsum dolor sit amet, consectetur adipisici
+        // elit, sed eiusmod tempor incidunt ut labore et
+        // dolore magna aliqua. Ut enim ad minim veniam,
+        // quis nostrud exercitation ullamco laboris nisi ut
+        // aliquid ex ea commodi consequat. Quis aute iure
+        // reprehenderit in voluptate velit esse cillum
+        // dolore eu fugiat nulla pariatur. Excepteur sint
+        // obcaecat cupiditat non proident, sunt in culpa
+        // qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
+        | anotherAlt WITH_TOKEN /* and comment */ xyz =
+            ANOTHER_TOKEN
     )
 ;
 
@@ -1554,8 +1774,10 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
-        | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()}
+        | anotherAlt WITH_TOKEN /* and comment */
+            xyz=ANOTHER_TOKEN
     )
 ;
 
@@ -1572,8 +1794,11 @@ ordinaryRule:
         // Lorem ipsum dolor sit amet, consectetur adipisici elit,
         // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
-        | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
+        // esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        anAltWithAnAction {doSomethingUseful()
+            }
+        | anotherAlt WITH_TOKEN /* and comment */
+            xyz = ANOTHER_TOKEN
     )
 ;
 
@@ -1587,11 +1812,39 @@ ordinaryRule:
         | alts
     ) (
 
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
-        | anotherAlt WITH_TOKEN /* and comment */ xyz=ANOTHER_TOKEN
+        // Lorem ipsum dolor
+        // sit amet,
+        // consectetur
+        // adipisici elit, sed
+        // eiusmod tempor
+        // incidunt ut labore
+        // et dolore magna
+        // aliqua. Ut enim ad
+        // minim veniam, quis
+        // nostrud
+        // exercitation
+        // ullamco laboris
+        // nisi ut aliquid ex
+        // ea commodi
+        // consequat. Quis
+        // aute iure
+        // reprehenderit in
+        // voluptate velit
+        // esse cillum dolore
+        // eu fugiat nulla
+        // pariatur. Excepteur
+        // sint obcaecat
+        // cupiditat non
+        // proident, sunt in
+        // culpa qui officia
+        // deserunt mollit
+        // anim id est
+        // laborum.
+        anAltWithAnAction {doSomethingUseful()
+            }
+        | anotherAlt
+            WITH_TOKEN /* and comment */
+            xyz=ANOTHER_TOKEN
     )
 ;
 
@@ -1605,15 +1858,70 @@ ordinaryRule:
         | alts
     ) (
 
-        // Lorem ipsum dolor sit amet, consectetur adipisici elit,
-        // sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        // laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit 
-        /* esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. */ anAltWithAnAction {doSomethingUseful()}
-        | anotherAlt WITH_TOKEN /* and comment */ xyz = ANOTHER_TOKEN
+        // Lorem
+        // ipsum
+        // dolor sit
+        // amet,
+        // consectetur
+        // adipisici
+        // elit, sed
+        // eiusmod
+        // tempor
+        // incidunt
+        // ut labore
+        // et dolore
+        // magna
+        // aliqua.
+        // Ut enim
+        // ad minim
+        // veniam,
+        // quis
+        // nostrud
+        // exercitation
+        // ullamco
+        // laboris
+        // nisi ut
+        // aliquid
+        // ex ea
+        // commodi
+        // consequat.
+        // Quis aute
+        // iure
+        // reprehenderit
+        // in
+        // voluptate
+        // velit
+        // esse
+        // cillum
+        // dolore eu
+        // fugiat
+        // nulla
+        // pariatur.
+        // Excepteur
+        // sint
+        // obcaecat
+        // cupiditat
+        // non
+        // proident,
+        // sunt in
+        // culpa qui
+        // officia
+        // deserunt
+        // mollit
+        // anim id
+        // est
+        // laborum.
+        anAltWithAnAction
+            {doSomethingUseful()
+            }
+        | anotherAlt
+            WITH_TOKEN /* and comment */
+            xyz =
+            ANOTHER_TOKEN
     )
 ;
 
-// Various more or less complex real world rules. Reset all settings to defaults.
+// Various more or less complex real world rules taken from the MySQL grammar. Reset all settings to defaults.
 // $antlr-format reset, columnLimit 120
 alterListItem:
 	ADD_SYMBOL COLUMN_SYMBOL? (
@@ -1660,7 +1968,7 @@ alterOrderClause:
 ;
 
 alterAlgorithmOption:
-	ALGORITHM_SYMBOL EQUAL_OPERATOR? ( DEFAULT_SYMBOL | identifier)
+	ALGORITHM_SYMBOL EQUAL_OPERATOR? (DEFAULT_SYMBOL | identifier)
 ;
 
 alterLockOption: LOCK_SYMBOL EQUAL_OPERATOR? (DEFAULT_SYMBOL | identifier);
@@ -1720,8 +2028,8 @@ alterView:
 	viewAlgorithm? definerClause? viewSuid? VIEW_SYMBOL viewRef viewTail
 ;
 
-// This is not the full view_tail from sql_yacc.yy as we have either a view name or a view reference,
-// depending on whether we come from createView or alterView. Everything until this difference is duplicated in those rules.
+// This is not the full view_tail from sql_yacc.yy as we have either a view name or a view reference, depending on
+// whether we come from createView or alterView. Everything until this difference is duplicated in those rules.
 viewTail: columnInternalRefList? AS_SYMBOL viewSelect;
 
 viewSelect: queryExpressionOrParens viewCheckOption?;
@@ -1756,7 +2064,8 @@ createDatabaseOption: defaultCharset | defaultCollation;
 
 createTable:
 	CREATE_SYMBOL TEMPORARY_SYMBOL? TABLE_SYMBOL ifNotExists? tableName (
-		(OPEN_PAR_SYMBOL tableElementList CLOSE_PAR_SYMBOL)? createTableOptions? partitionClause? duplicateAsQueryExpression?
+		(OPEN_PAR_SYMBOL tableElementList CLOSE_PAR_SYMBOL)? createTableOptions? partitionClause?
+			duplicateAsQueryExpression?
 		| LIKE_SYMBOL tableRef
 		| OPEN_PAR_SYMBOL LIKE_SYMBOL tableRef CLOSE_PAR_SYMBOL
 	)
@@ -1811,7 +2120,8 @@ loadStatement:
 	LOAD_SYMBOL dataOrXml (LOW_PRIORITY_SYMBOL | CONCURRENT_SYMBOL)? LOCAL_SYMBOL? INFILE_SYMBOL textLiteral (
 		REPLACE_SYMBOL
 		| IGNORE_SYMBOL
-	)? INTO_SYMBOL TABLE_SYMBOL tableRef usePartition? charsetClause? xmlRowsIdentifiedBy? fieldsClause? linesClause? loadDataFileTail
+	)? INTO_SYMBOL TABLE_SYMBOL tableRef usePartition? charsetClause? xmlRowsIdentifiedBy? fieldsClause? linesClause?
+		loadDataFileTail
 ;
 
 grant:
@@ -1819,9 +2129,8 @@ grant:
 		{serverVersion >= 80000}? roleOrPrivilegesList TO_SYMBOL userList (
 			WITH_SYMBOL ADMIN_SYMBOL OPTION_SYMBOL
 		)?
-		| ( roleOrPrivilegesList | ALL_SYMBOL PRIVILEGES_SYMBOL?) ON_SYMBOL aclType? grantIdentifier TO_SYMBOL grantList requireClause? (
-			WITH_SYMBOL grantOption+
-		)?
+		| (roleOrPrivilegesList | ALL_SYMBOL PRIVILEGES_SYMBOL?) ON_SYMBOL aclType? grantIdentifier TO_SYMBOL grantList
+			requireClause? (WITH_SYMBOL grantOption+)?
 		| {serverVersion >= 50500}? PROXY_SYMBOL ON_SYMBOL user TO_SYMBOL grantList (
 			WITH_SYMBOL GRANT_SYMBOL OPTION_SYMBOL
 		)?
@@ -1942,14 +2251,16 @@ runtimeFunctionCall:
 	) CLOSE_PAR_SYMBOL
 	| name = CURDATE_SYMBOL parentheses?
 	| name = CURTIME_SYMBOL timeFunctionParameters?
-	| name = (DATE_ADD_SYMBOL | DATE_SUB_SYMBOL) OPEN_PAR_SYMBOL expr COMMA_SYMBOL INTERVAL_SYMBOL expr interval CLOSE_PAR_SYMBOL
+	| name = (DATE_ADD_SYMBOL | DATE_SUB_SYMBOL) OPEN_PAR_SYMBOL expr COMMA_SYMBOL INTERVAL_SYMBOL expr interval
+		CLOSE_PAR_SYMBOL
 	| name = EXTRACT_SYMBOL OPEN_PAR_SYMBOL interval FROM_SYMBOL expr CLOSE_PAR_SYMBOL
 	| name = GET_FORMAT_SYMBOL OPEN_PAR_SYMBOL dateTimeTtype COMMA_SYMBOL expr CLOSE_PAR_SYMBOL
 	| name = NOW_SYMBOL timeFunctionParameters?
 	| name = POSITION_SYMBOL OPEN_PAR_SYMBOL bitExpr IN_SYMBOL expr CLOSE_PAR_SYMBOL
 	| substringFunction
 	| name = SYSDATE_SYMBOL timeFunctionParameters?
-	| name = (TIMESTAMP_ADD_SYMBOL | TIMESTAMP_DIFF_SYMBOL) OPEN_PAR_SYMBOL intervalTimeStamp COMMA_SYMBOL expr COMMA_SYMBOL expr CLOSE_PAR_SYMBOL
+	| name = (TIMESTAMP_ADD_SYMBOL | TIMESTAMP_DIFF_SYMBOL) OPEN_PAR_SYMBOL intervalTimeStamp COMMA_SYMBOL expr
+		COMMA_SYMBOL expr CLOSE_PAR_SYMBOL
 	| name = UTC_DATE_SYMBOL parentheses?
 	| name = UTC_TIME_SYMBOL timeFunctionParameters?
 	| name = UTC_TIMESTAMP_SYMBOL timeFunctionParameters?
@@ -2087,9 +2398,9 @@ roleOrLabelKeyword:
 		| CONTRIBUTORS_SYMBOL // Conditionally set in the lexer.
 		| CPU_SYMBOL
 		/*
-          Although a reserved keyword in SQL:2003 (and :2008),
-          not reserved in MySQL per WL#2111 specification.
-        */
+		 Although a reserved keyword in SQL:2003 (and :2008), not reserved in MySQL per WL#2111 specification.
+		
+		 */
 		| CURRENT_SYMBOL
 		| CURSOR_NAME_SYMBOL
 		| DATA_SYMBOL

@@ -36,6 +36,8 @@ enum InsertMarker {
     WhitespaceBlock = -300000, // Indirect index into the whitespace list.
 }
 
+const formatIntroducer = "$antlr-format";
+
 function isRangeBlock(marker: InsertMarker): boolean {
     return (marker <= InsertMarker.Range) && (marker > InsertMarker.Alignment);
 };
@@ -57,11 +59,15 @@ enum AlignmentType {
     Trailers // Align all of label, action, trailing comment and lexer command (whatever comes first).
 }
 
+// All alignments in the order they will be evaluated.
+const allAlignments = [AlignmentType.Colon, AlignmentType.FirstToken, AlignmentType.Label, AlignmentType.Action,
+    AlignmentType.LexerCommand, AlignmentType.TrailingComment, AlignmentType.Trailers];
+
 // Holds line number and group index for a specific alignment. For each alignment type there's an own
-// status, to allow multiple alignments per line.
+// status, to allow multiple alignments per line and ordered processing.
 interface AlignmentStatus {
-    lastLine: number; // The line number of the last alignment entry in the current group (if there's one currently).
-    groupIndex: number; // Index into the alignment groups list if a group is active.
+    lastLine: number;   // The line number of the last alignment entry in the current group (if there's one currently).
+    groups: number[][]; // A list of output pipeline indices for groups of alignments.
 }
 
 export class GrammarFormatter {
@@ -86,7 +92,6 @@ export class GrammarFormatter {
         this.rangeStart = -1;
 
         this.alignments.clear();
-        this.alignmentGroups = [];
         this.whitespaceList = [];
 
         // Position info of the target text.
@@ -95,7 +100,7 @@ export class GrammarFormatter {
         this.formattingDisabled = false;
 
         let coalesceWhitespaces = false; // Set in situations where we don't want multiple consecutive whitespaces.
-        let inBraces = false; // Set between {} (e.g. in options and action blocks).
+        let inBraces = false; // Set between {} (e.g. in options).
         let inRule = false;   // Set when we are processing a lexer or parser rule.
         let inNamedAction = false; // Ditto for a named action.
         let inLexerCommand = false; // Ditto for a lexer command (the part starting with ->).
@@ -110,6 +115,11 @@ export class GrammarFormatter {
             // If no whitespace is coming up we don't need the eraser marker anymore.
             if (token.type != ANTLRv4Lexer.WS && this.lastEntryIs(InsertMarker.WhitespaceEraser)) {
                 this.outputPipeline.pop();
+            }
+
+            if (minLineInsertionPending && token.type != ANTLRv4Lexer.WS && token.type != ANTLRv4Lexer.LINE_COMMENT) {
+                minLineInsertionPending = false;
+                this.ensureMinEmptyLines();
             }
 
             switch (token.type) {
@@ -310,6 +320,8 @@ export class GrammarFormatter {
                         this.addLineBreak();
                     }
                     this.add(i);
+                    this.addSpace();
+                    this.add(InsertMarker.WhitespaceEraser);
 
                     minLineInsertionPending = this.currentIndentation == 0;
                     if (!inRule) {
@@ -330,64 +342,70 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.DOC_COMMENT: {
                     // If this comment is the first non-whitespace entry on the current line
                     // some extra processing is required.
-                    let index = this.outputPipeline.length;
-                    while (--index > 0) {
-                        if (this.outputPipeline[index] != InsertMarker.Space
-                            && this.outputPipeline[index] != InsertMarker.Tab) {
-                            break;
+                    let hasLineContent = !this.currentLineContainsOnlySpaces();
+                    let comment = token.text!;
+                    if (hasLineContent) {
+                        if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
+                            // There's something before the comment on the current line.
+                            // Trigger normal alignment handling then.
+                            if (this.options.alignTrailers) {
+                                this.addAlignmentEntry(AlignmentType.Trailers);
+                            } else if (this.options.alignTrailingComments) {
+                                this.addAlignmentEntry(AlignmentType.TrailingComment);
+                            }
+                        }
+                    } else if (comment.indexOf(formatIntroducer) < 0
+                        && this.options.reflowComments
+                        && token.type == ANTLRv4Lexer.LINE_COMMENT) {
+                        // Scan forward and collect all consequtive single line comments lines
+                        // which stand alone on a line.
+                        while (true) {
+                            let nextToken = this.tokens[i + 1];
+                            if (nextToken.type == ANTLRv4Lexer.EOF) {
+                                break;
+                            }
+                            let content = nextToken.text!; // Must be whitespaces.
+                            if (content.split("\n").length > 2) { // More than a single line break. Stop here.
+                                break;
+                            }
+
+                            nextToken = this.tokens[i + 2];
+                            if (nextToken.type != ANTLRv4Lexer.LINE_COMMENT
+                                || nextToken.text!.indexOf(formatIntroducer) >= 0) {
+                                break;
+                            }
+
+                            comment += "\n" + nextToken.text!;
+                            i += 2;
+                            this.processFormattingCommands(i);
                         }
                     }
 
-                    if (index > 0 && this.outputPipeline[index] == InsertMarker.LineBreak) {
-                        /*// Comment starts the line (or even entirely is the line).
-                        // See if we are directly after a block start or a comment line,
-                        // in which case we don't do additional processing.
-                        let afterBlockStart = this.entryIs(index - 1, ANTLRv4Lexer.LBRACE)
-                            || this.entryIs(index - 1, ANTLRv4Lexer.LPAREN);
-                        let afterCommentLine = false;
-                        if (!afterBlockStart) {
-                            // Scan back to previous line break.
-                            while (--index > 0 && !this.entryIs(index, InsertMarker.LineBreak)) { }
-                            if (index > 0) {
-                                // Scan forward to first non-whitespace entry or a line break.
-                                while (++index < this.outputPipeline.length) {
-                                    if (this.entryIs(index, InsertMarker.Comment)) {
-                                        afterCommentLine = true;
-                                        break;
-                                    }
-                                    if (this.entryIs(index, InsertMarker.LineBreak)
-                                        || !this.entryIs(index, InsertMarker.Whitespace)) {
-                                        break;
-                                    }
-                                }
+                    if (this.options.reflowComments && comment.indexOf("\n") > 0) {
+                        let result = this.reflowComment(comment, token.type);
+                        let whitespaceIndex = InsertMarker.WhitespaceBlock - this.whitespaceList.length;
+                        this.outputPipeline.push(whitespaceIndex);
+                        this.whitespaceList.push(result);
+
+                        // Update the current line member.
+                        for (let char of result) {
+                            if (char == '\n') {
+                                ++this.currentLine;
                             }
                         }
 
-                        if (!afterBlockStart && !afterCommentLine) {
-                            while (this.lastEntryIs(InsertMarker.Space) || this.lastEntryIs(InsertMarker.Tab)) {
-                                this.removeLastEntry();
-                            }
-                            this.ensureMinEmptyLines();
-                            this.pushCurrentIndentation();
-                        }*/
-                    } else if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
-                        // There's something before the comment on the current line.
-                        // Trigger normal alignment handling then.
-                        if (this.options.alignTrailers) {
-                            this.addAlignmentEntry(AlignmentType.Trailers);
-                        } else if (this.options.alignTrailingComments) {
-                            this.addAlignmentEntry(AlignmentType.TrailingComment);
-                        }
-                    }
-
-                    this.add(i);
-                    if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
-                        if (this.currentIndentation > 0) {
-                            this.addLineBreak();
-                            this.pushCurrentIndentation();
-                        }
+                        this.addLineBreak();
+                        this.pushCurrentIndentation();
                     } else {
-                        this.addSpace();
+                        this.add(i);
+                        if (token.type == ANTLRv4Lexer.LINE_COMMENT) {
+                            if (this.currentIndentation > 0) {
+                                this.addLineBreak();
+                                this.pushCurrentIndentation();
+                            }
+                        } else {
+                            this.addSpace();
+                        }
                     }
 
                     break;
@@ -455,7 +473,7 @@ export class GrammarFormatter {
                         case "none": {
                             this.removeTrailingWhitespaces();
                             this.add(i);
-                            if (!this.nonBreakingTrailerAhead(i)) {
+                            if (!this.nonBreakingTrailerAhead(i) && !inSingleLineRule) {
                                 this.addLineBreak();
                                 this.pushCurrentIndentation();
                             } else {
@@ -470,7 +488,7 @@ export class GrammarFormatter {
                                 this.add(InsertMarker.WhitespaceEraser);
                             }
                             this.add(i);
-                            if (!this.nonBreakingTrailerAhead(i)) {
+                            if (!this.nonBreakingTrailerAhead(i) && !inSingleLineRule) {
                                 this.addLineBreak();
                                 this.pushCurrentIndentation();
                             } else {
@@ -481,7 +499,7 @@ export class GrammarFormatter {
                     }
 
                     // Aligning the first token only makes sense if the entire rule is on a single line.
-                    if (this.options.alignFirstTokens && this.singleLineBlockNesting > 0) {
+                    if (this.options.alignFirstTokens && inSingleLineRule) {
                         this.addAlignmentEntry(AlignmentType.FirstToken);
                         this.add(InsertMarker.WhitespaceEraser);
                     }
@@ -506,6 +524,7 @@ export class GrammarFormatter {
                         // extra checks to know which command the semicolon ends.
                         ++this.currentIndentation;
 
+                        inSingleLineRule = true;
                         coalesceWhitespaces = true;
                         inRule = true;
                     }
@@ -542,6 +561,9 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.STAR: {
                     this.removeTrailingWhitespaces();
                     this.add(i);
+
+                    this.addSpace();
+                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -574,6 +596,8 @@ export class GrammarFormatter {
                     }
 
                     this.add(i);
+                    this.addSpace();
+                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -625,6 +649,7 @@ export class GrammarFormatter {
                             }
                         } else {
                             this.add(i);
+                            this.add(InsertMarker.WhitespaceEraser);
                             ++this.currentIndentation;
                         }
 
@@ -659,11 +684,10 @@ export class GrammarFormatter {
                         this.addLineBreak();
                         this.pushCurrentIndentation();
                         this.add(i);
-
-                        if (!this.nonBreakingTrailerAhead(i)) {
-                            //this.addLineBreak();
-                        }
                     }
+
+                    this.addSpace();
+                    this.add(InsertMarker.WhitespaceEraser);
 
                     if (this.singleLineBlockNesting > 0) {
                         // Now decrease single line block counter for the closing parenthesis too.
@@ -714,12 +738,14 @@ export class GrammarFormatter {
                     // Starting a label. They are not trailing per se, but we treat them so
                     // if not in single line mode, as they look similar like trailing comments.
                     let willUseAlignment = false;
-                    if (this.singleLineBlockNesting == 0) {
+                    if (!inSingleLineRule) {
+                        // Labels can only be specified for top level alts, hence we test on the entire
+                        // rule if we are in single line mode, not the current alt's mode.
                         if (this.options.alignTrailers) {
-                            willUseAlignment = true,
+                            willUseAlignment = true;
                             this.addAlignmentEntry(AlignmentType.Trailers);
                         } else if (this.options.alignLabels) {
-                            willUseAlignment = true,
+                            willUseAlignment = true;
                             this.addAlignmentEntry(AlignmentType.Label);
                         }
                     }
@@ -775,6 +801,11 @@ export class GrammarFormatter {
                     this.add(i);
                     break;
                 }
+
+                case ANTLRv4Lexer.STRING_LITERAL:
+                    this.add(i);
+                    this.addSpace();
+                    break;
 
                 case Token.EOF:
                     // Ensure a line break at the end of the text.
@@ -879,6 +910,7 @@ export class GrammarFormatter {
         this.options.alignFirstTokens = false;
         this.options.alignLexerCommands = false;
         this.options.alignActions = false;
+        this.options.alignLabels = true;
         this.options.alignTrailers = false;
     }
 
@@ -916,6 +948,17 @@ export class GrammarFormatter {
         return this.entryIs(this.outputPipeline.length - 1, marker);
     }
 
+    private currentLineContainsOnlySpaces(): boolean {
+        let index = this.outputPipeline.length;
+        while (--index > 0) {
+            if (this.outputPipeline[index] != InsertMarker.Space
+                && this.outputPipeline[index] != InsertMarker.Tab) {
+                break;
+            }
+        }
+        return this.outputPipeline[index] == InsertMarker.LineBreak;
+    }
+
     /**
      * Skips over all comments and whitespaces backwards and checks the value of the value after that.
      * @param type A token type to check for.
@@ -931,28 +974,10 @@ export class GrammarFormatter {
             }
             --i;
         }
-        if (i < 0) {
+        if (i < 0 || this.outputPipeline[i] < 0) {
             return false;
         }
         return this.tokens[this.outputPipeline[i]].type == marker;
-    }
-
-    /**
-     * Scan the token list backwards up to the last line break or any non-whitespace token, whichever comes first.
-     * @return true if a line break came first.
-     */
-    private isFirstNonWhitespaceTokenOnLine(): boolean {
-        let i = this.outputPipeline.length - 1;
-        while (i >= 0) {
-            if (this.entryIs(i, InsertMarker.LineBreak)) {
-                return true;
-            }
-            if (!this.entryIs(i, InsertMarker.Whitespace)) {
-                return false;
-            }
-            --i;
-        }
-        return true;
     }
 
     private removeLastEntry() {
@@ -998,7 +1023,6 @@ export class GrammarFormatter {
 
     /**
      * Scans backwards and removes any whitespace up to the first non-whitespace.
-     * @param outputPipeline The list to work on.
      */
     private removeTrailingWhitespaces() {
         if (this.formattingDisabled) {
@@ -1015,24 +1039,38 @@ export class GrammarFormatter {
             return;
         }
 
-        if (this.currentColumn > 0) {
-            this.outputPipeline.push(InsertMarker.Error);
-
-        }
-
         if (this.options.useTab) {
             this.outputPipeline.push(...Array(this.currentIndentation).fill(InsertMarker.Tab));
+            this.currentColumn = this.currentIndentation * this.options.tabWidth!;
         } else {
             this.outputPipeline.push(...Array(this.currentIndentation * this.options.indentWidth!).fill(InsertMarker.Space));
+            this.currentColumn = this.currentIndentation * this.options.indentWidth!;
         }
-        this.currentColumn = this.currentIndentation * this.options.indentWidth!;
+    }
+
+    private applyLineContinuation() {
+        while (this.lastEntryIs(InsertMarker.Space) || this.lastEntryIs(InsertMarker.Tab)) {
+            this.removeLastEntry();
+        }
+
+        if (!this.lastEntryIs(InsertMarker.LineBreak)) {
+            this.outputPipeline.push(InsertMarker.LineBreak);
+            ++this.currentLine;
+        }
+        this.currentColumn = 0;
+        this.pushCurrentIndentation(true);
+        if (this.options.useTab) {
+            this.outputPipeline.push(InsertMarker.Tab);
+        } else {
+            this.outputPipeline.push(...Array(this.options.continuationIndentWidth!).fill(InsertMarker.Space));
+        }
+        this.currentColumn += this.options.continuationIndentWidth!;
     }
 
     /**
-     * Inserts the given marker into the result list, but checks if the entry before `index` is a single line comment.
-     * If that's the case we need special handling here.
+     * Adds the given marker to the output pipeline and updates current line + column.
      */
-    private insert(index: number, marker: InsertMarker) {
+    private add(marker: InsertMarker) {
         if (this.formattingDisabled) {
             return;
         }
@@ -1046,19 +1084,19 @@ export class GrammarFormatter {
                 self.currentColumn += token.text!.length;
             } else {
                 self.currentLine += parts.length - 1;
-                self.currentColumn = parts[parts.length - 1].length; // TODO: should probably handle tabs here.
+                self.currentColumn = self.computeLineLength(parts[parts.length - 1]);
             }
-            self.outputPipeline.splice(index, 0, marker);
+            self.outputPipeline.push(marker);
         }
 
         switch (marker) {
             case InsertMarker.WhitespaceEraser: { // Doesn't move current position.
-                this.outputPipeline.splice(index, 0, marker);
+                this.outputPipeline.push(marker);
                 return;
             }
 
             case InsertMarker.LineBreak: {
-                this.outputPipeline.splice(index, 0, marker);
+                this.outputPipeline.push(marker);
                 ++this.currentLine;
                 this.currentColumn = 0;
                 return;
@@ -1070,7 +1108,6 @@ export class GrammarFormatter {
                     token = this.tokens[marker];
                 }
 
-                const insertLength = token ? token.stopIndex - token.startIndex + 1 : 1;
                 if (token) {
                     switch (token.type) {
                         case ANTLRv4Lexer.BLOCK_COMMENT: {
@@ -1082,35 +1119,51 @@ export class GrammarFormatter {
                             insertBlock(this.tokens[marker]);
                             return
                         }
-                    }
-                }
 
-                this.outputPipeline.splice(index, 0, marker);
-                this.currentColumn += insertLength;
+                        default: {
+                            let tokenLength = token.stopIndex - token.startIndex + 1;
+                            if (this.currentColumn + tokenLength > this.options.columnLimit!) {
+                                // Note: this implementation works on non-aligned content and allows alignments
+                                // after the word wrapping.
+                                // In cases where alignment moves text beyond the column limit, we don't do
+                                // another word wrapping round. Instead we let alignments overrule the column limit.
+                                // The same applies for exceedance of the column limit caused by deep/large indentation, where
+                                // the indentation already goes beyond that limit.
+                                if (!this.currentLineContainsOnlySpaces()) {
+                                    this.applyLineContinuation();
+                                }
+                            }
+                            this.currentColumn += tokenLength;
+                            this.outputPipeline.push(marker);
+                            break;
+                        }
+                    }
+                } else {
+                    ++this.currentColumn;
+                    this.outputPipeline.push(marker);
+                }
 
                 break;
             }
         }
     }
 
-    private add(marker: InsertMarker) {
-        this.insert(this.outputPipeline.length, marker);
-    }
-
     /**
-     * Computes the new column offset we get when adding the given text.
+     * Computes the length of the given text, with tab stops.
      * There must be no linebreaks in the text.
      */
-    private updateCurrentColumn(text: string) {
+    private computeLineLength(text: string): number {
+        let length = 0;
         for (let char of text) {
             if (char == "\t") {
                 // Round up column offset to next tab stop.
                 let offsetToNextTabStop = this.options.tabWidth! - (this.currentColumn % this.options.tabWidth!);
-                this.currentColumn += offsetToNextTabStop;
+                length += offsetToNextTabStop;
             } else {
-                ++this.currentColumn;
+                ++length;
             }
         }
+        return length;
     }
 
     /**
@@ -1124,11 +1177,10 @@ export class GrammarFormatter {
 
         if (text.indexOf("\n") >= 0) {
             let parts = text.split("\n");
-            this.currentColumn = 0;
             this.currentLine += parts.length - 1;
-            this.updateCurrentColumn(parts[parts.length - 1]);
+            this.currentColumn = this.computeLineLength(parts[parts.length - 1]);
         } else {
-            this.updateCurrentColumn(text);
+            this.currentColumn += this.computeLineLength(text);
         }
         this.ranges.push([start, stop]);
         this.outputPipeline.push(InsertMarker.Range - this.currentRangeIndex++);
@@ -1136,7 +1188,7 @@ export class GrammarFormatter {
 
     private addSpace() {
         if (!this.lastEntryIs(InsertMarker.Space) && !this.lastEntryIs(ANTLRv4Lexer.LINE_COMMENT)) {
-            this.insert(this.outputPipeline.length, InsertMarker.Space);
+            this.add(InsertMarker.Space);
         }
     }
 
@@ -1146,7 +1198,7 @@ export class GrammarFormatter {
             while (this.lastEntryIs(InsertMarker.Space) || this.lastEntryIs(InsertMarker.Tab)) {
                 this.removeLastEntry();
             }
-            this.insert(this.outputPipeline.length, InsertMarker.LineBreak);
+            this.add(InsertMarker.LineBreak);
         }
     }
 
@@ -1164,9 +1216,7 @@ export class GrammarFormatter {
             for (let i = this.outputPipeline.length - 1; i > 0 && lineBreakCount > 0; --i) {
                 if (this.entryIs(i, InsertMarker.LineBreak)) {
                     --lineBreakCount;
-                } if (this.entryIs(i, InsertMarker.Whitespace)) {
-                    continue;
-                } else {
+                } else if (!this.entryIs(i, InsertMarker.Whitespace)) {
                     break;
                 }
             }
@@ -1183,8 +1233,10 @@ export class GrammarFormatter {
 
     /**
      * Starting from position i this methods scans forward in the input token list to determine
-     * if the block contains alternatives and how long it would be (in characters) if the block would be
-     * formatted on a single line. If there's a single line comment somewhere we cannot do such a simple formatting, however.
+     * if the current block contains alternatives and how long it would be (in characters) if the block would be
+     * formatted on a single line.
+     * If there's a single line comment before the stoppers we cannot put the block on a single line.
+     * If there's one after the stopper account for that too.
      *
      * @param i The position to start scanning from. Should point to either a colon or an opening parenthesis.
      */
@@ -1198,6 +1250,18 @@ export class GrammarFormatter {
         if (token.type == ANTLRv4Lexer.COLON || token.type == ANTLRv4Lexer.OR) {
             ++overallLength; // One for the space after these two.
         }
+
+        let self = this;
+        function checkTrailingComment() {
+            while (self.tokens[++i].type == ANTLRv4Lexer.WS) {
+                if (self.tokens[i].text!.indexOf("\n") >= 0) {
+                    break;
+                }
+            }
+            if (self.tokens[i].type == ANTLRv4Lexer.LINE_COMMENT) {
+                overallLength += self.tokens[i].text!.length;
+            }
+        };
 
         while (++i < this.tokens.length) {
             token = this.tokens[i];
@@ -1224,6 +1288,7 @@ export class GrammarFormatter {
                         // No check here if RPAREN is in the list of stoppers.
                         // If it is we return. If not and we got an RPAREN at nesting level 0
                         // we found an unbalanced block and return also.
+                        checkTrailingComment();
                         return [containsAlts, overallLength];
                     }
 
@@ -1233,6 +1298,7 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.SEMI: {
                     ++overallLength;
                     if (stoppers.has(ANTLRv4Lexer.SEMI)) {
+                        checkTrailingComment();
                         return [containsAlts, overallLength];
                     }
                     break;
@@ -1277,6 +1343,7 @@ export class GrammarFormatter {
                 case ANTLRv4Lexer.OR: {
                     if (nestingLevel == 0) {
                         if (stoppers.has(ANTLRv4Lexer.OR)) {
+                            checkTrailingComment();
                             return [containsAlts, overallLength];
                         }
                         containsAlts = true;
@@ -1325,19 +1392,20 @@ export class GrammarFormatter {
      */
     private processFormattingCommands(index: number): void {
 
-        let me = this;
-        function resetAlignmentStatus(type: AlignmentType) {
-            let status = me.alignments.get(type);
-            if (status) {
-                status.lastLine = -1;
-                status.groupIndex = -1;
+        let self = this;
+        function resetAlignmentStatus(alignments: AlignmentType[]) {
+            for (let type of alignments) {
+                let status = self.alignments.get(type);
+                if (status) {
+                    status.lastLine = -1;
+                }
             }
         }
 
         let text = this.tokens[index].text!;
         text = text.substr(2, text.length - 2).trim();
-        if (text.startsWith("$antlr-format")) {
-            let entries = text.substr("$antlr-format".length + 1, text.length).split(",");
+        if (text.startsWith(formatIntroducer)) {
+            let entries = text.substr(formatIntroducer.length + 1, text.length).split(",");
             for (let entry of entries) {
                 let groups = /(\w+)(?:(?:\s*\:)?\s*)?(\w+|[0-9]+)?/i.exec(entry.trim());
                 if (groups != undefined) {
@@ -1373,6 +1441,7 @@ export class GrammarFormatter {
                         case "alignFirstTokens":
                         case "alignLexerCommands":
                         case "alignActions":
+                        case "alignLabels":
                         case "alignTrailers": {
                             if (groups.length > 2
                                 && (groups[2] == "true"
@@ -1384,28 +1453,26 @@ export class GrammarFormatter {
                                 // Some additional handling for alignments. Switching an alignment means
                                 // that the alignment group for that alignment is finished.
                                 switch (groups[1]) {
-                                    case "groupedAlignments": {
-                                        // End all ongoing alignment groups when switching grouped alignments.
-                                        for (let entry of this.alignments) {
-                                            entry[1].lastLine = -1;
-                                            entry[1].groupIndex = -1;
-                                        }
+                                    case "groupedAlignments":
+                                        resetAlignmentStatus(allAlignments);
                                         break;
-                                    }
                                     case "alignTrailingComments":
-                                        resetAlignmentStatus(AlignmentType.TrailingComment);
+                                        resetAlignmentStatus([AlignmentType.TrailingComment]);
                                         break;
                                     case "alignFirstTokens":
-                                        resetAlignmentStatus(AlignmentType.FirstToken);
+                                        resetAlignmentStatus([AlignmentType.FirstToken]);
                                         break;
                                     case "alignLexerCommands":
-                                        resetAlignmentStatus(AlignmentType.LexerCommand);
+                                        resetAlignmentStatus([AlignmentType.LexerCommand]);
                                         break;
                                     case "alignActions":
-                                        resetAlignmentStatus(AlignmentType.Action);
+                                        resetAlignmentStatus([AlignmentType.Action]);
+                                        break;
+                                    case "alignLabels":
+                                        resetAlignmentStatus([AlignmentType.Label]);
                                         break;
                                     case "alignTrailers":
-                                        resetAlignmentStatus(AlignmentType.Trailers);
+                                        resetAlignmentStatus([AlignmentType.Trailers]);
                                         break;
                                 }
                             } else {
@@ -1476,7 +1543,7 @@ export class GrammarFormatter {
      */
     private addAlignmentEntry(type: AlignmentType): void {
         if (!this.alignments.has(type)) {
-            this.alignments.set(type, { lastLine: -1, groupIndex: -1 });
+            this.alignments.set(type, { lastLine: -1, groups: [] });
         }
 
         let status = this.alignments.get(type)!;
@@ -1496,76 +1563,69 @@ export class GrammarFormatter {
                     startNewGroup = false;
 
                     // Groups consist of indices into the output pipeline.
-                    // The insert marker in the pipeline points to the alignment group.
-                    this.alignmentGroups[status.groupIndex].push(this.outputPipeline.length);
-                    this.outputPipeline.push(InsertMarker.Alignment - status.groupIndex);
+                    status.groups[status.groups.length - 1].push(this.outputPipeline.length);
                 }
             }
 
             if (startNewGroup) {
-                status.groupIndex = this.alignmentGroups.length;
-                this.alignmentGroups.push([this.outputPipeline.length]);
-                this.outputPipeline.push(InsertMarker.Alignment - status.groupIndex);
+                status.groups.push([this.outputPipeline.length]);
             }
+            this.outputPipeline.push(InsertMarker.Alignment);
 
             status.lastLine = this.currentLine;
         }
     }
 
     /**
-     * Goes through the output pipeline, looking for alignment markers. If one is found all members
-     * for this alignment group are examined to find the column to align to and the markers are replaced
-     * by indices into a list, where we keep the whitespaces to fill in.
+     * Goes through the alignment groups for each alignment type. Each member is examined to find the column to align to.
+     * The alignment markers in the output pipeline are replaced by indices into our whitespace list, which gets the text
+     * to insert for a specific position. This way we don't change the output pipeline (which would invalidate group indices).
      */
     private computeAlignments(): void {
-        for (let index of this.outputPipeline) {
-            if (index <= InsertMarker.WhitespaceBlock) {
-                continue;
-            }
-
-            if (index <= InsertMarker.Alignment) {
-                let groupIndex = -(index - InsertMarker.Alignment);
-                let group = this.alignmentGroups[groupIndex];
-
-                // If the group only consists of a single member then ignore it.
-                if (group.length == 1) {
-                    this.outputPipeline[group[0]] = InsertMarker.Space;
-                    continue;
-                }
-
-                let columns: number[] = [];
-                for (let member of group) {
-                    console.assert(this.outputPipeline[member] <= InsertMarker.Alignment);
-                    columns.push(this.computeColumn(member));
-                }
-
-                // Determine the largest column and bring this up to the next tab stop (if we are using tabs)
-                // or add a single space to the longest column and align all others to this position.
-                let useTabs = this.options.useTab;
-                let maxColumn = Math.max(...columns);
-                if (useTabs) {
-                    maxColumn += this.options.tabWidth! - (maxColumn % this.options.tabWidth!);
-                } else {
-                    ++maxColumn;
-                }
-
-                // Compute required whitespace inserts and store them in the whitespace list.
-                // Replace the alignment markers in the current group with the indices in that list.
-                for (let i = 0; i < group.length; ++i) {
-                    let whitespaceIndex = InsertMarker.WhitespaceBlock - this.whitespaceList.length;
-                    this.outputPipeline[group[i]] = whitespaceIndex;
-
-                    let whitespaces;
-                    if (useTabs) {
-                        let tabCount = Math.floor((maxColumn - columns[i]) / this.options.tabWidth!);
-                        if ((maxColumn - columns[i]) % this.options.tabWidth! != 0) {
-                            ++tabCount;
-                        }
-                        whitespaces = Array(tabCount).fill("\t").join("");
-                    } else {
-                        whitespaces = Array(maxColumn - columns[i]).fill(" ").join("");
+        for (let type of allAlignments) {
+            let alignment = this.alignments.get(type);
+            if (alignment) {
+                for (let group of alignment.groups) {
+                    // If the group only consists of a single member then ignore it.
+                    if (group.length == 1) {
+                        this.outputPipeline[group[0]] = InsertMarker.Space;
+                        continue;
                     }
-                    this.whitespaceList.push(whitespaces);
+
+                    let columns: number[] = [];
+                    for (let member of group) {
+                        console.assert(this.outputPipeline[member] <= InsertMarker.Alignment);
+                        columns.push(this.columnForEntry(member));
+                    }
+
+                    // Determine the largest column and bring this up to the next tab stop (if we are using tabs)
+                    // or add a single space to the highest column value and align all others to this position.
+                    let useTabs = this.options.useTab;
+                    let maxColumn = Math.max(...columns);
+                    if (useTabs) {
+                        maxColumn += this.options.tabWidth! - (maxColumn % this.options.tabWidth!);
+                    } else {
+                        ++maxColumn;
+                    }
+
+                    // Compute required whitespace inserts and store them in the whitespace list.
+                    // Replace the alignment markers in the current group with the indices in that list.
+                    for (let i = 0; i < group.length; ++i) {
+                        let whitespaceIndex = InsertMarker.WhitespaceBlock - this.whitespaceList.length;
+                        this.outputPipeline[group[i]] = whitespaceIndex;
+
+                        let whitespaces;
+                        if (useTabs) {
+                            let tabCount = Math.floor((maxColumn - columns[i]) / this.options.tabWidth!);
+                            if ((maxColumn - columns[i]) % this.options.tabWidth! != 0) {
+                                ++tabCount;
+                            }
+                            whitespaces = Array(tabCount).fill("\t").join("");
+                        } else {
+                            whitespaces = Array(maxColumn - columns[i]).fill(" ").join("");
+                        }
+                        this.whitespaceList.push(whitespaces);
+                    }
                 }
             }
         }
@@ -1574,7 +1634,7 @@ export class GrammarFormatter {
     /**
      * Determines the column offset of the given entry in the output pipeline.
      */
-    private computeColumn(offset: number): number {
+    private columnForEntry(offset: number): number {
         let result = 0;
 
         // Scan back to last line break.
@@ -1611,7 +1671,7 @@ export class GrammarFormatter {
                             let endIndex = this.ranges[rangeIndex][1];
                             let interval = Interval.of(this.tokens[startIndex].startIndex, this.tokens[endIndex].stopIndex);
                             text += this.tokens[0].inputStream!.getText(interval);
-                        } if (isWhitespaceBlock(entry)) {
+                        } else if (isWhitespaceBlock(entry)) {
                             let whitespaceIndex = -(entry - InsertMarker.WhitespaceBlock);
                             text += this.whitespaceList[whitespaceIndex];
                         }
@@ -1632,6 +1692,121 @@ export class GrammarFormatter {
         }
 
         return result;
+    }
+
+    /**
+     * Reformats the given comment so that it does not go beyond the column limit, but fills the available space.
+     * It will fix indentation as well as leading * on block/doc comments. Lines starting with a dash will be kept
+     * on an own line, to avoid breaking lists/enumerations (but the column limit is still enforced).
+     *
+     * The function should only be called for comments spanning at least 2 lines.
+     *
+     * @param comment The comment to reformat.
+     * @param type Specifies what type of comment we have (a collection of single line comments or a block/doc comment).
+     * @returns The formatted comment.
+     */
+    private reflowComment(comment: string, type: number): string {
+        let result: string[] = [];
+        let lineIntroducer = (type == ANTLRv4Lexer.LINE_COMMENT) ? "// " : " * ";
+        let lines = comment.split("\n");
+
+        let lineIndex = 0;
+        let pipeline = lines[lineIndex++].split(" ").filter(function (entry: string) { return entry.length > 0; });
+        let line: string;
+
+        // We use a leading star only if the second line has one. Otherwise they are all removed (if any).
+        if (type != ANTLRv4Lexer.LINE_COMMENT) {
+            if (!lines[1].trim().startsWith("*")) {
+                lineIntroducer = " ";
+            }
+
+            let last = lines[lines.length - 1].trim().slice(0, -2);
+            if (last.length == 0) {
+                lines.pop();
+            } else {
+                lines[lines.length - 1] = last;
+            }
+        }
+
+        // Take over everything unchanged until the first space or line break.
+        if (pipeline.length == 1) {
+            result.push(pipeline[0]);
+            line = lineIntroducer;
+        } else {
+            line = pipeline[0] + " ";
+        }
+
+        let index = 1;
+        let column = this.computeLineLength(line);
+        while (true) {
+            while (index < pipeline.length) {
+                if (this.currentColumn + column + pipeline[index].length > this.options.columnLimit!) {
+                    // Don't push the trailing space we added before.
+                    result.push(line.slice(0, -1));
+                    line = lineIntroducer;
+                    column = this.computeLineLength(line);
+                }
+                line += pipeline[index++] + " ";
+                column = this.computeLineLength(line);
+            }
+
+            // Pipeline exhausted. Load next source line.
+            if (lineIndex == lines.length) {
+                break;
+            }
+
+            pipeline = lines[lineIndex++].split(" ").filter(function (entry: string) { return entry.length > 0; });
+            index = 0;
+
+            let minLength = 1;
+            if (pipeline.length > 0) {
+                let first = pipeline[0];
+                if (type == ANTLRv4Lexer.LINE_COMMENT) {
+                    pipeline[0] = first.substr(2);
+                    ++minLength;
+                } else {
+                    if (first.startsWith("*")) {
+                        pipeline[0] = first.substr(1);
+                        ++minLength;
+                    }
+                }
+                if (pipeline[0].length == 0) {
+                    ++index;
+                }
+            }
+
+            if (pipeline.length < minLength) {
+                // Keep empty lines.
+                result.push(line.slice(0, -1));
+                result.push(lineIntroducer);
+                line = lineIntroducer;
+            } else if (type == ANTLRv4Lexer.BLOCK_COMMENT || type == ANTLRv4Lexer.DOC_COMMENT) {
+                // Remove any leading * if we are in a doc or block comment.
+                let first = pipeline[0].trim();
+                if (first == "*") {
+                    ++index;
+                } else if (first.startsWith("*")) {
+                    pipeline[0] = first.substr(1);
+                }
+            }
+        };
+
+        if (line.length > 0) {
+            result.push(line.slice(0, -1));
+            if (type != ANTLRv4Lexer.LINE_COMMENT) {
+                result.push("");
+            }
+        }
+
+        if (type != ANTLRv4Lexer.LINE_COMMENT) {
+            result.push(" */");
+        }
+
+        let indentation = (this.options.useTab)
+            ? "\t".repeat(this.currentIndentation)
+            : " ".repeat(this.currentIndentation * this.options.indentWidth!)
+
+        return result.join("\n" + indentation);
     }
 
     private options: FormattingOptions;
@@ -1662,6 +1837,6 @@ export class GrammarFormatter {
     // For each possible alignment type (colon, first token, trailing predicate, trailing comment etc.)
     // there's one status record in this map.
     private alignments: Map<AlignmentType, AlignmentStatus> = new Map();
-    private alignmentGroups: number[][]; // A list of output pipeline indices for groups of alignments.
+    //private alignmentGroups: number[][]; // A list of output pipeline indices for groups of alignments.
     private whitespaceList: string[]; // A list of strings containing whitespaces to insert for alignment.
 }

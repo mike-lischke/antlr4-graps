@@ -2,13 +2,26 @@
    
         raw;
 
+/**
+* Permission is hereby granted,    free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*
+*           THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/ unusualCode: xyz;
+
 /*
- * LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE
- * LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE
- * LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE
- * LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE
- * LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE LICENSE
- */
+ Permission is hereby granted,    free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+*
+*The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*           THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*/
+     // Permission is hereby granted,    free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+  //
+//The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+//
+//           THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// A separate comment.
 
 //-------------------------------------------------------------------------------------------------
 
@@ -21,7 +34,7 @@
        Base1   ;superClass=Base2;
        /* Another such comment. The previous code moved to an own line. */ superClass = Base3; // trailing comment
        
-       /* Comment stays as it is. No min empty lines set, so no empty line before it. */
+       /* Comment stays as it is. Min-empty-line-setting only has an effect on top level elements. */
        superClass
        = /* Multiple lines of a single command with embedded comments is combined to a single line. */
        Base4
@@ -354,6 +367,7 @@ void doAfter() {}
 @parser::basevisitordefinitions {/* base visitor definitions section */}
 
 // $antlr-format reset
+rule1: rule2 (COMMA rule2)*; rule2: TOKEN1;
 and_ @init{ doInit(); } @after { doAfter(); } : And ;
 
 conquer: // Comment comment
@@ -544,7 +558,7 @@ BIN_NUMBER:     ('0b' [01]+) | ('b\'' [01]+ '\'');
 
 NUMBER: DIGITS { setType(determineNumericType(getText())); };
 
-// $antlr-format reset, groupedAlignments on
+// $antlr-format reset, groupedAlignments on, reflowComments off
 
 /*
    Tokens from MySQL 8.0
@@ -1347,7 +1361,7 @@ ordinaryRule: TOKEN_ONE (aBlock | with | a | few | alts) (
   ;
   
   
-// Various more or less complex real world rules. Reset all settings to defaults.
+// Various more or less complex real world rules taken from the MySQL grammar. Reset all settings to defaults.
 // $antlr-format reset, columnLimit 120
 alterListItem:
     ADD_SYMBOL COLUMN_SYMBOL?
