@@ -39,6 +39,10 @@ export enum SymbolKind {
     Option
 };
 
+/**
+ * A range within a text. Just like the range object in vscode the end position is not included in the range.
+ * Hence when start and end position are equal the range is empty.
+ */
 export class LexicalRange {
     start: { column: number, row: number };
     end: { column: number, row: number };

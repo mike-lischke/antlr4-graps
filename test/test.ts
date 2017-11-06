@@ -589,18 +589,18 @@ describe('antlr4-graps:', function () {
         })
     });
 
-    describe("Formatting", function () {
-        it("Formatting with all options (except alignment)", function () {
+    describe("Formatting:", function () {
+        it("With all options (except alignment)", function () {
             let text: string;
             let range = new LexicalRange();
-            range.start = { column: 0, row: 0 };
+            range.start = { column: 0, row: 1 };
             range.end = { column: 1, row: 100000 };
 
-            // Format a big file with all kinds of syntactic elements. Start out with default
+            // Format a file with all kinds of syntactic elements. Start out with default
             // fomatting options and change them in the file to test all variations.
             [text, range] = backend.formatGrammar("test/formatting/raw.g4", {}, range);
 
-            fs.writeFileSync("test/formatting-results/raw.g4", text, "utf8");
+            //fs.writeFileSync("test/formatting-results/raw.g4", text, "utf8");
             let expected = fs.readFileSync("test/formatting-results/raw.g4", { encoding: "utf8" });
             expect(expected).to.equal(text);
         });
@@ -614,19 +614,55 @@ describe('antlr4-graps:', function () {
             range.start = { column: 0, row: 0 };
             range.end = { column: 1, row: 100000 };
 
-            // Now load a large file with all possible alignment combinations (75 rules for each permutation),
-            // checking so also the overall performance.
+            // Load a large file with all possible alignment combinations (50 rules for each permutation),
+            // checking so also the overall performance (9600 rules).
             [text, range] = backend.formatGrammar("test/formatting/alignment.g4", {}, range);
 
-            fs.writeFileSync("test/formatting-results/alignment.g4", text, "utf8");
+            //fs.writeFileSync("test/formatting-results/alignment.g4", text, "utf8");
             let expected = fs.readFileSync("test/formatting-results/alignment.g4", { encoding: "utf8" });
             expect(expected).to.equal(text);
         });
 
-        /*
+        it.only("Ranged formatting", function () {
+            // First some edge cases with empty/simple results.
+            let [text, range] = backend.formatGrammar("test/formatting/raw.g4", {},
+                { start: { column: 0, row: -1 }, end: { column: 1, row: -1 } });
+            expect(text.length, "Test 1").to.equal(0);
+            expect(range, "Test 2").to.deep.equal({ start: { column: 0, row: 1 }, end: { column: 1e100, row: 1 }});
+
+            [text, range] = backend.formatGrammar("test/formatting/raw.g4", {},
+                { start: { column: 4, row: 43 }, end: { column: 0, row: 43 }});
+            expect(text, "Test 3").to.equal("\tsuperClass ");
+            expect(range, "Test 4").to.deep.equal({ start: { column: 0, row: 43 }, end: { column: 1e100, row: 43 }});
+
+            [text, range] = backend.formatGrammar("test/formatting/raw.g4", {},
+                { start: { column: 1000, row: 43 }, end: { column: 16, row: 43 }});
+            expect(text, "Test 5").to.equal("\tsuperClass ");
+            expect(range, "Test 6").to.deep.equal({ start: { column: 0, row: 43 }, end: { column: 1e100, row: 43 }});
+
+            [text, range] = backend.formatGrammar("test/formatting/raw.g4", {},
+                { start: { column: 0, row: 1e100 }, end: { column: 10, row: 1e100 - 100} });
+            expect(text, "Test 7").to.equal("\n");
+            expect(range, "Test 8").to.deep.equal({ start: { column: 0, row: 2125 }, end: { column: 1e100, row: 2125 }});
+
+            let rangeTests = JSON.parse(fs.readFileSync("test/formatting/ranges.json", { encoding: "utf8" }));
+            let testNumber = 9;
+            let target: LexicalRange;
+            for (let rangeTest of rangeTests) {
+                [text, target] = backend.formatGrammar("test/formatting/raw.g4", {}, rangeTest.source);
+
+                fs.writeFileSync("test/formatting-results/" + rangeTest.result, text, "utf8");
+                let expected = fs.readFileSync("test/formatting-results/" + rangeTest.result, { encoding: "utf8" });
+                expect(target, "Test " + testNumber++).to.deep.equal(rangeTest.target);
+                expect(expected, "Test " + testNumber++).to.equal(text);
+            }
+
+        });
+
         // This test has been taken out by intention as it difficult to get good results for all grammars
-        // with the same set of settings. Consider it more like a visual smoke test.
-        it("ANTLR grammar directory", function () {
+        // with the same set of settings. Consider it more like a smoke test.
+        // For running it you must copy the ANTLR4 grammar directory into "test/formatting/grammars-v4".
+        xit("ANTLR grammar directory", function () {
             this.timeout(20000);
 
             let files = glob.sync("test/formatting/grammars-v4/**\/*.g4", {});
@@ -657,7 +693,6 @@ describe('antlr4-graps:', function () {
                 expect(expected, "Test 1").to.equal(text);
             }
         });
-        */
     });
 });
 
@@ -673,7 +708,7 @@ function createAlignmentGrammar(): void {
     for (let section of sections) {
         grammar += "\n" + section + "\n";
 
-        // Make it 50 lexer rules and 25 parser rules (less parser rules as we always use grouped alignments for them).
+        // Make it 30 lexer rules and 20 parser rules (less parser rules as we always use grouped alignments for them).
         for (let i = 0; i < 30; ++i) {
             if (i == 0) {
                 grammar += "// $antlr-format groupedAlignments off\n";

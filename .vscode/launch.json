@@ -17,7 +17,6 @@
         {
             "name": "Mocha",
             "type": "node",
-            "protocol": "inspector",
             "request": "launch",
             "cwd": "${workspaceRoot}",
             "preLaunchTask": "tsc",
@@ -28,18 +27,10 @@
             "env": {
                "NODE_ENV": "testing"
             },
+            "outFiles": [
+                "${workspaceRoot}/out/**/*.js"
+            ],
             "sourceMaps": true
-        },
-        {
-            "name": "Attach",
-            "type": "node",
-            "request": "attach",
-            "port": 5858,
-            "address": "localhost",
-            "restart": false,
-            "sourceMaps": true,
-            "localRoot": "${workspaceRoot}",
-            "remoteRoot": null
         }
     ]
 }

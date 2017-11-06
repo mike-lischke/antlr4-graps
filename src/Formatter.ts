@@ -96,7 +96,7 @@ export class GrammarFormatter {
 
         // Position info of the target text.
         this.currentColumn = 0;
-        this.currentLine = 0;
+        this.currentLine = 1;
         this.formattingDisabled = false;
 
         let coalesceWhitespaces = false; // Set in situations where we don't want multiple consecutive whitespaces.
@@ -109,7 +109,98 @@ export class GrammarFormatter {
         let inSingleLineRule = false; // Set when an entire rule is placed on a single line.
         let minLineInsertionPending = false; // Set when the min line setting must be enforced after next line break.
 
-        for (let i = 0; i < this.tokens.length; ++i) {
+        // Start by determining the actual formatting range. This is specified for the unformatted text,
+        // so the caller can use it directly to replace it with the new text.
+        let startIndex = this.tokenFromPosition(range.start.row, true);
+        let endIndex = this.tokenFromPosition(range.end.row, false);
+
+        // Adjust the start index if we are within a single line comment which is part of a comment block
+        // and we are reflowing comment text. Include all single line comment entries of that block.
+        // For other comment types this is not necessary, as they are blocks by nature.
+        if (this.options.reflowComments && this.tokens[startIndex].type == ANTLRv4Lexer.LINE_COMMENT) {
+            while (startIndex > 0) {
+                if (this.tokens[startIndex - 1].type != ANTLRv4Lexer.WS) {
+                    break;
+                }
+                let temp = this.tokens[startIndex - 1].text!.split("\n");
+                if (temp.length > 2) { // More than one line break?
+                    break;
+                }
+                if (this.tokens[startIndex - 2].type != ANTLRv4Lexer.LINE_COMMENT) {
+                    break;
+                }
+                if (this.tokens[startIndex - 2].text!.indexOf(formatIntroducer) >= 0) {
+                    break; // Don't include comment lines containing (potential) formatting instructions.
+                }
+                startIndex -= 2;
+            }
+        }
+
+        let targetRange: LexicalRange = {
+            start: { column: 0, row: this.tokens[startIndex].line },
+            end: { column: 1e100, row: this.tokens[endIndex].line }
+        };
+        let temp = this.tokens[endIndex].text!.split("\n");
+        targetRange.end.row += temp.length - 1; // For multi line tokens like multi line comments.
+        this.currentLine = targetRange.start.row;
+
+        // Next step is to determine the context the start token is in.
+        let run = startIndex;
+        let done = false;
+        while (run > 0 && !done) {
+            switch (this.tokens[run].type) {
+                case ANTLRv4Lexer.SEMI: {
+                    // Top level or options block.
+                    let localRun = run;
+                    while (localRun-- > 0) {
+                        if (this.tokens[localRun].type == ANTLRv4Lexer.LBRACE) {
+                            // In an options {} rule.
+                            ++this.currentIndentation;
+                            inBraces = true;
+                            coalesceWhitespaces = true;
+                            break;
+                        }
+                    }
+                    done = true;
+                    break;
+                }
+                case ANTLRv4Lexer.COLON: // Also pretty clear. We are in a rule.
+                    ++this.currentIndentation;
+                    inRule = true;
+                    coalesceWhitespaces = true;
+                    done = true;
+                    break;
+                case ANTLRv4Lexer.AT: // A named action. Can only be formatted as a whole.
+                    targetRange.start.row = this.tokens[run].line;
+                    --run;
+                    break;
+                case ANTLRv4Lexer.LBRACE:
+                    // A braced block (e.g. tokens, channels etc.). Can't be an action/predicate
+                    // as they use different token types.
+                    ++this.currentIndentation;
+                    inBraces = true;
+                    done = true;
+                    --run;
+                    break;
+                case ANTLRv4Lexer.RBRACE: // Like a semicolon. We reached the end of braced block (top level).
+                    done = true;
+                    break;
+                case ANTLRv4Lexer.LPAREN:
+                    ++this.currentIndentation;
+                    --run;
+                    break;
+                case ANTLRv4Lexer.RPAREN:
+                    --this.currentIndentation;
+                    -run;
+                    break;
+                default:
+                    --run;
+                    break;
+            }
+        }
+
+        this.pushCurrentIndentation();
+        for (let i = startIndex; i <= endIndex; ++i) {
             let token = this.tokens[i];
 
             // If no whitespace is coming up we don't need the eraser marker anymore.
@@ -146,7 +237,7 @@ export class GrammarFormatter {
                     // Analyze whitespaces, we can have a mix of tab/space and line breaks here.
                     let text = token.text!.replace("\r\n", "\n");
                     let hasLineBreaks = text.indexOf("\n") >= 0;
-                    if (!localCommentAhead || !hasLineBreaks ) {
+                    if (!localCommentAhead || !hasLineBreaks) {
                         if (!hasLineBreaks || coalesceWhitespaces || this.singleLineBlockNesting > 0) {
                             if (!this.lastEntryIs(InsertMarker.Whitespace)) {
                                 this.addSpace();
@@ -357,7 +448,7 @@ export class GrammarFormatter {
                     } else if (comment.indexOf(formatIntroducer) < 0
                         && this.options.reflowComments
                         && token.type == ANTLRv4Lexer.LINE_COMMENT) {
-                        // Scan forward and collect all consequtive single line comments lines
+                        // Scan forward and collect all consecutive single line comments lines
                         // which stand alone on a line.
                         while (true) {
                             let nextToken = this.tokens[i + 1];
@@ -881,7 +972,16 @@ export class GrammarFormatter {
                     break;
             }
         }
-        return [result, range];
+
+        if (pendingLineComment > 0) {
+            let lastChar = result[result.length - 1];
+            if (lastChar != " " && lastChar != "\t" && lastChar != "\n") {
+                result += " ";
+            }
+            result += this.tokens[pendingLineComment].text;
+        }
+
+        return [result, targetRange];
     }
 
     private setDefaultOptions() {
@@ -1146,6 +1246,35 @@ export class GrammarFormatter {
                 break;
             }
         }
+    }
+
+    /**
+     * Returns the index for the first/last non-whitespace token on the given line. When no token can be found on that
+     *  line (e.g. in a skipped token) return the first one after that line (or the last index if even beyond that).
+     */
+    private tokenFromPosition(row: number, first: boolean): number {
+        // Tokens can span more than one line, so check backwards.
+        for (let i = 0; i < this.tokens.length; ++i) {
+            let token = this.tokens[i];
+            if (token.line > row) {
+                if (i == 0) {
+                    return i;
+                }
+                --i;
+
+                if (!first) {
+                    return this.tokens[i].type == ANTLRv4Lexer.WS ? i - 1 : i;
+                }
+
+                row = this.tokens[i].line;
+                while (i > 0 && this.tokens[i - 1].line == row) {
+                    --i;
+                }
+
+                return i;
+            }
+        }
+        return this.tokens.length - 1;
     }
 
     /**
@@ -1711,7 +1840,7 @@ export class GrammarFormatter {
         let lines = comment.split("\n");
 
         let lineIndex = 0;
-        let pipeline = lines[lineIndex++].split(" ").filter(function (entry: string) { return entry.length > 0; });
+        let pipeline = lines[lineIndex++].split(/ |\t/).filter(function (entry: string) { return entry.length > 0; });
         let line: string;
 
         // We use a leading star only if the second line has one. Otherwise they are all removed (if any).
@@ -1729,9 +1858,13 @@ export class GrammarFormatter {
         }
 
         // Take over everything unchanged until the first space or line break.
+        // If there's only the comment introducer on the first line, keep it that way and start
+        // on the next line with the processing.
+        let isFirst = false;
         if (pipeline.length == 1) {
             result.push(pipeline[0]);
             line = lineIntroducer;
+            isFirst = true;
         } else {
             line = pipeline[0] + " ";
         }
@@ -1755,47 +1888,46 @@ export class GrammarFormatter {
                 break;
             }
 
-            pipeline = lines[lineIndex++].split(" ").filter(function (entry: string) { return entry.length > 0; });
+            pipeline = lines[lineIndex++].split(/ |\t/).filter(function (entry: string) { return entry.length > 0; });
             index = 0;
 
-            let minLength = 1;
             if (pipeline.length > 0) {
+                // Remove line introducer (if there's one). Can make the pipeline empty if it only consists of that.
                 let first = pipeline[0];
                 if (type == ANTLRv4Lexer.LINE_COMMENT) {
-                    pipeline[0] = first.substr(2);
-                    ++minLength;
-                } else {
-                    if (first.startsWith("*")) {
-                        pipeline[0] = first.substr(1);
-                        ++minLength;
+                    if (first == "//") {
+                        pipeline = pipeline.slice(1);
+                    } else {
+                        pipeline[0] = first.substr(2);
                     }
-                }
-                if (pipeline[0].length == 0) {
-                    ++index;
+                } else {
+                    if (first == "*") {
+                        pipeline = pipeline.slice(1);
+                    } else {
+                        if (first.startsWith("*")) {
+                            pipeline[0] = first.substr(1);
+                        }
+                    }
                 }
             }
 
-            if (pipeline.length < minLength) {
-                // Keep empty lines.
-                result.push(line.slice(0, -1));
+            if (pipeline.length == 0) {
+                // Keep empty lines. Push the current line only if this is not still the first line
+                // (because we already pushed it already).
+                if (!isFirst) {
+                    result.push(line.slice(0, -1));
+                }
                 result.push(lineIntroducer);
                 line = lineIntroducer;
-            } else if (type == ANTLRv4Lexer.BLOCK_COMMENT || type == ANTLRv4Lexer.DOC_COMMENT) {
-                // Remove any leading * if we are in a doc or block comment.
-                let first = pipeline[0].trim();
-                if (first == "*") {
-                    ++index;
-                } else if (first.startsWith("*")) {
-                    pipeline[0] = first.substr(1);
-                }
             }
+            isFirst = false;
         };
 
         if (line.length > 0) {
             result.push(line.slice(0, -1));
-            if (type != ANTLRv4Lexer.LINE_COMMENT) {
-                result.push("");
-            }
+            //if (type != ANTLRv4Lexer.LINE_COMMENT) {
+            //    result.push("");
+            //}
         }
 
         if (type != ANTLRv4Lexer.LINE_COMMENT) {

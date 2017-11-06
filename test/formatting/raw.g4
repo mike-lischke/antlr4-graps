@@ -1,4 +1,9 @@
-   grammar
+   		/* 
+   		   *
+ An initial comment
+*/
+/** * */
+       grammar
    
         raw;
 

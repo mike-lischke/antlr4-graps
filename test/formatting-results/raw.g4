@@ -1,3 +1,8 @@
+/*
+ * 
+ * An initial comment
+ */
+/** * */
 grammar raw;
 
 /**
@@ -15,7 +20,6 @@ grammar raw;
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
  */
 unusualCode: xyz;
 
@@ -34,7 +38,6 @@ unusualCode: xyz;
  NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
  OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
  */
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
 // associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -1593,7 +1596,6 @@ ordinaryRule:
          culpa qui officia
          deserunt mollit anim
          id est laborum.
-        
          */
         anAltWithAnAction {doSomethingUseful()
             }
@@ -1667,7 +1669,6 @@ ordinaryRule:
          * anim id
          * est
          * laborum.
-        
          */
         anAltWithAnAction
             {doSomethingUseful()
@@ -2399,7 +2400,6 @@ roleOrLabelKeyword:
 		| CPU_SYMBOL
 		/*
 		 Although a reserved keyword in SQL:2003 (and :2008), not reserved in MySQL per WL#2111 specification.
-		
 		 */
 		| CURRENT_SYMBOL
 		| CURSOR_NAME_SYMBOL

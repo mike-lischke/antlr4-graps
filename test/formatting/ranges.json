@@ -1,0 +1,186 @@
+[
+    {
+        "source": {
+            "start": {
+                "column": 0,
+                "row": 1
+            },
+            "end": {
+                "column": 0,
+                "row": 1
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 1
+            },
+            "end": {
+                "column": 1e100,
+                "row": 4
+            }
+        },
+        "result": "range1.txt"
+    },
+    {
+        "source": {
+            "start": {
+                "column": 0,
+                "row": 1
+            },
+            "end": {
+                "column": 12,
+                "row": 1
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 1
+            },
+            "end": {
+                "column": 1e100,
+                "row": 4
+            }
+        },
+        "result": "range2.txt"
+    },
+    {
+        "source": {
+            "start": {
+                "column": -1000,
+                "row": 20
+            },
+            "end": {
+                "column": -2000,
+                "row": 20
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 17
+            },
+            "end": {
+                "column": 1e100,
+                "row": 22
+            }
+        },
+        "result": "range3.txt"
+    },
+    {
+        "source": {
+            "start": {
+                "column": 10,
+                "row": 8
+            },
+            "end": {
+                "column": 12,
+                "row": 8
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 8
+            },
+            "end": {
+                "column": 1e100,
+                "row": 8
+            }
+        },
+        "result": "range4.txt"
+    },
+    {
+        "source": {
+            "start": {
+                "column": 10,
+                "row": 6
+            },
+            "end": {
+                "column": 12,
+                "row": 8
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 6
+            },
+            "end": {
+                "column": 1e100,
+                "row": 8
+            }
+        },
+        "result": "range5.txt"
+    },
+    {
+        "source": {
+            "start": {
+                "column": 150,
+                "row": 15
+            },
+            "end": {
+                "column": 100,
+                "row": 29
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 15
+            },
+            "end": {
+                "column": 1e100,
+                "row": 29
+            }
+        },
+        "result": "range6.txt"
+    },
+    {
+        "source": {
+            "start": {
+                "column": 10,
+                "row": 31
+            },
+            "end": {
+                "column": 11,
+                "row": 31
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 31
+            },
+            "end": {
+                "column": 1e100,
+                "row": 31
+            }
+        },
+        "result": "range7.txt"
+    },
+    {
+        "source": {
+            "start": {
+                "column": 10,
+                "row": 31
+            },
+            "end": {
+                "column": 60,
+                "row": 36
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 31
+            },
+            "end": {
+                "column": 1e100,
+                "row": 36
+            }
+        },
+        "result": "range8.txt"
+    }
+]
