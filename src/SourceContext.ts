@@ -637,16 +637,27 @@ export class SourceContext {
             let exception = "";
             java.stderr.on("data", (data) => {
                 let text = data.toString();
-                if (exception.length > 0) {
-                    // We got a Java execution exception. Return it as is, so the caller can show that
-                    // to the user, instead of interpreting it as a grammar error.
-                    exception += text;
-                } else {
-                    let parser = new ErrorParser(dependencies);
-                    if (parser.convertErrorsToDiagnostics(text)) {
-                        resolve(fileList);
+                if (text.startsWith("Picked up _JAVA_OPTIONS:")) {
+                    let endOfInfo = text.indexOf("\n");
+                    if (endOfInfo == -1) {
+                        text = "";
                     } else {
+                        text = text.substr(endOfInfo + 1, text.length);
+                    }
+                }
+
+                if (text.length > 0) {
+                    if (exception.length > 0) {
+                        // We got a Java execution exception. Return it as is, so the caller can show that
+                        // to the user, instead of interpreting it as a grammar error.
                         exception += text;
+                    } else {
+                        let parser = new ErrorParser(dependencies);
+                        if (parser.convertErrorsToDiagnostics(text)) {
+                            resolve(fileList);
+                        } else {
+                            exception += text;
+                        }
                     }
                 }
             });

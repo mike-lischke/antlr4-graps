@@ -259,8 +259,7 @@ export class ErrorParser {
 							case 124: { // "rule alt label <arg> conflicts with rule <arg2>", ErrorSeverity.ERROR
 								let matches = ErrorParser.errorCodeToPattern.get(errorCode)!.exec(errorText);
 								if (matches) {
-									// We're adding two entries here: one for the conflicting symbol and one for the
-									// the symbol the mentioned one conflicts with.
+									// We're adding two entries here: one for each symbol.
 									this.addDiagnosticsForSymbols([matches[1]], errorText, DiagnosticType.Warning, context);
 									range.end.column += matches[1].length - 1;
 								}
