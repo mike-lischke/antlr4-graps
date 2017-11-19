@@ -1,14 +1,10 @@
 language: node_js
 node_js:
   - "stable"
-  - "6"
+  - "8"
 
-jdk: openjdk6
+jdk: oraclejdk8
 sudo: false
-
-# Undo _JAVA_OPTIONS environment variable
-before_script:
-  - _JAVA_OPTIONS=
 
 branches:
   only:
