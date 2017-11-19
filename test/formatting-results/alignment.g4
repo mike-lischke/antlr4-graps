@@ -503,14 +503,14 @@ rule__________15: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule_______________________16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+rule_______________________16: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
 ;
 rule_______17: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule____18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___19: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
+rule___19: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doSomething($text);} {doesItBlend}?
@@ -600,7 +600,7 @@ rule_________________3: (
 	| rule________ # label________ {doSomething($text);}
 ;
 rule_________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -1126,7 +1126,7 @@ rule____________0: (
 	| rule________ # label________
 ; // Final trailing comment.
 rule_1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -1167,7 +1167,7 @@ rule___________5: (
 	| rule________ # label________
 ; // Final trailing comment.
 rule_______________________6: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -1200,7 +1200,7 @@ rule____________________9: (
 	| rule________ {doSomething($text);}
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule__________10: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+rule__________10: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -1216,7 +1216,7 @@ rule_______________13: (
 	| rule____
 	| rule________ {doesItBlend}?
 ; // Final trailing comment.
-rule_________________14: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________________14: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_____________________15: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
@@ -1303,7 +1303,7 @@ rule_________________________1: (
 	| rule________
 ; // Final trailing comment.
 rule_____2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -1319,7 +1319,7 @@ rule____________________3: (
 	| rule________ # label________
 ;
 rule_______________________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -1386,7 +1386,7 @@ rule_______________________15: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule__________________16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+rule__________________16: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -1838,7 +1838,7 @@ rule___1: (
 	| rule________	# label________ {doSomething($text);}
 ;
 rule________2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -1983,7 +1983,7 @@ Keyword__29: 'Keyword__29' {doesItBlend()}?; // Specified in the interest of for
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_________________________0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -2016,7 +2016,7 @@ rule_________3: (
 	| rule________ {doSomething($text);}
 ;
 rule________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -2089,7 +2089,7 @@ rule_12: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) r
 	| rule________																	# label________ {doSomething($text);}
 ;
 rule______________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___________________14: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule___________________14: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -2612,12 +2612,12 @@ rule______________11: (
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ; // Final trailing comment.
-rule____________________12: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
+rule____________________12: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																											# label__
 	| rule____																											# label____
 	| rule________																										# label________ {doSomething($text);} {doesItBlend}?
 ;
-rule_____13: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule_____13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__												# label__
 	| rule____												# label____
 	| rule________											# label________ {doesItBlend}?
@@ -2627,7 +2627,7 @@ rule____14: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB
 	| rule____																			# label____
 	| rule________																		# label________ {doSomething($text);}
 ;
-rule________________________15: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule________________________15: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__																	# label__
 	| rule____																	# label____
 	| rule________																# label________ {doesItBlend}?
@@ -2782,7 +2782,7 @@ rule______________________9: (
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
 rule________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________11: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________________________12: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________________________12: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule___13: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_________________________14: (
 		alt1 ruleA		// Mom look, a trailing comment.
@@ -2811,13 +2811,13 @@ rule____________________16: (
 	| rule____		# label____
 	| rule________	# label________
 ; // Final trailing comment.
-rule__________________17: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule__________________17: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__																# label__
 	| rule____																# label____
 	| rule________															# label________ {doesItBlend}?
 ;
 rule____________________18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__________________19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________________19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
 // $antlr-format alignColons none, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
@@ -2882,7 +2882,7 @@ rule___1: (
 	| rule________	# label________
 ;
 rule_________2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -2917,7 +2917,7 @@ rule_________________________5: (
 	| rule________	# label________ {doSomething($text);}
 ;					// Final trailing comment.
 rule__6: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -2951,7 +2951,7 @@ rule_______9: (
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_______________10: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_______________10: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_______________11: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule___________________12: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__												# label__
@@ -3098,7 +3098,7 @@ rule____6: (
 	| rule________
 ;
 rule___________7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -3115,7 +3115,7 @@ rule_____________8: (
 	| rule________
 ; // Final trailing comment.
 rule_________________________9: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -3140,7 +3140,7 @@ rule__________14: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____										# label____
 	| rule________									# label________
 ;
-rule_______15: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_______15: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule______________16: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -3214,7 +3214,7 @@ Keyword_______________29: 'Keyword_______________29'	{domeSomething($text);};
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_________________0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -3254,7 +3254,7 @@ rule____4: (
 	| rule________ {doSomething($text);}
 ;
 rule________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -3428,7 +3428,7 @@ rule_______4: (
 	| rule________	# label________
 ;
 rule________________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -3599,7 +3599,7 @@ rule__3: (
 	| rule________
 ;
 rule____4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -3805,7 +3805,7 @@ rule______________________7: (
 	| rule________	# label________ {doSomething($text);}
 ;
 rule_8: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -3961,7 +3961,7 @@ rule_________2: (
 	| rule________
 ;
 rule_________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -3994,7 +3994,7 @@ rule____6: (
 	| rule________	# label________ {doSomething($text);}
 ;
 rule_7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -4043,7 +4043,7 @@ rule______________________13: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____													# label____
 	| rule________												# label________
 ;
-rule_____________________14: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule_____________________14: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -4341,7 +4341,7 @@ rule____________4: (
 	| rule________	# label________
 ;
 rule____________________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -4435,7 +4435,7 @@ rule___________________18: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # lab
 	| rule____					# label____
 	| rule________				# label________ {doesItBlend}?
 ;
-rule______________19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule______________19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
 // $antlr-format alignColons none, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
@@ -4521,7 +4521,7 @@ rule______________3: (
 	| rule________
 ; // Final trailing comment.
 rule____4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -4590,7 +4590,7 @@ rule______15: (		{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ;
-rule_____________________16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_____________________16: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule__________________17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____18: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule______________19: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
@@ -4651,7 +4651,7 @@ Keyword_____________29: 'Keyword_____________29';		// Specified in the interest 
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule____________________0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -4659,7 +4659,7 @@ rule____________________0: (
 	| rule________ {doesItBlend}?
 ;
 rule____________________1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -4692,7 +4692,7 @@ rule_____________________4: (
 	| rule________	{doesItBlend}?
 ;					// Final trailing comment.
 rule________________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -4747,7 +4747,7 @@ rule___________________12: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule____________________13: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule____________________13: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -4926,7 +4926,7 @@ rule___________11: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 ;
 rule____________________12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_________________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________________14: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________________14: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________15: (
 		alt1	{doSomething($text);} ruleA // Mom look, a trailing comment.
 		| alt2	{doSomething($text);} ruleB // And another comment.
@@ -5057,7 +5057,7 @@ rule_______6: (
 	| rule________	# label________
 ;
 rule______________________7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -5087,7 +5087,7 @@ rule_10: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) r
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule___________________11: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule___________________11: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule______________________12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule___14: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
@@ -5204,7 +5204,7 @@ rule__________________2: (
 	| rule________	# label________
 ;
 rule_______________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -5284,7 +5284,7 @@ rule_____________________13: (alt1 {doSomething($text);} ruleA | alt2 {doSomethi
 ;
 rule_____________________14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_____15: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_________16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________16: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule________________________17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_________________18: (
 		alt1		{doSomething($text);} ruleA // Mom look, a trailing comment.
@@ -5420,7 +5420,7 @@ rule_________________7: (
 	| rule________	# label________
 ;
 rule____8: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -5457,7 +5457,7 @@ rule_______________14: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($te
 	| rule____					# label____
 	| rule________				# label________ {doSomething($text);}
 ;
-rule_____________15: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule_____________15: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -5469,7 +5469,7 @@ rule__________________16: (alt1	{doSomething($text);} ruleA | alt2 {doSomething(
 ;
 rule_____________________17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule___18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule____19: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule____19: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -5553,7 +5553,7 @@ rule_________________________2: (
 	| rule________
 ; // Final trailing comment.
 rule_________________________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -5594,7 +5594,7 @@ rule________________________7: (
 	| rule________
 ;
 rule_____8: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -5637,7 +5637,7 @@ rule_______________________16: (	{doesItBlend}? alt1 {doSomething($text);} ruleA
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule___17: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule___17: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -6091,7 +6091,7 @@ rule_______2: (
 	| rule________ # label________
 ;
 rule__________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -6149,7 +6149,7 @@ rule_____________9: (
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule____10:	( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____10:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_11:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________12: (
 		alt1 ruleA // Mom look, a trailing comment.
@@ -6330,7 +6330,7 @@ rule_____9: (
 	| rule________ # label________ {doSomething($text);}
 ; // Final trailing comment.
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule________________________10: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule________________________10: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -6357,7 +6357,7 @@ rule_____________15: (
 	| rule________ # label________
 ; // Final trailing comment.
 rule_____________________16:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__________17:				( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________17:				({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_______________18: (
 			{doesItBlend}? alt1 {doSomething($text);} ruleA	// Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 {doSomething($text);} ruleB	// And another comment.
@@ -6789,7 +6789,7 @@ rule_____________0: (
 	| rule________ # label________ {doSomething($text);}
 ;
 rule_______________________1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -6814,7 +6814,7 @@ rule________________________3: (
 	| rule________
 ; // Final trailing comment.
 rule____________________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -6871,7 +6871,7 @@ rule___________11: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);
 	| rule________ # label________ {doSomething($text);}
 ;
 rule____________12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__13: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+rule__13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -6897,7 +6897,7 @@ rule___________________18: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # lab
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
 ;
-rule_________19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
 // $antlr-format alignColons none, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
@@ -7056,7 +7056,7 @@ rule__12: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule_____________13: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+rule_____________13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -7514,7 +7514,7 @@ rule____________1: (
 	| rule________	# label________ {doesItBlend}?
 ; // Final trailing comment.
 rule___________________2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -7530,7 +7530,7 @@ rule_____________3: (
 	| rule________
 ;
 rule__________________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -7538,7 +7538,7 @@ rule__________________4: (
 	| rule________	# label________ {doesItBlend}?
 ;
 rule_________________________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -7580,7 +7580,7 @@ rule______________________9: (
 	| rule________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_____________________10: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
+rule_____________________10: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																											# label__
 	| rule____																											# label____
 	| rule________																										# label________ {doSomething($text);} {doesItBlend}?
@@ -7609,7 +7609,7 @@ rule__16: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) 
 ;
 rule___17:					( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________________18:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__________________19:	( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________________19:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
 // $antlr-format alignColons none, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
@@ -7684,7 +7684,7 @@ rule______________2: (
 	| rule________	# label________
 ;
 rule___________________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -7757,7 +7757,7 @@ rule______________________12: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____													# label____
 	| rule________												# label________
 ;
-rule_______________________13: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule_______________________13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__																	# label__
 	| rule____																	# label____
 	| rule________																# label________ {doesItBlend}?
@@ -7776,9 +7776,9 @@ rule__________15: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);}
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule____________________16:	( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____________________16:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule______17:				( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_________18:			( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________18:			({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________19:			( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 
 // $antlr-format alignColons none, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
@@ -8199,7 +8199,7 @@ rule____0: (
 	| rule________	# label________
 ;
 rule__________________1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -8242,7 +8242,7 @@ rule__5: (
 	| rule________
 ; // Final trailing comment.
 rule________________6: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -8280,22 +8280,22 @@ rule___________________10: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule__________11: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule__________11: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__														# label__
 	| rule____														# label____
 	| rule________													# label________ {doesItBlend}?
 ;
-rule________________12: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
+rule________________12: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																										# label__
 	| rule____																										# label____
 	| rule________																									# label________ {doSomething($text);} {doesItBlend}?
 ;
-rule_______13: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule_______13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__													# label__
 	| rule____													# label____
 	| rule________												# label________ {doesItBlend}?
 ;
-rule_________14: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________14: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule__________15: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__										# label__
 	| rule____										# label____
@@ -8306,7 +8306,7 @@ rule_________________16: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule__________________17: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________________17: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________________________18: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -8396,7 +8396,7 @@ rule___________________2: (
 	| rule________ {doSomething($text);}
 ;
 rule_______________________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -8481,7 +8481,7 @@ rule___________________14: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule_____________________15: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_____________________15: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_______________16: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -8602,7 +8602,7 @@ rule_____________________4: (
 	| rule________ {doSomething($text);}
 ;
 rule______________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -8676,7 +8676,7 @@ rule___________________16: (
 	| rule________
 ; // Final trailing comment.
 rule____________________17:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_________________18:	( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________________18:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule________19: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -8787,7 +8787,7 @@ rule______________________5: (
 	| rule________
 ;
 rule___6: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -9000,7 +9000,7 @@ rule_____________________10: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____													# label____
 	| rule________												# label________
 ;
-rule__________________11: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule__________________11: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -9108,7 +9108,7 @@ rule________________0: (
 	| rule________ {doSomething($text);}
 ;
 rule___________________1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -9124,7 +9124,7 @@ rule_2: (
 	| rule________
 ;
 rule__________________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -9283,7 +9283,7 @@ rule________________1: (
 	| rule________
 ;
 rule______2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -9333,7 +9333,7 @@ rule____7: (
 	| rule________	# label________
 ;					// Final trailing comment.
 rule_________________________8: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -9488,7 +9488,7 @@ rule___3: (
 	| rule________	# label________
 ;
 rule_________________________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -9653,7 +9653,7 @@ rule_____1: (
 	| rule________
 ;
 rule______________2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -9669,7 +9669,7 @@ rule____________________3: (
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;
 rule___________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -9883,7 +9883,7 @@ rule___________________5: (
 	| rule________	# label________
 ;
 rule____________________6: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -9923,7 +9923,7 @@ rule______12: (		{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule________	# label________ {doesItBlend}?
 ;
 rule______13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_______________14: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule_______________14: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -10006,7 +10006,7 @@ rule________0: (
 	| rule________	# label________
 ;
 rule_______1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -10207,7 +10207,7 @@ rule_____________________2: (
 	| rule________
 ;
 rule_______________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -10376,7 +10376,7 @@ rule__________________0: (
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
 rule_______________________1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -10401,7 +10401,7 @@ rule_____________________3: (
 	| rule________
 ;
 rule_4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -10567,7 +10567,7 @@ rule__1: (
 	| rule________
 ;
 rule________2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -10584,7 +10584,7 @@ rule___________________3: (
 	| rule________	# label________ {doesItBlend}?
 ;					// Final trailing comment.
 rule_____________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -10592,7 +10592,7 @@ rule_____________4: (
 	| rule________	# label________ {doesItBlend}?
 ;
 rule____________________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -10608,7 +10608,7 @@ rule__6: (
 	| rule________	# label________
 ;
 rule_____________________7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -10625,7 +10625,7 @@ rule______________________8: (
 	| rule________	# label________
 ;					// Final trailing comment.
 rule____________________9: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -10754,7 +10754,7 @@ Keyword___29: 'Keyword___29'			{doesItBlend()}?;
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_____________0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -11117,7 +11117,7 @@ rule_______________________2: (
 	| rule________	# label________
 ;
 rule______3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -11210,7 +11210,7 @@ rule_____________________17: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____													# label____
 	| rule________												# label________
 ;
-rule____18: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule____18: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -11288,7 +11288,7 @@ rule_____0: (
 	| rule________	# label________
 ;					// Final trailing comment.
 rule_____1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -11416,23 +11416,23 @@ rule_________________________18: (
 ;					// Final trailing comment.
 rule________19: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword___________0: 'Keyword___________0' -> type(SomethingReallyMeaningful);
+Keyword___________0					: 'Keyword___________0' -> type(SomethingReallyMeaningful);
 Keyword________________________1:
 	'Keyword________________________1' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword_________2:
 	'Keyword_________2' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____3: 'Keyword_____3' {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_____________4: 'Keyword_____________4' -> type(SomethingReallyMeaningful);
-Keyword_________________________5: 'Keyword_________________________5' -> type(SomethingReallyMeaningful);
+Keyword_____3						: 'Keyword_____3' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_____________4				: 'Keyword_____________4' -> type(SomethingReallyMeaningful);
+Keyword_________________________5	: 'Keyword_________________________5' -> type(SomethingReallyMeaningful);
 Keyword______________________6:
 	'Keyword______________________6' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________7: 'Keyword________7' {domeSomething($text);};
-Keyword_______________________8: 'Keyword_______________________8' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword________7					: 'Keyword________7' {domeSomething($text);};
+Keyword_______________________8		: 'Keyword_______________________8' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword_______________________9:
 	'Keyword_______________________9' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
@@ -11442,11 +11442,11 @@ Keyword_10:
 Keyword______________________11:
 	'Keyword______________________11' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____12: 'Keyword_____12' {doesItBlend()}? {domeSomething($text);};
+Keyword_____12						: 'Keyword_____12' {doesItBlend()}? {domeSomething($text);};
 Keyword______________________13:
 	'Keyword______________________13' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____14: 'Keyword_____14' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____14						: 'Keyword_____14' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 Keyword___________________15:
 	'Keyword___________________15' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
@@ -11454,27 +11454,27 @@ Keyword___________________15:
 Keyword_____16:
 	'Keyword_____16' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______________________17: 'Keyword_______________________17' {doesItBlend()}?;
+Keyword_______________________17 : 'Keyword_______________________17' {doesItBlend()}?;
 Keyword_____________________18:
 	'Keyword_____________________18' {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_________________19: 'Keyword_________________19' {domeSomething($text);} {doesItBlend()}?;
-Keyword__________20: 'Keyword__________20' {domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_________________19	: 'Keyword_________________19' {domeSomething($text);} {doesItBlend()}?;
+Keyword__________20			: 'Keyword__________20' {domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
 Keyword____21:
 	'Keyword____21' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword___________22: 'Keyword___________22'; // Specified in the interest of formatting.
+Keyword___________22 : 'Keyword___________22'; // Specified in the interest of formatting.
 Keyword____________________23:
 	'Keyword____________________23' {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword________________________24:
 	'Keyword________________________24' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____________________25: 'Keyword_____________________25' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_______26: 'Keyword_______26' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword____________________27: 'Keyword____________________27' {doesItBlend()}? {domeSomething($text);};
-Keyword____28: 'Keyword____28' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________________________29: 'Keyword________________________29'; // Specified in the interest of formatting.
+Keyword_____________________25		: 'Keyword_____________________25' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_______26					: 'Keyword_______26' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____________________27		: 'Keyword____________________27' {doesItBlend()}? {domeSomething($text);};
+Keyword____28						: 'Keyword____28' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________________________29	: 'Keyword________________________29'; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule______________0: (
@@ -11568,21 +11568,21 @@ rule____10: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule_________11: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule________12: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_________11	: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule________12	: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule___________13: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule__________14: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________14 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule__________________15: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule_______16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule______________________17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_______16					: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________________17	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule___________18: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
@@ -11594,53 +11594,53 @@ rule___________________19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # labe
 	| rule________ # label________ {doesItBlend}?
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_________0: 'Keyword_________0' {domeSomething($text);};								// Specified in the interest of formatting.
-Keyword_________1: 'Keyword_________1' -> mode(SomethingReallyMeaningful);					// Specified in the interest of formatting.
-Keyword_________________2: 'Keyword_________________2';										// Specified in the interest of formatting.
-Keyword__3: 'Keyword__3' {doesItBlend()}? -> mode(SomethingReallyMeaningful);				// Specified in the interest of formatting.
-Keyword___________________4: 'Keyword___________________4' {doesItBlend()}?;				// Specified in the interest of formatting.
+Keyword_________0					: 'Keyword_________0' {domeSomething($text);};						// Specified in the interest of formatting.
+Keyword_________1					: 'Keyword_________1' -> mode(SomethingReallyMeaningful);			// Specified in the interest of formatting.
+Keyword_________________2			: 'Keyword_________________2';										// Specified in the interest of formatting.
+Keyword__3							: 'Keyword__3' {doesItBlend()}? -> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword___________________4			: 'Keyword___________________4' {doesItBlend()}?;					// Specified in the interest of formatting.
 Keyword___________________5:
 	'Keyword___________________5' {domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																							// Specified in the interest of formatting.
-Keyword______________________6: 'Keyword______________________6' {domeSomething($text);};	// Specified in the interest of formatting.
-Keyword__________________7: 'Keyword__________________7' {doesItBlend()}? {domeSomething($text);};
-Keyword________________________8: 'Keyword________________________8' {doesItBlend()}? {domeSomething($text);};
-Keyword_____________9: 'Keyword_____________9' {domeSomething($text);};						// Specified in the interest of formatting.
-Keyword__________10: 'Keyword__________10' -> mode(SomethingReallyMeaningful);
-Keyword_____________________11: 'Keyword_____________________11' {doesItBlend()}?;			// Specified in the interest of formatting.
-Keyword________12: 'Keyword________12' {domeSomething($text);};
-Keyword_____13: 'Keyword_____13' {domeSomething($text);} {doesItBlend()}?;					// Specified in the interest of formatting.
-Keyword__________14: 'Keyword__________14' {doesItBlend()}? {domeSomething($text);};
+;																										// Specified in the interest of formatting.
+Keyword______________________6		: 'Keyword______________________6' {domeSomething($text);};			// Specified in the interest of formatting.
+Keyword__________________7			: 'Keyword__________________7' {doesItBlend()}? {domeSomething($text);};
+Keyword________________________8	: 'Keyword________________________8' {doesItBlend()}? {domeSomething($text);};
+Keyword_____________9				: 'Keyword_____________9' {domeSomething($text);};					// Specified in the interest of formatting.
+Keyword__________10					: 'Keyword__________10' -> mode(SomethingReallyMeaningful);
+Keyword_____________________11		: 'Keyword_____________________11' {doesItBlend()}?;				// Specified in the interest of formatting.
+Keyword________12					: 'Keyword________12' {domeSomething($text);};
+Keyword_____13						: 'Keyword_____13' {domeSomething($text);} {doesItBlend()}?;		// Specified in the interest of formatting.
+Keyword__________14					: 'Keyword__________14' {doesItBlend()}? {domeSomething($text);};
 // $antlr-format groupedAlignments on
-Keyword__________15: 'Keyword__________15' {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword___16: 'Keyword___16' {domeSomething($text);} -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________15	: 'Keyword__________15' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___16		: 'Keyword___16' {domeSomething($text);} -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword__________________17:
 	'Keyword__________________17' {doesItBlend()}? {domeSomething($text);}
 ; // Specified in the interest of formatting.
 Keyword___18:
 	'Keyword___18' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																					// Specified in the interest of formatting.
-Keyword___________19: 'Keyword___________19' -> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword_____20: 'Keyword_____20' {doesItBlend()}?;
+;																						// Specified in the interest of formatting.
+Keyword___________19	: 'Keyword___________19' -> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword_____20			: 'Keyword_____20' {doesItBlend()}?;
 Keyword_________________21:
 	'Keyword_________________21' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____22: 'Keyword____22';
+Keyword____22 : 'Keyword____22';
 Keyword______________23:
 	'Keyword______________23' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword_________________________24:
 	'Keyword_________________________24' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____________________25: 'Keyword____________________25' {domeSomething($text);} {doesItBlend()}?;
-Keyword___26: 'Keyword___26' {domeSomething($text);};
+Keyword____________________25	: 'Keyword____________________25' {domeSomething($text);} {doesItBlend()}?;
+Keyword___26					: 'Keyword___26' {domeSomething($text);};
 Keyword_____________27:
 	'Keyword_____________27' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________________________28: 'Keyword________________________28' {doesItBlend()}?;
-Keyword_____29: 'Keyword_____29' {domeSomething($text);};
+Keyword________________________28	: 'Keyword________________________28' {doesItBlend()}?;
+Keyword_____29						: 'Keyword_____29' {domeSomething($text);};
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule________________________0: (
@@ -11729,68 +11729,68 @@ rule_________9: (
 	| rule________ {doesItBlend}?
 ; // Final trailing comment.
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule____________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___11: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_____________12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___________________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_______________14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________10			: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___11					: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_____________12			: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___________________13	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_______________14		: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________________15: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
 ;
-rule___________________16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule____________17: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule___________________16	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________17			: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule____________18: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule____________________19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____________________19 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_______________________0:
-	'Keyword_______________________0'								{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+	'Keyword_______________________0'									{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword___1: 'Keyword___1' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword________2: 'Keyword________2'								{domeSomething($text);} {doesItBlend()}?;
-Keyword______________________3: 'Keyword______________________3'	{doesItBlend()}? {domeSomething($text);};
-Keyword____________________4: 'Keyword____________________4'		{doesItBlend()}? {domeSomething($text);};
-Keyword__________5: 'Keyword__________5';
-Keyword_______________________6: 'Keyword_______________________6' -> type(SomethingReallyMeaningful);
-Keyword____________7: 'Keyword____________7'; // Specified in the interest of formatting.
-Keyword__________________8: 'Keyword__________________8'; // Specified in the interest of formatting.
-Keyword__9: 'Keyword__9'											{doesItBlend()}?;
-Keyword_____________10: 'Keyword_____________10';
-Keyword________________________11: 'Keyword________________________11'; // Specified in the interest of formatting.
-Keyword________________12: 'Keyword________________12'; // Specified in the interest of formatting.
+Keyword___1							: 'Keyword___1' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword________2					: 'Keyword________2'				{domeSomething($text);} {doesItBlend()}?;
+Keyword______________________3		: 'Keyword______________________3'	{doesItBlend()}? {domeSomething($text);};
+Keyword____________________4		: 'Keyword____________________4'	{doesItBlend()}? {domeSomething($text);};
+Keyword__________5					: 'Keyword__________5';
+Keyword_______________________6		: 'Keyword_______________________6' -> type(SomethingReallyMeaningful);
+Keyword____________7				: 'Keyword____________7'; // Specified in the interest of formatting.
+Keyword__________________8			: 'Keyword__________________8'; // Specified in the interest of formatting.
+Keyword__9							: 'Keyword__9'						{doesItBlend()}?;
+Keyword_____________10				: 'Keyword_____________10';
+Keyword________________________11	: 'Keyword________________________11'; // Specified in the interest of formatting.
+Keyword________________12			: 'Keyword________________12'; // Specified in the interest of formatting.
 Keyword____________________13:
 	'Keyword____________________13' -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____14: 'Keyword____14'										{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____14						: 'Keyword____14'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_____15: 'Keyword_____15' -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword__________16: 'Keyword__________16' {doesItBlend()}? {domeSomething($text);};
-Keyword______17: 'Keyword______17';
-Keyword________________18: 'Keyword________________18'			{domeSomething($text);} {doesItBlend()}?;
-Keyword____________________19: 'Keyword____________________19'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_________20: 'Keyword_________20';
-Keyword_________________21: 'Keyword_________________21' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_____15					: 'Keyword_____15' -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________16				: 'Keyword__________16' {doesItBlend()}? {domeSomething($text);};
+Keyword______17					: 'Keyword______17';
+Keyword________________18		: 'Keyword________________18'		{domeSomething($text);} {doesItBlend()}?;
+Keyword____________________19	: 'Keyword____________________19'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_________20				: 'Keyword_________20';
+Keyword_________________21		: 'Keyword_________________21' {domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword__________22:
 	'Keyword__________22' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword____________23:
 	'Keyword____________23' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____________________24: 'Keyword____________________24'; // Specified in the interest of formatting.
+Keyword____________________24 : 'Keyword____________________24'; // Specified in the interest of formatting.
 Keyword___________________25:
 	'Keyword___________________25' {domeSomething($text);} {doesItBlend()}?
 ; // Specified in the interest of formatting.
-Keyword___________________26: 'Keyword___________________26' -> type(SomethingReallyMeaningful);
-Keyword_____________________27: 'Keyword_____________________27' {doesItBlend()}? {domeSomething($text);};
-Keyword___28: 'Keyword___28'; // Specified in the interest of formatting.
-Keyword_________________________29: 'Keyword_________________________29' {domeSomething($text);} {doesItBlend()}?;
+Keyword___________________26		: 'Keyword___________________26' -> type(SomethingReallyMeaningful);
+Keyword_____________________27		: 'Keyword_____________________27' {doesItBlend()}? {domeSomething($text);};
+Keyword___28						: 'Keyword___28'; // Specified in the interest of formatting.
+Keyword_________________________29	: 'Keyword_________________________29' {domeSomething($text);} {doesItBlend()}?;
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule________0: (
@@ -11851,7 +11851,7 @@ rule_______6: (
 	| rule________ # label________ {doSomething($text);}
 ;
 rule_______________7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -11899,18 +11899,18 @@ rule___12: (
 	| rule____
 	| rule________ {doSomething($text);}
 ; // Final trailing comment.
-rule_________________________13: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+rule_________________________13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
 ;
-rule_14: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+rule_14: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
 ;
-rule__15: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_____________16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__15			: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_____________16	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________________17: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -11935,47 +11935,47 @@ rule__________19: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule________ # label________
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_________________0: 'Keyword_________________0'					{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_1: 'Keyword_1'													{doesItBlend()}? -> type(SomethingReallyMeaningful);		// Specified in the interest of formatting.
-Keyword_____________________2: 'Keyword_____________________2'			{domeSomething($text);} {doesItBlend()}?;
-Keyword_________________________3: 'Keyword_________________________3'	{doesItBlend()}?;
-Keyword________________4: 'Keyword________________4';																				// Specified in the interest of formatting.
-Keyword___________5: 'Keyword___________5'								{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword____6: 'Keyword____6'											{domeSomething($text);} -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword__________________7: 'Keyword__________________7' -> mode(SomethingReallyMeaningful);
-Keyword___________8: 'Keyword___________8';
-Keyword__9: 'Keyword__9'												{domeSomething($text);} {doesItBlend()}?;
-Keyword____10: 'Keyword____10'											{domeSomething($text);} {doesItBlend()}?;
+Keyword_________________0			: 'Keyword_________________0'			{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_1							: 'Keyword_1'							{doesItBlend()}? -> type(SomethingReallyMeaningful);		// Specified in the interest of formatting.
+Keyword_____________________2		: 'Keyword_____________________2'		{domeSomething($text);} {doesItBlend()}?;
+Keyword_________________________3	: 'Keyword_________________________3'	{doesItBlend()}?;
+Keyword________________4			: 'Keyword________________4';																		// Specified in the interest of formatting.
+Keyword___________5					: 'Keyword___________5'					{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword____6						: 'Keyword____6'						{domeSomething($text);} -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword__________________7			: 'Keyword__________________7' -> mode(SomethingReallyMeaningful);
+Keyword___________8					: 'Keyword___________8';
+Keyword__9							: 'Keyword__9'							{domeSomething($text);} {doesItBlend()}?;
+Keyword____10						: 'Keyword____10'						{domeSomething($text);} {doesItBlend()}?;
 Keyword____________________11:
 	'Keyword____________________11' -> mode(SomethingReallyMeaningful)
-;																																	// Specified in the interest of formatting.
-Keyword________________12: 'Keyword________________12'					{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_________13: 'Keyword_________13';																							// Specified in the interest of formatting.
-Keyword____14: 'Keyword____14'											{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+;																																		// Specified in the interest of formatting.
+Keyword________________12			: 'Keyword________________12'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_________13					: 'Keyword_________13';																				// Specified in the interest of formatting.
+Keyword____14						: 'Keyword____14'						{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
-Keyword_______15: 'Keyword_______15' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______15 : 'Keyword_______15' {doesItBlend()}?; // Specified in the interest of formatting.
 Keyword________________________16:
 	'Keyword________________________16' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______17: 'Keyword_______17' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword__________________18: 'Keyword__________________18';
-Keyword____19: 'Keyword____19' -> mode(SomethingReallyMeaningful);
-Keyword_20: 'Keyword_20' {doesItBlend()}?;
-Keyword__21: 'Keyword__21';																					// Specified in the interest of formatting.
-Keyword____22: 'Keyword____22' -> mode(SomethingReallyMeaningful);											// Specified in the interest of formatting.
-Keyword______________23: 'Keyword______________23'	{domeSomething($text);};								// Specified in the interest of formatting.
-Keyword___24: 'Keyword___24'						{domeSomething($text);};								// Specified in the interest of formatting.
-Keyword______________25: 'Keyword______________25'	{doesItBlend()}?;										// Specified in the interest of formatting.
-Keyword______26: 'Keyword______26'					{doesItBlend()}? -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword______27: 'Keyword______27'					{domeSomething($text);};								// Specified in the interest of formatting.
-Keyword________________________28: 'Keyword________________________28';										// Specified in the interest of formatting.
-Keyword___________________29: 'Keyword___________________29' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_______17					: 'Keyword_______17' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword__________________18			: 'Keyword__________________18';
+Keyword____19						: 'Keyword____19' -> mode(SomethingReallyMeaningful);
+Keyword_20							: 'Keyword_20' {doesItBlend()}?;
+Keyword__21							: 'Keyword__21';																	// Specified in the interest of formatting.
+Keyword____22						: 'Keyword____22' -> mode(SomethingReallyMeaningful);								// Specified in the interest of formatting.
+Keyword______________23				: 'Keyword______________23'	{domeSomething($text);};								// Specified in the interest of formatting.
+Keyword___24						: 'Keyword___24'			{domeSomething($text);};								// Specified in the interest of formatting.
+Keyword______________25				: 'Keyword______________25'	{doesItBlend()}?;										// Specified in the interest of formatting.
+Keyword______26						: 'Keyword______26'			{doesItBlend()}? -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword______27						: 'Keyword______27'			{domeSomething($text);};								// Specified in the interest of formatting.
+Keyword________________________28	: 'Keyword________________________28';												// Specified in the interest of formatting.
+Keyword___________________29		: 'Keyword___________________29' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_______________________0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -12000,7 +12000,7 @@ rule_________2: (
 	| rule________ # label________
 ;
 rule____________________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -12008,7 +12008,7 @@ rule____________________3: (
 	| rule________ # label________ {doesItBlend}?
 ;
 rule_______________________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -12057,9 +12057,9 @@ rule____________9: (
 	| rule________
 ; // Final trailing comment.
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule______________________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule______11: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule______________12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________________10	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______11					: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule______________12			: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule___________13: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -12069,9 +12069,9 @@ rule___________13: (
 	| rule____ # label____
 	| rule________ # label________
 ; // Final trailing comment.
-rule______14: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule___15: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule_______________________16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______14					: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule___15						: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_______________________16	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_________________17: (
 			{doesItBlend}? alt1 ruleA	// Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 ruleB	// And another comment.
@@ -12081,56 +12081,56 @@ rule_________________17: (
 	| rule____
 	| rule________ {doesItBlend}?
 ; // Final trailing comment.
-rule______________18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________19: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule______________18	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________19			: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword__________________0: 'Keyword__________________0'			-> mode(SomethingReallyMeaningful);
-Keyword___________1: 'Keyword___________1' {domeSomething($text);}	-> type(SomethingReallyMeaningful);
-Keyword______________________2: 'Keyword______________________2' {domeSomething($text);};
-Keyword__3: 'Keyword__3' {domeSomething($text);};
-Keyword_____________________4: 'Keyword_____________________4' {doesItBlend()}?;
-Keyword_____________5: 'Keyword_____________5' {doesItBlend()}?;
+Keyword__________________0		: 'Keyword__________________0'					-> mode(SomethingReallyMeaningful);
+Keyword___________1				: 'Keyword___________1' {domeSomething($text);}	-> type(SomethingReallyMeaningful);
+Keyword______________________2	: 'Keyword______________________2' {domeSomething($text);};
+Keyword__3						: 'Keyword__3' {domeSomething($text);};
+Keyword_____________________4	: 'Keyword_____________________4' {doesItBlend()}?;
+Keyword_____________5			: 'Keyword_____________5' {doesItBlend()}?;
 Keyword__________6:
-	'Keyword__________6' {doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
+	'Keyword__________6' {doesItBlend()}? {domeSomething($text);}				-> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____________7: 'Keyword____________7' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword______________8: 'Keyword______________8';
+Keyword____________7			: 'Keyword____________7' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword______________8			: 'Keyword______________8';
 Keyword________________________9:
-	'Keyword________________________9' {domeSomething($text);}		-> type(SomethingReallyMeaningful)
+	'Keyword________________________9' {domeSomething($text);}					-> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword__________10: 'Keyword__________10' {doesItBlend()}?;
-Keyword______________11: 'Keyword______________11' {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________12: 'Keyword________12';
+Keyword__________10				: 'Keyword__________10' {doesItBlend()}?;
+Keyword______________11			: 'Keyword______________11' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________12				: 'Keyword________12';
 Keyword_________________13:
-	'Keyword_________________13' {doesItBlend()}?					-> mode(SomethingReallyMeaningful)
+	'Keyword_________________13' {doesItBlend()}?								-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_________14: 'Keyword_________14';
+Keyword_________14				: 'Keyword_________14';
 // $antlr-format groupedAlignments on
-Keyword____________15: 'Keyword____________15' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword______________16: 'Keyword______________16' {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____________________17: 'Keyword_____________________17' {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword____________15			: 'Keyword____________15' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword______________16			: 'Keyword______________16' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________________17	: 'Keyword_____________________17' {doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword______________18:
 	'Keyword______________18' {doesItBlend()}? {domeSomething($text);}
 ; // Specified in the interest of formatting.
-Keyword________________19: 'Keyword________________19' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_20: 'Keyword_20' {domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword____21: 'Keyword____21';
-Keyword___22: 'Keyword___22' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_______________23: 'Keyword_______________23' {doesItBlend()}?;
-Keyword______________24: 'Keyword______________24' -> mode(SomethingReallyMeaningful);
+Keyword________________19	: 'Keyword________________19' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_20					: 'Keyword_20' {domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____21				: 'Keyword____21';
+Keyword___22				: 'Keyword___22' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_______________23	: 'Keyword_______________23' {doesItBlend()}?;
+Keyword______________24		: 'Keyword______________24' -> mode(SomethingReallyMeaningful);
 Keyword_____________25:
 	'Keyword_____________25' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword_______________________26:
 	'Keyword_______________________26' {domeSomething($text);} {doesItBlend()}?
 ; // Specified in the interest of formatting.
-Keyword_______________27: 'Keyword_______________27' {doesItBlend()}?;
+Keyword_______________27 : 'Keyword_______________27' {doesItBlend()}?;
 Keyword_________28:
 	'Keyword_________28' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____________________29: 'Keyword____________________29' -> mode(SomethingReallyMeaningful);
+Keyword____________________29 : 'Keyword____________________29' -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_____________0: (
@@ -12252,70 +12252,70 @@ rule____________________15: (alt1 {doSomething($text);} ruleA | alt2 {doSomethin
 	| rule____ # label____
 	| rule________ # label________ {doSomething($text);}
 ;
-rule______________16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________16 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_________17: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule__________18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________18 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____________________19: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword___________________0:
-	'Keyword___________________0' {domeSomething($text);}							-> type(SomethingReallyMeaningful)
-;																							// Specified in the interest of formatting.
-Keyword_______________1: 'Keyword_______________1' {doesItBlend()}? {domeSomething($text);};
-Keyword____________________2: 'Keyword____________________2' {domeSomething($text);};
-Keyword______3: 'Keyword______3' {domeSomething($text);} {doesItBlend()}?;
+	'Keyword___________________0' {domeSomething($text);}								-> type(SomethingReallyMeaningful)
+;																								// Specified in the interest of formatting.
+Keyword_______________1				: 'Keyword_______________1' {doesItBlend()}? {domeSomething($text);};
+Keyword____________________2		: 'Keyword____________________2' {domeSomething($text);};
+Keyword______3						: 'Keyword______3' {domeSomething($text);} {doesItBlend()}?;
 Keyword_________________________4:
-	'Keyword_________________________4' {doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
+	'Keyword_________________________4' {doesItBlend()}? {domeSomething($text);}		-> type(SomethingReallyMeaningful)
 ;
 Keyword________________5:
-	'Keyword________________5' {domeSomething($text);} {doesItBlend()}?				-> type(SomethingReallyMeaningful)
-;																							// Specified in the interest of formatting.
-Keyword_________________________6: 'Keyword_________________________6' {doesItBlend()}?;	// Specified in the interest of formatting.
-Keyword____7: 'Keyword____7' {doesItBlend()}?										-> mode(SomethingReallyMeaningful);
+	'Keyword________________5' {domeSomething($text);} {doesItBlend()}?					-> type(SomethingReallyMeaningful)
+;																								// Specified in the interest of formatting.
+Keyword_________________________6	: 'Keyword_________________________6' {doesItBlend()}?;		// Specified in the interest of formatting.
+Keyword____7						: 'Keyword____7' {doesItBlend()}?					-> mode(SomethingReallyMeaningful);
 Keyword___________8:
-	'Keyword___________8' {doesItBlend()}? {domeSomething($text);}					-> type(SomethingReallyMeaningful)
-;																							// Specified in the interest of formatting.
-Keyword_____________________9: 'Keyword_____________________9' {domeSomething($text);};		// Specified in the interest of formatting.
-Keyword________________10: 'Keyword________________10';
+	'Keyword___________8' {doesItBlend()}? {domeSomething($text);}						-> type(SomethingReallyMeaningful)
+;																								// Specified in the interest of formatting.
+Keyword_____________________9		: 'Keyword_____________________9' {domeSomething($text);};	// Specified in the interest of formatting.
+Keyword________________10			: 'Keyword________________10';
 Keyword________________________11:
-	'Keyword________________________11' {domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful)
-;																							// Specified in the interest of formatting.
-Keyword_______________12: 'Keyword_______________12' {domeSomething($text);};				// Specified in the interest of formatting.
-Keyword____________________13: 'Keyword____________________13' {doesItBlend()}?		-> type(SomethingReallyMeaningful);
+	'Keyword________________________11' {domeSomething($text);} {doesItBlend()}?		-> type(SomethingReallyMeaningful)
+;																								// Specified in the interest of formatting.
+Keyword_______________12			: 'Keyword_______________12' {domeSomething($text);};		// Specified in the interest of formatting.
+Keyword____________________13		: 'Keyword____________________13' {doesItBlend()}?	-> type(SomethingReallyMeaningful);
 Keyword________________14:
-	'Keyword________________14' {doesItBlend()}?									-> mode(SomethingReallyMeaningful)
-;																							// Specified in the interest of formatting.
+	'Keyword________________14' {doesItBlend()}?										-> mode(SomethingReallyMeaningful)
+;																								// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 Keyword__________________15:
 	'Keyword__________________15' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;
-Keyword_______________16: 'Keyword_______________16' {domeSomething($text);};
-Keyword______________17: 'Keyword______________17';
-Keyword_________18: 'Keyword_________18' {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword___________19: 'Keyword___________19' {domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____20: 'Keyword_____20' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_______________16	: 'Keyword_______________16' {domeSomething($text);};
+Keyword______________17		: 'Keyword______________17';
+Keyword_________18			: 'Keyword_________18' {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword___________19		: 'Keyword___________19' {domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____20				: 'Keyword_____20' {domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword_________21:
 	'Keyword_________21' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;																			// Specified in the interest of formatting.
-Keyword_____________22: 'Keyword_____________22' {domeSomething($text);};	// Specified in the interest of formatting.
+Keyword_____________22 : 'Keyword_____________22' {domeSomething($text);};	// Specified in the interest of formatting.
 Keyword_____23:
 	'Keyword_____23' {domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																				// Specified in the interest of formatting.
-Keyword____24: 'Keyword____24' {domeSomething($text);};							// Specified in the interest of formatting.
-Keyword__________25: 'Keyword__________25' {domeSomething($text);};				// Specified in the interest of formatting.
-Keyword____26: 'Keyword____26' {doesItBlend()}?;								// Specified in the interest of formatting.
-Keyword______27: 'Keyword______27' {domeSomething($text);} {doesItBlend()}?;	// Specified in the interest of formatting.
-Keyword________________________28: 'Keyword________________________28' -> mode(SomethingReallyMeaningful);
-Keyword________________29: 'Keyword________________29';
+;																									// Specified in the interest of formatting.
+Keyword____24						: 'Keyword____24' {domeSomething($text);};						// Specified in the interest of formatting.
+Keyword__________25					: 'Keyword__________25' {domeSomething($text);};				// Specified in the interest of formatting.
+Keyword____26						: 'Keyword____26' {doesItBlend()}?;								// Specified in the interest of formatting.
+Keyword______27						: 'Keyword______27' {domeSomething($text);} {doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword________________________28	: 'Keyword________________________28' -> mode(SomethingReallyMeaningful);
+Keyword________________29			: 'Keyword________________29';
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_______0: (
@@ -12404,7 +12404,7 @@ rule_____________________9: (
 	| rule________
 ; // Final trailing comment.
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule___________________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___________________10 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________________11: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -12415,7 +12415,7 @@ rule__12: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) 
 	| rule____ # label____
 	| rule________ # label________ {doSomething($text);}
 ;
-rule____13: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____13 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_____________14: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -12439,7 +12439,7 @@ rule___________________16: (alt1 {doSomething($text);} ruleA | alt2 {doSomething
 	| rule____ # label____
 	| rule________ # label________ {doSomething($text);}
 ;
-rule_____17: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_____17 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule______________18: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -12451,50 +12451,50 @@ rule________19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule________ # label________ {doesItBlend}?
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword________________0:
-	'Keyword________________0'									{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
+	'Keyword________________0'										{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword______1: 'Keyword______1'								{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____2: 'Keyword_____2'									{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________________3: 'Keyword________________3'			{domeSomething($text);} {doesItBlend()}?;
-Keyword___________________4: 'Keyword___________________4'		{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
-Keyword_______________5: 'Keyword_______________5'				{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
-Keyword____________6: 'Keyword____________6';
-Keyword______7: 'Keyword______7'								{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__________8: 'Keyword__________8'																	-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword___9: 'Keyword___9'										{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
-Keyword____________10: 'Keyword____________10'					{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
+Keyword______1					: 'Keyword______1'					{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____2					: 'Keyword_____2'					{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________________3		: 'Keyword________________3'		{domeSomething($text);} {doesItBlend()}?;
+Keyword___________________4		: 'Keyword___________________4'		{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
+Keyword_______________5			: 'Keyword_______________5'			{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
+Keyword____________6			: 'Keyword____________6';
+Keyword______7					: 'Keyword______7'					{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__________8				: 'Keyword__________8'															-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___9						: 'Keyword___9'						{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
+Keyword____________10			: 'Keyword____________10'			{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
 Keyword________________________11:
-	'Keyword________________________11'							{doesItBlend()}?							-> mode(SomethingReallyMeaningful)
+	'Keyword________________________11'								{doesItBlend()}?							-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword_____________________12:
-	'Keyword_____________________12'																		-> mode(SomethingReallyMeaningful)
+	'Keyword_____________________12'																			-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_13: 'Keyword_13'										{domeSomething($text);} {doesItBlend()}?	-> mode(SomethingReallyMeaningful);
-Keyword___________________14: 'Keyword___________________14'	{doesItBlend()}?;
+Keyword_13						: 'Keyword_13'						{domeSomething($text);} {doesItBlend()}?	-> mode(SomethingReallyMeaningful);
+Keyword___________________14	: 'Keyword___________________14'	{doesItBlend()}?;
 // $antlr-format groupedAlignments on
 Keyword__________________15:
 	'Keyword__________________15' -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword___16: 'Keyword___16' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword______17: 'Keyword______17'					{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____________18: 'Keyword_____________18'	{doesItBlend()}?;
-Keyword___19: 'Keyword___19'						{domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___16			: 'Keyword___16' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______17			: 'Keyword______17'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____________18	: 'Keyword_____________18'	{doesItBlend()}?;
+Keyword___19			: 'Keyword___19'			{domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword__________________20:
 	'Keyword__________________20' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______________21: 'Keyword_______________21';
-Keyword_______22: 'Keyword_______22'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_______23: 'Keyword_______23'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______________21	: 'Keyword_______________21';
+Keyword_______22			: 'Keyword_______22'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_______23			: 'Keyword_______23'	{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword______________________24:
 	'Keyword______________________24' {domeSomething($text);} {doesItBlend()}?
 ; // Specified in the interest of formatting.
-Keyword_________________________25: 'Keyword_________________________25'	-> mode(SomethingReallyMeaningful);
-Keyword_____________________26: 'Keyword_____________________26'			-> mode(SomethingReallyMeaningful);
-Keyword_______27: 'Keyword_______27'					{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________________28: 'Keyword________________28'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_________________________25	: 'Keyword_________________________25'	-> mode(SomethingReallyMeaningful);
+Keyword_____________________26		: 'Keyword_____________________26'		-> mode(SomethingReallyMeaningful);
+Keyword_______27					: 'Keyword_______27'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________________28			: 'Keyword________________28'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword_______________________29:
 	'Keyword_______________________29' {domeSomething($text);}
 ; // Specified in the interest of formatting.
@@ -12576,7 +12576,7 @@ rule________8: (
 	| rule________ # label________
 ;
 rule________9: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -12593,7 +12593,7 @@ rule__10: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule___________11: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+rule___________11: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -12607,7 +12607,7 @@ rule_____________12: (
 	| rule____ # label____
 	| rule________ # label________
 ; // Final trailing comment.
-rule_____13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule________14: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -12622,59 +12622,59 @@ rule_________________________15: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule_________________16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________________17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_________________16	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________________17	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_________________18: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule____________19: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule____________19: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_______________0: 'Keyword_______________0'																		-> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword____________1: 'Keyword____________1';
-Keyword___________________2: 'Keyword___________________2'					{domeSomething($text);};														// Specified in the interest of formatting.
-Keyword________________3: 'Keyword________________3'						{doesItBlend()}?;																// Specified in the interest of formatting.
+Keyword_______________0				: 'Keyword_______________0'															-> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword____________1				: 'Keyword____________1';
+Keyword___________________2			: 'Keyword___________________2'			{domeSomething($text);};														// Specified in the interest of formatting.
+Keyword________________3			: 'Keyword________________3'			{doesItBlend()}?;																// Specified in the interest of formatting.
 Keyword_______________4:
 	'Keyword_______________4'												{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
 ;																																							// Specified in the interest of formatting.
-Keyword______5: 'Keyword______5';																															// Specified in the interest of formatting.
-Keyword__________6: 'Keyword__________6'									{doesItBlend()}? {domeSomething($text);};
+Keyword______5						: 'Keyword______5';																										// Specified in the interest of formatting.
+Keyword__________6					: 'Keyword__________6'					{doesItBlend()}? {domeSomething($text);};
 Keyword___________7:
 	'Keyword___________7'													{domeSomething($text);} {doesItBlend()}?	-> mode(SomethingReallyMeaningful)
 ;																																							// Specified in the interest of formatting.
-Keyword__________8: 'Keyword__________8'									{doesItBlend()}?;
-Keyword_____________9: 'Keyword_____________9'								{doesItBlend()}? {domeSomething($text);};
-Keyword________________10: 'Keyword________________10'						{doesItBlend()}?;
-Keyword_________________________11: 'Keyword_________________________11'	{domeSomething($text);} {doesItBlend()}?;
-Keyword_________________________12: 'Keyword_________________________12'	{domeSomething($text);};
-Keyword_______________13: 'Keyword_______________13'																	-> type(SomethingReallyMeaningful);
-Keyword_____14: 'Keyword_____14'											{domeSomething($text);}						-> type(SomethingReallyMeaningful);
+Keyword__________8					: 'Keyword__________8'					{doesItBlend()}?;
+Keyword_____________9				: 'Keyword_____________9'				{doesItBlend()}? {domeSomething($text);};
+Keyword________________10			: 'Keyword________________10'			{doesItBlend()}?;
+Keyword_________________________11	: 'Keyword_________________________11'	{domeSomething($text);} {doesItBlend()}?;
+Keyword_________________________12	: 'Keyword_________________________12'	{domeSomething($text);};
+Keyword_______________13			: 'Keyword_______________13'														-> type(SomethingReallyMeaningful);
+Keyword_____14						: 'Keyword_____14'						{domeSomething($text);}						-> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
-Keyword___15: 'Keyword___15'			{domeSomething($text);};
-Keyword________16: 'Keyword________16'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_____17: 'Keyword_____17'		{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword____________________18: 'Keyword____________________18' -> type(SomethingReallyMeaningful);
-Keyword_19: 'Keyword_19' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___15					: 'Keyword___15'		{domeSomething($text);};
+Keyword________16				: 'Keyword________16'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_____17					: 'Keyword_____17'		{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword____________________18	: 'Keyword____________________18' -> type(SomethingReallyMeaningful);
+Keyword_19						: 'Keyword_19' {doesItBlend()}?; // Specified in the interest of formatting.
 Keyword__________________20:
 	'Keyword__________________20' -> mode(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword___________________21: 'Keyword___________________21';	// Specified in the interest of formatting.
-Keyword___________________22: 'Keyword___________________22'	{domeSomething($text);};
-Keyword________23: 'Keyword________23'							{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword___________________24: 'Keyword___________________24'	{doesItBlend()}?;
-Keyword_________25: 'Keyword_________25'						{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__________________26: 'Keyword__________________26'		{domeSomething($text);};
+;																	// Specified in the interest of formatting.
+Keyword___________________21	: 'Keyword___________________21';	// Specified in the interest of formatting.
+Keyword___________________22	: 'Keyword___________________22'	{domeSomething($text);};
+Keyword________23				: 'Keyword________23'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___________________24	: 'Keyword___________________24'	{doesItBlend()}?;
+Keyword_________25				: 'Keyword_________25'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________________26		: 'Keyword__________________26'		{domeSomething($text);};
 Keyword___________________27:
 	'Keyword___________________27' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;
-Keyword_28: 'Keyword_28' -> mode(SomethingReallyMeaningful);
+Keyword_28 : 'Keyword_28' -> mode(SomethingReallyMeaningful);
 Keyword_______________________29:
 	'Keyword_______________________29' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
@@ -12706,7 +12706,7 @@ rule_2: (
 	| rule________
 ;
 rule_______________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -12739,7 +12739,7 @@ rule____6: (
 	| rule________ {doSomething($text);}
 ;
 rule__7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -12764,67 +12764,67 @@ rule________9: (
 	| rule________ {doesItBlend}?
 ; // Final trailing comment.
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule____________________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________________________11: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule________________12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________________10		: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________________________11	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________________12			: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________________13: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule____14: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____14 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_______________________15: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule_________16: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule______17: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule________________18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule____________19: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
+rule_________16			: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule______17			: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule________________18	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________19: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doSomething($text);} {doesItBlend}?
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword________________0:
 	'Keyword________________0' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______1: 'Keyword_______1' {domeSomething($text);};
-Keyword_______________________2: 'Keyword_______________________2' {doesItBlend()}?;
-Keyword____________________3: 'Keyword____________________3' {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword________________4: 'Keyword________________4' {doesItBlend()}?;
-Keyword___________________5: 'Keyword___________________5' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_______6: 'Keyword_______6' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_______1						: 'Keyword_______1' {domeSomething($text);};
+Keyword_______________________2		: 'Keyword_______________________2' {doesItBlend()}?;
+Keyword____________________3		: 'Keyword____________________3' {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword________________4			: 'Keyword________________4' {doesItBlend()}?;
+Keyword___________________5			: 'Keyword___________________5' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______6						: 'Keyword_______6' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword__________________7:
 	'Keyword__________________7' {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____________________8: 'Keyword_____________________8' -> type(SomethingReallyMeaningful);
-Keyword_________________________9: 'Keyword_________________________9' {doesItBlend()}?;
-Keyword____________10: 'Keyword____________10' {domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___________________11: 'Keyword___________________11' {domeSomething($text);};
-Keyword_______________________12: 'Keyword_______________________12' {doesItBlend()}? {domeSomething($text);};
+Keyword_____________________8		: 'Keyword_____________________8' -> type(SomethingReallyMeaningful);
+Keyword_________________________9	: 'Keyword_________________________9' {doesItBlend()}?;
+Keyword____________10				: 'Keyword____________10' {domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___________________11		: 'Keyword___________________11' {domeSomething($text);};
+Keyword_______________________12	: 'Keyword_______________________12' {doesItBlend()}? {domeSomething($text);};
 Keyword______________________13:
 	'Keyword______________________13' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________________________14: 'Keyword________________________14' {domeSomething($text);};
+Keyword________________________14	: 'Keyword________________________14' {domeSomething($text);};
 // $antlr-format groupedAlignments on
-Keyword_______________________15: 'Keyword_______________________15' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword____16: 'Keyword____16' {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______________17: 'Keyword_______________17' -> type(SomethingReallyMeaningful);
-Keyword_________18: 'Keyword_________18' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_________19: 'Keyword_________19' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword__20: 'Keyword__20' {doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword____21: 'Keyword____21' {doesItBlend()}? {domeSomething($text);};
-Keyword___22: 'Keyword___22' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______________________15	: 'Keyword_______________________15' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword____16						: 'Keyword____16' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______________17			: 'Keyword_______________17' -> type(SomethingReallyMeaningful);
+Keyword_________18					: 'Keyword_________18' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_________19					: 'Keyword_________19' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword__20							: 'Keyword__20' {doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____21						: 'Keyword____21' {doesItBlend()}? {domeSomething($text);};
+Keyword___22						: 'Keyword___22' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_________________________23:
 	'Keyword_________________________23' {doesItBlend()}?
 ; // Specified in the interest of formatting.
-Keyword__24: 'Keyword__24' -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword___________25: 'Keyword___________25' {doesItBlend()}?;
-Keyword__________________26: 'Keyword__________________26' {doesItBlend()}?;
+Keyword__24					: 'Keyword__24' -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___________25		: 'Keyword___________25' {doesItBlend()}?;
+Keyword__________________26	: 'Keyword__________________26' {doesItBlend()}?;
 Keyword____________________27:
 	'Keyword____________________27' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -12917,7 +12917,7 @@ rule____________________9: (
 	| rule________	# label________ {doesItBlend}?
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule________________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________________10 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________________11: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -12932,7 +12932,7 @@ rule______________________12: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# l
 	| rule____																	# label____
 	| rule________																# label________ {doesItBlend}?
 ;
-rule__________________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________________13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________14: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__											# label__
 	| rule____											# label____
@@ -12947,8 +12947,8 @@ rule________________________15: (
 	| rule____
 	| rule________ {doSomething($text);}
 ; // Final trailing comment.
-rule____________16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________16	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__17			: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__18: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -12964,51 +12964,51 @@ rule_______________19: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule________										# label________
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_______________0: 'Keyword_______________0' {doesItBlend()}?;
-Keyword_____________1: 'Keyword_____________1' {doesItBlend()}? {domeSomething($text);};	// Specified in the interest of formatting.
-Keyword____2: 'Keyword____2' {domeSomething($text);};										// Specified in the interest of formatting.
-Keyword_3: 'Keyword_3';
+Keyword_______________0				: 'Keyword_______________0' {doesItBlend()}?;
+Keyword_____________1				: 'Keyword_____________1' {doesItBlend()}? {domeSomething($text);};	// Specified in the interest of formatting.
+Keyword____2						: 'Keyword____2' {domeSomething($text);};							// Specified in the interest of formatting.
+Keyword_3							: 'Keyword_3';
 Keyword_____________4:
 	'Keyword_____________4' {doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																							// Specified in the interest of formatting.
-Keyword________________5: 'Keyword________________5';										// Specified in the interest of formatting.
-Keyword____________________6: 'Keyword____________________6' -> type(SomethingReallyMeaningful);
-Keyword________7: 'Keyword________7' -> mode(SomethingReallyMeaningful);
+;																										// Specified in the interest of formatting.
+Keyword________________5			: 'Keyword________________5';										// Specified in the interest of formatting.
+Keyword____________________6		: 'Keyword____________________6' -> type(SomethingReallyMeaningful);
+Keyword________7					: 'Keyword________7' -> mode(SomethingReallyMeaningful);
 Keyword_____8:
 	'Keyword_____8' {domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																							// Specified in the interest of formatting.
+;																										// Specified in the interest of formatting.
 Keyword__________9:
 	'Keyword__________9' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																							// Specified in the interest of formatting.
-Keyword_________________________10: 'Keyword_________________________10';					// Specified in the interest of formatting.
-Keyword__11: 'Keyword__11' {doesItBlend()}? {domeSomething($text);};						// Specified in the interest of formatting.
+;																										// Specified in the interest of formatting.
+Keyword_________________________10	: 'Keyword_________________________10';								// Specified in the interest of formatting.
+Keyword__11							: 'Keyword__11' {doesItBlend()}? {domeSomething($text);};			// Specified in the interest of formatting.
 Keyword__________________12:
 	'Keyword__________________12' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																							// Specified in the interest of formatting.
-Keyword__________________13: 'Keyword__________________13' {domeSomething($text);};			// Specified in the interest of formatting.
-Keyword____________________14: 'Keyword____________________14';								// Specified in the interest of formatting.
+;																										// Specified in the interest of formatting.
+Keyword__________________13			: 'Keyword__________________13' {domeSomething($text);};			// Specified in the interest of formatting.
+Keyword____________________14		: 'Keyword____________________14';									// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_________________15: 'Keyword_________________15' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________________15 : 'Keyword_________________15' {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_________16:
 	'Keyword_________16' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword______________________17: 'Keyword______________________17' {doesItBlend()}? {domeSomething($text);};
-Keyword______18: 'Keyword______18' {doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword________________19: 'Keyword________________19' {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_______________20: 'Keyword_______________20' {doesItBlend()}?;
-Keyword___________21: 'Keyword___________21' -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword_22: 'Keyword_22' {doesItBlend()}? -> type(SomethingReallyMeaningful);		// Specified in the interest of formatting.
-Keyword__________________23: 'Keyword__________________23' {doesItBlend()}?;		// Specified in the interest of formatting.
-Keyword_______24: 'Keyword_______24' -> type(SomethingReallyMeaningful);			// Specified in the interest of formatting.
-Keyword___________25: 'Keyword___________25' {doesItBlend()}?;
-Keyword____26: 'Keyword____26' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword______________________17	: 'Keyword______________________17' {doesItBlend()}? {domeSomething($text);};
+Keyword______18					: 'Keyword______18' {doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword________________19		: 'Keyword________________19' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_______________20		: 'Keyword_______________20' {doesItBlend()}?;
+Keyword___________21			: 'Keyword___________21' -> type(SomethingReallyMeaningful);		// Specified in the interest of formatting.
+Keyword_22						: 'Keyword_22' {doesItBlend()}? -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword__________________23		: 'Keyword__________________23' {doesItBlend()}?;					// Specified in the interest of formatting.
+Keyword_______24				: 'Keyword_______24' -> type(SomethingReallyMeaningful);			// Specified in the interest of formatting.
+Keyword___________25			: 'Keyword___________25' {doesItBlend()}?;
+Keyword____26					: 'Keyword____26' {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_______27:
 	'Keyword_______27' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____28: 'Keyword_____28' -> type(SomethingReallyMeaningful);
-Keyword____29: 'Keyword____29' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____28	: 'Keyword_____28' -> type(SomethingReallyMeaningful);
+Keyword____29	: 'Keyword____29' {domeSomething($text);}; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule____________________0: (
@@ -13094,7 +13094,7 @@ rule_________________9: (
 	| rule________ {doSomething($text);}
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_________10: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_________10 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule____11: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -13131,7 +13131,7 @@ rule________________________14: (
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ; // Final trailing comment.
-rule_____________________15: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____________________15 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________________16: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__													# label__
 	| rule____													# label____
@@ -13151,35 +13151,35 @@ rule_18: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) r
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule___19: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule___19 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword_______0: 'Keyword_______0'									{domeSomething($text);};
-Keyword___1: 'Keyword___1'; // Specified in the interest of formatting.
-Keyword____2: 'Keyword____2';
-Keyword__________3: 'Keyword__________3' -> type(SomethingReallyMeaningful);
-Keyword______________________4: 'Keyword______________________4'	{domeSomething($text);};
-Keyword_5: 'Keyword_5'												{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__________6: 'Keyword__________6' -> mode(SomethingReallyMeaningful);
-Keyword_________________7: 'Keyword_________________7'				{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______8: 'Keyword_______8'									{doesItBlend()}?;
-Keyword___9: 'Keyword___9' -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_____10: 'Keyword_____10'									{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword____11: 'Keyword____11'										{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword______________12: 'Keyword______________12' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_____13: 'Keyword_____13'									{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__14: 'Keyword__14'											{domeSomething($text);};
+Keyword_______0					: 'Keyword_______0'					{domeSomething($text);};
+Keyword___1						: 'Keyword___1'; // Specified in the interest of formatting.
+Keyword____2					: 'Keyword____2';
+Keyword__________3				: 'Keyword__________3' -> type(SomethingReallyMeaningful);
+Keyword______________________4	: 'Keyword______________________4'	{domeSomething($text);};
+Keyword_5						: 'Keyword_5'						{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________6				: 'Keyword__________6' -> mode(SomethingReallyMeaningful);
+Keyword_________________7		: 'Keyword_________________7'		{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______8					: 'Keyword_______8'					{doesItBlend()}?;
+Keyword___9						: 'Keyword___9' -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_____10					: 'Keyword_____10'					{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword____11					: 'Keyword____11'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword______________12			: 'Keyword______________12' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_____13					: 'Keyword_____13'					{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__14						: 'Keyword__14'						{domeSomething($text);};
 // $antlr-format groupedAlignments on
-Keyword___________15: 'Keyword___________15'; // Specified in the interest of formatting.
+Keyword___________15 : 'Keyword___________15'; // Specified in the interest of formatting.
 Keyword__________16:
 	'Keyword__________16' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____17: 'Keyword_____17' -> mode(SomethingReallyMeaningful);
+Keyword_____17 : 'Keyword_____17' -> mode(SomethingReallyMeaningful);
 Keyword__________________18:
 	'Keyword__________________18' {domeSomething($text);} {doesItBlend()}?
 ; // Specified in the interest of formatting.
-Keyword_____19: 'Keyword_____19' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____19 : 'Keyword_____19' {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword__________________20:
 	'Keyword__________________20' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -13189,7 +13189,7 @@ Keyword__________21:
 Keyword______________________22:
 	'Keyword______________________22' {domeSomething($text);}
 ; // Specified in the interest of formatting.
-Keyword_23: 'Keyword_23' -> type(SomethingReallyMeaningful);
+Keyword_23 : 'Keyword_23' -> type(SomethingReallyMeaningful);
 Keyword______________24:
 	'Keyword______________24' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -13199,13 +13199,13 @@ Keyword____________25:
 Keyword____________________26:
 	'Keyword____________________26' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_27: 'Keyword_27';
-Keyword__28: 'Keyword__28'			{domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword______29: 'Keyword______29'	{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_27		: 'Keyword_27';
+Keyword__28		: 'Keyword__28'		{domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______29	: 'Keyword______29'	{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_______________0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -13230,7 +13230,7 @@ rule_________________________2: (
 	| rule________	# label________ {doesItBlend}?
 ; // Final trailing comment.
 rule______3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -13247,7 +13247,7 @@ rule________________________4: (
 	| rule________
 ; // Final trailing comment.
 rule___5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -13255,7 +13255,7 @@ rule___5: (
 	| rule________ {doesItBlend}?
 ;
 rule__________6: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -13297,13 +13297,13 @@ rule__________________10: (
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ; // Final trailing comment.
-rule_______________________11: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_______________________11 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____________________12: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__												# label__
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule______________________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________________13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________14: (
 			{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 ruleB // And another comment.
@@ -13322,7 +13322,7 @@ rule_________________15: (
 	| rule____		# label____
 	| rule________	# label________
 ; // Final trailing comment.
-rule____16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____16 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____17: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -13332,56 +13332,56 @@ rule____17: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule________________________18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule______________19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________________________18	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________19			: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_________________________0: 'Keyword_________________________0'		{domeSomething($text);};
-Keyword__________________1: 'Keyword__________________1'					{doesItBlend()}?;
-Keyword_______________2: 'Keyword_______________2' -> mode(SomethingReallyMeaningful);
-Keyword_______________3: 'Keyword_______________3';
-Keyword_______4: 'Keyword_______4'											{domeSomething($text);} {doesItBlend()}?;
-Keyword_________5: 'Keyword_________5';
+Keyword_________________________0	: 'Keyword_________________________0'	{domeSomething($text);};
+Keyword__________________1			: 'Keyword__________________1'			{doesItBlend()}?;
+Keyword_______________2				: 'Keyword_______________2' -> mode(SomethingReallyMeaningful);
+Keyword_______________3				: 'Keyword_______________3';
+Keyword_______4						: 'Keyword_______4'						{domeSomething($text);} {doesItBlend()}?;
+Keyword_________5					: 'Keyword_________5';
 Keyword________________________6:
 	'Keyword________________________6' -> type(SomethingReallyMeaningful)
 ;																														// Specified in the interest of formatting.
-Keyword_____________________7: 'Keyword_____________________7'				{domeSomething($text);};					// Specified in the interest of formatting.
-Keyword____________________8: 'Keyword____________________8' -> mode(SomethingReallyMeaningful);
-Keyword________9: 'Keyword________9'										{doesItBlend()}?;							// Specified in the interest of formatting.
-Keyword_____________________10: 'Keyword_____________________10';														// Specified in the interest of formatting.
-Keyword_________________________11: 'Keyword_________________________11'	{domeSomething($text);};
+Keyword_____________________7		: 'Keyword_____________________7'		{domeSomething($text);};					// Specified in the interest of formatting.
+Keyword____________________8		: 'Keyword____________________8' -> mode(SomethingReallyMeaningful);
+Keyword________9					: 'Keyword________9'					{doesItBlend()}?;							// Specified in the interest of formatting.
+Keyword_____________________10		: 'Keyword_____________________10';													// Specified in the interest of formatting.
+Keyword_________________________11	: 'Keyword_________________________11'	{domeSomething($text);};
 Keyword________________________12:
 	'Keyword________________________12' -> mode(SomethingReallyMeaningful)
 ;																														// Specified in the interest of formatting.
-Keyword___________________13: 'Keyword___________________13';															// Specified in the interest of formatting.
-Keyword_____14: 'Keyword_____14'											{doesItBlend()}? {domeSomething($text);};	// Specified in the interest of formatting.
+Keyword___________________13		: 'Keyword___________________13';													// Specified in the interest of formatting.
+Keyword_____14						: 'Keyword_____14'						{doesItBlend()}? {domeSomething($text);};	// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword__________15: 'Keyword__________15'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_____16: 'Keyword_____16'			{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________15	: 'Keyword__________15'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_____16		: 'Keyword_____16'		{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword_____________________17:
 	'Keyword_____________________17' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword__________18: 'Keyword__________18' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__________18 : 'Keyword__________18' {doesItBlend()}?; // Specified in the interest of formatting.
 Keyword____19:
 	'Keyword____19' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;																		// Specified in the interest of formatting.
-Keyword______________20: 'Keyword______________20' {doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword______________20 : 'Keyword______________20' {doesItBlend()}?;	// Specified in the interest of formatting.
 Keyword____________________21:
 	'Keyword____________________21' {doesItBlend()}? {domeSomething($text);}
-;																			// Specified in the interest of formatting.
-Keyword________________22: 'Keyword________________22' {doesItBlend()}?;	// Specified in the interest of formatting.
-Keyword______________________23: 'Keyword______________________23' -> mode(SomethingReallyMeaningful);
+;																				// Specified in the interest of formatting.
+Keyword________________22		: 'Keyword________________22' {doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword______________________23	: 'Keyword______________________23' -> mode(SomethingReallyMeaningful);
 Keyword____24:
 	'Keyword____24' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______________25: 'Keyword_______________25' {doesItBlend()}?;
+Keyword_______________25 : 'Keyword_______________25' {doesItBlend()}?;
 Keyword______________________26:
 	'Keyword______________________26' {domeSomething($text);}
 ; // Specified in the interest of formatting.
-Keyword_________27: 'Keyword_________27'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_28: 'Keyword_28'					{doesItBlend()}?;	// Specified in the interest of formatting.
-Keyword________29: 'Keyword________29'		{doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword_________27	: 'Keyword_________27'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_28			: 'Keyword_28'			{doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword________29	: 'Keyword________29'	{doesItBlend()}?;	// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_______________0: (
@@ -13435,7 +13435,7 @@ rule______________________5: (
 	| rule________	# label________ {doSomething($text);}
 ;
 rule___________6: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -13483,8 +13483,8 @@ rule_________________________11: (
 	| rule____		# label____
 	| rule________	# label________
 ; // Final trailing comment.
-rule______12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______12		: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________13	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_____________________14: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																							# label__
 	| rule____																							# label____
@@ -13499,8 +13499,8 @@ rule____________________15: (
 	| rule____
 	| rule________ {doSomething($text);}
 ; // Final trailing comment.
-rule_________16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________________17: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule_________16 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________________17: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__															# label__
 	| rule____															# label____
 	| rule________														# label________ {doesItBlend}?
@@ -13510,56 +13510,56 @@ rule______18: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} rul
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule__________________19: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________________19 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword_0: 'Keyword_0' {domeSomething($text);}								-> mode(SomethingReallyMeaningful);
-Keyword__________1: 'Keyword__________1' {domeSomething($text);}			-> type(SomethingReallyMeaningful);
-Keyword_________________________2: 'Keyword_________________________2' {doesItBlend()}?;
-Keyword_______________________3: 'Keyword_______________________3';
-Keyword_____________________4: 'Keyword_____________________4';
+Keyword_0							: 'Keyword_0' {domeSomething($text);}			-> mode(SomethingReallyMeaningful);
+Keyword__________1					: 'Keyword__________1' {domeSomething($text);}	-> type(SomethingReallyMeaningful);
+Keyword_________________________2	: 'Keyword_________________________2' {doesItBlend()}?;
+Keyword_______________________3		: 'Keyword_______________________3';
+Keyword_____________________4		: 'Keyword_____________________4';
 Keyword___5:
-	'Keyword___5' {domeSomething($text);} {doesItBlend()}?					-> type(SomethingReallyMeaningful)
+	'Keyword___5' {domeSomething($text);} {doesItBlend()}?							-> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____________________6: 'Keyword_____________________6'				-> mode(SomethingReallyMeaningful);
-Keyword____________7: 'Keyword____________7' {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__________________8: 'Keyword__________________8' {doesItBlend()}?	-> mode(SomethingReallyMeaningful);
-Keyword___________________9: 'Keyword___________________9'					-> mode(SomethingReallyMeaningful);
-Keyword__________________10: 'Keyword__________________10' {doesItBlend()}? {domeSomething($text);};
-Keyword__________________11: 'Keyword__________________11'; // Specified in the interest of formatting.
+Keyword_____________________6		: 'Keyword_____________________6'				-> mode(SomethingReallyMeaningful);
+Keyword____________7				: 'Keyword____________7' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________________8			: 'Keyword__________________8' {doesItBlend()}?	-> mode(SomethingReallyMeaningful);
+Keyword___________________9			: 'Keyword___________________9'					-> mode(SomethingReallyMeaningful);
+Keyword__________________10			: 'Keyword__________________10' {doesItBlend()}? {domeSomething($text);};
+Keyword__________________11			: 'Keyword__________________11'; // Specified in the interest of formatting.
 Keyword_______12:
-	'Keyword_______12' {domeSomething($text);}								-> type(SomethingReallyMeaningful)
+	'Keyword_______12' {domeSomething($text);}										-> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____________________13: 'Keyword____________________13' {domeSomething($text);} {doesItBlend()}?;
+Keyword____________________13		: 'Keyword____________________13' {domeSomething($text);} {doesItBlend()}?;
 Keyword__________________14:
-	'Keyword__________________14'											-> mode(SomethingReallyMeaningful)
+	'Keyword__________________14'													-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword___15: 'Keyword___15' {doesItBlend()}? {domeSomething($text);};
+Keyword___15 : 'Keyword___15' {doesItBlend()}? {domeSomething($text);};
 Keyword__16:
 	'Keyword__16' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword_17:
 	'Keyword_17' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____________________18: 'Keyword____________________18' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____________________18 : 'Keyword____________________18' {doesItBlend()}?; // Specified in the interest of formatting.
 Keyword___________________19:
 	'Keyword___________________19' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______20: 'Keyword_______20';
+Keyword_______20 : 'Keyword_______20';
 Keyword______________________21:
 	'Keyword______________________21' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword__________________22:
 	'Keyword__________________22' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________________23: 'Keyword________________23' {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____24: 'Keyword_____24' {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________________________25: 'Keyword_________________________25' {doesItBlend()}? {domeSomething($text);};
-Keyword_26: 'Keyword_26'; // Specified in the interest of formatting.
-Keyword__________27: 'Keyword__________27' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_________________28: 'Keyword_________________28' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________________23			: 'Keyword________________23' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____24						: 'Keyword_____24' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________________________25	: 'Keyword_________________________25' {doesItBlend()}? {domeSomething($text);};
+Keyword_26							: 'Keyword_26'; // Specified in the interest of formatting.
+Keyword__________27					: 'Keyword__________27' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_________________28			: 'Keyword_________________28' {doesItBlend()}?; // Specified in the interest of formatting.
 Keyword________________29:
 	'Keyword________________29' {doesItBlend()}? {domeSomething($text);}
 ; // Specified in the interest of formatting.
@@ -13655,7 +13655,7 @@ rule_______________________10: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____													# label____
 	| rule________												# label________
 ;
-rule_______11: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_______11 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule________________________12: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -13703,57 +13703,57 @@ rule__________18: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule______19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule______19 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_________________________0:
 	'Keyword_________________________0' {doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
 ;
-Keyword______1: 'Keyword______1'													-> type(SomethingReallyMeaningful);
-Keyword_______________________2: 'Keyword_______________________2' {domeSomething($text);};
-Keyword________________3: 'Keyword________________3' {doesItBlend()}?;		// Specified in the interest of formatting.
+Keyword______1						: 'Keyword______1'								-> type(SomethingReallyMeaningful);
+Keyword_______________________2		: 'Keyword_______________________2' {domeSomething($text);};
+Keyword________________3			: 'Keyword________________3' {doesItBlend()}?;					// Specified in the interest of formatting.
 Keyword_____4:
 	'Keyword_____4' {domeSomething($text);}											-> mode(SomethingReallyMeaningful)
-;																			// Specified in the interest of formatting.
-Keyword__________5: 'Keyword__________5' {doesItBlend()}?							-> type(SomethingReallyMeaningful);
-Keyword_________________________6: 'Keyword_________________________6' {domeSomething($text);} {doesItBlend()}?;
-Keyword___7: 'Keyword___7' {domeSomething($text);} {doesItBlend()}?;		// Specified in the interest of formatting.
-Keyword____8: 'Keyword____8' {domeSomething($text);};						// Specified in the interest of formatting.
-Keyword_______9: 'Keyword_______9';
+;																									// Specified in the interest of formatting.
+Keyword__________5					: 'Keyword__________5' {doesItBlend()}?			-> type(SomethingReallyMeaningful);
+Keyword_________________________6	: 'Keyword_________________________6' {domeSomething($text);} {doesItBlend()}?;
+Keyword___7							: 'Keyword___7' {domeSomething($text);} {doesItBlend()}?;		// Specified in the interest of formatting.
+Keyword____8						: 'Keyword____8' {domeSomething($text);};						// Specified in the interest of formatting.
+Keyword_______9						: 'Keyword_______9';
 Keyword_____________10:
 	'Keyword_____________10' {domeSomething($text);}								-> mode(SomethingReallyMeaningful)
-;																			// Specified in the interest of formatting.
+;																									// Specified in the interest of formatting.
 Keyword________________________11:
 	'Keyword________________________11'												-> type(SomethingReallyMeaningful)
-;																			// Specified in the interest of formatting.
-Keyword______12: 'Keyword______12' {doesItBlend()}?;						// Specified in the interest of formatting.
-Keyword_____13: 'Keyword_____13' {domeSomething($text);} {doesItBlend()}?;	// Specified in the interest of formatting.
-Keyword______14: 'Keyword______14' {doesItBlend()}?;
+;																									// Specified in the interest of formatting.
+Keyword______12						: 'Keyword______12' {doesItBlend()}?;							// Specified in the interest of formatting.
+Keyword_____13						: 'Keyword_____13' {domeSomething($text);} {doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword______14						: 'Keyword______14' {doesItBlend()}?;
 // $antlr-format groupedAlignments on
-Keyword_____________15: 'Keyword_____________15' {domeSomething($text);}	-> type(SomethingReallyMeaningful);
-Keyword_______________16: 'Keyword_______________16'						-> type(SomethingReallyMeaningful);
+Keyword_____________15		: 'Keyword_____________15' {domeSomething($text);}	-> type(SomethingReallyMeaningful);
+Keyword_______________16	: 'Keyword_______________16'						-> type(SomethingReallyMeaningful);
 Keyword_______________________17:
 	'Keyword_______________________17' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
-Keyword___________18: 'Keyword___________18' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_______________19: 'Keyword_______________19' {doesItBlend()}? {domeSomething($text);};
-Keyword__20: 'Keyword__20' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword___________21: 'Keyword___________21' {doesItBlend()}?	-> mode(SomethingReallyMeaningful);
-Keyword________22: 'Keyword________22'							-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___________18		: 'Keyword___________18' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______________19	: 'Keyword_______________19' {doesItBlend()}? {domeSomething($text);};
+Keyword__20					: 'Keyword__20' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___________21		: 'Keyword___________21' {doesItBlend()}?	-> mode(SomethingReallyMeaningful);
+Keyword________22			: 'Keyword________22'						-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword______________________23:
 	'Keyword______________________23' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword________24:
 	'Keyword________24' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;																				// Specified in the interest of formatting.
-Keyword__________25: 'Keyword__________25' -> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword__________26: 'Keyword__________26' {doesItBlend()}?;
+Keyword__________25	: 'Keyword__________25' -> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword__________26	: 'Keyword__________26' {doesItBlend()}?;
 Keyword________________________27:
 	'Keyword________________________27' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
-Keyword____________________28: 'Keyword____________________28' {domeSomething($text);};	// Specified in the interest of formatting.
-Keyword_______29: 'Keyword_______29';													// Specified in the interest of formatting.
+Keyword____________________28	: 'Keyword____________________28' {domeSomething($text);};	// Specified in the interest of formatting.
+Keyword_______29				: 'Keyword_______29';										// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule______________________0: (
@@ -13855,15 +13855,15 @@ rule_____________________11: (
 	| rule____		# label____
 	| rule________	# label________
 ; // Final trailing comment.
-rule______12: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule____________________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______12				: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____________________13	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___14					: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______________________15: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__																	# label__
 	| rule____																	# label____
 	| rule________																# label________ {doesItBlend}?
 ;
-rule_________________16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_________________16 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______________________17: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -13878,51 +13878,51 @@ rule__________________18: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule_______19: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_______19 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword______________________0: 'Keyword______________________0'		{domeSomething($text);} {doesItBlend()}?;
-Keyword_____________1: 'Keyword_____________1';
+Keyword______________________0		: 'Keyword______________________0'		{domeSomething($text);} {doesItBlend()}?;
+Keyword_____________1				: 'Keyword_____________1';
 Keyword___________________2:
-	'Keyword___________________2'										{doesItBlend()}? {domeSomething($text);}	-> mode(SomethingReallyMeaningful)
+	'Keyword___________________2'											{doesItBlend()}? {domeSomething($text);}	-> mode(SomethingReallyMeaningful)
 ;
-Keyword__________________3: 'Keyword__________________3'				{doesItBlend()}?							-> type(SomethingReallyMeaningful);
-Keyword____4: 'Keyword____4'											{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__________________3			: 'Keyword__________________3'			{doesItBlend()}?							-> type(SomethingReallyMeaningful);
+Keyword____4						: 'Keyword____4'						{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
 Keyword__________5:
-	'Keyword__________5'												{doesItBlend()}?							-> type(SomethingReallyMeaningful)
+	'Keyword__________5'													{doesItBlend()}?							-> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword______________________6: 'Keyword______________________6'; // Specified in the interest of formatting.
-Keyword____7: 'Keyword____7'											{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
-Keyword___________8: 'Keyword___________8'																			-> mode(SomethingReallyMeaningful);
-Keyword______________________9: 'Keyword______________________9'; // Specified in the interest of formatting.
-Keyword___________10: 'Keyword___________10'																		-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______________________6		: 'Keyword______________________6'; // Specified in the interest of formatting.
+Keyword____7						: 'Keyword____7'						{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
+Keyword___________8					: 'Keyword___________8'																-> mode(SomethingReallyMeaningful);
+Keyword______________________9		: 'Keyword______________________9'; // Specified in the interest of formatting.
+Keyword___________10				: 'Keyword___________10'															-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword_______________________11:
-	'Keyword_______________________11'									{domeSomething($text);} {doesItBlend()}?
+	'Keyword_______________________11'										{domeSomething($text);} {doesItBlend()}?
 ; // Specified in the interest of formatting.
-Keyword___________________12: 'Keyword___________________12'														-> mode(SomethingReallyMeaningful);
-Keyword_______________________13: 'Keyword_______________________13'	{doesItBlend()}?							-> mode(SomethingReallyMeaningful);
-Keyword____________________14: 'Keyword____________________14'			{doesItBlend()}?;
+Keyword___________________12		: 'Keyword___________________12'													-> mode(SomethingReallyMeaningful);
+Keyword_______________________13	: 'Keyword_______________________13'	{doesItBlend()}?							-> mode(SomethingReallyMeaningful);
+Keyword____________________14		: 'Keyword____________________14'		{doesItBlend()}?;
 // $antlr-format groupedAlignments on
-Keyword____15: 'Keyword____15' -> type(SomethingReallyMeaningful);
-Keyword________________16: 'Keyword________________16'	{domeSomething($text);} {doesItBlend()}?;
-Keyword_____________17: 'Keyword_____________17'		{domeSomething($text);};
-Keyword____18: 'Keyword____18'; // Specified in the interest of formatting.
-Keyword___________19: 'Keyword___________19'				{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_______20: 'Keyword_______20'						{doesItBlend()}?;
-Keyword_21: 'Keyword_21'									{doesItBlend()}?;
-Keyword__________________22: 'Keyword__________________22'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword____15				: 'Keyword____15' -> type(SomethingReallyMeaningful);
+Keyword________________16	: 'Keyword________________16'	{domeSomething($text);} {doesItBlend()}?;
+Keyword_____________17		: 'Keyword_____________17'		{domeSomething($text);};
+Keyword____18				: 'Keyword____18'; // Specified in the interest of formatting.
+Keyword___________19		: 'Keyword___________19'		{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_______20			: 'Keyword_______20'			{doesItBlend()}?;
+Keyword_21					: 'Keyword_21'					{doesItBlend()}?;
+Keyword__________________22	: 'Keyword__________________22'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
 Keyword________________23:
 	'Keyword________________23' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword___________24: 'Keyword___________24' {doesItBlend()}?;
+Keyword___________24 : 'Keyword___________24' {doesItBlend()}?;
 Keyword______________________25:
 	'Keyword______________________25' {domeSomething($text);}
 ; // Specified in the interest of formatting.
-Keyword_______________26: 'Keyword_______________26' -> type(SomethingReallyMeaningful);
-Keyword___27: 'Keyword___27';
-Keyword___28: 'Keyword___28';
-Keyword_______________29: 'Keyword_______________29' -> mode(SomethingReallyMeaningful);
+Keyword_______________26	: 'Keyword_______________26' -> type(SomethingReallyMeaningful);
+Keyword___27				: 'Keyword___27';
+Keyword___28				: 'Keyword___28';
+Keyword_______________29	: 'Keyword_______________29' -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule__________________0: (
@@ -14015,8 +14015,8 @@ rule_________________10: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule___11: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___11	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___12	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________________13: (
 			{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 ruleB // And another comment.
@@ -14026,7 +14026,7 @@ rule__________________13: (
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ; // Final trailing comment.
-rule_____14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____14 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____________15: (
 		alt1	{doSomething($text);} ruleA // Mom look, a trailing comment.
 		| alt2	{doSomething($text);} ruleB // And another comment.
@@ -14036,12 +14036,12 @@ rule____________15: (
 	| rule____
 	| rule________ {doSomething($text);}
 ; // Final trailing comment.
-rule________________16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule________________16: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__															# label__
 	| rule____															# label____
 	| rule________														# label________ {doesItBlend}?
 ;
-rule____17: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____17 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_________________________18: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																								# label__
 	| rule____																								# label____
@@ -14057,57 +14057,57 @@ rule_____19: (
 	| rule________
 ; // Final trailing comment.
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword____0: 'Keyword____0'										{domeSomething($text);} {doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword____0						: 'Keyword____0'					{domeSomething($text);} {doesItBlend()}?;	// Specified in the interest of formatting.
 Keyword_____________________1:
-	'Keyword_____________________1'									{doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
-;																												// Specified in the interest of formatting.
-Keyword______________2: 'Keyword______________2';																// Specified in the interest of formatting.
-Keyword________________3: 'Keyword________________3'				{domeSomething($text);};					// Specified in the interest of formatting.
+	'Keyword_____________________1'										{doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
+;																													// Specified in the interest of formatting.
+Keyword______________2				: 'Keyword______________2';														// Specified in the interest of formatting.
+Keyword________________3			: 'Keyword________________3'		{domeSomething($text);};					// Specified in the interest of formatting.
 Keyword_______________________4:
-	'Keyword_______________________4'								{domeSomething($text);}						-> type(SomethingReallyMeaningful)
-;																												// Specified in the interest of formatting.
-Keyword_________________5: 'Keyword_________________5'				{doesItBlend()}?							-> mode(SomethingReallyMeaningful);
-Keyword_______________________6: 'Keyword_______________________6'	{domeSomething($text);};
+	'Keyword_______________________4'									{domeSomething($text);}						-> type(SomethingReallyMeaningful)
+;																													// Specified in the interest of formatting.
+Keyword_________________5			: 'Keyword_________________5'		{doesItBlend()}?							-> mode(SomethingReallyMeaningful);
+Keyword_______________________6		: 'Keyword_______________________6'	{domeSomething($text);};
 Keyword_______________________7:
-	'Keyword_______________________7'								{doesItBlend()}?							-> type(SomethingReallyMeaningful)
-;																												// Specified in the interest of formatting.
-Keyword____8: 'Keyword____8'										{domeSomething($text);};					// Specified in the interest of formatting.
-Keyword__________________9: 'Keyword__________________9'			{domeSomething($text);}						-> type(SomethingReallyMeaningful);
-Keyword_________10: 'Keyword_________10'																		-> type(SomethingReallyMeaningful);
-Keyword____11: 'Keyword____11'																					-> mode(SomethingReallyMeaningful);
-Keyword________________________12: 'Keyword________________________12';
+	'Keyword_______________________7'									{doesItBlend()}?							-> type(SomethingReallyMeaningful)
+;																													// Specified in the interest of formatting.
+Keyword____8						: 'Keyword____8'					{domeSomething($text);};					// Specified in the interest of formatting.
+Keyword__________________9			: 'Keyword__________________9'		{domeSomething($text);}						-> type(SomethingReallyMeaningful);
+Keyword_________10					: 'Keyword_________10'															-> type(SomethingReallyMeaningful);
+Keyword____11						: 'Keyword____11'																-> mode(SomethingReallyMeaningful);
+Keyword________________________12	: 'Keyword________________________12';
 Keyword________13:
-	'Keyword________13'												{doesItBlend()}?							-> mode(SomethingReallyMeaningful)
-;																												// Specified in the interest of formatting.
-Keyword_____________14: 'Keyword_____________14'					{domeSomething($text);};
+	'Keyword________13'													{doesItBlend()}?							-> mode(SomethingReallyMeaningful)
+;																													// Specified in the interest of formatting.
+Keyword_____________14				: 'Keyword_____________14'			{domeSomething($text);};
 // $antlr-format groupedAlignments on
 Keyword________________________15:
 	'Keyword________________________15' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________________16: 'Keyword________________16'	{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
-Keyword____17: 'Keyword____17'							{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
+Keyword________________16	: 'Keyword________________16'	{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
+Keyword____17				: 'Keyword____17'				{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
 Keyword_______________________18:
 	'Keyword_______________________18' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____19: 'Keyword_____19'											{domeSomething($text);}	-> type(SomethingReallyMeaningful);
-Keyword___20: 'Keyword___20'												{domeSomething($text);}	-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_________________________21: 'Keyword_________________________21'	{doesItBlend()}?		-> type(SomethingReallyMeaningful);
-Keyword_22: 'Keyword_22';
-Keyword___23: 'Keyword___23' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_____19						: 'Keyword_____19'						{domeSomething($text);}	-> type(SomethingReallyMeaningful);
+Keyword___20						: 'Keyword___20'						{domeSomething($text);}	-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_________________________21	: 'Keyword_________________________21'	{doesItBlend()}?		-> type(SomethingReallyMeaningful);
+Keyword_22							: 'Keyword_22';
+Keyword___23						: 'Keyword___23' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword_________________24:
 	'Keyword_________________24' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword__________25:
 	'Keyword__________25' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword______26: 'Keyword______26' {domeSomething($text);};
-Keyword____________27: 'Keyword____________27' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______26			: 'Keyword______26' {domeSomething($text);};
+Keyword____________27	: 'Keyword____________27' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword______________________28:
 	'Keyword______________________28' {doesItBlend()}? {domeSomething($text);}
 ; // Specified in the interest of formatting.
-Keyword__29: 'Keyword__29' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword__29 : 'Keyword__29' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule________________0: (
@@ -14204,13 +14204,13 @@ rule__________11: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____										# label____
 	| rule________									# label________
 ;
-rule_______12: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule_______12: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__													# label__
 	| rule____													# label____
 	| rule________												# label________ {doesItBlend}?
 ;
-rule____13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___________________14: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____13					: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___________________14	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule____15: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -14220,44 +14220,44 @@ rule____15: (
 	| rule____		# label____
 	| rule________	# label________
 ; // Final trailing comment.
-rule_________16: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule_________16: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule___17: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule___17: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__												# label__
 	| rule____												# label____
 	| rule________											# label________ {doesItBlend}?
 ;
-rule____18: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_________19: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____18		: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_________19	: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword________________0: 'Keyword________________0'					{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword__________________1: 'Keyword__________________1'				{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__2: 'Keyword__2'												-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_________________________3: 'Keyword_________________________3'	{domeSomething($text);};
+Keyword________________0			: 'Keyword________________0'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword__________________1			: 'Keyword__________________1'			{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__2							: 'Keyword__2'							-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_________________________3	: 'Keyword_________________________3'	{domeSomething($text);};
 Keyword_____4:
-	'Keyword_____4'														{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
+	'Keyword_____4'															{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
 Keyword___________5:
-	'Keyword___________5'												{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword________________________6: 'Keyword________________________6';	// Specified in the interest of formatting.
+	'Keyword___________5'													{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword________________________6	: 'Keyword________________________6';	// Specified in the interest of formatting.
 Keyword_______________________7:
-	'Keyword_______________________7'									{domeSomething($text);} {doesItBlend()}?
-;																		// Specified in the interest of formatting.
-Keyword_8: 'Keyword_8';
-Keyword______________________9: 'Keyword______________________9'		{doesItBlend()}?;
+	'Keyword_______________________7'										{domeSomething($text);} {doesItBlend()}?
+;																			// Specified in the interest of formatting.
+Keyword_8							: 'Keyword_8';
+Keyword______________________9		: 'Keyword______________________9'		{doesItBlend()}?;
 Keyword___________________10:
-	'Keyword___________________10'										{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword____________________11: 'Keyword____________________11'			{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_______12: 'Keyword_______12'									{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_13: 'Keyword_13'												{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword____14: 'Keyword____14';
+	'Keyword___________________10'											{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword____________________11		: 'Keyword____________________11'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_______12					: 'Keyword_______12'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_13							: 'Keyword_13'							{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____14						: 'Keyword____14';
 // $antlr-format groupedAlignments on
 Keyword_________________15:
 	'Keyword_________________15'	{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
@@ -14265,17 +14265,17 @@ Keyword_________________15:
 Keyword_________________________16:
 	'Keyword_________________________16' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;
-Keyword______________17: 'Keyword______________17' {doesItBlend()}? {domeSomething($text);};
+Keyword______________17 : 'Keyword______________17' {doesItBlend()}? {domeSomething($text);};
 Keyword_________________________18:
 	'Keyword_________________________18'	{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;											// Specified in the interest of formatting.
-Keyword_______________19: 'Keyword_______________19';
-Keyword_20: 'Keyword_20' {doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_______________19	: 'Keyword_______________19';
+Keyword_20					: 'Keyword_20' {doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword__________________21:
 	'Keyword__________________21'					{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;													// Specified in the interest of formatting.
-Keyword____22: 'Keyword____22';						// Specified in the interest of formatting.
-Keyword_____________23: 'Keyword_____________23'	-> type(SomethingReallyMeaningful);
+Keyword____22			: 'Keyword____22';			// Specified in the interest of formatting.
+Keyword_____________23	: 'Keyword_____________23'	-> type(SomethingReallyMeaningful);
 Keyword_______24:
 	'Keyword_______24'	{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;						// Specified in the interest of formatting.
@@ -14388,7 +14388,7 @@ rule_10: (
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ;					// Final trailing comment.
-rule_____11: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_____11 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule__12: (
 					{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
 		|			{doesItBlend}? alt2 ruleB // And another comment.
@@ -14398,8 +14398,8 @@ rule__12: (
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ;					// Final trailing comment.
-rule_13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___14: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_13		: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___14	: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule____________________15: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__												# label__
 	| rule____												# label____
@@ -14424,53 +14424,53 @@ rule__________________18: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule__19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__19 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword______________________0:
 	'Keyword______________________0'								{domeSomething($text);} {doesItBlend()}?
 ;																	// Specified in the interest of formatting.
-Keyword______1: 'Keyword______1'									-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword________________2: 'Keyword________________2';
-Keyword__3: 'Keyword__3'											-> mode(SomethingReallyMeaningful);
+Keyword______1					: 'Keyword______1'					-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword________________2		: 'Keyword________________2';
+Keyword__3						: 'Keyword__3'						-> mode(SomethingReallyMeaningful);
 Keyword_______4:
 	'Keyword_______4'												{domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
 Keyword__________________5:
 	'Keyword__________________5'									{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
-Keyword____________6: 'Keyword____________6'						-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword____7: 'Keyword____7'										-> type(SomethingReallyMeaningful);
-Keyword________8: 'Keyword________8'								{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword______________9: 'Keyword______________9'					-> mode(SomethingReallyMeaningful);
-Keyword_______________10: 'Keyword_______________10'				{doesItBlend()}? {domeSomething($text);};
+Keyword____________6			: 'Keyword____________6'			-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____7					: 'Keyword____7'					-> type(SomethingReallyMeaningful);
+Keyword________8				: 'Keyword________8'				{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword______________9			: 'Keyword______________9'			-> mode(SomethingReallyMeaningful);
+Keyword_______________10		: 'Keyword_______________10'		{doesItBlend()}? {domeSomething($text);};
 Keyword_________________________11:
 	'Keyword_________________________11'							{domeSomething($text);} {doesItBlend()}?
 ;																	// Specified in the interest of formatting.
-Keyword______________________12: 'Keyword______________________12'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____13: 'Keyword_____13'									{doesItBlend()}? {domeSomething($text);};
-Keyword__14: 'Keyword__14';
+Keyword______________________12	: 'Keyword______________________12'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____13					: 'Keyword_____13'					{doesItBlend()}? {domeSomething($text);};
+Keyword__14						: 'Keyword__14';
 // $antlr-format groupedAlignments on
-Keyword______________________15: 'Keyword______________________15'	-> mode(SomethingReallyMeaningful);
-Keyword____16: 'Keyword____16'										{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_________________17: 'Keyword_________________17'			{doesItBlend()}?;
-Keyword_______________________18: 'Keyword_______________________18';
-Keyword____________19: 'Keyword____________19'							{doesItBlend()}?;
-Keyword________________________20: 'Keyword________________________20'	{doesItBlend()}?;
+Keyword______________________15		: 'Keyword______________________15'	-> mode(SomethingReallyMeaningful);
+Keyword____16						: 'Keyword____16'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_________________17			: 'Keyword_________________17'		{doesItBlend()}?;
+Keyword_______________________18	: 'Keyword_______________________18';
+Keyword____________19				: 'Keyword____________19'				{doesItBlend()}?;
+Keyword________________________20	: 'Keyword________________________20'	{doesItBlend()}?;
 Keyword______________________21:
-	'Keyword______________________21'									{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword________________________22: 'Keyword________________________22'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________________________23: 'Keyword________________________23'	{doesItBlend()}?; // Specified in the interest of formatting.
+	'Keyword______________________21'										{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword________________________22	: 'Keyword________________________22'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________________________23	: 'Keyword________________________23'	{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_______24:
-	'Keyword_______24'							{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;												// Specified in the interest of formatting.
-Keyword_25: 'Keyword_25'						{domeSomething($text);};
-Keyword___________26: 'Keyword___________26';	// Specified in the interest of formatting.
-Keyword___27: 'Keyword___27'					{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_______28: 'Keyword_______28'			{domeSomething($text);} {doesItBlend()}?;
-Keyword_________29: 'Keyword_________29'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+	'Keyword_______24'								{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;													// Specified in the interest of formatting.
+Keyword_25				: 'Keyword_25'				{domeSomething($text);};
+Keyword___________26	: 'Keyword___________26';	// Specified in the interest of formatting.
+Keyword___27			: 'Keyword___27'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_______28		: 'Keyword_______28'		{domeSomething($text);} {doesItBlend()}?;
+Keyword_________29		: 'Keyword_________29'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule___________0: (
@@ -14556,22 +14556,22 @@ rule____9: (
 	| rule________	# label________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule____________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule______________________11: (		{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____________10				: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________________11	: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule____________________12: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__						# label__
 	| rule____						# label____
 	| rule________					# label________ {doSomething($text);}
 ;
-rule__13: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_____14: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule__13	: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_____14	: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule__________________15: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__				# label__
 	| rule____				# label____
 	| rule________			# label________ {doesItBlend}?
 ;
-rule_____16: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule___________________17: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_____16					: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule___________________17	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule___18: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -14591,46 +14591,46 @@ rule_____________________19: (
 	| rule________	# label________ {doSomething($text);}
 ;					// Final trailing comment.
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword_______0: 'Keyword_______0'										-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword___1: 'Keyword___1'												{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____________2: 'Keyword_____________2'							{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__________3: 'Keyword__________3'								{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______4: 'Keyword_______4'										{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________5: 'Keyword_________5'									{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword____________________6: 'Keyword____________________6'			{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______________________7: 'Keyword_______________________7'		{domeSomething($text);};
+Keyword_______0						: 'Keyword_______0'						-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___1							: 'Keyword___1'							{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____________2				: 'Keyword_____________2'				{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________3					: 'Keyword__________3'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______4						: 'Keyword_______4'						{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________5					: 'Keyword_________5'					{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____________________6		: 'Keyword____________________6'		{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______________________7		: 'Keyword_______________________7'		{domeSomething($text);};
 Keyword______________________8:
-	'Keyword______________________8'									{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
+	'Keyword______________________8'										{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;
-Keyword________________________9: 'Keyword________________________9'	{domeSomething($text);};
-Keyword______________10: 'Keyword______________10'						{doesItBlend()}?;
-Keyword________11: 'Keyword________11'									{doesItBlend()}?;
+Keyword________________________9	: 'Keyword________________________9'	{domeSomething($text);};
+Keyword______________10				: 'Keyword______________10'				{doesItBlend()}?;
+Keyword________11					: 'Keyword________11'					{doesItBlend()}?;
 Keyword______12:
-	'Keyword______12'													{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword___________13: 'Keyword___________13'							{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___________14: 'Keyword___________14'							-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+	'Keyword______12'														{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword___________13				: 'Keyword___________13'				{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___________14				: 'Keyword___________14'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_________________15: 'Keyword_________________15'		{doesItBlend()}? {domeSomething($text);};
-Keyword___________________16: 'Keyword___________________16'	{domeSomething($text);};
+Keyword_________________15		: 'Keyword_________________15'		{doesItBlend()}? {domeSomething($text);};
+Keyword___________________16	: 'Keyword___________________16'	{domeSomething($text);};
 Keyword________________17:
 	'Keyword________________17'								{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;															// Specified in the interest of formatting.
-Keyword_________________18: 'Keyword_________________18'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__19: 'Keyword__19'									{doesItBlend()}?;
-Keyword________20: 'Keyword________20'						-> mode(SomethingReallyMeaningful);
+Keyword_________________18	: 'Keyword_________________18'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__19					: 'Keyword__19'					{doesItBlend()}?;
+Keyword________20			: 'Keyword________20'			-> mode(SomethingReallyMeaningful);
 Keyword_______________________21:
 	'Keyword_______________________21'						{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;															// Specified in the interest of formatting.
-Keyword____________22: 'Keyword____________22'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword__________________23: 'Keyword__________________23'	{doesItBlend()}?;
-Keyword_______24: 'Keyword_______24'						{domeSomething($text);};
-Keyword________25: 'Keyword________25'						{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________________26: 'Keyword________________26'		{domeSomething($text);};
-Keyword_____27: 'Keyword_____27'							{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____28: 'Keyword_____28'							{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____________22		: 'Keyword____________22'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword__________________23	: 'Keyword__________________23'	{doesItBlend()}?;
+Keyword_______24			: 'Keyword_______24'			{domeSomething($text);};
+Keyword________25			: 'Keyword________25'			{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________________26	: 'Keyword________________26'	{domeSomething($text);};
+Keyword_____27				: 'Keyword_____27'				{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____28				: 'Keyword_____28'				{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword________________________29:
 	'Keyword________________________29'	-> mode(SomethingReallyMeaningful)
 ;										// Specified in the interest of formatting.
@@ -14739,7 +14739,7 @@ rule________________________11: (
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);}
 ;					// Final trailing comment.
-rule______12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______12 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________13: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__			# label__
 	| rule____			# label____
@@ -14768,7 +14768,7 @@ rule____16: (
 	| rule____
 	| rule________	{doesItBlend}?
 ;					// Final trailing comment.
-rule______________17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________17 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______________________18: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -14784,51 +14784,51 @@ rule_______________19: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule________										# label________
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_____________________0:
-	'Keyword_____________________0'									{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+	'Keyword_____________________0'										{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
 Keyword_______________________1:
-	'Keyword_______________________1'								{domeSomething($text);}
-;																	// Specified in the interest of formatting.
-Keyword______________________2: 'Keyword______________________2'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_____3: 'Keyword_____3'										{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____________4: 'Keyword_____________4'						-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword______________5: 'Keyword______________5'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword____________________6: 'Keyword____________________6';		// Specified in the interest of formatting.
+	'Keyword_______________________1'									{domeSomething($text);}
+;																		// Specified in the interest of formatting.
+Keyword______________________2		: 'Keyword______________________2'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_____3						: 'Keyword_____3'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________4				: 'Keyword_____________4'			-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______________5				: 'Keyword______________5'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword____________________6		: 'Keyword____________________6';	// Specified in the interest of formatting.
 Keyword_________________________7:
-	'Keyword_________________________7'								{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
+	'Keyword_________________________7'									{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;
 Keyword______8:
-	'Keyword______8'												{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																	// Specified in the interest of formatting.
-Keyword____________9: 'Keyword____________9'						{domeSomething($text);};
+	'Keyword______8'													{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																		// Specified in the interest of formatting.
+Keyword____________9				: 'Keyword____________9'			{domeSomething($text);};
 Keyword_________________________10:
-	'Keyword_________________________10'							{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																	// Specified in the interest of formatting.
-Keyword_______________11: 'Keyword_______________11';
-Keyword______12: 'Keyword______12'									{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword___13: 'Keyword___13';										// Specified in the interest of formatting.
-Keyword________________________14: 'Keyword________________________14';
+	'Keyword_________________________10'								{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																		// Specified in the interest of formatting.
+Keyword_______________11			: 'Keyword_______________11';
+Keyword______12						: 'Keyword______12'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___13						: 'Keyword___13';					// Specified in the interest of formatting.
+Keyword________________________14	: 'Keyword________________________14';
 // $antlr-format groupedAlignments on
-Keyword__________15: 'Keyword__________15'							{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_16: 'Keyword_16'											{domeSomething($text);};
-Keyword______________17: 'Keyword______________17'					-> type(SomethingReallyMeaningful);
-Keyword__________18: 'Keyword__________18'							{domeSomething($text);} {doesItBlend()}?;
-Keyword_____________________19: 'Keyword_____________________19'	{doesItBlend()}? {domeSomething($text);};
-Keyword_____20: 'Keyword_____20'									{domeSomething($text);} {doesItBlend()}?;
-Keyword______21: 'Keyword______21'									{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword______________22: 'Keyword______________22'					{domeSomething($text);};
-Keyword_____________________23: 'Keyword_____________________23'	-> mode(SomethingReallyMeaningful);
-Keyword_____24: 'Keyword_____24';									// Specified in the interest of formatting.
-Keyword________25: 'Keyword________25'								-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_26: 'Keyword_26';											// Specified in the interest of formatting.
+Keyword__________15				: 'Keyword__________15'				{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_16						: 'Keyword_16'						{domeSomething($text);};
+Keyword______________17			: 'Keyword______________17'			-> type(SomethingReallyMeaningful);
+Keyword__________18				: 'Keyword__________18'				{domeSomething($text);} {doesItBlend()}?;
+Keyword_____________________19	: 'Keyword_____________________19'	{doesItBlend()}? {domeSomething($text);};
+Keyword_____20					: 'Keyword_____20'					{domeSomething($text);} {doesItBlend()}?;
+Keyword______21					: 'Keyword______21'					{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword______________22			: 'Keyword______________22'			{domeSomething($text);};
+Keyword_____________________23	: 'Keyword_____________________23'	-> mode(SomethingReallyMeaningful);
+Keyword_____24					: 'Keyword_____24';					// Specified in the interest of formatting.
+Keyword________25				: 'Keyword________25'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_26						: 'Keyword_26';						// Specified in the interest of formatting.
 Keyword__________________27:
 	'Keyword__________________27'	{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;									// Specified in the interest of formatting.
-Keyword________________28: 'Keyword________________28';
-Keyword_____________29: 'Keyword_____________29' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword________________28	: 'Keyword________________28';
+Keyword_____________29		: 'Keyword_____________29' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_____0: (
@@ -14848,7 +14848,7 @@ rule_____________________1: (
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;
 rule___________2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -14913,7 +14913,7 @@ rule_________9: (
 	| rule________	# label________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_____10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____10 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______________________11: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__													# label__
 	| rule____													# label____
@@ -14952,50 +14952,50 @@ rule________________________16: (
 	| rule____
 	| rule________	{doSomething($text);}
 ;					// Final trailing comment.
-rule____________________17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_____________18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule______________________19: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________________17		: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____________18				: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________________19	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword_____________________0: 'Keyword_____________________0'			-> mode(SomethingReallyMeaningful);
-Keyword______________1: 'Keyword______________1'						{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_____2: 'Keyword_____2'											{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword____________3: 'Keyword____________3'							{doesItBlend()}?;
-Keyword________________4: 'Keyword________________4'					{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword______________5: 'Keyword______________5'						{doesItBlend()}? {domeSomething($text);};
-Keyword_________________________6: 'Keyword_________________________6'	{doesItBlend()}?;
-Keyword_____7: 'Keyword_____7'											{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_____________________0		: 'Keyword_____________________0'		-> mode(SomethingReallyMeaningful);
+Keyword______________1				: 'Keyword______________1'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_____2						: 'Keyword_____2'						{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____________3				: 'Keyword____________3'				{doesItBlend()}?;
+Keyword________________4			: 'Keyword________________4'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword______________5				: 'Keyword______________5'				{doesItBlend()}? {domeSomething($text);};
+Keyword_________________________6	: 'Keyword_________________________6'	{doesItBlend()}?;
+Keyword_____7						: 'Keyword_____7'						{domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword_____________________8:
-	'Keyword_____________________8'										{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword____________9: 'Keyword____________9'							-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_10: 'Keyword_10'												{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_________11: 'Keyword_________11'								-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+	'Keyword_____________________8'											{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword____________9				: 'Keyword____________9'				-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_10							: 'Keyword_10'							{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_________11					: 'Keyword_________11'					-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword___________________12:
-	'Keyword___________________12'										{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword________________________13: 'Keyword________________________13'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword____________________14: 'Keyword____________________14'			{doesItBlend()}? {domeSomething($text);};
+	'Keyword___________________12'											{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword________________________13	: 'Keyword________________________13'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword____________________14		: 'Keyword____________________14'		{doesItBlend()}? {domeSomething($text);};
 // $antlr-format groupedAlignments on
-Keyword______________15: 'Keyword______________15' {doesItBlend()}? {domeSomething($text);};
+Keyword______________15 : 'Keyword______________15' {doesItBlend()}? {domeSomething($text);};
 Keyword__16:
-	'Keyword__16'										{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
-;														// Specified in the interest of formatting.
-Keyword____17: 'Keyword____17'							{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________________18: 'Keyword________________18'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______19: 'Keyword_______19'					{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword__16'											{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
+;															// Specified in the interest of formatting.
+Keyword____17				: 'Keyword____17'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________________18	: 'Keyword________________18'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______19			: 'Keyword_______19'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_________________________20:
 	'Keyword_________________________20'	{doesItBlend()}? {domeSomething($text);}
 ;											// Specified in the interest of formatting.
-Keyword_____21: 'Keyword_____21';			// Specified in the interest of formatting.
+Keyword_____21 : 'Keyword_____21';			// Specified in the interest of formatting.
 Keyword______________22:
 	'Keyword______________22'	{doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;								// Specified in the interest of formatting.
 Keyword________________________23:
 	'Keyword________________________23'									{doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;																		// Specified in the interest of formatting.
-Keyword________________________24: 'Keyword________________________24'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________________________24 : 'Keyword________________________24'	{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_______________25:
 	'Keyword_______________25'	{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;								// Specified in the interest of formatting.
@@ -15005,7 +15005,7 @@ Keyword___________________26:
 Keyword____27:
 	'Keyword____27'													{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
-Keyword_____________________28: 'Keyword_____________________28'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________________28 : 'Keyword_____________________28'	{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword___________29:
 	'Keyword___________29'	{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;							// Specified in the interest of formatting.
@@ -15087,7 +15087,7 @@ rule________________________8: (
 	| rule________
 ;
 rule_______________9: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -15095,7 +15095,7 @@ rule_______________9: (
 	| rule________ {doesItBlend}?
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_______________________10: (		{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_______________________10 : (		{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________________________11: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__							# label__
 	| rule____							# label____
@@ -15120,8 +15120,8 @@ rule_________________14: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label
 	| rule____				# label____
 	| rule________			# label________ {doesItBlend}?
 ;
-rule______15: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule____16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule______15	: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____16		: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule______________17: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -15146,10 +15146,10 @@ rule_______________________19: (alt1	{doSomething($text);} ruleA | alt2 {doSomet
 	| rule________						# label________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_______________________0: 'Keyword_______________________0'	-> mode(SomethingReallyMeaningful);
-Keyword__________________1: 'Keyword__________________1';
+Keyword_______________________0	: 'Keyword_______________________0'	-> mode(SomethingReallyMeaningful);
+Keyword__________________1		: 'Keyword__________________1';
 Keyword______2:
 	'Keyword______2'												{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
@@ -15159,38 +15159,38 @@ Keyword________________3:
 Keyword_______________4:
 	'Keyword_______________4'										{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
-Keyword__________5: 'Keyword__________5'							-> type(SomethingReallyMeaningful);
+Keyword__________5				: 'Keyword__________5'				-> type(SomethingReallyMeaningful);
 Keyword___________6:
 	'Keyword___________6'											{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
-Keyword__7: 'Keyword__7';
-Keyword__________8: 'Keyword__________8'							{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_____________9: 'Keyword_____________9'						{doesItBlend()}? {domeSomething($text);};
-Keyword___10: 'Keyword___10'										{doesItBlend()}?;
+Keyword__7						: 'Keyword__7';
+Keyword__________8				: 'Keyword__________8'				{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_____________9			: 'Keyword_____________9'			{doesItBlend()}? {domeSomething($text);};
+Keyword___10					: 'Keyword___10'					{doesItBlend()}?;
 Keyword_________________________11:
 	'Keyword_________________________11'							{domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword______12: 'Keyword______12'									{domeSomething($text);} {doesItBlend()}?;
+Keyword______12					: 'Keyword______12'					{domeSomething($text);} {doesItBlend()}?;
 Keyword___________________13:
 	'Keyword___________________13'									{doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
-Keyword________14: 'Keyword________14'								{doesItBlend()}?;
+Keyword________14				: 'Keyword________14'				{doesItBlend()}?;
 // $antlr-format groupedAlignments on
-Keyword______15: 'Keyword______15'					{doesItBlend()}? {domeSomething($text);};
-Keyword_____________16: 'Keyword_____________16'	-> mode(SomethingReallyMeaningful);
+Keyword______15			: 'Keyword______15'			{doesItBlend()}? {domeSomething($text);};
+Keyword_____________16	: 'Keyword_____________16'	-> mode(SomethingReallyMeaningful);
 Keyword_____________17:
-	'Keyword_____________17'									{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword___________________18: 'Keyword___________________18';	// Specified in the interest of formatting.
-Keyword__________19: 'Keyword__________19'						{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_____20: 'Keyword_____20';								// Specified in the interest of formatting.
-Keyword____________21: 'Keyword____________21'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword________22: 'Keyword________22';
-Keyword____23: 'Keyword____23'						{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword____24: 'Keyword____24'						-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword__________25: 'Keyword__________25';			// Specified in the interest of formatting.
-Keyword___26: 'Keyword___26'						{domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword______________27: 'Keyword______________27'	{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+	'Keyword_____________17'										{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword___________________18	: 'Keyword___________________18';	// Specified in the interest of formatting.
+Keyword__________19				: 'Keyword__________19'				{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_____20					: 'Keyword_____20';					// Specified in the interest of formatting.
+Keyword____________21			: 'Keyword____________21'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword________22				: 'Keyword________22';
+Keyword____23					: 'Keyword____23'			{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword____24					: 'Keyword____24'			-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________25				: 'Keyword__________25';	// Specified in the interest of formatting.
+Keyword___26					: 'Keyword___26'			{domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______________27			: 'Keyword______________27'	{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword_________________28:
 	'Keyword_________________28'	{doesItBlend()}? {domeSomething($text);}
 ;									// Specified in the interest of formatting.
@@ -15233,7 +15233,7 @@ rule____________3: (
 	| rule________
 ; // Final trailing comment.
 rule_______________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -15257,7 +15257,7 @@ rule_______________6: (
 	| rule________	# label________ {doSomething($text);}
 ;
 rule________7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -15302,7 +15302,7 @@ rule________________12: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($t
 	| rule____					# label____
 	| rule________				# label________ {doSomething($text);}
 ;
-rule_____________________13: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_____________________13 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________________________14: (
 			{doesItBlend}? alt1 {doSomething($text);} ruleA // Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 {doSomething($text);} ruleB // And another comment.
@@ -15312,7 +15312,7 @@ rule_________________________14: (
 	| rule____
 	| rule________	{doSomething($text);} {doesItBlend}?
 ;					// Final trailing comment.
-rule_______________________15: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_______________________15 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_____________________16: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -15322,58 +15322,58 @@ rule_____________________16: (
 	| rule____										# label____
 	| rule________									# label________
 ;													// Final trailing comment.
-rule___________17: (								{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule___________17 : (								{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule___________18: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__										# label__
 	| rule____										# label____
 	| rule________									# label________
 ;
-rule________19: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________19 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword____________________0: 'Keyword____________________0'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__________1: 'Keyword__________1'						-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword________________2: 'Keyword________________2';
-Keyword____________3: 'Keyword____________3'					{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword____________4: 'Keyword____________4'					{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____5: 'Keyword_____5'									{domeSomething($text);} {doesItBlend()}?;
-Keyword_____________________6: 'Keyword_____________________6'	{doesItBlend()}? {domeSomething($text);};
-Keyword_________7: 'Keyword_________7'							{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________8: 'Keyword_________8'							-> mode(SomethingReallyMeaningful);
-Keyword________________9: 'Keyword________________9'			{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________10: 'Keyword________10'							{doesItBlend()}? {domeSomething($text);};
+Keyword____________________0	: 'Keyword____________________0'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________1				: 'Keyword__________1'				-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword________________2		: 'Keyword________________2';
+Keyword____________3			: 'Keyword____________3'			{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword____________4			: 'Keyword____________4'			{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____5					: 'Keyword_____5'					{domeSomething($text);} {doesItBlend()}?;
+Keyword_____________________6	: 'Keyword_____________________6'	{doesItBlend()}? {domeSomething($text);};
+Keyword_________7				: 'Keyword_________7'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________8				: 'Keyword_________8'				-> mode(SomethingReallyMeaningful);
+Keyword________________9		: 'Keyword________________9'		{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________10				: 'Keyword________10'				{doesItBlend()}? {domeSomething($text);};
 Keyword_________________11:
-	'Keyword_________________11'								{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword_____________________12: 'Keyword_____________________12';
+	'Keyword_________________11'									{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword_____________________12	: 'Keyword_____________________12';
 Keyword_________________________13:
-	'Keyword_________________________13'						{domeSomething($text);}
-;																// Specified in the interest of formatting.
+	'Keyword_________________________13'							{domeSomething($text);}
+;																	// Specified in the interest of formatting.
 Keyword______________________14:
-	'Keyword______________________14'							{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
+	'Keyword______________________14'								{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_____________________15: 'Keyword_____________________15'	{doesItBlend()}? {domeSomething($text);};
-Keyword_________________16: 'Keyword_________________16'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_____________________15	: 'Keyword_____________________15'	{doesItBlend()}? {domeSomething($text);};
+Keyword_________________16		: 'Keyword_________________16'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword_______________________17:
 	'Keyword_______________________17' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;
-Keyword_____________18: 'Keyword_____________18'						{domeSomething($text);} {doesItBlend()}?;
-Keyword___________19: 'Keyword___________19'							{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______________________20: 'Keyword_______________________20';	// Specified in the interest of formatting.
+Keyword_____________18				: 'Keyword_____________18'				{domeSomething($text);} {doesItBlend()}?;
+Keyword___________19				: 'Keyword___________19'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______________________20	: 'Keyword_______________________20';	// Specified in the interest of formatting.
 Keyword___________21:
 	'Keyword___________21'								{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;														// Specified in the interest of formatting.
-Keyword________________22: 'Keyword________________22'	{doesItBlend()}?;
+Keyword________________22 : 'Keyword________________22'	{doesItBlend()}?;
 Keyword_____________________23:
-	'Keyword_____________________23'			{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;												// Specified in the interest of formatting.
-Keyword_24: 'Keyword_24'						{domeSomething($text);} -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword____________25: 'Keyword____________25'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___________26: 'Keyword___________26'	{domeSomething($text);};
-Keyword_________27: 'Keyword_________27';		// Specified in the interest of formatting.
-Keyword_28: 'Keyword_28';
+	'Keyword_____________________23'				{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;													// Specified in the interest of formatting.
+Keyword_24				: 'Keyword_24'				{domeSomething($text);} -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____________25	: 'Keyword____________25'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___________26	: 'Keyword___________26'	{domeSomething($text);};
+Keyword_________27		: 'Keyword_________27';		// Specified in the interest of formatting.
+Keyword_28				: 'Keyword_28';
 Keyword___________________29:
 	'Keyword___________________29'	{doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;									// Specified in the interest of formatting.
@@ -15422,7 +15422,7 @@ rule_________________4: (
 	| rule________	{doSomething($text);}
 ;					// Final trailing comment.
 rule_________________________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -15472,7 +15472,7 @@ rule__________________11: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule_______________________12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_______________________12 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_13: (alt1		{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__		# label__
 	| rule____		# label____
@@ -15492,70 +15492,70 @@ rule____________________15: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # la
 	| rule____					# label____
 	| rule________				# label________ {doesItBlend}?
 ;
-rule________________16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________17: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_______18: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule________________16	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________17			: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_______18: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule__19: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule__19 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword________________________0:
-	'Keyword________________________0'									{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword________________________1: 'Keyword________________________1'	{doesItBlend()}?;
-Keyword_2: 'Keyword_2'													{domeSomething($text);} {doesItBlend()}?;
-Keyword___________________3: 'Keyword___________________3'				{domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword________________________0'										{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword________________________1	: 'Keyword________________________1'	{doesItBlend()}?;
+Keyword_2							: 'Keyword_2'							{domeSomething($text);} {doesItBlend()}?;
+Keyword___________________3			: 'Keyword___________________3'			{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword___________________4:
-	'Keyword___________________4'										{doesItBlend()}? {domeSomething($text);}
-;																		// Specified in the interest of formatting.
-Keyword______________5: 'Keyword______________5'						{doesItBlend()}?; // Specified in the interest of formatting.
+	'Keyword___________________4'											{doesItBlend()}? {domeSomething($text);}
+;																			// Specified in the interest of formatting.
+Keyword______________5				: 'Keyword______________5'				{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_________________________6:
-	'Keyword_________________________6'									{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
+	'Keyword_________________________6'										{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;
-Keyword_______7: 'Keyword_______7'										{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______7						: 'Keyword_______7'						{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_____________8:
-	'Keyword_____________8'												{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
+	'Keyword_____________8'													{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
 Keyword_______________________9:
-	'Keyword_______________________9'									{domeSomething($text);}
-;																		// Specified in the interest of formatting.
-Keyword__________________10: 'Keyword__________________10'				{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword___11: 'Keyword___11'											-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword______12: 'Keyword______12'										{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________13: 'Keyword________13'									{domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword_______________________9'										{domeSomething($text);}
+;																			// Specified in the interest of formatting.
+Keyword__________________10			: 'Keyword__________________10'			{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___11						: 'Keyword___11'						-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______12						: 'Keyword______12'						{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________13					: 'Keyword________13'					{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword__________________14:
-	'Keyword__________________14'										-> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
+	'Keyword__________________14'											-> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_____________15: 'Keyword_____________15'						-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_______________________16: 'Keyword_______________________16'	-> mode(SomethingReallyMeaningful);
-Keyword_______________________17: 'Keyword_______________________17'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword______________________18: 'Keyword______________________18'		{doesItBlend()}?;
-Keyword_________19: 'Keyword_________19'								{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______________20: 'Keyword_______________20'					-> mode(SomethingReallyMeaningful);
-Keyword________________21: 'Keyword________________21'					{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____________15				: 'Keyword_____________15'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_______________________16	: 'Keyword_______________________16'	-> mode(SomethingReallyMeaningful);
+Keyword_______________________17	: 'Keyword_______________________17'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword______________________18		: 'Keyword______________________18'		{doesItBlend()}?;
+Keyword_________19					: 'Keyword_________19'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______________20			: 'Keyword_______________20'			-> mode(SomethingReallyMeaningful);
+Keyword________________21			: 'Keyword________________21'			{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword____________________22:
 	'Keyword____________________22'							{doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;															// Specified in the interest of formatting.
-Keyword____23: 'Keyword____23'								{domeSomething($text);};
-Keyword_________________24: 'Keyword_________________24'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____________25: 'Keyword_____________25'			{domeSomething($text);};
-Keyword__26: 'Keyword__26'									-> mode(SomethingReallyMeaningful);
+Keyword____23				: 'Keyword____23'				{domeSomething($text);};
+Keyword_________________24	: 'Keyword_________________24'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________25		: 'Keyword_____________25'		{domeSomething($text);};
+Keyword__26					: 'Keyword__26'					-> mode(SomethingReallyMeaningful);
 Keyword_________________________27:
 	'Keyword_________________________27' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
 Keyword_______________28:
 	'Keyword_______________28'	-> mode(SomethingReallyMeaningful)
 ;								// Specified in the interest of formatting.
-Keyword___29: 'Keyword___29'	-> mode(SomethingReallyMeaningful);
+Keyword___29 : 'Keyword___29'	-> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule____________________0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -15563,7 +15563,7 @@ rule____________________0: (
 	| rule________	# label________ {doesItBlend}?
 ;
 rule____1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -15646,8 +15646,8 @@ rule_____________11: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____											# label____
 	| rule________										# label________
 ;
-rule___12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_____________13: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule___12			: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____________13	: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule__________14: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__			# label__
 	| rule____			# label____
@@ -15691,33 +15691,33 @@ rule______________________19: (alt1	{doSomething($text);} ruleA | alt2 {doSometh
 	| rule________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword____________________0:
-	'Keyword____________________0'										{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_________________________1: 'Keyword_________________________1'	{doesItBlend()}? {domeSomething($text);};
-Keyword_______2: 'Keyword_______2'										{domeSomething($text);};
-Keyword______3: 'Keyword______3'										{doesItBlend()}?;
-Keyword_______4: 'Keyword_______4';
-Keyword___________________5: 'Keyword___________________5'				{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____6: 'Keyword_____6'											{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword____________________0'											{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_________________________1	: 'Keyword_________________________1'	{doesItBlend()}? {domeSomething($text);};
+Keyword_______2						: 'Keyword_______2'						{domeSomething($text);};
+Keyword______3						: 'Keyword______3'						{doesItBlend()}?;
+Keyword_______4						: 'Keyword_______4';
+Keyword___________________5			: 'Keyword___________________5'			{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____6						: 'Keyword_____6'						{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_____7:
-	'Keyword_____7'														{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
+	'Keyword_____7'															{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
 Keyword_________8:
-	'Keyword_________8'													{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_______9: 'Keyword_______9'										-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword__________________10: 'Keyword__________________10'				{doesItBlend()}?;
-Keyword_____________________11: 'Keyword_____________________11'		{doesItBlend()}? -> type(SomethingReallyMeaningful);
+	'Keyword_________8'														{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_______9						: 'Keyword_______9'						-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________________10			: 'Keyword__________________10'			{doesItBlend()}?;
+Keyword_____________________11		: 'Keyword_____________________11'		{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword_____________________12:
-	'Keyword_____________________12'									-> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
+	'Keyword_____________________12'										-> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
 Keyword_______________13:
-	'Keyword_______________13'											{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword________________14: 'Keyword________________14'					{domeSomething($text);} {doesItBlend()}?;
+	'Keyword_______________13'												{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword________________14			: 'Keyword________________14'			{domeSomething($text);} {doesItBlend()}?;
 // $antlr-format groupedAlignments on
 Keyword___________________15:
 	'Keyword___________________15'	-> type(SomethingReallyMeaningful)
@@ -15725,25 +15725,25 @@ Keyword___________________15:
 Keyword_____________16:
 	'Keyword_____________16'								{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;															// Specified in the interest of formatting.
-Keyword__________________17: 'Keyword__________________17'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword___________18: 'Keyword___________18'				{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword____19: 'Keyword____19'								-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________________17	: 'Keyword__________________17'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword___________18		: 'Keyword___________18'		{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____19				: 'Keyword____19'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword____________20:
 	'Keyword____________20'									{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;															// Specified in the interest of formatting.
-Keyword________________21: 'Keyword________________21'		{domeSomething($text);} {doesItBlend()}?;
-Keyword__________________22: 'Keyword__________________22'	{domeSomething($text);};
+Keyword________________21	: 'Keyword________________21'	{domeSomething($text);} {doesItBlend()}?;
+Keyword__________________22	: 'Keyword__________________22'	{domeSomething($text);};
 Keyword________________________23:
-	'Keyword________________________23'									{doesItBlend()}? {domeSomething($text);}
-;																		// Specified in the interest of formatting.
-Keyword_24: 'Keyword_24'												{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________________________25: 'Keyword________________________25'	{doesItBlend()}? {domeSomething($text);};
+	'Keyword________________________23'										{doesItBlend()}? {domeSomething($text);}
+;																			// Specified in the interest of formatting.
+Keyword_24							: 'Keyword_24'							{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________________________25	: 'Keyword________________________25'	{doesItBlend()}? {domeSomething($text);};
 Keyword_________26:
 	'Keyword_________26'													{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																			// Specified in the interest of formatting.
-Keyword______________27: 'Keyword______________27'							{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_________________________28: 'Keyword_________________________28'	-> mode(SomethingReallyMeaningful);
-Keyword___________________29: 'Keyword___________________29'				-> type(SomethingReallyMeaningful);
+Keyword______________27				: 'Keyword______________27'				{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_________________________28	: 'Keyword_________________________28'	-> mode(SomethingReallyMeaningful);
+Keyword___________________29		: 'Keyword___________________29'		-> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule____________0: (
@@ -15821,7 +15821,7 @@ rule_____________________8: (
 	| rule________	# label________
 ;
 rule__________9: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -15829,8 +15829,8 @@ rule__________9: (
 	| rule________ {doesItBlend}?
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule______10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule____________11: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______10		: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________11	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____12: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__		# label__
 	| rule____		# label____
@@ -15864,59 +15864,59 @@ rule___________________16: (alt1 {doSomething($text);} ruleA | alt2 {doSomething
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule____________17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________17 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____________________18: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__												# label__
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule_19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_19 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_____0: 'Keyword_____0'											{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____1: 'Keyword_____1'											-> mode(SomethingReallyMeaningful);
-Keyword_____________________2: 'Keyword_____________________2';			// Specified in the interest of formatting.
-Keyword___3: 'Keyword___3'												{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_____0						: 'Keyword_____0'						{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____1						: 'Keyword_____1'						-> mode(SomethingReallyMeaningful);
+Keyword_____________________2		: 'Keyword_____________________2';		// Specified in the interest of formatting.
+Keyword___3							: 'Keyword___3'							{domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword_____________4:
-	'Keyword_____________4'												{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_________________________5: 'Keyword_________________________5'	{domeSomething($text);};
-Keyword_____________________6: 'Keyword_____________________6'			{domeSomething($text);};
-Keyword_______7: 'Keyword_______7'										-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword____8: 'Keyword____8'											{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword______9: 'Keyword______9'										{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_________________10: 'Keyword_________________10'				-> type(SomethingReallyMeaningful);
+	'Keyword_____________4'													{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_________________________5	: 'Keyword_________________________5'	{domeSomething($text);};
+Keyword_____________________6		: 'Keyword_____________________6'		{domeSomething($text);};
+Keyword_______7						: 'Keyword_______7'						-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____8						: 'Keyword____8'						{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword______9						: 'Keyword______9'						{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_________________10			: 'Keyword_________________10'			-> type(SomethingReallyMeaningful);
 Keyword___________________11:
-	'Keyword___________________11'										{doesItBlend()}? {domeSomething($text);}
-;																		// Specified in the interest of formatting.
-Keyword_____12: 'Keyword_____12'										{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+	'Keyword___________________11'											{doesItBlend()}? {domeSomething($text);}
+;																			// Specified in the interest of formatting.
+Keyword_____12						: 'Keyword_____12'						{doesItBlend()}? -> mode(SomethingReallyMeaningful);
 Keyword___________13:
-	'Keyword___________13'												{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword___________________14: 'Keyword___________________14';
+	'Keyword___________13'													{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword___________________14		: 'Keyword___________________14';
 // $antlr-format groupedAlignments on
 Keyword__________________15:
-	'Keyword__________________15'								{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword____________16: 'Keyword____________16'					{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword___________________17: 'Keyword___________________17'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_________18: 'Keyword_________18'						{doesItBlend()}?;
-Keyword_____19: 'Keyword_____19'								{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______20: 'Keyword_______20'							{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____21: 'Keyword_____21';
+	'Keyword__________________15'									{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword____________16			: 'Keyword____________16'			{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword___________________17	: 'Keyword___________________17'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_________18				: 'Keyword_________18'				{doesItBlend()}?;
+Keyword_____19					: 'Keyword_____19'					{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______20				: 'Keyword_______20'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____21					: 'Keyword_____21';
 Keyword________________22:
 	'Keyword________________22'	{doesItBlend()}? {domeSomething($text);}
 ;								// Specified in the interest of formatting.
 Keyword_________________23:
-	'Keyword_________________23'						{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;														// Specified in the interest of formatting.
-Keyword_____24: 'Keyword_____24'						{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__25: 'Keyword__25'								{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_____________26: 'Keyword_____________26'		{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________27: 'Keyword_________27'				{doesItBlend()}?;
-Keyword_______________28: 'Keyword_______________28'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__________29: 'Keyword__________29'				-> type(SomethingReallyMeaningful);
+	'Keyword_________________23'							{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;															// Specified in the interest of formatting.
+Keyword_____24				: 'Keyword_____24'				{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__25					: 'Keyword__25'					{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_____________26		: 'Keyword_____________26'		{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________27			: 'Keyword_________27'			{doesItBlend()}?;
+Keyword_______________28	: 'Keyword_______________28'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__________29			: 'Keyword__________29'			-> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule___________________0: (
@@ -15928,7 +15928,7 @@ rule___________________0: (
 	| rule________	# label________
 ;
 rule___1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -15978,7 +15978,7 @@ rule_________________6: (
 	| rule________	# label________ {doSomething($text);}
 ;					// Final trailing comment.
 rule__7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -16007,7 +16007,7 @@ rule_______________________10: (alt1	{doSomething($text);} ruleA | alt2 {doSomet
 	| rule____							# label____
 	| rule________						# label________ {doSomething($text);}
 ;
-rule_____________________11: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_____________________11 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule________________12: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -16022,7 +16022,7 @@ rule_________13: (	{doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSom
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;
-rule______________14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________14 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______15: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -16057,49 +16057,49 @@ rule_____19: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} rule
 	| rule________	# label________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword___________0: 'Keyword___________0'								{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_____________1: 'Keyword_____________1'							{doesItBlend()}?;
-Keyword_2: 'Keyword_2'													{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_________3: 'Keyword_________3'									{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______4: 'Keyword_______4'										{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_5: 'Keyword_5'													{doesItBlend()}? {domeSomething($text);};
-Keyword____________6: 'Keyword____________6'							{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___________0					: 'Keyword___________0'					{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_____________1				: 'Keyword_____________1'				{doesItBlend()}?;
+Keyword_2							: 'Keyword_2'							{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_________3					: 'Keyword_________3'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______4						: 'Keyword_______4'						{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_5							: 'Keyword_5'							{doesItBlend()}? {domeSomething($text);};
+Keyword____________6				: 'Keyword____________6'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword________7:
-	'Keyword________7'													{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_______________________8: 'Keyword_______________________8'		{doesItBlend()}?;
-Keyword________________________9: 'Keyword________________________9'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_______10: 'Keyword_______10';
-Keyword_______________________11: 'Keyword_______________________11'	-> type(SomethingReallyMeaningful);
-Keyword____12: 'Keyword____12'											{domeSomething($text);} -> type(SomethingReallyMeaningful);
+	'Keyword________7'														{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_______________________8		: 'Keyword_______________________8'		{doesItBlend()}?;
+Keyword________________________9	: 'Keyword________________________9'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_______10					: 'Keyword_______10';
+Keyword_______________________11	: 'Keyword_______________________11'	-> type(SomethingReallyMeaningful);
+Keyword____12						: 'Keyword____12'						{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword_______________13:
-	'Keyword_______________13'											{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword__________________14: 'Keyword__________________14'				{doesItBlend()}? -> type(SomethingReallyMeaningful);
+	'Keyword_______________13'												{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword__________________14			: 'Keyword__________________14'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
-Keyword______________15: 'Keyword______________15'							{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword___________16: 'Keyword___________16'								-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_________________________17: 'Keyword_________________________17'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword______________15				: 'Keyword______________15'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___________16				: 'Keyword___________16'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_________________________17	: 'Keyword_________________________17'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword________________18:
 	'Keyword________________18'						{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;													// Specified in the interest of formatting.
-Keyword______________19: 'Keyword______________19'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword______________19 : 'Keyword______________19'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword_____20:
-	'Keyword_____20'											{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword____________________21: 'Keyword____________________21'	-> mode(SomethingReallyMeaningful);
-Keyword____22: 'Keyword____22'									{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______________23: 'Keyword_______________23'			-> type(SomethingReallyMeaningful);
-Keyword____________24: 'Keyword____________24'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword____________________25: 'Keyword____________________25';	// Specified in the interest of formatting.
+	'Keyword_____20'												{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword____________________21	: 'Keyword____________________21'	-> mode(SomethingReallyMeaningful);
+Keyword____22					: 'Keyword____22'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______________23		: 'Keyword_______________23'		-> type(SomethingReallyMeaningful);
+Keyword____________24			: 'Keyword____________24'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword____________________25	: 'Keyword____________________25';	// Specified in the interest of formatting.
 Keyword____26:
-	'Keyword____26'										{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;														// Specified in the interest of formatting.
-Keyword________________27: 'Keyword________________27'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword__________28: 'Keyword__________28'				{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________29: 'Keyword________29'					{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+	'Keyword____26'											{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;															// Specified in the interest of formatting.
+Keyword________________27	: 'Keyword________________27'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword__________28			: 'Keyword__________28'			{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________29			: 'Keyword________29'			{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_______________0: (
@@ -16186,7 +16186,7 @@ rule__________9: (
 	| rule________	# label________ {doSomething($text);}
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_____10: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_____10 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule___________11: (
 			{doesItBlend}? alt1 {doSomething($text);} ruleA // Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 {doSomething($text);} ruleB // And another comment.
@@ -16234,52 +16234,52 @@ rule___________17: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule__18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__18 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_19: (alt1		{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__		# label__
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword___0: 'Keyword___0'											{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword___0						: 'Keyword___0'						{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword________________1:
 	'Keyword________________1'										{doesItBlend()}? {domeSomething($text);}
 ;																	// Specified in the interest of formatting.
-Keyword________2: 'Keyword________2'								{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__________________3: 'Keyword__________________3'			-> mode(SomethingReallyMeaningful);
-Keyword________4: 'Keyword________4'								{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________5: 'Keyword________5'								{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________2				: 'Keyword________2'				{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________________3		: 'Keyword__________________3'		-> mode(SomethingReallyMeaningful);
+Keyword________4				: 'Keyword________4'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________5				: 'Keyword________5'				{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword______6:
 	'Keyword______6'												{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
-Keyword___________________7: 'Keyword___________________7'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword________________8: 'Keyword________________8'				{domeSomething($text);};
-Keyword_______________________9: 'Keyword_______________________9'	{domeSomething($text);};
-Keyword_____10: 'Keyword_____10'									{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword____________11: 'Keyword____________11'						{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword____12: 'Keyword____12'										{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword___________________13: 'Keyword___________________13'		{doesItBlend()}?;
-Keyword______________________14: 'Keyword______________________14'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___________________7		: 'Keyword___________________7'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword________________8		: 'Keyword________________8'		{domeSomething($text);};
+Keyword_______________________9	: 'Keyword_______________________9'	{domeSomething($text);};
+Keyword_____10					: 'Keyword_____10'					{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword____________11			: 'Keyword____________11'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword____12					: 'Keyword____12'					{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___________________13	: 'Keyword___________________13'	{doesItBlend()}?;
+Keyword______________________14	: 'Keyword______________________14'	{doesItBlend()}?; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword___________________15: 'Keyword___________________15'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_____16: 'Keyword_____16'								{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_______17: 'Keyword_______17'							{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________________18: 'Keyword_________________18'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword___________19: 'Keyword___________19'					{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_____________20: 'Keyword_____________20'				{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword______21: 'Keyword______21'								-> mode(SomethingReallyMeaningful);
-Keyword______22: 'Keyword______22';
-Keyword____23: 'Keyword____23'							{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword______________24: 'Keyword______________24'		{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_______________25: 'Keyword_______________25'	{doesItBlend()}?;
+Keyword___________________15	: 'Keyword___________________15'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_____16					: 'Keyword_____16'					{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_______17				: 'Keyword_______17'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________________18		: 'Keyword_________________18'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___________19			: 'Keyword___________19'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_____________20			: 'Keyword_____________20'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword______21					: 'Keyword______21'					-> mode(SomethingReallyMeaningful);
+Keyword______22					: 'Keyword______22';
+Keyword____23					: 'Keyword____23'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword______________24			: 'Keyword______________24'		{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______________25		: 'Keyword_______________25'	{doesItBlend()}?;
 Keyword______________26:
 	'Keyword______________26'	{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;								// Specified in the interest of formatting.
-Keyword_27: 'Keyword_27';
-Keyword________28: 'Keyword________28' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword________________29: 'Keyword________________29';
+Keyword_27					: 'Keyword_27';
+Keyword________28			: 'Keyword________28' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword________________29	: 'Keyword________________29';
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_________0: (
@@ -16307,7 +16307,7 @@ rule___2: (
 	| rule________	# label________ {doSomething($text);}
 ;
 rule___________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -16331,7 +16331,7 @@ rule______________________5: (
 	| rule________	# label________
 ;
 rule___6: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -16347,7 +16347,7 @@ rule_7: (
 	| rule________	# label________
 ;
 rule________8: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -16372,13 +16372,13 @@ rule__________10: (
 	| rule____
 	| rule________	{doesItBlend}?
 ;					// Final trailing comment.
-rule________11: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________11 : (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule___12: (		{doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule_13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____________________14: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -16393,7 +16393,7 @@ rule_____________15: (
 	| rule____
 	| rule________	{doesItBlend}?
 ;					// Final trailing comment.
-rule___16: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule___16 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_______________________17: (
 			{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 ruleB // And another comment.
@@ -16403,60 +16403,60 @@ rule_______________________17: (
 	| rule____
 	| rule________	{doesItBlend}?
 ;					// Final trailing comment.
-rule________18: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule__19: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________18	: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__19		: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword__0: 'Keyword__0'												{domeSomething($text);} -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_________1: 'Keyword_________1'									{doesItBlend()}? {domeSomething($text);};
+Keyword__0							: 'Keyword__0'							{domeSomething($text);} -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_________1					: 'Keyword_________1'					{doesItBlend()}? {domeSomething($text);};
 Keyword________________2:
-	'Keyword________________2'											{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_________________________3: 'Keyword_________________________3'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__4: 'Keyword__4';
-Keyword__________5: 'Keyword__________5'								{domeSomething($text);};
+	'Keyword________________2'												{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_________________________3	: 'Keyword_________________________3'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__4							: 'Keyword__4';
+Keyword__________5					: 'Keyword__________5'					{domeSomething($text);};
 Keyword________________6:
-	'Keyword________________6'											-> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
+	'Keyword________________6'												-> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
 Keyword_________________7:
-	'Keyword_________________7'											{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword____________8: 'Keyword____________8'							{domeSomething($text);} {doesItBlend()}?;
-Keyword__________9: 'Keyword__________9'								{doesItBlend()}?;
-Keyword____________10: 'Keyword____________10'							{doesItBlend()}?;
-Keyword____________11: 'Keyword____________11';							// Specified in the interest of formatting.
-Keyword_________12: 'Keyword_________12'								{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_____13: 'Keyword_____13';										// Specified in the interest of formatting.
+	'Keyword_________________7'												{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword____________8				: 'Keyword____________8'				{domeSomething($text);} {doesItBlend()}?;
+Keyword__________9					: 'Keyword__________9'					{doesItBlend()}?;
+Keyword____________10				: 'Keyword____________10'				{doesItBlend()}?;
+Keyword____________11				: 'Keyword____________11';				// Specified in the interest of formatting.
+Keyword_________12					: 'Keyword_________12'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_____13						: 'Keyword_____13';						// Specified in the interest of formatting.
 Keyword____________________14:
-	'Keyword____________________14'										{doesItBlend()}? {domeSomething($text);}
-;																		// Specified in the interest of formatting.
+	'Keyword____________________14'											{doesItBlend()}? {domeSomething($text);}
+;																			// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword__________________15: 'Keyword__________________15'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword___________16: 'Keyword___________16'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________________15	: 'Keyword__________________15'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___________16		: 'Keyword___________16'		{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword___________________17:
 	'Keyword___________________17' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;
-Keyword_______________18: 'Keyword_______________18'	{doesItBlend()}?;
-Keyword__19: 'Keyword__19'								{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______________18	: 'Keyword_______________18'	{doesItBlend()}?;
+Keyword__19					: 'Keyword__19'					{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_______20:
 	'Keyword_______20'				{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;									// Specified in the interest of formatting.
-Keyword______21: 'Keyword______21'	{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______21 : 'Keyword______21'	{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword_____________________22:
 	'Keyword_____________________22'		{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;											// Specified in the interest of formatting.
-Keyword_________23: 'Keyword_________23'	{domeSomething($text);};
+Keyword_________23 : 'Keyword_________23'	{domeSomething($text);};
 Keyword_____________________24:
 	'Keyword_____________________24'	{domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;										// Specified in the interest of formatting.
-Keyword_25: 'Keyword_25'				{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_25 : 'Keyword_25'				{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword______________________26:
-	'Keyword______________________26'					-> type(SomethingReallyMeaningful)
-;														// Specified in the interest of formatting.
-Keyword________________27: 'Keyword________________27'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__28: 'Keyword__28'								{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_29: 'Keyword_29'								{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword______________________26'						-> type(SomethingReallyMeaningful)
+;															// Specified in the interest of formatting.
+Keyword________________27	: 'Keyword________________27'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__28					: 'Keyword__28'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_29					: 'Keyword_29'					{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_______________0: (
@@ -16477,7 +16477,7 @@ rule_______________________1: (
 	| rule________	# label________
 ;					// Final trailing comment.
 rule_____________________2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -16535,7 +16535,7 @@ rule_______________________8: (
 	| rule________
 ;
 rule_____9: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -16553,14 +16553,14 @@ rule___________________11: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule____12: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____12 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule__________13: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__			# label__
 	| rule____			# label____
 	| rule________		# label________ {doSomething($text);}
 ;
-rule_____________________14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule____________15: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____________________14	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________15			: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______16: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -16570,8 +16570,8 @@ rule______16: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule___________17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_____________18: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule___________17 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____________18: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -16582,20 +16582,20 @@ rule_______________________19: (alt1	{doSomething($text);} ruleA | alt2 {doSomet
 	| rule________						# label________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_________________0:
 	'Keyword_________________0'										{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
-Keyword____________1: 'Keyword____________1'						{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword____________1			: 'Keyword____________1'			{doesItBlend()}? -> mode(SomethingReallyMeaningful);
 Keyword____________________2:
 	'Keyword____________________2'									{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;
-Keyword_____3: 'Keyword_____3'										{domeSomething($text);};
-Keyword_______________________4: 'Keyword_______________________4'	{doesItBlend()}? {domeSomething($text);};
-Keyword_______________________5: 'Keyword_______________________5'	{doesItBlend()}? {domeSomething($text);};
-Keyword_______6: 'Keyword_______6'									{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_____7: 'Keyword_____7'										{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_____3					: 'Keyword_____3'					{domeSomething($text);};
+Keyword_______________________4	: 'Keyword_______________________4'	{doesItBlend()}? {domeSomething($text);};
+Keyword_______________________5	: 'Keyword_______________________5'	{doesItBlend()}? {domeSomething($text);};
+Keyword_______6					: 'Keyword_______6'					{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_____7					: 'Keyword_____7'					{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword______8:
 	'Keyword______8'												{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
@@ -16605,32 +16605,32 @@ Keyword________9:
 Keyword_____________________10:
 	'Keyword_____________________10'								{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
-Keyword__11: 'Keyword__11'											{doesItBlend()}?;
+Keyword__11						: 'Keyword__11'						{doesItBlend()}?;
 Keyword_________________12:
 	'Keyword_________________12'									-> type(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
 Keyword_____13:
 	'Keyword_____13'												{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																	// Specified in the interest of formatting.
-Keyword___14: 'Keyword___14'										{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___14					: 'Keyword___14'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword______________________15: 'Keyword______________________15'	{domeSomething($text);} {doesItBlend()}?;
-Keyword______________16: 'Keyword______________16'					-> type(SomethingReallyMeaningful);
-Keyword_____17: 'Keyword_____17'									{doesItBlend()}?;
-Keyword____18: 'Keyword____18'										{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____19: 'Keyword_____19'									{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_______________20: 'Keyword_______________20'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword________________21: 'Keyword________________21'				{doesItBlend()}? {domeSomething($text);};
-Keyword________22: 'Keyword________22'								{domeSomething($text);};
-Keyword________________________23: 'Keyword________________________23';
-Keyword________24: 'Keyword________24' -> type(SomethingReallyMeaningful);
+Keyword______________________15		: 'Keyword______________________15'	{domeSomething($text);} {doesItBlend()}?;
+Keyword______________16				: 'Keyword______________16'			-> type(SomethingReallyMeaningful);
+Keyword_____17						: 'Keyword_____17'					{doesItBlend()}?;
+Keyword____18						: 'Keyword____18'					{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____19						: 'Keyword_____19'					{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______________20			: 'Keyword_______________20'		{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword________________21			: 'Keyword________________21'		{doesItBlend()}? {domeSomething($text);};
+Keyword________22					: 'Keyword________22'				{domeSomething($text);};
+Keyword________________________23	: 'Keyword________________________23';
+Keyword________24					: 'Keyword________24' -> type(SomethingReallyMeaningful);
 Keyword___________25:
 	'Keyword___________25'													{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																			// Specified in the interest of formatting.
-Keyword________________________26: 'Keyword________________________26'		{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword______________________27: 'Keyword______________________27'			{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________28: 'Keyword________28'										{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_________________________29: 'Keyword_________________________29'	{doesItBlend()}?;
+Keyword________________________26	: 'Keyword________________________26'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword______________________27		: 'Keyword______________________27'		{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________28					: 'Keyword________28'					{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_________________________29	: 'Keyword_________________________29'	{doesItBlend()}?;
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule__0: (
@@ -16719,8 +16719,8 @@ rule_________________9: (
 	| rule________	{doesItBlend}?
 ;					// Final trailing comment.
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule__________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__11: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule__________10	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__11			: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule____12: (
 			{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 ruleB // And another comment.
@@ -16735,8 +16735,8 @@ rule_____________13: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____											# label____
 	| rule________										# label________
 ;
-rule____14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_____15: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____14	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____15	: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule________________16: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -16762,55 +16762,55 @@ rule_______19: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ru
 	| rule________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword___________0: 'Keyword___________0'								{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword___________________1: 'Keyword___________________1'				{domeSomething($text);} {doesItBlend()}?;
+Keyword___________0					: 'Keyword___________0'					{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___________________1			: 'Keyword___________________1'			{domeSomething($text);} {doesItBlend()}?;
 Keyword__________________2:
-	'Keyword__________________2'										{domeSomething($text);} {doesItBlend()}?
-;																		// Specified in the interest of formatting.
-Keyword_________3: 'Keyword_________3'									{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__________________4: 'Keyword__________________4'				{doesItBlend()}? -> type(SomethingReallyMeaningful);
+	'Keyword__________________2'											{domeSomething($text);} {doesItBlend()}?
+;																			// Specified in the interest of formatting.
+Keyword_________3					: 'Keyword_________3'					{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__________________4			: 'Keyword__________________4'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword__________________5:
-	'Keyword__________________5'										{doesItBlend()}? {domeSomething($text);}
-;																		// Specified in the interest of formatting.
+	'Keyword__________________5'											{doesItBlend()}? {domeSomething($text);}
+;																			// Specified in the interest of formatting.
 Keyword_________________6:
-	'Keyword_________________6'											{domeSomething($text);} {doesItBlend()}?
-;																		// Specified in the interest of formatting.
-Keyword_________________________7: 'Keyword_________________________7'	{domeSomething($text);};
+	'Keyword_________________6'												{domeSomething($text);} {doesItBlend()}?
+;																			// Specified in the interest of formatting.
+Keyword_________________________7	: 'Keyword_________________________7'	{domeSomething($text);};
 Keyword________________8:
-	'Keyword________________8'											{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword________________9: 'Keyword________________9';					// Specified in the interest of formatting.
+	'Keyword________________8'												{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword________________9			: 'Keyword________________9';			// Specified in the interest of formatting.
 Keyword_________________10:
-	'Keyword_________________10'										{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
+	'Keyword_________________10'											{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword_________11: 'Keyword_________11'								{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword______12: 'Keyword______12'										{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_________11					: 'Keyword_________11'					{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword______12						: 'Keyword______12'						{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword____________13:
-	'Keyword____________13'												{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_14: 'Keyword_14';
+	'Keyword____________13'													{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_14							: 'Keyword_14';
 // $antlr-format groupedAlignments on
 Keyword____________________15:
-	'Keyword____________________15'										{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword________________16: 'Keyword________________16'					{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword__________17: 'Keyword__________17'								{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______________________18: 'Keyword_______________________18'	-> type(SomethingReallyMeaningful);
-Keyword_______19: 'Keyword_______19'									{domeSomething($text);} {doesItBlend()}?;
-Keyword_____________20: 'Keyword_____________20'						{doesItBlend()}? {domeSomething($text);};
-Keyword___________21: 'Keyword___________21'							{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________________22: 'Keyword_________________22'				{domeSomething($text);} {doesItBlend()}?;
-Keyword_23: 'Keyword_23'												{doesItBlend()}? {domeSomething($text);};
-Keyword_____________24: 'Keyword_____________24'						{domeSomething($text);} {doesItBlend()}?;
-Keyword_25: 'Keyword_25'												{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword__________26: 'Keyword__________26'								{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_________27: 'Keyword_________27'								{domeSomething($text);};
+	'Keyword____________________15'											{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword________________16			: 'Keyword________________16'			{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword__________17					: 'Keyword__________17'					{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______________________18	: 'Keyword_______________________18'	-> type(SomethingReallyMeaningful);
+Keyword_______19					: 'Keyword_______19'					{domeSomething($text);} {doesItBlend()}?;
+Keyword_____________20				: 'Keyword_____________20'				{doesItBlend()}? {domeSomething($text);};
+Keyword___________21				: 'Keyword___________21'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________________22			: 'Keyword_________________22'			{domeSomething($text);} {doesItBlend()}?;
+Keyword_23							: 'Keyword_23'							{doesItBlend()}? {domeSomething($text);};
+Keyword_____________24				: 'Keyword_____________24'				{domeSomething($text);} {doesItBlend()}?;
+Keyword_25							: 'Keyword_25'							{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword__________26					: 'Keyword__________26'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_________27					: 'Keyword_________27'					{domeSomething($text);};
 Keyword_______________________28:
 	'Keyword_______________________28' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;
-Keyword_________29: 'Keyword_________29' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_________29 : 'Keyword_________29' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule______________0: (
@@ -16855,7 +16855,7 @@ rule_______________4: (
 	| rule________ {doSomething($text);}
 ;
 rule________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -16918,7 +16918,7 @@ rule___________________12: (
 	| rule____
 	| rule________	{doesItBlend}?
 ;					// Final trailing comment.
-rule_13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_________________14: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__				# label__
 	| rule____				# label____
@@ -16929,8 +16929,8 @@ rule____________15: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____										# label____
 	| rule________									# label________
 ;
-rule_______________16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule__17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_______________16	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__17				: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________________18: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -16946,53 +16946,53 @@ rule__________19: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);}
 	| rule________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_____________0: 'Keyword_____________0'								{doesItBlend()}?;
-Keyword________________1: 'Keyword________________1'						{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_______________________2: 'Keyword_______________________2'			{doesItBlend()}?;
+Keyword_____________0				: 'Keyword_____________0'				{doesItBlend()}?;
+Keyword________________1			: 'Keyword________________1'			{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_______________________2		: 'Keyword_______________________2'		{doesItBlend()}?;
 Keyword___________3:
 	'Keyword___________3'													{doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;																			// Specified in the interest of formatting.
-Keyword_______4: 'Keyword_______4';
+Keyword_______4						: 'Keyword_______4';
 Keyword________________________5:
 	'Keyword________________________5'										{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword____________________6: 'Keyword____________________6';
-Keyword______________7: 'Keyword______________7'							{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________8: 'Keyword________8';										// Specified in the interest of formatting.
-Keyword________________________9: 'Keyword________________________9'		-> mode(SomethingReallyMeaningful);
+Keyword____________________6		: 'Keyword____________________6';
+Keyword______________7				: 'Keyword______________7'				{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________8					: 'Keyword________8';					// Specified in the interest of formatting.
+Keyword________________________9	: 'Keyword________________________9'	-> mode(SomethingReallyMeaningful);
 Keyword_____10:
 	'Keyword_____10'														{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																			// Specified in the interest of formatting.
-Keyword_________________________11: 'Keyword_________________________11';	// Specified in the interest of formatting.
-Keyword_______________________12: 'Keyword_______________________12'		{domeSomething($text);};
-Keyword__13: 'Keyword__13'													{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword______________14: 'Keyword______________14';
+Keyword_________________________11	: 'Keyword_________________________11';	// Specified in the interest of formatting.
+Keyword_______________________12	: 'Keyword_______________________12'	{domeSomething($text);};
+Keyword__13							: 'Keyword__13'							{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword______________14				: 'Keyword______________14';
 // $antlr-format groupedAlignments on
-Keyword______15: 'Keyword______15' {domeSomething($text);};
+Keyword______15 : 'Keyword______15' {domeSomething($text);};
 Keyword____________________16:
-	'Keyword____________________16'					-> mode(SomethingReallyMeaningful)
-;													// Specified in the interest of formatting.
-Keyword______________17: 'Keyword______________17'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______18: 'Keyword_______18';
-Keyword______________________19: 'Keyword______________________19';
-Keyword_____20: 'Keyword_____20'								{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword______________21: 'Keyword______________21'				{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword___________________22: 'Keyword___________________22'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________________23: 'Keyword_________________23';
-Keyword________________________24: 'Keyword________________________24' {domeSomething($text);};
+	'Keyword____________________16'								-> mode(SomethingReallyMeaningful)
+;																// Specified in the interest of formatting.
+Keyword______________17				: 'Keyword______________17'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______18					: 'Keyword_______18';
+Keyword______________________19		: 'Keyword______________________19';
+Keyword_____20						: 'Keyword_____20'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword______________21				: 'Keyword______________21'			{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___________________22		: 'Keyword___________________22'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________________23			: 'Keyword_________________23';
+Keyword________________________24	: 'Keyword________________________24' {domeSomething($text);};
 Keyword_________________25:
 	'Keyword_________________25'			{domeSomething($text);} {doesItBlend()}?
 ;											// Specified in the interest of formatting.
-Keyword_________26: 'Keyword_________26'	{doesItBlend()}?;
+Keyword_________26 : 'Keyword_________26'	{doesItBlend()}?;
 Keyword_________27:
 	'Keyword_________27'	{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;							// Specified in the interest of formatting.
 Keyword_____________________28:
 	'Keyword_____________________28'					{doesItBlend()}? {domeSomething($text);}
 ;														// Specified in the interest of formatting.
-Keyword________________29: 'Keyword________________29'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________________29 : 'Keyword________________29'	{doesItBlend()}?; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule__________0: (
@@ -17030,7 +17030,7 @@ rule_________________________3: (
 	| rule________	# label________ {doSomething($text);}
 ;
 rule____4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -17054,7 +17054,7 @@ rule________________________6: (
 	| rule________	# label________
 ;
 rule_____________7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -17062,7 +17062,7 @@ rule_____________7: (
 	| rule________	# label________ {doesItBlend}?
 ;
 rule_______________8: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -17097,7 +17097,7 @@ rule_____________12: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule_______13: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_______13 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule____________14: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__										# label__
 	| rule____										# label____
@@ -17121,61 +17121,61 @@ rule___16: (
 	| rule____
 	| rule________	{doSomething($text);}
 ;					// Final trailing comment.
-rule_______17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___________________18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_______17				: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___________________18	: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule________________________19: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__							# label__
 	| rule____							# label____
 	| rule________						# label________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword______________0:				'Keyword______________0' -> type(SomethingReallyMeaningful);
-Keyword____________________1:		'Keyword____________________1';
-Keyword____2:						'Keyword____2'; // Specified in the interest of formatting.
-Keyword_________________3:			'Keyword_________________3' {domeSomething($text);};
-Keyword__4:							'Keyword__4' {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword________________5:			'Keyword________________5' {doesItBlend()}?;
-Keyword____________________6:		'Keyword____________________6' -> mode(SomethingReallyMeaningful);
-Keyword______7:						'Keyword______7' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword______________0			:	'Keyword______________0' -> type(SomethingReallyMeaningful);
+Keyword____________________1	:	'Keyword____________________1';
+Keyword____2					:	'Keyword____2'; // Specified in the interest of formatting.
+Keyword_________________3		:	'Keyword_________________3' {domeSomething($text);};
+Keyword__4						:	'Keyword__4' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword________________5		:	'Keyword________________5' {doesItBlend()}?;
+Keyword____________________6	:	'Keyword____________________6' -> mode(SomethingReallyMeaningful);
+Keyword______7					:	'Keyword______7' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword___________________8:
 	'Keyword___________________8' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword___9:						'Keyword___9' {doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword___________________10:		'Keyword___________________10' {doesItBlend()}?;
-Keyword_____________11:				'Keyword_____________11' {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword______________________12:	'Keyword______________________12' -> mode(SomethingReallyMeaningful);
-Keyword___13:						'Keyword___13' {doesItBlend()}? {domeSomething($text);};
+Keyword___9						:	'Keyword___9' {doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___________________10	:	'Keyword___________________10' {doesItBlend()}?;
+Keyword_____________11			:	'Keyword_____________11' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword______________________12	:	'Keyword______________________12' -> mode(SomethingReallyMeaningful);
+Keyword___13					:	'Keyword___13' {doesItBlend()}? {domeSomething($text);};
 Keyword__14:
 	'Keyword__14' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword____________15:		'Keyword____________15' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword____________16:		'Keyword____________16'; // Specified in the interest of formatting.
-Keyword__________17:		'Keyword__________17' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword______________18:	'Keyword______________18' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword____________15	:	'Keyword____________15' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword____________16	:	'Keyword____________16'; // Specified in the interest of formatting.
+Keyword__________17		:	'Keyword__________17' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword______________18	:	'Keyword______________18' {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword________________________19:
 	'Keyword________________________19' {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_________20:					'Keyword_________20' {domeSomething($text);};
-Keyword________________________21:	'Keyword________________________21' -> type(SomethingReallyMeaningful);
+Keyword_________20					:	'Keyword_________20' {domeSomething($text);};
+Keyword________________________21	:	'Keyword________________________21' -> type(SomethingReallyMeaningful);
 Keyword____________22:
 	'Keyword____________22' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____________________23: 'Keyword_____________________23' -> mode(SomethingReallyMeaningful);
+Keyword_____________________23 : 'Keyword_____________________23' -> mode(SomethingReallyMeaningful);
 Keyword___________________24:
 	'Keyword___________________24' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword___________________25:
 	'Keyword___________________25' {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____26:			'Keyword_____26' {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_____________27:	'Keyword_____________27'; // Specified in the interest of formatting.
+Keyword_____26			:	'Keyword_____26' {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_____________27	:	'Keyword_____________27'; // Specified in the interest of formatting.
 Keyword_____________________28:
 	'Keyword_____________________28' {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________________________29: 'Keyword________________________29' -> mode(SomethingReallyMeaningful);
+Keyword________________________29 : 'Keyword________________________29' -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule________________0: (
@@ -17266,7 +17266,7 @@ rule____________________10: ({doesItBlend}? alt1 {doSomething($text);} ruleA | a
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule____11: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____11 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________12: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
@@ -17309,55 +17309,55 @@ rule________________________17: (
 	| rule____ # label____
 	| rule________ # label________
 ; // Final trailing comment.
-rule_18: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_18 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________________19: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword________________________0:
 	'Keyword________________________0' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
-Keyword_1:						'Keyword_1' {domeSomething($text);} {doesItBlend()}?;
-Keyword______2:					'Keyword______2' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_______________3:		'Keyword_______________3' {domeSomething($text);};							// Specified in the interest of formatting.
+Keyword_1						:	'Keyword_1' {domeSomething($text);} {doesItBlend()}?;
+Keyword______2					:	'Keyword______2' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_______________3			:	'Keyword_______________3' {domeSomething($text);};							// Specified in the interest of formatting.
 Keyword_____________________4:
 	'Keyword_____________________4' {domeSomething($text);} {doesItBlend()}?
-;																											// Specified in the interest of formatting.
-Keyword______________5:			'Keyword______________5';
-Keyword_____6:					'Keyword_____6' {domeSomething($text);};
-Keyword__7:						'Keyword__7' {domeSomething($text);} -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword______________________8:	'Keyword______________________8' {domeSomething($text);};					// Specified in the interest of formatting.
-Keyword_____________________9:	'Keyword_____________________9';											// Specified in the interest of formatting.
-Keyword_______10:				'Keyword_______10' -> type(SomethingReallyMeaningful);
-Keyword______11:				'Keyword______11' -> mode(SomethingReallyMeaningful);
-Keyword___12:					'Keyword___12' -> mode(SomethingReallyMeaningful);
+;																												// Specified in the interest of formatting.
+Keyword______________5			:	'Keyword______________5';
+Keyword_____6					:	'Keyword_____6' {domeSomething($text);};
+Keyword__7						:	'Keyword__7' {domeSomething($text);} -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword______________________8	:	'Keyword______________________8' {domeSomething($text);};					// Specified in the interest of formatting.
+Keyword_____________________9	:	'Keyword_____________________9';											// Specified in the interest of formatting.
+Keyword_______10				:	'Keyword_______10' -> type(SomethingReallyMeaningful);
+Keyword______11					:	'Keyword______11' -> mode(SomethingReallyMeaningful);
+Keyword___12					:	'Keyword___12' -> mode(SomethingReallyMeaningful);
 Keyword____________________13:
 	'Keyword____________________13' {domeSomething($text);} {doesItBlend()}?
-;																											// Specified in the interest of formatting.
+;																												// Specified in the interest of formatting.
 Keyword______________14:
 	'Keyword______________14' {doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																											// Specified in the interest of formatting.
+;																												// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword____________15:		'Keyword____________15' {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword___________16:		'Keyword___________16' -> type(SomethingReallyMeaningful);
-Keyword_________17:			'Keyword_________17' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_________________18:	'Keyword_________________18' -> mode(SomethingReallyMeaningful);
+Keyword____________15		:	'Keyword____________15' {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword___________16		:	'Keyword___________16' -> type(SomethingReallyMeaningful);
+Keyword_________17			:	'Keyword_________17' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_________________18	:	'Keyword_________________18' -> mode(SomethingReallyMeaningful);
 Keyword______________________19:
 	'Keyword______________________19' -> mode(SomethingReallyMeaningful)
-;																										// Specified in the interest of formatting.
-Keyword________20:				'Keyword________20' {doesItBlend()}? {domeSomething($text);};			// Specified in the interest of formatting.
-Keyword______21:				'Keyword______21' {doesItBlend()}? -> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword___________22:			'Keyword___________22' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword______23:				'Keyword______23' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_24:						'Keyword_24';
-Keyword________25:				'Keyword________25' {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____________________26:	'Keyword_____________________26' {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_______________27:		'Keyword_______________27' {doesItBlend()}?;
-Keyword________28:				'Keyword________28' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+;																											// Specified in the interest of formatting.
+Keyword________20				:	'Keyword________20' {doesItBlend()}? {domeSomething($text);};			// Specified in the interest of formatting.
+Keyword______21					:	'Keyword______21' {doesItBlend()}? -> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword___________22			:	'Keyword___________22' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword______23					:	'Keyword______23' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_24						:	'Keyword_24';
+Keyword________25				:	'Keyword________25' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________________26	:	'Keyword_____________________26' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_______________27		:	'Keyword_______________27' {doesItBlend()}?;
+Keyword________28				:	'Keyword________28' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword________________________29:
 	'Keyword________________________29' {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -17460,8 +17460,8 @@ rule____________11: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doS
 	| rule____ # label____
 	| rule________ # label________ {doSomething($text);} {doesItBlend}?
 ;
-rule___________________12:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_______13:				( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule___________________12	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_______13				:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule__________14: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -17497,45 +17497,45 @@ rule____________19: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule________ # label________
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword___________________0:	'Keyword___________________0'	{doesItBlend()}? {domeSomething($text);};
-Keyword_____________1:			'Keyword_____________1'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword___________________2:	'Keyword___________________2'	{doesItBlend()}?;
-Keyword___________________3:	'Keyword___________________3'	{doesItBlend()}?;
+Keyword___________________0	:	'Keyword___________________0'	{doesItBlend()}? {domeSomething($text);};
+Keyword_____________1		:	'Keyword_____________1'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___________________2	:	'Keyword___________________2'	{doesItBlend()}?;
+Keyword___________________3	:	'Keyword___________________3'	{doesItBlend()}?;
 Keyword_________________________4:
 	'Keyword_________________________4'							{domeSomething($text);}
 ; // Specified in the interest of formatting.
-Keyword_______________5:		'Keyword_______________5' -> mode(SomethingReallyMeaningful);
-Keyword_______6:				'Keyword_______6'				{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword___7:					'Keyword___7'					{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______8:				'Keyword_______8'				{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____________9:			'Keyword_____________9'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword______________10:		'Keyword______________10'; // Specified in the interest of formatting.
-Keyword________11:				'Keyword________11'; // Specified in the interest of formatting.
+Keyword_______________5		:	'Keyword_______________5' -> mode(SomethingReallyMeaningful);
+Keyword_______6				:	'Keyword_______6'				{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___7					:	'Keyword___7'					{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______8				:	'Keyword_______8'				{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____________9		:	'Keyword_____________9'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword______________10		:	'Keyword______________10'; // Specified in the interest of formatting.
+Keyword________11			:	'Keyword________11'; // Specified in the interest of formatting.
 Keyword________________12:
 	'Keyword________________12'									{doesItBlend()}? {domeSomething($text);}
 ; // Specified in the interest of formatting.
-Keyword____13:					'Keyword____13';
-Keyword__14:					'Keyword__14'					{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____13				:	'Keyword____13';
+Keyword__14					:	'Keyword__14'					{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_______15:					'Keyword_______15'					{doesItBlend()}? {domeSomething($text);};
-Keyword________________________16:	'Keyword________________________16'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_______15					:	'Keyword_______15'					{doesItBlend()}? {domeSomething($text);};
+Keyword________________________16	:	'Keyword________________________16'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword__________17:
 	'Keyword__________17' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________________________18:	'Keyword________________________18';
-Keyword_____________19:				'Keyword_____________19'	{domeSomething($text);};
-Keyword___________20:				'Keyword___________20'		{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword______21:					'Keyword______21'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________________22:			'Keyword________________22' -> mode(SomethingReallyMeaningful);
-Keyword________________________23:	'Keyword________________________23' -> mode(SomethingReallyMeaningful);
-Keyword_______24:					'Keyword_______24'					{domeSomething($text);};
-Keyword______________________25:	'Keyword______________________25'	{domeSomething($text);};
-Keyword_____________26:				'Keyword_____________26'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword______________________27:	'Keyword______________________27'; // Specified in the interest of formatting.
-Keyword______28:					'Keyword______28' {doesItBlend()}?;
-Keyword________29:					'Keyword________29'; // Specified in the interest of formatting.
+Keyword________________________18	:	'Keyword________________________18';
+Keyword_____________19				:	'Keyword_____________19'	{domeSomething($text);};
+Keyword___________20				:	'Keyword___________20'		{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword______21						:	'Keyword______21'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________________22			:	'Keyword________________22' -> mode(SomethingReallyMeaningful);
+Keyword________________________23	:	'Keyword________________________23' -> mode(SomethingReallyMeaningful);
+Keyword_______24					:	'Keyword_______24'					{domeSomething($text);};
+Keyword______________________25		:	'Keyword______________________25'	{domeSomething($text);};
+Keyword_____________26				:	'Keyword_____________26'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword______________________27		:	'Keyword______________________27'; // Specified in the interest of formatting.
+Keyword______28						:	'Keyword______28' {doesItBlend()}?;
+Keyword________29					:	'Keyword________29'; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule____________0: (
@@ -17622,8 +17622,8 @@ rule______9: (
 	| rule________ # label________
 ; // Final trailing comment.
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule________10: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_________11: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule________10 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_________11: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -17637,7 +17637,7 @@ rule____________12: (
 	| rule____ # label____
 	| rule________ # label________
 ; // Final trailing comment.
-rule________________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________________13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_________14: (
 			{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 ruleB // And another comment.
@@ -17665,7 +17665,7 @@ rule___________________16: (
 	| rule____ # label____
 	| rule________ # label________
 ; // Final trailing comment.
-rule_____17: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+rule_____17: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -17685,51 +17685,51 @@ rule___19: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB)
 	| rule________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword________0:				'Keyword________0'					{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword________________1:		'Keyword________________1'			{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_2:						'Keyword_2'							{domeSomething($text);} -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword______3:					'Keyword______3'					{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword________________4:		'Keyword________________4'			{domeSomething($text);};									// Specified in the interest of formatting.
-Keyword_________________5:		'Keyword_________________5';																	// Specified in the interest of formatting.
+Keyword________0				:	'Keyword________0'					{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword________________1		:	'Keyword________________1'			{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_2						:	'Keyword_2'							{domeSomething($text);} -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword______3					:	'Keyword______3'					{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword________________4		:	'Keyword________________4'			{domeSomething($text);};									// Specified in the interest of formatting.
+Keyword_________________5		:	'Keyword_________________5';																	// Specified in the interest of formatting.
 Keyword_______________________6:
-	'Keyword_______________________6'								{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
+	'Keyword_______________________6'									{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;
-Keyword________7:				'Keyword________7';																				// Specified in the interest of formatting.
-Keyword__8:						'Keyword__8'						{domeSomething($text);} {doesItBlend()}?;
-Keyword_____________9:			'Keyword_____________9'				{domeSomething($text);} {doesItBlend()}?;					// Specified in the interest of formatting.
+Keyword________7				:	'Keyword________7';																				// Specified in the interest of formatting.
+Keyword__8						:	'Keyword__8'						{domeSomething($text);} {doesItBlend()}?;
+Keyword_____________9			:	'Keyword_____________9'				{domeSomething($text);} {doesItBlend()}?;					// Specified in the interest of formatting.
 Keyword____________________10:
-	'Keyword____________________10'									{doesItBlend()}? {domeSomething($text);}
-;																																// Specified in the interest of formatting.
-Keyword_____________________11:	'Keyword_____________________11'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+	'Keyword____________________10'										{doesItBlend()}? {domeSomething($text);}
+;																																	// Specified in the interest of formatting.
+Keyword_____________________11	:	'Keyword_____________________11'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword_________________12:
-	'Keyword_________________12'									{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																																// Specified in the interest of formatting.
-Keyword____13:					'Keyword____13'						{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_______14:				'Keyword_______14'					{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+	'Keyword_________________12'										{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																																	// Specified in the interest of formatting.
+Keyword____13					:	'Keyword____13'						{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_______14				:	'Keyword_______14'					{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
-Keyword_____15:						'Keyword_____15' {domeSomething($text);};
-Keyword___________________16:		'Keyword___________________16';
-Keyword_______17:					'Keyword_______17'; // Specified in the interest of formatting.
-Keyword_______________________18:	'Keyword_______________________18'	{doesItBlend()}?;
-Keyword__19:						'Keyword__19'						{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword______20:					'Keyword______20'					{domeSomething($text);} {doesItBlend()}?;
-Keyword_______________________21:	'Keyword_______________________21'	{domeSomething($text);};
-Keyword________22:					'Keyword________22' -> mode(SomethingReallyMeaningful);
+Keyword_____15						:	'Keyword_____15' {domeSomething($text);};
+Keyword___________________16		:	'Keyword___________________16';
+Keyword_______17					:	'Keyword_______17'; // Specified in the interest of formatting.
+Keyword_______________________18	:	'Keyword_______________________18'	{doesItBlend()}?;
+Keyword__19							:	'Keyword__19'						{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword______20						:	'Keyword______20'					{domeSomething($text);} {doesItBlend()}?;
+Keyword_______________________21	:	'Keyword_______________________21'	{domeSomething($text);};
+Keyword________22					:	'Keyword________22' -> mode(SomethingReallyMeaningful);
 Keyword________________________23:
 	'Keyword________________________23' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_________________24: 'Keyword_________________24' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_________________24 : 'Keyword_________________24' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword______________________25:
 	'Keyword______________________25' {domeSomething($text);} {doesItBlend()}?
-;																		// Specified in the interest of formatting.
-Keyword_______________________26:	'Keyword_______________________26';	// Specified in the interest of formatting.
-Keyword____27:						'Keyword____27' {doesItBlend()}?;	// Specified in the interest of formatting.
+;																			// Specified in the interest of formatting.
+Keyword_______________________26	:	'Keyword_______________________26';	// Specified in the interest of formatting.
+Keyword____27						:	'Keyword____27' {doesItBlend()}?;	// Specified in the interest of formatting.
 Keyword__28:
 	'Keyword__28' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword______________29: 'Keyword______________29' {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword______________29 : 'Keyword______________29' {doesItBlend()}? -> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_________________0: (
@@ -17741,7 +17741,7 @@ rule_________________0: (
 	| rule________ # label________
 ;
 rule_________1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -17757,7 +17757,7 @@ rule_______2: (
 	| rule________
 ;
 rule____________3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -17773,7 +17773,7 @@ rule____4: (
 	| rule________ # label________
 ;
 rule____________________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -17798,7 +17798,7 @@ rule_________7: (
 	| rule________
 ; // Final trailing comment.
 rule___8: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -17814,7 +17814,7 @@ rule_____9: (
 	| rule________ # label________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_______10: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_______10 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_______________11: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
@@ -17829,7 +17829,7 @@ rule________________________12: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule___________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___________13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______14: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -17839,12 +17839,12 @@ rule______14: (
 	| rule____ # label____
 	| rule________ # label________
 ; // Final trailing comment.
-rule_______________________15: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+rule_______________________15: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
 ;
-rule_____16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____16 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_________________________17: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
@@ -17869,55 +17869,55 @@ rule__19: (
 	| rule________ # label________ {doSomething($text);}
 ; // Final trailing comment.
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword_______________________0:	'Keyword_______________________0' {doesItBlend()}?	-> type(SomethingReallyMeaningful);
+Keyword_______________________0		:	'Keyword_______________________0' {doesItBlend()}?	-> type(SomethingReallyMeaningful);
 Keyword_____1:
-	'Keyword_____1' {domeSomething($text);} {doesItBlend()}?							-> mode(SomethingReallyMeaningful)
+	'Keyword_____1' {domeSomething($text);} {doesItBlend()}?								-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____2:						'Keyword____2';
+Keyword____2						:	'Keyword____2';
 Keyword______________3:
-	'Keyword______________3' {doesItBlend()}?											-> mode(SomethingReallyMeaningful)
+	'Keyword______________3' {doesItBlend()}?												-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword_________________________4:
-	'Keyword_________________________4' {doesItBlend()}? {domeSomething($text);}		-> mode(SomethingReallyMeaningful)
+	'Keyword_________________________4' {doesItBlend()}? {domeSomething($text);}			-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________5:					'Keyword________5';
-Keyword_________6:					'Keyword_________6' {domeSomething($text);};
-Keyword____________________7:		'Keyword____________________7' {doesItBlend()}? {domeSomething($text);};
-Keyword__________8:					'Keyword__________8' {doesItBlend()}?				-> type(SomethingReallyMeaningful);
-Keyword_______9:					'Keyword_______9' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________5					:	'Keyword________5';
+Keyword_________6					:	'Keyword_________6' {domeSomething($text);};
+Keyword____________________7		:	'Keyword____________________7' {doesItBlend()}? {domeSomething($text);};
+Keyword__________8					:	'Keyword__________8' {doesItBlend()}?				-> type(SomethingReallyMeaningful);
+Keyword_______9						:	'Keyword_______9' {doesItBlend()}?; // Specified in the interest of formatting.
 Keyword______________________10:
-	'Keyword______________________10' {doesItBlend()}?									-> mode(SomethingReallyMeaningful)
+	'Keyword______________________10' {doesItBlend()}?										-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword__________________11:
-	'Keyword__________________11'														-> mode(SomethingReallyMeaningful)
+	'Keyword__________________11'															-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword__________12:				'Keyword__________12' {doesItBlend()}? {domeSomething($text);};
-Keyword_______________________13:	'Keyword_______________________13' {doesItBlend()}?;
-Keyword______14:					'Keyword______14'									-> type(SomethingReallyMeaningful);
+Keyword__________12					:	'Keyword__________12' {doesItBlend()}? {domeSomething($text);};
+Keyword_______________________13	:	'Keyword_______________________13' {doesItBlend()}?;
+Keyword______14						:	'Keyword______14'									-> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 Keyword______________15:
 	'Keyword______________15' {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______16:		'Keyword_______16'; // Specified in the interest of formatting.
-Keyword__________17:	'Keyword__________17' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword____18:			'Keyword____18' -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_______16	:	'Keyword_______16'; // Specified in the interest of formatting.
+Keyword__________17	:	'Keyword__________17' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____18		:	'Keyword____18' -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword______19:
 	'Keyword______19' {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________________________20: 'Keyword________________________20'; // Specified in the interest of formatting.
+Keyword________________________20 : 'Keyword________________________20'; // Specified in the interest of formatting.
 Keyword_______________________21:
 	'Keyword_______________________21' {doesItBlend()}? {domeSomething($text);}
 ; // Specified in the interest of formatting.
-Keyword______22:				'Keyword______22' {doesItBlend()}?				-> type(SomethingReallyMeaningful);
-Keyword_23:						'Keyword_23' {doesItBlend()}?					-> mode(SomethingReallyMeaningful);
-Keyword___________________24:	'Keyword___________________24' {doesItBlend()}?	-> mode(SomethingReallyMeaningful);
-Keyword_________25:				'Keyword_________25'; // Specified in the interest of formatting.
-Keyword_______26:				'Keyword_______26' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword______27:				'Keyword______27';
-Keyword________28:				'Keyword________28' {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____________29:			'Keyword_____________29' -> type(SomethingReallyMeaningful);
+Keyword______22					:	'Keyword______22' {doesItBlend()}?				-> type(SomethingReallyMeaningful);
+Keyword_23						:	'Keyword_23' {doesItBlend()}?					-> mode(SomethingReallyMeaningful);
+Keyword___________________24	:	'Keyword___________________24' {doesItBlend()}?	-> mode(SomethingReallyMeaningful);
+Keyword_________25				:	'Keyword_________25'; // Specified in the interest of formatting.
+Keyword_______26				:	'Keyword_______26' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword______27					:	'Keyword______27';
+Keyword________28				:	'Keyword________28' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________29			:	'Keyword_____________29' -> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule________________________0: (
@@ -18004,7 +18004,7 @@ rule___9: (
 	| rule________
 ; // Final trailing comment.
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule__________________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________________10 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_____11: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -18019,7 +18019,7 @@ rule_____12: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} rule
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule______________________13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule______________________13 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule______14: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -18029,7 +18029,7 @@ rule______14: (
 	| rule____ # label____
 	| rule________ # label________
 ; // Final trailing comment.
-rule__________15: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________15 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________16: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -18039,7 +18039,7 @@ rule_______________16: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule_17: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_17 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule______________18: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
@@ -18055,34 +18055,34 @@ rule_______________________19: (
 	| rule________
 ; // Final trailing comment.
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword______0:
-	'Keyword______0' {domeSomething($text);}											-> mode(SomethingReallyMeaningful)
-;																															// Specified in the interest of formatting.
-Keyword___________1:				'Keyword___________1';																	// Specified in the interest of formatting.
-Keyword_____________________2:		'Keyword_____________________2' {doesItBlend()}?;
-Keyword_________________3:			'Keyword_________________3';															// Specified in the interest of formatting.
-Keyword______________4:				'Keyword______________4' {domeSomething($text);}	-> type(SomethingReallyMeaningful);
+	'Keyword______0' {domeSomething($text);}												-> mode(SomethingReallyMeaningful)
+;																																// Specified in the interest of formatting.
+Keyword___________1					:	'Keyword___________1';																	// Specified in the interest of formatting.
+Keyword_____________________2		:	'Keyword_____________________2' {doesItBlend()}?;
+Keyword_________________3			:	'Keyword_________________3';															// Specified in the interest of formatting.
+Keyword______________4				:	'Keyword______________4' {domeSomething($text);}	-> type(SomethingReallyMeaningful);
 Keyword________________5:
-	'Keyword________________5' {domeSomething($text);}									-> mode(SomethingReallyMeaningful)
-;																															// Specified in the interest of formatting.
-Keyword___6:						'Keyword___6' {domeSomething($text);};													// Specified in the interest of formatting.
-Keyword_________________________7:	'Keyword_________________________7';
+	'Keyword________________5' {domeSomething($text);}										-> mode(SomethingReallyMeaningful)
+;																																// Specified in the interest of formatting.
+Keyword___6							:	'Keyword___6' {domeSomething($text);};													// Specified in the interest of formatting.
+Keyword_________________________7	:	'Keyword_________________________7';
 Keyword________________________8:
-	'Keyword________________________8'													-> type(SomethingReallyMeaningful)
-;																															// Specified in the interest of formatting.
-Keyword_________9:					'Keyword_________9';																	// Specified in the interest of formatting.
-Keyword__10:						'Keyword__10' {doesItBlend()}?						-> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword____________11:				'Keyword____________11' {doesItBlend()}?			-> type(SomethingReallyMeaningful);
-Keyword____12:						'Keyword____12' {doesItBlend()}?;
-Keyword______13:					'Keyword______13' {domeSomething($text);} {doesItBlend()}?;
+	'Keyword________________________8'														-> type(SomethingReallyMeaningful)
+;																																// Specified in the interest of formatting.
+Keyword_________9					:	'Keyword_________9';																	// Specified in the interest of formatting.
+Keyword__10							:	'Keyword__10' {doesItBlend()}?						-> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword____________11				:	'Keyword____________11' {doesItBlend()}?			-> type(SomethingReallyMeaningful);
+Keyword____12						:	'Keyword____12' {doesItBlend()}?;
+Keyword______13						:	'Keyword______13' {domeSomething($text);} {doesItBlend()}?;
 Keyword___14:
-	'Keyword___14' {doesItBlend()}? {domeSomething($text);}								-> mode(SomethingReallyMeaningful)
-;																															// Specified in the interest of formatting.
+	'Keyword___14' {doesItBlend()}? {domeSomething($text);}									-> mode(SomethingReallyMeaningful)
+;																																// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_____________________15:	'Keyword_____________________15';
-Keyword_____________16:			'Keyword_____________16' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________________15	:	'Keyword_____________________15';
+Keyword_____________16			:	'Keyword_____________16' {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_________________________17:
 	'Keyword_________________________17' {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -18095,17 +18095,17 @@ Keyword__________________19:
 Keyword_________________________20:
 	'Keyword_________________________20' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword__21: 'Keyword__21' {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword__21 : 'Keyword__21' {doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword_____________________22:
 	'Keyword_____________________22' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
-Keyword________23:					'Keyword________23' -> type(SomethingReallyMeaningful);											// Specified in the interest of formatting.
-Keyword_______24:					'Keyword_______24' {domeSomething($text);};														// Specified in the interest of formatting.
-Keyword_________________________25:	'Keyword_________________________25';															// Specified in the interest of formatting.
-Keyword_____________26:				'Keyword_____________26'									-> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword_______27:					'Keyword_______27' {doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful);
-Keyword_______________28:			'Keyword_______________28' {domeSomething($text);}			-> mode(SomethingReallyMeaningful);
-Keyword____________29:				'Keyword____________29'										-> mode(SomethingReallyMeaningful);
+Keyword________23					:	'Keyword________23' -> type(SomethingReallyMeaningful);											// Specified in the interest of formatting.
+Keyword_______24					:	'Keyword_______24' {domeSomething($text);};														// Specified in the interest of formatting.
+Keyword_________________________25	:	'Keyword_________________________25';															// Specified in the interest of formatting.
+Keyword_____________26				:	'Keyword_____________26'									-> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword_______27					:	'Keyword_______27' {doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful);
+Keyword_______________28			:	'Keyword_______________28' {domeSomething($text);}			-> mode(SomethingReallyMeaningful);
+Keyword____________29				:	'Keyword____________29'										-> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule__0: (
@@ -18217,14 +18217,14 @@ rule______________________13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # l
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
 ;
-rule_____14: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_____14 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule________15: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule_________16:		( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________________17:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_________16			:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________________17	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________18: (
 		{doesItBlend}? alt1 ruleA	// Mom look, a trailing comment.
 		| {doesItBlend}? alt2 ruleB	// And another comment.
@@ -18240,55 +18240,55 @@ rule________________19: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule________ # label________
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword__0:					'Keyword__0';
+Keyword__0					:	'Keyword__0';
 Keyword_________________________1:
-	'Keyword_________________________1'					{domeSomething($text);}						-> type(SomethingReallyMeaningful)
+	'Keyword_________________________1'						{domeSomething($text);}						-> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_________2:			'Keyword_________2'			{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________________3:	'Keyword________________3'	{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
+Keyword_________2			:	'Keyword_________2'			{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________________3	:	'Keyword________________3'	{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
 Keyword____________________4:
-	'Keyword____________________4'						{doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
+	'Keyword____________________4'							{doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____________5:		'Keyword_____________5'		{domeSomething($text);};
-Keyword________________6:	'Keyword________________6'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_________________7:	'Keyword_________________7'	{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
+Keyword_____________5		:	'Keyword_____________5'		{domeSomething($text);};
+Keyword________________6	:	'Keyword________________6'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_________________7	:	'Keyword_________________7'	{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
 Keyword________________________8:
-	'Keyword________________________8'					{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
+	'Keyword________________________8'						{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______9:			'Keyword_______9'			{domeSomething($text);};
-Keyword_______________10:	'Keyword_______________10'	{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
+Keyword_______9				:	'Keyword_______9'			{domeSomething($text);};
+Keyword_______________10	:	'Keyword_______________10'	{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
 Keyword________________11:
-	'Keyword________________11'							{doesItBlend()}? {domeSomething($text);}
+	'Keyword________________11'								{doesItBlend()}? {domeSomething($text);}
 ; // Specified in the interest of formatting.
 Keyword________________________12:
-	'Keyword________________________12'					{domeSomething($text);} {doesItBlend()}?
+	'Keyword________________________12'						{domeSomething($text);} {doesItBlend()}?
 ; // Specified in the interest of formatting.
-Keyword_____13:				'Keyword_____13'			{doesItBlend()}? {domeSomething($text);};
+Keyword_____13				:	'Keyword_____13'			{doesItBlend()}? {domeSomething($text);};
 Keyword______________________14:
-	'Keyword______________________14'					{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
+	'Keyword______________________14'						{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 Keyword__________15:
 	'Keyword__________15' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____________16:				'Keyword____________16' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_______________________17:	'Keyword_______________________17';
-Keyword_________________18:			'Keyword_________________18'	{doesItBlend()}?		-> mode(SomethingReallyMeaningful);
-Keyword___19:						'Keyword___19'					{domeSomething($text);}	-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____________16				:	'Keyword____________16' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_______________________17	:	'Keyword_______________________17';
+Keyword_________________18			:	'Keyword_________________18'	{doesItBlend()}?		-> mode(SomethingReallyMeaningful);
+Keyword___19						:	'Keyword___19'					{domeSomething($text);}	-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword______20:
 	'Keyword______20' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_________21:				'Keyword_________21'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword___________22:			'Keyword___________22'	{domeSomething($text);};
-Keyword________________23:		'Keyword________________23'; // Specified in the interest of formatting.
-Keyword__24:					'Keyword__24'				{doesItBlend()}?		-> mode(SomethingReallyMeaningful);
-Keyword______________25:		'Keyword______________25'	{domeSomething($text);}	-> mode(SomethingReallyMeaningful);
-Keyword_____________26:			'Keyword_____________26';
-Keyword_____________________27:	'Keyword_____________________27'	{doesItBlend()}?;
-Keyword_____________________28:	'Keyword_____________________28'	{domeSomething($text);};
-Keyword____29:					'Keyword____29' -> type(SomethingReallyMeaningful);
+Keyword_________21				:	'Keyword_________21'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword___________22			:	'Keyword___________22'	{domeSomething($text);};
+Keyword________________23		:	'Keyword________________23'; // Specified in the interest of formatting.
+Keyword__24						:	'Keyword__24'				{doesItBlend()}?		-> mode(SomethingReallyMeaningful);
+Keyword______________25			:	'Keyword______________25'	{domeSomething($text);}	-> mode(SomethingReallyMeaningful);
+Keyword_____________26			:	'Keyword_____________26';
+Keyword_____________________27	:	'Keyword_____________________27'	{doesItBlend()}?;
+Keyword_____________________28	:	'Keyword_____________________28'	{domeSomething($text);};
+Keyword____29					:	'Keyword____29' -> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_________________________0: (
@@ -18360,7 +18360,7 @@ rule_________________7: (
 	| rule________ {doSomething($text);}
 ; // Final trailing comment.
 rule____________8: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -18382,10 +18382,10 @@ rule______________10: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($tex
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule________________11:			( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_______________________12:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule____13:						( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_________14:				( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule________________11			:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_______________________12	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____13						:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_________14					:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_15: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -18395,8 +18395,8 @@ rule_15: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule______16:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule____17:		( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule______16	:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____17		:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule___________18: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -18406,49 +18406,49 @@ rule___________18: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule___19: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___19 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword___0:						'Keyword___0'						{domeSomething($text);};					// Specified in the interest of formatting.
-Keyword_________________1:			'Keyword_________________1'			{doesItBlend()}?							-> type(SomethingReallyMeaningful);
+Keyword___0							:	'Keyword___0'						{domeSomething($text);};					// Specified in the interest of formatting.
+Keyword_________________1			:	'Keyword_________________1'			{doesItBlend()}?							-> type(SomethingReallyMeaningful);
 Keyword_____2:
-	'Keyword_____2'														{doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
-;																													// Specified in the interest of formatting.
-Keyword____3:						'Keyword____3'						{domeSomething($text);};					// Specified in the interest of formatting.
-Keyword_4:							'Keyword_4'							{doesItBlend()}? {domeSomething($text);};
-Keyword_________5:					'Keyword_________5'					{domeSomething($text);} {doesItBlend()}?;	// Specified in the interest of formatting.
-Keyword___________6:				'Keyword___________6'				{doesItBlend()}?							-> type(SomethingReallyMeaningful);
-Keyword____________7:				'Keyword____________7';															// Specified in the interest of formatting.
+	'Keyword_____2'															{doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
+;																														// Specified in the interest of formatting.
+Keyword____3						:	'Keyword____3'						{domeSomething($text);};					// Specified in the interest of formatting.
+Keyword_4							:	'Keyword_4'							{doesItBlend()}? {domeSomething($text);};
+Keyword_________5					:	'Keyword_________5'					{domeSomething($text);} {doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword___________6					:	'Keyword___________6'				{doesItBlend()}?							-> type(SomethingReallyMeaningful);
+Keyword____________7				:	'Keyword____________7';															// Specified in the interest of formatting.
 Keyword____8:
-	'Keyword____8'														{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful)
-;																													// Specified in the interest of formatting.
-Keyword_____________________9:		'Keyword_____________________9'		{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
-Keyword________________________10:	'Keyword________________________10'	{domeSomething($text);};
-Keyword__________11:				'Keyword__________11'				{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
-Keyword_____________________12:		'Keyword_____________________12'	{doesItBlend()}?;
-Keyword____13:						'Keyword____13'																	-> type(SomethingReallyMeaningful);
+	'Keyword____8'															{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful)
+;																														// Specified in the interest of formatting.
+Keyword_____________________9		:	'Keyword_____________________9'		{domeSomething($text);}						-> mode(SomethingReallyMeaningful);
+Keyword________________________10	:	'Keyword________________________10'	{domeSomething($text);};
+Keyword__________11					:	'Keyword__________11'				{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
+Keyword_____________________12		:	'Keyword_____________________12'	{doesItBlend()}?;
+Keyword____13						:	'Keyword____13'																	-> type(SomethingReallyMeaningful);
 Keyword__________14:
-	'Keyword__________14'												{doesItBlend()}?							-> type(SomethingReallyMeaningful)
-;																													// Specified in the interest of formatting.
+	'Keyword__________14'													{doesItBlend()}?							-> type(SomethingReallyMeaningful)
+;																														// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword______15:				'Keyword______15';													// Specified in the interest of formatting.
-Keyword_______16:				'Keyword_______16'		{domeSomething($text);} {doesItBlend()}?;	// Specified in the interest of formatting.
-Keyword____________17:			'Keyword____________17'	{doesItBlend()}?;							// Specified in the interest of formatting.
-Keyword____________18:			'Keyword____________18' -> type(SomethingReallyMeaningful);			// Specified in the interest of formatting.
-Keyword________19:				'Keyword________19';												// Specified in the interest of formatting.
-Keyword_________20:				'Keyword_________20'				{doesItBlend()}?;				// Specified in the interest of formatting.
-Keyword_____________________21:	'Keyword_____________________21'	{domeSomething($text);};		// Specified in the interest of formatting.
-Keyword___________22:			'Keyword___________22'				{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword______15					:	'Keyword______15';													// Specified in the interest of formatting.
+Keyword_______16				:	'Keyword_______16'		{domeSomething($text);} {doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword____________17			:	'Keyword____________17'	{doesItBlend()}?;							// Specified in the interest of formatting.
+Keyword____________18			:	'Keyword____________18' -> type(SomethingReallyMeaningful);			// Specified in the interest of formatting.
+Keyword________19				:	'Keyword________19';												// Specified in the interest of formatting.
+Keyword_________20				:	'Keyword_________20'				{doesItBlend()}?;				// Specified in the interest of formatting.
+Keyword_____________________21	:	'Keyword_____________________21'	{domeSomething($text);};		// Specified in the interest of formatting.
+Keyword___________22			:	'Keyword___________22'				{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword_____________________23:
 	'Keyword_____________________23' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword______________24: 'Keyword______________24';
+Keyword______________24 : 'Keyword______________24';
 Keyword______________________25:
 	'Keyword______________________25' {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword______26:	'Keyword______26'	{domeSomething($text);}	-> type(SomethingReallyMeaningful);
-Keyword_____27:		'Keyword_____27'	{domeSomething($text);}	-> mode(SomethingReallyMeaningful);
+Keyword______26	:	'Keyword______26'	{domeSomething($text);}	-> type(SomethingReallyMeaningful);
+Keyword_____27	:	'Keyword_____27'	{domeSomething($text);}	-> mode(SomethingReallyMeaningful);
 Keyword_______28:
 	'Keyword_______28' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -18579,7 +18579,7 @@ rule___________14: (alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule__________________15: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________________15 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_____________16: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -18598,57 +18598,57 @@ rule___________17: (
 	| rule____
 	| rule________ {doSomething($text);}
 ; // Final trailing comment.
-rule___18:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__19:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule___18	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__19	:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword__0:							'Keyword__0' {domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__0							:	'Keyword__0' {domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword_________________________1:
 	'Keyword_________________________1' {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_____________2:				'Keyword_____________2' {doesItBlend()}?;
+Keyword_____________2				:	'Keyword_____________2' {doesItBlend()}?;
 Keyword_____________3:
 	'Keyword_____________3' {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword___________________4:		'Keyword___________________4' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword______________________5:		'Keyword______________________5'; // Specified in the interest of formatting.
-Keyword_________________6:			'Keyword_________________6' {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_________7:					'Keyword_________7' {doesItBlend()}?;
-Keyword_________________________8:	'Keyword_________________________8' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword______9:						'Keyword______9' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___________________4			:	'Keyword___________________4' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword______________________5		:	'Keyword______________________5'; // Specified in the interest of formatting.
+Keyword_________________6			:	'Keyword_________________6' {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_________7					:	'Keyword_________7' {doesItBlend()}?;
+Keyword_________________________8	:	'Keyword_________________________8' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword______9						:	'Keyword______9' {doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_____________________10:
 	'Keyword_____________________10' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;
 Keyword_________________________11:
 	'Keyword_________________________11' {doesItBlend()}?
 ; // Specified in the interest of formatting.
-Keyword__________12:				'Keyword__________12' -> type(SomethingReallyMeaningful);
-Keyword___________________13:		'Keyword___________________13' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__14:						'Keyword__14' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________12					:	'Keyword__________12' -> type(SomethingReallyMeaningful);
+Keyword___________________13		:	'Keyword___________________13' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__14							:	'Keyword__14' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_______________15:			'Keyword_______________15' {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword____________16:				'Keyword____________16' {doesItBlend()}?;
-Keyword______________________17:	'Keyword______________________17' -> type(SomethingReallyMeaningful);
-Keyword_________________________18:	'Keyword_________________________18' {domeSomething($text);};
-Keyword________________________19:	'Keyword________________________19' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_______________15			:	'Keyword_______________15' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword____________16				:	'Keyword____________16' {doesItBlend()}?;
+Keyword______________________17		:	'Keyword______________________17' -> type(SomethingReallyMeaningful);
+Keyword_________________________18	:	'Keyword_________________________18' {domeSomething($text);};
+Keyword________________________19	:	'Keyword________________________19' {domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword____________________20:
 	'Keyword____________________20' {domeSomething($text);} {doesItBlend()}?
 ; // Specified in the interest of formatting.
-Keyword___21:				'Keyword___21';
-Keyword_________22:			'Keyword_________22' {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_______________23:	'Keyword_______________23' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___21				:	'Keyword___21';
+Keyword_________22			:	'Keyword_________22' {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_______________23	:	'Keyword_______________23' {doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_________________________24:
 	'Keyword_________________________24' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
-Keyword___25: 'Keyword___25' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword___25 : 'Keyword___25' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword_________________26:
 	'Keyword_________________26' -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword______________________27:
 	'Keyword______________________27' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword_____________________28: 'Keyword_____________________28'; // Specified in the interest of formatting.
+Keyword_____________________28 : 'Keyword_____________________28'; // Specified in the interest of formatting.
 Keyword______________________29:
 	'Keyword______________________29' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -18761,8 +18761,8 @@ rule_________________________13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	
 	| rule____																	# label____
 	| rule________																# label________ {doesItBlend}?
 ;
-rule_______14:			( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule______________15:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_______14			:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule______________15	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______________16: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__											# label__
 	| rule____											# label____
@@ -18788,40 +18788,40 @@ rule___________________19: (
 	| rule________	# label________
 ; // Final trailing comment.
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword________________0:			'Keyword________________0' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword________________________1:	'Keyword________________________1' {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword___2:						'Keyword___2' {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_________________3:			'Keyword_________________3' {doesItBlend()}?;
-Keyword________4:					'Keyword________4' {domeSomething($text);} {doesItBlend()}?;
-Keyword________________________5:	'Keyword________________________5' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword____6:						'Keyword____6';
+Keyword________________0			:	'Keyword________________0' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword________________________1	:	'Keyword________________________1' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___2							:	'Keyword___2' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_________________3			:	'Keyword_________________3' {doesItBlend()}?;
+Keyword________4					:	'Keyword________4' {domeSomething($text);} {doesItBlend()}?;
+Keyword________________________5	:	'Keyword________________________5' {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword____6						:	'Keyword____6';
 Keyword______________________7:
 	'Keyword______________________7' {doesItBlend()}? {domeSomething($text);}
-;																							// Specified in the interest of formatting.
-Keyword________8:					'Keyword________8' -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword________________________9:	'Keyword________________________9' {domeSomething($text);} {doesItBlend()}?;
+;																								// Specified in the interest of formatting.
+Keyword________8					:	'Keyword________8' -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword________________________9	:	'Keyword________________________9' {domeSomething($text);} {doesItBlend()}?;
 Keyword___________________10:
 	'Keyword___________________10' {doesItBlend()}? {domeSomething($text);}
-;																							// Specified in the interest of formatting.
-Keyword__________11:				'Keyword__________11' {domeSomething($text);};			// Specified in the interest of formatting.
+;																								// Specified in the interest of formatting.
+Keyword__________11					:	'Keyword__________11' {domeSomething($text);};			// Specified in the interest of formatting.
 Keyword______________________12:
 	'Keyword______________________12' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;
-Keyword_13:							'Keyword_13' {domeSomething($text);};
-Keyword_14:							'Keyword_14' {domeSomething($text);} {doesItBlend()}?;
+Keyword_13							:	'Keyword_13' {domeSomething($text);};
+Keyword_14							:	'Keyword_14' {domeSomething($text);} {doesItBlend()}?;
 // $antlr-format groupedAlignments on
-Keyword_____________15:				'Keyword_____________15' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword______________________16:	'Keyword______________________16'; // Specified in the interest of formatting.
+Keyword_____________15			:	'Keyword_____________15' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword______________________16	:	'Keyword______________________16'; // Specified in the interest of formatting.
 Keyword_____________17:
 	'Keyword_____________17' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword_______________18:
 	'Keyword_______________18' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword__________19:	'Keyword__________19' {domeSomething($text);} {doesItBlend()}?;
-Keyword___20:			'Keyword___20' -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________19	:	'Keyword__________19' {domeSomething($text);} {doesItBlend()}?;
+Keyword___20		:	'Keyword___20' -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword_____________21:
 	'Keyword_____________21' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -18831,16 +18831,16 @@ Keyword___________22:
 Keyword_______________23:
 	'Keyword_______________23' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword___________________24:	'Keyword___________________24' {doesItBlend()}?;
-Keyword________25:				'Keyword________25' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_____________________26:	'Keyword_____________________26' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___________________24	:	'Keyword___________________24' {doesItBlend()}?;
+Keyword________25				:	'Keyword________25' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_____________________26	:	'Keyword_____________________26' {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_______________27:
 	'Keyword_______________27' {domeSomething($text);} {doesItBlend()}?
 ; // Specified in the interest of formatting.
 Keyword_________________________28:
 	'Keyword_________________________28' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword__________________29: 'Keyword__________________29' -> type(SomethingReallyMeaningful);
+Keyword__________________29 : 'Keyword__________________29' -> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule__0: (
@@ -18927,7 +18927,7 @@ rule_____________________9: (
 	| rule________	# label________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_________________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_________________10 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________11: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																					# label__
 	| rule____																					# label____
@@ -18938,8 +18938,8 @@ rule_______12: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ru
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule__________________13:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_14:					( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________________13	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_14						:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__15: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																			# label__
 	| rule____																			# label____
@@ -18970,48 +18970,48 @@ rule_19: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($t
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword____0:						'Keyword____0'					{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________________1:			'Keyword_________________1'		{domeSomething($text);} {doesItBlend()}?;
-Keyword_______________2:			'Keyword_______________2' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword____________________3:		'Keyword____________________3'; // Specified in the interest of formatting.
-Keyword_______________4:			'Keyword_______________4'		{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_________________________5:	'Keyword_________________________5' -> type(SomethingReallyMeaningful);
+Keyword____0						:	'Keyword____0'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________________1			:	'Keyword_________________1'		{domeSomething($text);} {doesItBlend()}?;
+Keyword_______________2				:	'Keyword_______________2' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____________________3		:	'Keyword____________________3'; // Specified in the interest of formatting.
+Keyword_______________4				:	'Keyword_______________4'		{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_________________________5	:	'Keyword_________________________5' -> type(SomethingReallyMeaningful);
 Keyword_____________6:
-	'Keyword_____________6'											{doesItBlend()}? -> type(SomethingReallyMeaningful)
+	'Keyword_____________6'												{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_________7:					'Keyword_________7'				{doesItBlend()}? {domeSomething($text);};
-Keyword__________________8:			'Keyword__________________8'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____________9:				'Keyword_____________9'			{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_________7					:	'Keyword_________7'				{doesItBlend()}? {domeSomething($text);};
+Keyword__________________8			:	'Keyword__________________8'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____________9				:	'Keyword_____________9'			{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword___________________10:
-	'Keyword___________________10'									{doesItBlend()}? -> type(SomethingReallyMeaningful)
+	'Keyword___________________10'										{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______________11:			'Keyword_______________11'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword______12:					'Keyword______12'				{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword________13:					'Keyword________13' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_____________________14:		'Keyword_____________________14' -> mode(SomethingReallyMeaningful);
+Keyword_______________11			:	'Keyword_______________11'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword______12						:	'Keyword______12'				{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword________13					:	'Keyword________13' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_____________________14		:	'Keyword_____________________14' -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 Keyword______________15:
 	'Keyword______________15' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword__________16:				'Keyword__________16'				{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_______________________17:	'Keyword_______________________17'	{domeSomething($text);};
-Keyword________________18:			'Keyword________________18'			{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword____________________19:		'Keyword____________________19'		{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword______________20:			'Keyword______________20'			{domeSomething($text);};
-Keyword___________21:				'Keyword___________21'				{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__________16					:	'Keyword__________16'				{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_______________________17	:	'Keyword_______________________17'	{domeSomething($text);};
+Keyword________________18			:	'Keyword________________18'			{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword____________________19		:	'Keyword____________________19'		{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword______________20				:	'Keyword______________20'			{domeSomething($text);};
+Keyword___________21				:	'Keyword___________21'				{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword___________________22:
 	'Keyword___________________22' -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword______23:		'Keyword______23'		{doesItBlend()}? {domeSomething($text);};
-Keyword____________24:	'Keyword____________24'	{doesItBlend()}?;
-Keyword_25:				'Keyword_25'			{domeSomething($text);} {doesItBlend()}?;
+Keyword______23			:	'Keyword______23'		{doesItBlend()}? {domeSomething($text);};
+Keyword____________24	:	'Keyword____________24'	{doesItBlend()}?;
+Keyword_25				:	'Keyword_25'			{domeSomething($text);} {doesItBlend()}?;
 Keyword_______________________26:
 	'Keyword_______________________26' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_27:		'Keyword_27' {doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword____28:	'Keyword____28'; // Specified in the interest of formatting.
+Keyword_27		:	'Keyword_27' {doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____28	:	'Keyword____28'; // Specified in the interest of formatting.
 Keyword___________________29:
 	'Keyword___________________29' {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -19051,7 +19051,7 @@ rule__3: (
 	| rule________	# label________
 ;
 rule___________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -19067,7 +19067,7 @@ rule__________________5: (
 	| rule________	# label________
 ;
 rule______________6: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -19100,8 +19100,8 @@ rule_9: (
 	| rule________	# label________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_______________________10:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_________________11:		( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_______________________10	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_________________11			:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________________________12: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__														# label__
 	| rule____														# label____
@@ -19112,7 +19112,7 @@ rule__________________13: (alt1 {doSomething($text);} ruleA | alt2 {doSomething(
 	| rule____																							# label____
 	| rule________																						# label________ {doSomething($text);}
 ;
-rule__________________14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________________14 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______15: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -19123,7 +19123,7 @@ rule___________________16: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule____17: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____17 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_____18: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -19139,59 +19139,59 @@ rule________19: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} r
 	| rule________																			# label________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_____0:
-	'Keyword_____0'														{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																									// Specified in the interest of formatting.
-Keyword_____1:						'Keyword_____1' -> mode(SomethingReallyMeaningful);				// Specified in the interest of formatting.
-Keyword_____________2:				'Keyword_____________2'				{domeSomething($text);};	// Specified in the interest of formatting.
+	'Keyword_____0'															{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																										// Specified in the interest of formatting.
+Keyword_____1						:	'Keyword_____1' -> mode(SomethingReallyMeaningful);				// Specified in the interest of formatting.
+Keyword_____________2				:	'Keyword_____________2'				{domeSomething($text);};	// Specified in the interest of formatting.
 Keyword_____________3:
-	'Keyword_____________3'												{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																									// Specified in the interest of formatting.
+	'Keyword_____________3'													{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																										// Specified in the interest of formatting.
 Keyword________4:
-	'Keyword________4'													{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																									// Specified in the interest of formatting.
-Keyword________________________5:	'Keyword________________________5'	{domeSomething($text);} {doesItBlend()}?;
-Keyword__________________6:			'Keyword__________________6';									// Specified in the interest of formatting.
+	'Keyword________4'														{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																										// Specified in the interest of formatting.
+Keyword________________________5	:	'Keyword________________________5'	{domeSomething($text);} {doesItBlend()}?;
+Keyword__________________6			:	'Keyword__________________6';									// Specified in the interest of formatting.
 Keyword__________________7:
-	'Keyword__________________7'										{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																									// Specified in the interest of formatting.
+	'Keyword__________________7'											{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																										// Specified in the interest of formatting.
 Keyword_______________________8:
-	'Keyword_______________________8'									{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																									// Specified in the interest of formatting.
-Keyword______________________9:		'Keyword______________________9';
-Keyword______10:					'Keyword______10'					{domeSomething($text);};
-Keyword___________________11:		'Keyword___________________11'		{doesItBlend()}?;
+	'Keyword_______________________8'										{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																										// Specified in the interest of formatting.
+Keyword______________________9		:	'Keyword______________________9';
+Keyword______10						:	'Keyword______10'					{domeSomething($text);};
+Keyword___________________11		:	'Keyword___________________11'		{doesItBlend()}?;
 Keyword____________12:
-	'Keyword____________12'												{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																									// Specified in the interest of formatting.
-Keyword___13:						'Keyword___13' -> mode(SomethingReallyMeaningful);
-Keyword_____________14:				'Keyword_____________14' -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+	'Keyword____________12'													{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																										// Specified in the interest of formatting.
+Keyword___13						:	'Keyword___13' -> mode(SomethingReallyMeaningful);
+Keyword_____________14				:	'Keyword_____________14' -> type(SomethingReallyMeaningful);	// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword________15:			'Keyword________15'				{doesItBlend()}? {domeSomething($text);};
-Keyword_______16:			'Keyword_______16'				{doesItBlend()}?;
-Keyword_____17:				'Keyword_____17'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_________________18:	'Keyword_________________18'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________15			:	'Keyword________15'				{doesItBlend()}? {domeSomething($text);};
+Keyword_______16			:	'Keyword_______16'				{doesItBlend()}?;
+Keyword_____17				:	'Keyword_____17'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_________________18	:	'Keyword_________________18'	{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_____________________19:
 	'Keyword_____________________19' -> type(SomethingReallyMeaningful)
 ;												// Specified in the interest of formatting.
-Keyword_____20:				'Keyword_____20';	// Specified in the interest of formatting.
-Keyword_________21:			'Keyword_________21'	{doesItBlend()}?;
-Keyword___________22:		'Keyword___________22'	{domeSomething($text);};
-Keyword______________23:	'Keyword______________23'; // Specified in the interest of formatting.
+Keyword_____20			:	'Keyword_____20';	// Specified in the interest of formatting.
+Keyword_________21		:	'Keyword_________21'	{doesItBlend()}?;
+Keyword___________22	:	'Keyword___________22'	{domeSomething($text);};
+Keyword______________23	:	'Keyword______________23'; // Specified in the interest of formatting.
 Keyword_______________________24:
 	'Keyword_______________________24' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword__________________25:
 	'Keyword__________________25' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;													// Specified in the interest of formatting.
-Keyword___26:	'Keyword___26' {doesItBlend()}?;	// Specified in the interest of formatting.
-Keyword_____27:	'Keyword_____27';
+;														// Specified in the interest of formatting.
+Keyword___26	:	'Keyword___26' {doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword_____27	:	'Keyword_____27';
 Keyword__________________28:
 	'Keyword__________________28' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_________________________29: 'Keyword_________________________29' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_________________________29 : 'Keyword_________________________29' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_______0: (
@@ -19211,7 +19211,7 @@ rule____________________1: (
 	| rule________
 ;
 rule___2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -19269,7 +19269,7 @@ rule___________8: (
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ; // Final trailing comment.
 rule____________9: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -19277,14 +19277,14 @@ rule____________9: (
 	| rule________ {doesItBlend}?
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_10:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule____11:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_10		:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____11	:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule____________________12: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__												# label__
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____________14: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -19294,63 +19294,63 @@ rule____________14: (
 	| rule____		# label____
 	| rule________	# label________
 ; // Final trailing comment.
-rule____15: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule____15: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__												# label__
 	| rule____												# label____
 	| rule________											# label________ {doesItBlend}?
 ;
-rule___________________16:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_________17:			(	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule___________18: (			{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule___________________16	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_________17				:	(	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule___________18: (				{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__														# label__
 	| rule____														# label____
 	| rule________													# label________ {doesItBlend}?
 ;
-rule________19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________19 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword______0:						'Keyword______0' {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_______1:					'Keyword_______1';
-Keyword____2:						'Keyword____2' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________________________3:	'Keyword_________________________3' {domeSomething($text);};
-Keyword________________________4:	'Keyword________________________4' {doesItBlend()}?;
-Keyword______5:						'Keyword______5' {domeSomething($text);};
-Keyword________________6:			'Keyword________________6'; // Specified in the interest of formatting.
-Keyword___________________7:		'Keyword___________________7'					-> mode(SomethingReallyMeaningful);
+Keyword______0						:	'Keyword______0' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______1						:	'Keyword_______1';
+Keyword____2						:	'Keyword____2' {doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________________________3	:	'Keyword_________________________3' {domeSomething($text);};
+Keyword________________________4	:	'Keyword________________________4' {doesItBlend()}?;
+Keyword______5						:	'Keyword______5' {domeSomething($text);};
+Keyword________________6			:	'Keyword________________6'; // Specified in the interest of formatting.
+Keyword___________________7			:	'Keyword___________________7'					-> mode(SomethingReallyMeaningful);
 Keyword________________________8:
 	'Keyword________________________8' {domeSomething($text);}
 ; // Specified in the interest of formatting.
 Keyword________________________9:
-	'Keyword________________________9' {domeSomething($text);} {doesItBlend()}?		-> mode(SomethingReallyMeaningful)
+	'Keyword________________________9' {domeSomething($text);} {doesItBlend()}?			-> mode(SomethingReallyMeaningful)
 ;
-Keyword______________10:			'Keyword______________10' {doesItBlend()}?		-> mode(SomethingReallyMeaningful);
-Keyword_________11:					'Keyword_________11' {domeSomething($text);}	-> type(SomethingReallyMeaningful);
+Keyword______________10				:	'Keyword______________10' {doesItBlend()}?		-> mode(SomethingReallyMeaningful);
+Keyword_________11					:	'Keyword_________11' {domeSomething($text);}	-> type(SomethingReallyMeaningful);
 Keyword______12:
-	'Keyword______12' {domeSomething($text);}										-> mode(SomethingReallyMeaningful)
+	'Keyword______12' {domeSomething($text);}											-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword________________________13:
-	'Keyword________________________13' {domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful)
+	'Keyword________________________13' {domeSomething($text);} {doesItBlend()}?		-> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword____________14:				'Keyword____________14' {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____________14				:	'Keyword____________14' {doesItBlend()}?; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_____________15:				'Keyword_____________15' {doesItBlend()}? {domeSomething($text);};
-Keyword____16:						'Keyword____16' -> mode(SomethingReallyMeaningful);
-Keyword______________________17:	'Keyword______________________17'; // Specified in the interest of formatting.
+Keyword_____________15			:	'Keyword_____________15' {doesItBlend()}? {domeSomething($text);};
+Keyword____16					:	'Keyword____16' -> mode(SomethingReallyMeaningful);
+Keyword______________________17	:	'Keyword______________________17'; // Specified in the interest of formatting.
 Keyword_________________________18:
 	'Keyword_________________________18' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________19:				'Keyword________19' {doesItBlend()}? {domeSomething($text);};
-Keyword____________20:			'Keyword____________20' {doesItBlend()}?	-> mode(SomethingReallyMeaningful);
-Keyword_____________21:			'Keyword_____________21'					-> type(SomethingReallyMeaningful);
-Keyword__________22:			'Keyword__________22';
-Keyword___23:					'Keyword___23' {domeSomething($text);}			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword__________________24:	'Keyword__________________24' {doesItBlend()}?	-> type(SomethingReallyMeaningful);
-Keyword_25:						'Keyword_25' {doesItBlend()}? {domeSomething($text);};
-Keyword_________________26:		'Keyword_________________26' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword____________________27:	'Keyword____________________27';
-Keyword________________28:		'Keyword________________28'; // Specified in the interest of formatting.
-Keyword___________29:			'Keyword___________29'; // Specified in the interest of formatting.
+Keyword________19				:	'Keyword________19' {doesItBlend()}? {domeSomething($text);};
+Keyword____________20			:	'Keyword____________20' {doesItBlend()}?	-> mode(SomethingReallyMeaningful);
+Keyword_____________21			:	'Keyword_____________21'					-> type(SomethingReallyMeaningful);
+Keyword__________22				:	'Keyword__________22';
+Keyword___23					:	'Keyword___23' {domeSomething($text);}			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________________24		:	'Keyword__________________24' {doesItBlend()}?	-> type(SomethingReallyMeaningful);
+Keyword_25						:	'Keyword_25' {doesItBlend()}? {domeSomething($text);};
+Keyword_________________26		:	'Keyword_________________26' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword____________________27	:	'Keyword____________________27';
+Keyword________________28		:	'Keyword________________28'; // Specified in the interest of formatting.
+Keyword___________29			:	'Keyword___________29'; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule__0: (
@@ -19435,11 +19435,11 @@ rule___9: (
 	| rule________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule______10:				( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_________11:			({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule__________________12:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__13:					( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_________14:			( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______10				:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_________11				:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________________12	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__13					:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_________14				:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______________________15: (
 		alt1 {doSomething($text);} ruleA // Mom look, a trailing comment.
 		| alt2 {doSomething($text);} ruleB // And another comment.
@@ -19459,7 +19459,7 @@ rule_________17: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____													# label____
 	| rule________												# label________ {doesItBlend}?
 ;
-rule__18: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule__18 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule______________19: (
 		alt1 ruleA // Mom look, a trailing comment.
 		| alt2 ruleB // And another comment.
@@ -19470,57 +19470,57 @@ rule______________19: (
 	| rule________
 ; // Final trailing comment.
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_____0:						'Keyword_____0'										-> type(SomethingReallyMeaningful);
-Keyword__1:							'Keyword__1';
-Keyword_________________2:			'Keyword_________________2' {domeSomething($text);}	-> mode(SomethingReallyMeaningful);
+Keyword_____0						:	'Keyword_____0'										-> type(SomethingReallyMeaningful);
+Keyword__1							:	'Keyword__1';
+Keyword_________________2			:	'Keyword_________________2' {domeSomething($text);}	-> mode(SomethingReallyMeaningful);
 Keyword_____________________3:
-	'Keyword_____________________3' {doesItBlend()}?									-> mode(SomethingReallyMeaningful)
-;																															// Specified in the interest of formatting.
-Keyword______4:						'Keyword______4'									-> type(SomethingReallyMeaningful);
-Keyword_____5:						'Keyword_____5' {domeSomething($text);}				-> type(SomethingReallyMeaningful);
-Keyword_____________________6:		'Keyword_____________________6' {doesItBlend()}?	-> type(SomethingReallyMeaningful);
-Keyword___________7:				'Keyword___________7'								-> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
-Keyword___________8:				'Keyword___________8' {domeSomething($text);};											// Specified in the interest of formatting.
-Keyword_________________________9:	'Keyword_________________________9' {doesItBlend()}?;
-Keyword_________10:					'Keyword_________10' {domeSomething($text);} {doesItBlend()}?;							// Specified in the interest of formatting.
-Keyword________________11:			'Keyword________________11' {doesItBlend()}?		-> mode(SomethingReallyMeaningful);
+	'Keyword_____________________3' {doesItBlend()}?										-> mode(SomethingReallyMeaningful)
+;																																// Specified in the interest of formatting.
+Keyword______4						:	'Keyword______4'									-> type(SomethingReallyMeaningful);
+Keyword_____5						:	'Keyword_____5' {domeSomething($text);}				-> type(SomethingReallyMeaningful);
+Keyword_____________________6		:	'Keyword_____________________6' {doesItBlend()}?	-> type(SomethingReallyMeaningful);
+Keyword___________7					:	'Keyword___________7'								-> mode(SomethingReallyMeaningful);	// Specified in the interest of formatting.
+Keyword___________8					:	'Keyword___________8' {domeSomething($text);};											// Specified in the interest of formatting.
+Keyword_________________________9	:	'Keyword_________________________9' {doesItBlend()}?;
+Keyword_________10					:	'Keyword_________10' {domeSomething($text);} {doesItBlend()}?;							// Specified in the interest of formatting.
+Keyword________________11			:	'Keyword________________11' {doesItBlend()}?		-> mode(SomethingReallyMeaningful);
 Keyword________________12:
-	'Keyword________________12' {doesItBlend()}?										-> mode(SomethingReallyMeaningful)
-;																															// Specified in the interest of formatting.
-Keyword_______________13:			'Keyword_______________13';																// Specified in the interest of formatting.
+	'Keyword________________12' {doesItBlend()}?											-> mode(SomethingReallyMeaningful)
+;																																// Specified in the interest of formatting.
+Keyword_______________13			:	'Keyword_______________13';																// Specified in the interest of formatting.
 Keyword_________________________14:
-	'Keyword_________________________14' {doesItBlend()}? {domeSomething($text);}		-> type(SomethingReallyMeaningful)
+	'Keyword_________________________14' {doesItBlend()}? {domeSomething($text);}			-> type(SomethingReallyMeaningful)
 ;
 // $antlr-format groupedAlignments on
 Keyword________________15:
 	'Keyword________________15' {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_________________16:	'Keyword_________________16' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword___17:				'Keyword___17'; // Specified in the interest of formatting.
+Keyword_________________16	:	'Keyword_________________16' {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword___17				:	'Keyword___17'; // Specified in the interest of formatting.
 Keyword__18:
 	'Keyword__18' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword______________________19:
 	'Keyword______________________19' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword______20:				'Keyword______20'										-> mode(SomethingReallyMeaningful);
-Keyword___________________21:	'Keyword___________________21' {domeSomething($text);}	-> mode(SomethingReallyMeaningful);
-Keyword________22:				'Keyword________22' {domeSomething($text);} {doesItBlend()}?;
+Keyword______20					:	'Keyword______20'										-> mode(SomethingReallyMeaningful);
+Keyword___________________21	:	'Keyword___________________21' {domeSomething($text);}	-> mode(SomethingReallyMeaningful);
+Keyword________22				:	'Keyword________22' {domeSomething($text);} {doesItBlend()}?;
 Keyword_______________23:
 	'Keyword_______________23' {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword___24:		'Keyword___24' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_________25:	'Keyword_________25' {doesItBlend()}?;	// Specified in the interest of formatting.
-Keyword__26:		'Keyword__26' {domeSomething($text);};	// Specified in the interest of formatting.
+Keyword___24		:	'Keyword___24' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_________25	:	'Keyword_________25' {doesItBlend()}?;	// Specified in the interest of formatting.
+Keyword__26			:	'Keyword__26' {domeSomething($text);};	// Specified in the interest of formatting.
 Keyword________________27:
 	'Keyword________________27' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword______________28:
 	'Keyword______________28' {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______________29: 'Keyword_______________29';
+Keyword_______________29 : 'Keyword_______________29';
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_________________0: (
@@ -19612,19 +19612,19 @@ rule________________________10: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____													# label____
 	| rule________												# label________
 ;
-rule______11: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule______11 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_______12: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule_13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_________14: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																					# label__
 	| rule____																					# label____
 	| rule________																				# label________ {doSomething($text);}
 ;
-rule__________15: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________15 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______16: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																				# label__
 	| rule____																				# label____
@@ -19635,58 +19635,58 @@ rule________________17: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____											# label____
 	| rule________										# label________
 ;
-rule_______________18: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_______________18 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_______19: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																				# label__
 	| rule____																				# label____
 	| rule________																			# label________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword________________________0:	'Keyword________________________0'; // Specified in the interest of formatting.
-Keyword________1:					'Keyword________1'; // Specified in the interest of formatting.
-Keyword___________2:				'Keyword___________2'	{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
-Keyword_____________3:				'Keyword_____________3'	{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________________________0	:	'Keyword________________________0'; // Specified in the interest of formatting.
+Keyword________1					:	'Keyword________1'; // Specified in the interest of formatting.
+Keyword___________2					:	'Keyword___________2'	{domeSomething($text);} {doesItBlend()}?	-> type(SomethingReallyMeaningful);
+Keyword_____________3				:	'Keyword_____________3'	{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_______________________4:
-	'Keyword_______________________4'						{doesItBlend()}?							-> mode(SomethingReallyMeaningful)
+	'Keyword_______________________4'							{doesItBlend()}?							-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword______5:						'Keyword______5'													-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______5						:	'Keyword______5'													-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword______________________6:
-	'Keyword______________________6'						{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
+	'Keyword______________________6'							{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword______________________7:
-	'Keyword______________________7'						{domeSomething($text);} {doesItBlend()}?
+	'Keyword______________________7'							{domeSomething($text);} {doesItBlend()}?
 ; // Specified in the interest of formatting.
-Keyword____________8:				'Keyword____________8'	{domeSomething($text);};
+Keyword____________8				:	'Keyword____________8'	{domeSomething($text);};
 Keyword_____________________9:
-	'Keyword_____________________9'							{domeSomething($text);} {doesItBlend()}?	-> mode(SomethingReallyMeaningful)
+	'Keyword_____________________9'								{domeSomething($text);} {doesItBlend()}?	-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword_______________10:
-	'Keyword_______________10'								{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
+	'Keyword_______________10'									{domeSomething($text);}						-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword______________________11:
-	'Keyword______________________11'						{doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
+	'Keyword______________________11'							{doesItBlend()}? {domeSomething($text);}	-> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword_______12:
-	'Keyword_______12'										{doesItBlend()}?							-> mode(SomethingReallyMeaningful)
+	'Keyword_______12'											{doesItBlend()}?							-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword____13:
-	'Keyword____13'											{doesItBlend()}? {domeSomething($text);}	-> mode(SomethingReallyMeaningful)
+	'Keyword____13'												{doesItBlend()}? {domeSomething($text);}	-> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword__________________14:		'Keyword__________________14'; // Specified in the interest of formatting.
+Keyword__________________14			:	'Keyword__________________14'; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword____________________15: 'Keyword____________________15' {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword____________________15 : 'Keyword____________________15' {doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword__________16:
 	'Keyword__________16' {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword_______________17:
 	'Keyword_______________17' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_18:						'Keyword_18' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_________________19:		'Keyword_________________19'		{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__20:					'Keyword__20'						{doesItBlend()}?;
-Keyword_____________________21:	'Keyword_____________________21'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_18						:	'Keyword_18' -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_________________19		:	'Keyword_________________19'		{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__20						:	'Keyword__20'						{doesItBlend()}?;
+Keyword_____________________21	:	'Keyword_____________________21'	{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword___________22:
 	'Keyword___________22' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -19696,19 +19696,19 @@ Keyword___________________23:
 Keyword____________________24:
 	'Keyword____________________24' -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword________________________25: 'Keyword________________________25' {doesItBlend()}? {domeSomething($text);};
+Keyword________________________25 : 'Keyword________________________25' {doesItBlend()}? {domeSomething($text);};
 Keyword_______________________26:
 	'Keyword_______________________26' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
 Keyword__________________27:
 	'Keyword__________________27' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword_______________________28:	'Keyword_______________________28'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword____________________29:		'Keyword____________________29'		{domeSomething($text);} {doesItBlend()}?;
+Keyword_______________________28	:	'Keyword_______________________28'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword____________________29		:	'Keyword____________________29'		{domeSomething($text);} {doesItBlend()}?;
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule___________________0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -19748,7 +19748,7 @@ rule______4: (
 	| rule________ {doSomething($text);}
 ;
 rule_______________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -19765,7 +19765,7 @@ rule_________6: (
 	| rule________
 ; // Final trailing comment.
 rule__7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -19810,56 +19810,56 @@ rule_____12: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} rule
 	| rule____																			# label____
 	| rule________																		# label________ {doSomething($text);}
 ;
-rule__13: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule__13: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule_____14:				( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________________15:		( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule____16:					( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule______17:				( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule____________________18:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____14					:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________________15		:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____16					:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule______17				:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____________________18	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule___________________19: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__												# label__
 	| rule____												# label____
 	| rule________											# label________
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_____________0:		'Keyword_____________0'		{doesItBlend()}?;			// Specified in the interest of formatting.
-Keyword________1:			'Keyword________1'			{domeSomething($text);};	// Specified in the interest of formatting.
+Keyword_____________0		:	'Keyword_____________0'		{doesItBlend()}?;			// Specified in the interest of formatting.
+Keyword________1			:	'Keyword________1'			{domeSomething($text);};	// Specified in the interest of formatting.
 Keyword____________2:
-	'Keyword____________2'								{domeSomething($text);}	-> mode(SomethingReallyMeaningful)
-;																					// Specified in the interest of formatting.
-Keyword_______3:			'Keyword_______3'			{domeSomething($text);}	-> type(SomethingReallyMeaningful);
+	'Keyword____________2'									{domeSomething($text);}	-> mode(SomethingReallyMeaningful)
+;																						// Specified in the interest of formatting.
+Keyword_______3				:	'Keyword_______3'			{domeSomething($text);}	-> type(SomethingReallyMeaningful);
 Keyword_________4:
-	'Keyword_________4'									{doesItBlend()}?		-> type(SomethingReallyMeaningful)
-;																					// Specified in the interest of formatting.
-Keyword__5:					'Keyword__5';
+	'Keyword_________4'										{doesItBlend()}?		-> type(SomethingReallyMeaningful)
+;																						// Specified in the interest of formatting.
+Keyword__5					:	'Keyword__5';
 Keyword_________________________6:
-	'Keyword_________________________6'					{domeSomething($text);} {doesItBlend()}?
-;																					// Specified in the interest of formatting.
-Keyword_________________7:	'Keyword_________________7';
-Keyword_________8:			'Keyword_________8'			{doesItBlend()}?;
-Keyword_________________9:	'Keyword_________________9'	{domeSomething($text);}	-> mode(SomethingReallyMeaningful);
-Keyword_________________10:	'Keyword_________________10';
+	'Keyword_________________________6'						{domeSomething($text);} {doesItBlend()}?
+;																						// Specified in the interest of formatting.
+Keyword_________________7	:	'Keyword_________________7';
+Keyword_________8			:	'Keyword_________8'			{doesItBlend()}?;
+Keyword_________________9	:	'Keyword_________________9'	{domeSomething($text);}	-> mode(SomethingReallyMeaningful);
+Keyword_________________10	:	'Keyword_________________10';
 Keyword____________________11:
-	'Keyword____________________11'						{domeSomething($text);}	-> type(SomethingReallyMeaningful)
-;																					// Specified in the interest of formatting.
+	'Keyword____________________11'							{domeSomething($text);}	-> type(SomethingReallyMeaningful)
+;																						// Specified in the interest of formatting.
 Keyword_________________________12:
-	'Keyword_________________________12'										-> mode(SomethingReallyMeaningful)
-;																					// Specified in the interest of formatting.
-Keyword________________13:	'Keyword________________13'	{doesItBlend()}?;			// Specified in the interest of formatting.
+	'Keyword_________________________12'											-> mode(SomethingReallyMeaningful)
+;																						// Specified in the interest of formatting.
+Keyword________________13	:	'Keyword________________13'	{doesItBlend()}?;			// Specified in the interest of formatting.
 Keyword________________14:
-	'Keyword________________14'													-> mode(SomethingReallyMeaningful)
-;																					// Specified in the interest of formatting.
+	'Keyword________________14'														-> mode(SomethingReallyMeaningful)
+;																						// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword___________15:			'Keyword___________15';
-Keyword___________________16:	'Keyword___________________16'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword________________17:		'Keyword________________17'		{doesItBlend()}?;
-Keyword_____________18:			'Keyword_____________18'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___________15			:	'Keyword___________15';
+Keyword___________________16	:	'Keyword___________________16'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword________________17		:	'Keyword________________17'		{doesItBlend()}?;
+Keyword_____________18			:	'Keyword_____________18'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword____________________19:
 	'Keyword____________________19' {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
@@ -19869,16 +19869,16 @@ Keyword_____________20:
 Keyword______________21:
 	'Keyword______________21' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword__22: 'Keyword__22' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword__22 : 'Keyword__22' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
 Keyword_____________________23:
 	'Keyword_____________________23' {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ; // Specified in the interest of formatting.
-Keyword___24:					'Keyword___24'				{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword______________25:		'Keyword______________25'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__________________26:	'Keyword__________________26';
-Keyword_____________________27:	'Keyword_____________________27'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_______28:				'Keyword_______28'					{doesItBlend()}? {domeSomething($text);};
-Keyword__________29:			'Keyword__________29'				{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___24					:	'Keyword___24'				{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword______________25			:	'Keyword______________25'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__________________26		:	'Keyword__________________26';
+Keyword_____________________27	:	'Keyword_____________________27'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_______28				:	'Keyword_______28'					{doesItBlend()}? {domeSomething($text);};
+Keyword__________29				:	'Keyword__________29'				{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule________________0: (
@@ -19890,7 +19890,7 @@ rule________________0: (
 	| rule________	# label________
 ;
 rule______________________1: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -19993,7 +19993,7 @@ rule__________13: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);}
 	| rule____																					# label____
 	| rule________																				# label________ {doSomething($text);}
 ;
-rule____________________14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________________14 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule________15: (
 			{doesItBlend}? alt1 ruleA	// Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 ruleB	// And another comment.
@@ -20008,67 +20008,67 @@ rule___16: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB)
 	| rule____																			# label____
 	| rule________																		# label________ {doSomething($text);}
 ;
-rule________________________17: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule________________________17: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule__________________18: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule__________________18: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule______________________19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+rule______________________19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__																	# label__
 	| rule____																	# label____
 	| rule________																# label________ {doesItBlend}?
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword__________0:					'Keyword__________0'				{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword________________________1:	'Keyword________________________1';
-Keyword_________2:					'Keyword_________2'					-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword______________________3:		'Keyword______________________3';	// Specified in the interest of formatting.
-Keyword_________________4:			'Keyword_________________4';
-Keyword_____5:						'Keyword_____5'						{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________6:					'Keyword________6'					{doesItBlend()}?;
-Keyword____7:						'Keyword____7'						{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___________8:				'Keyword___________8'				{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___________9:				'Keyword___________9'				{doesItBlend()}?;
-Keyword________10:					'Keyword________10';				// Specified in the interest of formatting.
-Keyword_____11:						'Keyword_____11'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________0					:	'Keyword__________0'				{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword________________________1	:	'Keyword________________________1';
+Keyword_________2					:	'Keyword_________2'					-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______________________3		:	'Keyword______________________3';	// Specified in the interest of formatting.
+Keyword_________________4			:	'Keyword_________________4';
+Keyword_____5						:	'Keyword_____5'						{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________6					:	'Keyword________6'					{doesItBlend()}?;
+Keyword____7						:	'Keyword____7'						{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___________8					:	'Keyword___________8'				{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___________9					:	'Keyword___________9'				{doesItBlend()}?;
+Keyword________10					:	'Keyword________10';				// Specified in the interest of formatting.
+Keyword_____11						:	'Keyword_____11'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword______________12:
-	'Keyword______________12'											{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
+	'Keyword______________12'												{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
 Keyword_______________________13:
-	'Keyword_______________________13'									{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword____________14:				'Keyword____________14'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+	'Keyword_______________________13'										{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword____________14				:	'Keyword____________14'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 Keyword___________15:
-	'Keyword___________15'											{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																	// Specified in the interest of formatting.
-Keyword_____________________16:	'Keyword_____________________16'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword____17:					'Keyword____17'						{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________18:				'Keyword________18'					{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword__19:					'Keyword__19'						{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________20:				'Keyword________20'					{doesItBlend()}?;
-Keyword_____________________21:	'Keyword_____________________21'	{domeSomething($text);};
-Keyword__22:					'Keyword__22'						{domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword__________________23:	'Keyword__________________23'		{doesItBlend()}?;
-Keyword__24:					'Keyword__24'						-> type(SomethingReallyMeaningful);
+	'Keyword___________15'												{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																		// Specified in the interest of formatting.
+Keyword_____________________16	:	'Keyword_____________________16'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword____17					:	'Keyword____17'						{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________18				:	'Keyword________18'					{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword__19						:	'Keyword__19'						{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________20				:	'Keyword________20'					{doesItBlend()}?;
+Keyword_____________________21	:	'Keyword_____________________21'	{domeSomething($text);};
+Keyword__22						:	'Keyword__22'						{domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________________23		:	'Keyword__________________23'		{doesItBlend()}?;
+Keyword__24						:	'Keyword__24'						-> type(SomethingReallyMeaningful);
 Keyword______________________25:
 	'Keyword______________________25'					{domeSomething($text);}
 ;														// Specified in the interest of formatting.
-Keyword________________26: 'Keyword________________26'	{doesItBlend()}? {domeSomething($text);};
+Keyword________________26 : 'Keyword________________26'	{doesItBlend()}? {domeSomething($text);};
 Keyword______________________27:
 	'Keyword______________________27'	{domeSomething($text);} {doesItBlend()}?
 ;										// Specified in the interest of formatting.
 Keyword_____________28:
 	'Keyword_____________28'	{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;								// Specified in the interest of formatting.
-Keyword___29: 'Keyword___29'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___29 : 'Keyword___29'	{doesItBlend()}?; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule___0: (
@@ -20112,7 +20112,7 @@ rule_____4: (
 	| rule________	# label________
 ;
 rule______________________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -20188,7 +20188,7 @@ rule________________15: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($t
 	| rule____					# label____
 	| rule________				# label________ {doSomething($text);}
 ;
-rule________16: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule________16 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule____________________17: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -20199,52 +20199,52 @@ rule___________________18: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____												# label____
 	| rule________											# label________
 ;
-rule___19: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___19 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_______0:					'Keyword_______0';
-Keyword___________1:				'Keyword___________1'				{doesItBlend()}?;
-Keyword_______________2:			'Keyword_______________2'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_______0						:	'Keyword_______0';
+Keyword___________1					:	'Keyword___________1'				{doesItBlend()}?;
+Keyword_______________2				:	'Keyword_______________2'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword____________________3:
-	'Keyword____________________3'										{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword___________4:				'Keyword___________4'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
+	'Keyword____________________3'											{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword___________4					:	'Keyword___________4'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword______5:
-	'Keyword______5'													{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_________6:					'Keyword_________6'					{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword________________________7:	'Keyword________________________7'	{doesItBlend()}? {domeSomething($text);};
-Keyword______________8:				'Keyword______________8'			{doesItBlend()}?;
-Keyword__________9:					'Keyword__________9';
-Keyword______________10:			'Keyword______________10'			{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword____________11:				'Keyword____________11'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword___________________12:		'Keyword___________________12';
-Keyword_________13:					'Keyword_________13'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+	'Keyword______5'														{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_________6					:	'Keyword_________6'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________________________7	:	'Keyword________________________7'	{doesItBlend()}? {domeSomething($text);};
+Keyword______________8				:	'Keyword______________8'			{doesItBlend()}?;
+Keyword__________9					:	'Keyword__________9';
+Keyword______________10				:	'Keyword______________10'			{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword____________11				:	'Keyword____________11'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___________________12		:	'Keyword___________________12';
+Keyword_________13					:	'Keyword_________13'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
 Keyword_________________________14:
-	'Keyword_________________________14'								{domeSomething($text);}
-;																		// Specified in the interest of formatting.
+	'Keyword_________________________14'									{domeSomething($text);}
+;																			// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword__________15:				'Keyword__________15';
-Keyword_________________________16:	'Keyword_________________________16'	{doesItBlend()}?;
-Keyword__________17:				'Keyword__________17';					// Specified in the interest of formatting.
-Keyword__________________18:		'Keyword__________________18'			-> mode(SomethingReallyMeaningful);
-Keyword_________________19:			'Keyword_________________19'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword__________15					:	'Keyword__________15';
+Keyword_________________________16	:	'Keyword_________________________16'	{doesItBlend()}?;
+Keyword__________17					:	'Keyword__________17';					// Specified in the interest of formatting.
+Keyword__________________18			:	'Keyword__________________18'			-> mode(SomethingReallyMeaningful);
+Keyword_________________19			:	'Keyword_________________19'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword_________20:
 	'Keyword_________20'	{doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;							// Specified in the interest of formatting.
 Keyword_____________________21:
-	'Keyword_____________________21'								-> mode(SomethingReallyMeaningful)
-;																	// Specified in the interest of formatting.
-Keyword_____________22:			'Keyword_____________22'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword________23:				'Keyword________23'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_____________________24:	'Keyword_____________________24'	{domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword_____________________21'									-> mode(SomethingReallyMeaningful)
+;																		// Specified in the interest of formatting.
+Keyword_____________22			:	'Keyword_____________22'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword________23				:	'Keyword________23'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_____________________24	:	'Keyword_____________________24'	{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword______________25:
-	'Keyword______________25'									{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword___________________26:	'Keyword___________________26'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword____________27:			'Keyword____________27'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_______28:				'Keyword_______28'				{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
+	'Keyword______________25'										{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword___________________26	:	'Keyword___________________26'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____________27			:	'Keyword____________27'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______28				:	'Keyword_______28'				{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword_________________________29:
 	'Keyword_________________________29'	-> type(SomethingReallyMeaningful)
 ;											// Specified in the interest of formatting.
@@ -20310,7 +20310,7 @@ rule______________6: (
 	| rule________	# label________
 ;					// Final trailing comment.
 rule_________7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -20382,12 +20382,12 @@ rule______16: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} rul
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule____________17: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule____________17: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule___18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___18 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________19: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -20398,63 +20398,63 @@ rule_______________19: (
 	| rule________	# label________
 ;					// Final trailing comment.
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword_________________0:		'Keyword_________________0'			-> type(SomethingReallyMeaningful);
-Keyword__________________1:		'Keyword__________________1'		{domeSomething($text);};
-Keyword____2:					'Keyword____2'						{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword____________________3:	'Keyword____________________3'		{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_________________0		:	'Keyword_________________0'			-> type(SomethingReallyMeaningful);
+Keyword__________________1		:	'Keyword__________________1'		{domeSomething($text);};
+Keyword____2					:	'Keyword____2'						{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____________________3	:	'Keyword____________________3'		{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword_______4:
-	'Keyword_______4'												{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																	// Specified in the interest of formatting.
-Keyword______________________5:	'Keyword______________________5'	-> mode(SomethingReallyMeaningful);
+	'Keyword_______4'													{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																		// Specified in the interest of formatting.
+Keyword______________________5	:	'Keyword______________________5'	-> mode(SomethingReallyMeaningful);
 Keyword_________________________6:
-	'Keyword_________________________6'								{domeSomething($text);}
-;																	// Specified in the interest of formatting.
-Keyword_____________________7:	'Keyword_____________________7'		{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_______________8:		'Keyword_______________8'			-> mode(SomethingReallyMeaningful);
+	'Keyword_________________________6'									{domeSomething($text);}
+;																		// Specified in the interest of formatting.
+Keyword_____________________7	:	'Keyword_____________________7'		{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_______________8			:	'Keyword_______________8'			-> mode(SomethingReallyMeaningful);
 Keyword________________9:
-	'Keyword________________9'										{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																	// Specified in the interest of formatting.
-Keyword____10:					'Keyword____10'						{domeSomething($text);};
-Keyword____________11:			'Keyword____________11'				-> type(SomethingReallyMeaningful);
+	'Keyword________________9'											{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																		// Specified in the interest of formatting.
+Keyword____10					:	'Keyword____10'						{domeSomething($text);};
+Keyword____________11			:	'Keyword____________11'				-> type(SomethingReallyMeaningful);
 Keyword_______12:
-	'Keyword_______12'												{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																	// Specified in the interest of formatting.
-Keyword______________13:		'Keyword______________13'			{doesItBlend()}?;
-Keyword____________14:			'Keyword____________14'				{doesItBlend()}?;
+	'Keyword_______12'													{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																		// Specified in the interest of formatting.
+Keyword______________13			:	'Keyword______________13'			{doesItBlend()}?;
+Keyword____________14			:	'Keyword____________14'				{doesItBlend()}?;
 // $antlr-format groupedAlignments on
-Keyword___________________15: 'Keyword___________________15'; // Specified in the interest of formatting.
+Keyword___________________15 : 'Keyword___________________15'; // Specified in the interest of formatting.
 Keyword____________________16:
 	'Keyword____________________16' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword_____________17:		'Keyword_____________17'	{domeSomething($text);};
-Keyword_____18:				'Keyword_____18'			{doesItBlend()}?;
-Keyword_______________19:	'Keyword_______________19'	{domeSomething($text);};
+Keyword_____________17		:	'Keyword_____________17'	{domeSomething($text);};
+Keyword_____18				:	'Keyword_____18'			{doesItBlend()}?;
+Keyword_______________19	:	'Keyword_______________19'	{domeSomething($text);};
 Keyword____________________20:
 	'Keyword____________________20' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword_____________21:				'Keyword_____________21'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_______________________22:	'Keyword_______________________22'	{domeSomething($text);};
-Keyword____________23:				'Keyword____________23'				-> type(SomethingReallyMeaningful);
+Keyword_____________21				:	'Keyword_____________21'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______________________22	:	'Keyword_______________________22'	{domeSomething($text);};
+Keyword____________23				:	'Keyword____________23'				-> type(SomethingReallyMeaningful);
 Keyword________________________24:
 	'Keyword________________________24'	{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;										// Specified in the interest of formatting.
 Keyword____________________25:
 	'Keyword____________________25'						{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;														// Specified in the interest of formatting.
-Keyword________________26: 'Keyword________________26'	{doesItBlend()}?;
+Keyword________________26 : 'Keyword________________26'	{doesItBlend()}?;
 Keyword_______________________27:
 	'Keyword_______________________27'	{doesItBlend()}? {domeSomething($text);}
 ;										// Specified in the interest of formatting.
 Keyword_____________________28:
 	'Keyword_____________________28'		{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;											// Specified in the interest of formatting.
-Keyword__________29: 'Keyword__________29'	-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________29 : 'Keyword__________29'	-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_____0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -20543,25 +20543,25 @@ rule_______10: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ru
 	| rule____			# label____
 	| rule________		# label________ {doSomething($text);}
 ;
-rule_______11:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_____12:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_______11	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____12		:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_____________13: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule___________________14: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule___________________14: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule___________________15: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___________________15 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________16: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__		# label__
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ;
-rule________________17: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule________________17: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -20577,63 +20577,63 @@ rule_______________19: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule________										# label________
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword____________________0:	'Keyword____________________0';
-Keyword__________________1:		'Keyword__________________1'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__________________2:		'Keyword__________________2'	{doesItBlend()}?;
+Keyword____________________0	:	'Keyword____________________0';
+Keyword__________________1		:	'Keyword__________________1'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________________2		:	'Keyword__________________2'	{doesItBlend()}?;
 Keyword________________________3:
-	'Keyword________________________3'							{doesItBlend()}? {domeSomething($text);}
-;																// Specified in the interest of formatting.
+	'Keyword________________________3'								{doesItBlend()}? {domeSomething($text);}
+;																	// Specified in the interest of formatting.
 Keyword_________________________4:
-	'Keyword_________________________4'							-> mode(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword____________5:			'Keyword____________5'			{domeSomething($text);} {doesItBlend()}?;
-Keyword_________________6:		'Keyword_________________6'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
+	'Keyword_________________________4'								-> mode(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword____________5			:	'Keyword____________5'			{domeSomething($text);} {doesItBlend()}?;
+Keyword_________________6		:	'Keyword_________________6'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword____7:
-	'Keyword____7'												{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword___8:					'Keyword___8'					-> mode(SomethingReallyMeaningful);
-Keyword________9:				'Keyword________9'				-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+	'Keyword____7'													{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword___8						:	'Keyword___8'					-> mode(SomethingReallyMeaningful);
+Keyword________9				:	'Keyword________9'				-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword________________________10:
-	'Keyword________________________10'							-> type(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword_______________11:		'Keyword_______________11'		{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword________________12:		'Keyword________________12'		{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_13:						'Keyword_13'					{doesItBlend()}?;
+	'Keyword________________________10'								-> type(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword_______________11		:	'Keyword_______________11'		{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword________________12		:	'Keyword________________12'		{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_13						:	'Keyword_13'					{doesItBlend()}?;
 Keyword______________14:
-	'Keyword______________14'									{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
+	'Keyword______________14'										{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 Keyword__________________15:
 	'Keyword__________________15' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;
-Keyword______________________16:	'Keyword______________________16'	-> mode(SomethingReallyMeaningful);
-Keyword__________17:				'Keyword__________17'				{domeSomething($text);} {doesItBlend()}?;
+Keyword______________________16	:	'Keyword______________________16'	-> mode(SomethingReallyMeaningful);
+Keyword__________17				:	'Keyword__________17'				{domeSomething($text);} {doesItBlend()}?;
 Keyword__________________18:
 	'Keyword__________________18' {domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
 Keyword_________________19:
 	'Keyword_________________19'						{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;														// Specified in the interest of formatting.
-Keyword_______________20: 'Keyword_______________20'	{doesItBlend()}?;
+Keyword_______________20 : 'Keyword_______________20'	{doesItBlend()}?;
 Keyword____________________21:
 	'Keyword____________________21' {domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;
 Keyword____________________22:
-	'Keyword____________________22'							-> type(SomethingReallyMeaningful)
-;															// Specified in the interest of formatting.
-Keyword_________________23:	'Keyword_________________23'	{domeSomething($text);};
-Keyword_____24:				'Keyword_____24'				{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________25:			'Keyword________25'				{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword____________________22'								-> type(SomethingReallyMeaningful)
+;																// Specified in the interest of formatting.
+Keyword_________________23	:	'Keyword_________________23'	{domeSomething($text);};
+Keyword_____24				:	'Keyword_____24'				{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________25			:	'Keyword________25'				{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword______________________26:
 	'Keyword______________________26'	{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;										// Specified in the interest of formatting.
 Keyword____________________27:
-	'Keyword____________________27'				{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;												// Specified in the interest of formatting.
-Keyword__28:			'Keyword__28'			{doesItBlend()}? {domeSomething($text);};
-Keyword____________29:	'Keyword____________29'	{domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword____________________27'					{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;													// Specified in the interest of formatting.
+Keyword__28				:	'Keyword__28'			{doesItBlend()}? {domeSomething($text);};
+Keyword____________29	:	'Keyword____________29'	{domeSomething($text);}; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule___________0: (
@@ -20654,7 +20654,7 @@ rule__1: (
 	| rule________	{doSomething($text);} {doesItBlend}?
 ;					// Final trailing comment.
 rule______________2: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -20680,7 +20680,7 @@ rule_4: (
 	| rule________
 ; // Final trailing comment.
 rule_________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -20754,7 +20754,7 @@ rule_____14: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} rule
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);}
 ;
-rule____15: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____15 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule______16: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -20764,63 +20764,63 @@ rule______16: (
 	| rule____		# label____
 	| rule________	# label________
 ;					// Final trailing comment.
-rule________17:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_18:		( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule_19:		( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________17	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_18			:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_19			:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword_______0:					'Keyword_______0'					{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______0						:	'Keyword_______0'					{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_______1:
-	'Keyword_______1'													{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword______2:						'Keyword______2';
-Keyword___________3:				'Keyword___________3'				{domeSomething($text);} {doesItBlend()}?;
-Keyword________________________4:	'Keyword________________________4'	{doesItBlend()}?;
-Keyword_________________5:			'Keyword_________________5'			{doesItBlend()}?;
-Keyword______________6:				'Keyword______________6'			{doesItBlend()}?;
-Keyword__________7:					'Keyword__________7'				-> type(SomethingReallyMeaningful);
+	'Keyword_______1'														{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword______2						:	'Keyword______2';
+Keyword___________3					:	'Keyword___________3'				{domeSomething($text);} {doesItBlend()}?;
+Keyword________________________4	:	'Keyword________________________4'	{doesItBlend()}?;
+Keyword_________________5			:	'Keyword_________________5'			{doesItBlend()}?;
+Keyword______________6				:	'Keyword______________6'			{doesItBlend()}?;
+Keyword__________7					:	'Keyword__________7'				-> type(SomethingReallyMeaningful);
 Keyword_________________________8:
-	'Keyword_________________________8'									{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_____________9:				'Keyword_____________9'				-> mode(SomethingReallyMeaningful);
-Keyword_____10:						'Keyword_____10';
+	'Keyword_________________________8'										{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_____________9				:	'Keyword_____________9'				-> mode(SomethingReallyMeaningful);
+Keyword_____10						:	'Keyword_____10';
 Keyword___________11:
-	'Keyword___________11'												{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword___12:						'Keyword___12'						{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword________13:					'Keyword________13'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword______________________14:	'Keyword______________________14'	{doesItBlend()}?; // Specified in the interest of formatting.
+	'Keyword___________11'													{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword___12						:	'Keyword___12'						{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________13					:	'Keyword________13'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword______________________14		:	'Keyword______________________14'	{doesItBlend()}?; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_15: 'Keyword_15' {doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_15 : 'Keyword_15' {doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword__________________16:
 	'Keyword__________________16' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword_________________17:	'Keyword_________________17'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword___________18:		'Keyword___________18'			{doesItBlend()}? {domeSomething($text);};
-Keyword_19:					'Keyword_19'					-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_________________17	:	'Keyword_________________17'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword___________18		:	'Keyword___________18'			{doesItBlend()}? {domeSomething($text);};
+Keyword_19					:	'Keyword_19'					-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword___________________20:
 	'Keyword___________________20'	{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;									// Specified in the interest of formatting.
-Keyword_____21: 'Keyword_____21';
+Keyword_____21 : 'Keyword_____21';
 Keyword____________________22:
 	'Keyword____________________22'	{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;									// Specified in the interest of formatting.
-Keyword_23: 'Keyword_23'			{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_23 : 'Keyword_23'			{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_________________________24:
-	'Keyword_________________________24'								{domeSomething($text);} {doesItBlend()}?
-;																		// Specified in the interest of formatting.
-Keyword________________25:			'Keyword________________25'			{doesItBlend()}?;
-Keyword________________________26:	'Keyword________________________26'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword__________________27:		'Keyword__________________27'		{domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword_________________________24'									{domeSomething($text);} {doesItBlend()}?
+;																			// Specified in the interest of formatting.
+Keyword________________25			:	'Keyword________________25'			{doesItBlend()}?;
+Keyword________________________26	:	'Keyword________________________26'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__________________27			:	'Keyword__________________27'		{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_________________28:
 	'Keyword_________________28'	-> type(SomethingReallyMeaningful)
 ;									// Specified in the interest of formatting.
-Keyword___29: 'Keyword___29'		{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___29 : 'Keyword___29'		{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_______________________0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -20905,8 +20905,8 @@ rule______________________9: (
 	| rule________	# label________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule________________10:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule______________11:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________________10	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________11	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________________12: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__						# label__
 	| rule____						# label____
@@ -20936,33 +20936,33 @@ rule_________16: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ;
-rule______________________17:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___18:						( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__________________19: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule______________________17	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___18						:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________________19: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword___0:					'Keyword___0'					{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword______________1:			'Keyword______________1'		{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword______________2:			'Keyword______________2'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___0					:	'Keyword___0'					{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword______________1		:	'Keyword______________1'		{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword______________2		:	'Keyword______________2'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword______________________3:
 	'Keyword______________________3'							{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
-Keyword_______________4:		'Keyword_______________4'		-> type(SomethingReallyMeaningful);
-Keyword________5:				'Keyword________5'				{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_6:						'Keyword_6';					// Specified in the interest of formatting.
-Keyword___________7:			'Keyword___________7'			{domeSomething($text);};
+Keyword_______________4		:	'Keyword_______________4'		-> type(SomethingReallyMeaningful);
+Keyword________5			:	'Keyword________5'				{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_6					:	'Keyword_6';					// Specified in the interest of formatting.
+Keyword___________7			:	'Keyword___________7'			{domeSomething($text);};
 Keyword________________8:
 	'Keyword________________8'									{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;																// Specified in the interest of formatting.
 Keyword______9:
 	'Keyword______9'											{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																// Specified in the interest of formatting.
-Keyword__10:					'Keyword__10'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__10					:	'Keyword__10'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword________________________11:
 	'Keyword________________________11'							{domeSomething($text);}
 ;																// Specified in the interest of formatting.
@@ -20972,25 +20972,25 @@ Keyword________________12:
 Keyword_________________13:
 	'Keyword_________________13'								{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																// Specified in the interest of formatting.
-Keyword__________________14:	'Keyword__________________14';	// Specified in the interest of formatting.
+Keyword__________________14	:	'Keyword__________________14';	// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword__15:		'Keyword__15'			{doesItBlend()}?;
-Keyword_________16:	'Keyword_________16'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword__15			:	'Keyword__15'			{doesItBlend()}?;
+Keyword_________16	:	'Keyword_________16'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword________________17:
-	'Keyword________________17'									{doesItBlend()}? {domeSomething($text);}
-;																// Specified in the interest of formatting.
-Keyword_______________18:			'Keyword_______________18'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____________19:				'Keyword_____________19'	-> mode(SomethingReallyMeaningful);
-Keyword________________20:			'Keyword________________20';
-Keyword_21:							'Keyword_21'						{domeSomething($text);};
-Keyword_____22:						'Keyword_____22'					{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword__________________23:		'Keyword__________________23'		{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_______________________24:	'Keyword_______________________24'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_____________25:				'Keyword_____________25'			{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__26:						'Keyword__26'						-> type(SomethingReallyMeaningful);
-Keyword_____________27:				'Keyword_____________27'			{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__________28:				'Keyword__________28'				{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___29:						'Keyword___29'						{doesItBlend()}?;
+	'Keyword________________17'										{doesItBlend()}? {domeSomething($text);}
+;																	// Specified in the interest of formatting.
+Keyword_______________18			:	'Keyword_______________18'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____________19				:	'Keyword_____________19'	-> mode(SomethingReallyMeaningful);
+Keyword________________20			:	'Keyword________________20';
+Keyword_21							:	'Keyword_21'						{domeSomething($text);};
+Keyword_____22						:	'Keyword_____22'					{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword__________________23			:	'Keyword__________________23'		{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______________________24	:	'Keyword_______________________24'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_____________25				:	'Keyword_____________25'			{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__26							:	'Keyword__26'						-> type(SomethingReallyMeaningful);
+Keyword_____________27				:	'Keyword_____________27'			{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________28					:	'Keyword__________28'				{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___29						:	'Keyword___29'						{doesItBlend()}?;
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_______0: (
@@ -21055,7 +21055,7 @@ rule_______6: (
 	| rule________
 ; // Final trailing comment.
 rule_________________7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -21131,7 +21131,7 @@ rule____________________17: (
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;					// Final trailing comment.
-rule______________18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________18 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_____19: (
 		alt1		{doSomething($text);} ruleA // Mom look, a trailing comment.
 		| alt2		{doSomething($text);} ruleB // And another comment.
@@ -21142,33 +21142,33 @@ rule_____19: (
 	| rule________	# label________ {doSomething($text);}
 ;					// Final trailing comment.
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_______________________0:
-	'Keyword_______________________0'									{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
+	'Keyword_______________________0'										{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
 Keyword_____________1:
-	'Keyword_____________1'												{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_____________2:				'Keyword_____________2'				-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword__________3:					'Keyword__________3'				{doesItBlend()}?;
-Keyword_________________4:			'Keyword_________________4'			{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___________________5:		'Keyword___________________5'		{domeSomething($text);};
-Keyword______________6:				'Keyword______________6';			// Specified in the interest of formatting.
-Keyword_________________________7:	'Keyword_________________________7'	-> type(SomethingReallyMeaningful);
-Keyword__________________8:			'Keyword__________________8'		-> type(SomethingReallyMeaningful);
-Keyword___________9:				'Keyword___________9'				{doesItBlend()}? -> type(SomethingReallyMeaningful);
+	'Keyword_____________1'													{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_____________2				:	'Keyword_____________2'				-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________3					:	'Keyword__________3'				{doesItBlend()}?;
+Keyword_________________4			:	'Keyword_________________4'			{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___________________5			:	'Keyword___________________5'		{domeSomething($text);};
+Keyword______________6				:	'Keyword______________6';			// Specified in the interest of formatting.
+Keyword_________________________7	:	'Keyword_________________________7'	-> type(SomethingReallyMeaningful);
+Keyword__________________8			:	'Keyword__________________8'		-> type(SomethingReallyMeaningful);
+Keyword___________9					:	'Keyword___________9'				{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword_________________10:
-	'Keyword_________________10'										{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+	'Keyword_________________10'											{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
 Keyword________________________11:
-	'Keyword________________________11'									{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+	'Keyword________________________11'										{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
-Keyword_________________12:			'Keyword_________________12'		{doesItBlend()}?;
-Keyword______________________13:	'Keyword______________________13'	{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_______________________14:	'Keyword_______________________14';
+Keyword_________________12			:	'Keyword_________________12'		{doesItBlend()}?;
+Keyword______________________13		:	'Keyword______________________13'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_______________________14	:	'Keyword_______________________14';
 // $antlr-format groupedAlignments on
-Keyword___15: 'Keyword___15' {domeSomething($text);} {doesItBlend()}?;
+Keyword___15 : 'Keyword___15' {domeSomething($text);} {doesItBlend()}?;
 Keyword__________________16:
 	'Keyword__________________16'	{doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;									// Specified in the interest of formatting.
@@ -21181,18 +21181,18 @@ Keyword_________18:
 Keyword_________________________19:
 	'Keyword_________________________19'	{domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;											// Specified in the interest of formatting.
-Keyword_20:							'Keyword_20';
-Keyword_____________21:				'Keyword_____________21'			-> mode(SomethingReallyMeaningful);
-Keyword_____22:						'Keyword_____22'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_______________________23:	'Keyword_______________________23'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_____________________24:		'Keyword_____________________24';
-Keyword___________________25:		'Keyword___________________25' {domeSomething($text);};
+Keyword_20							:	'Keyword_20';
+Keyword_____________21				:	'Keyword_____________21'			-> mode(SomethingReallyMeaningful);
+Keyword_____22						:	'Keyword_____22'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_______________________23	:	'Keyword_______________________23'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_____________________24		:	'Keyword_____________________24';
+Keyword___________________25		:	'Keyword___________________25' {domeSomething($text);};
 Keyword____________________26:
-	'Keyword____________________26'										{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword________________________27:	'Keyword________________________27'	{doesItBlend()}? {domeSomething($text);};
-Keyword___________28:				'Keyword___________28'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword__________29:				'Keyword__________29';				// Specified in the interest of formatting.
+	'Keyword____________________26'											{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword________________________27	:	'Keyword________________________27'	{doesItBlend()}? {domeSomething($text);};
+Keyword___________28				:	'Keyword___________28'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword__________29					:	'Keyword__________29';				// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_____0: (
@@ -21277,7 +21277,7 @@ rule_______9: (
 	| rule________	# label________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule____________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________10 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______11: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -21324,7 +21324,7 @@ rule__16: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) 
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule__17: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule__17 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_________________________18: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__														# label__
 	| rule____														# label____
@@ -21336,53 +21336,53 @@ rule________________19: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule________										# label________
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword__________0:					'Keyword__________0';
-Keyword_________1:					'Keyword_________1'					{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword__________0					:	'Keyword__________0';
+Keyword_________1					:	'Keyword_________1'					{domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword_______2:
-	'Keyword_______2'													{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword________________________3:	'Keyword________________________3'	{domeSomething($text);};
-Keyword_______________4:			'Keyword_______________4'			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_________________________5:	'Keyword_________________________5';
-Keyword___________________6:		'Keyword___________________6'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_________________________7:	'Keyword_________________________7'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword___________8:				'Keyword___________8';				// Specified in the interest of formatting.
-Keyword__9:							'Keyword__9'						{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_________________10:			'Keyword_________________10'		{doesItBlend()}?;
-Keyword__________________11:		'Keyword__________________11'		{doesItBlend()}? {domeSomething($text);};
-Keyword____________12:				'Keyword____________12'				{domeSomething($text);};
-Keyword_________________13:			'Keyword_________________13'		-> type(SomethingReallyMeaningful);
-Keyword_______14:					'Keyword_______14';
+	'Keyword_______2'														{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword________________________3	:	'Keyword________________________3'	{domeSomething($text);};
+Keyword_______________4				:	'Keyword_______________4'			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_________________________5	:	'Keyword_________________________5';
+Keyword___________________6			:	'Keyword___________________6'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_________________________7	:	'Keyword_________________________7'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword___________8					:	'Keyword___________8';				// Specified in the interest of formatting.
+Keyword__9							:	'Keyword__9'						{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_________________10			:	'Keyword_________________10'		{doesItBlend()}?;
+Keyword__________________11			:	'Keyword__________________11'		{doesItBlend()}? {domeSomething($text);};
+Keyword____________12				:	'Keyword____________12'				{domeSomething($text);};
+Keyword_________________13			:	'Keyword_________________13'		-> type(SomethingReallyMeaningful);
+Keyword_______14					:	'Keyword_______14';
 // $antlr-format groupedAlignments on
-Keyword_____________15: 'Keyword_____________15' {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________15 : 'Keyword_____________15' {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword_________16:
 	'Keyword_________16'	{domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;							// Specified in the interest of formatting.
 Keyword_________________________17:
 	'Keyword_________________________17' {doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;
-Keyword__________________18: 'Keyword__________________18'; // Specified in the interest of formatting.
+Keyword__________________18 : 'Keyword__________________18'; // Specified in the interest of formatting.
 Keyword________________________19:
 	'Keyword________________________19'		{doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;											// Specified in the interest of formatting.
-Keyword_________20: 'Keyword_________20'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_________20 : 'Keyword_________20'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
 Keyword______________________21:
 	'Keyword______________________21'	{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;										// Specified in the interest of formatting.
 Keyword____________________22:
 	'Keyword____________________22' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword________23:				'Keyword________23'				{domeSomething($text);} {doesItBlend()}?;
-Keyword_____________24:			'Keyword_____________24'		{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword____________________25:	'Keyword____________________25'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__26:					'Keyword__26'					{domeSomething($text);} {doesItBlend()}?;
+Keyword________23				:	'Keyword________23'				{domeSomething($text);} {doesItBlend()}?;
+Keyword_____________24			:	'Keyword_____________24'		{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword____________________25	:	'Keyword____________________25'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__26						:	'Keyword__26'					{domeSomething($text);} {doesItBlend()}?;
 Keyword___________27:
-	'Keyword___________27'								{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;														// Specified in the interest of formatting.
-Keyword_______________28:	'Keyword_______________28'	{doesItBlend()}? {domeSomething($text);};
-Keyword__29:				'Keyword__29'				{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+	'Keyword___________27'									{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;															// Specified in the interest of formatting.
+Keyword_______________28	:	'Keyword_______________28'	{doesItBlend()}? {domeSomething($text);};
+Keyword__29					:	'Keyword__29'				{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_________________0: (
@@ -21469,7 +21469,7 @@ rule__9: (
 	| rule________	# label________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule___10: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule___10 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_____11: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -21498,7 +21498,7 @@ rule________14: (
 	| rule____
 	| rule________	{doSomething($text);}
 ;					// Final trailing comment.
-rule___15: (		{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule___15 : (		{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule____16: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -21513,7 +21513,7 @@ rule_______17: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ;
-rule__18: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__18 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule____________________19: (
 					{doesItBlend}? alt1 {doSomething($text);} ruleA // Mom look, a trailing comment.
 		|			{doesItBlend}? alt2 {doSomething($text);} ruleB // And another comment.
@@ -21524,61 +21524,61 @@ rule____________________19: (
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;					// Final trailing comment.
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword________0:
 	'Keyword________0'											{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;																// Specified in the interest of formatting.
-Keyword____________1:			'Keyword____________1'			{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____________1		:	'Keyword____________1'			{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_____________________2:
 	'Keyword_____________________2'								{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;
 Keyword________________________3:
 	'Keyword________________________3'							{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;																// Specified in the interest of formatting.
-Keyword___________________4:	'Keyword___________________4'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword___________5:			'Keyword___________5'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________________6:		'Keyword_________________6'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_____________7:			'Keyword_____________7'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword___________________4	:	'Keyword___________________4'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___________5			:	'Keyword___________5'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________________6	:	'Keyword_________________6'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_____________7		:	'Keyword_____________7'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword_____________________8:
 	'Keyword_____________________8'								{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;
-Keyword__________________9:		'Keyword__________________9';
+Keyword__________________9	:	'Keyword__________________9';
 Keyword_________________10:
 	'Keyword_________________10'								-> mode(SomethingReallyMeaningful)
 ;																// Specified in the interest of formatting.
-Keyword__________________11:	'Keyword__________________11'	{doesItBlend()}? {domeSomething($text);};
-Keyword_12:						'Keyword_12'					{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword__________________11	:	'Keyword__________________11'	{doesItBlend()}? {domeSomething($text);};
+Keyword_12					:	'Keyword_12'					{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_________________________13:
 	'Keyword_________________________13'						{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;																// Specified in the interest of formatting.
-Keyword__________________14:	'Keyword__________________14'	{doesItBlend()}?;
+Keyword__________________14	:	'Keyword__________________14'	{doesItBlend()}?;
 // $antlr-format groupedAlignments on
-Keyword___15: 'Keyword___15' {domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword___15 : 'Keyword___15' {domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword_______________________16:
 	'Keyword_______________________16'									{domeSomething($text);} {doesItBlend()}?
 ;																		// Specified in the interest of formatting.
-Keyword______________________17:	'Keyword______________________17'	{doesItBlend()}? {domeSomething($text);};
-Keyword_____________18:				'Keyword_____________18'			-> mode(SomethingReallyMeaningful);
-Keyword____________19:				'Keyword____________19'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword______________________17	:	'Keyword______________________17'	{doesItBlend()}? {domeSomething($text);};
+Keyword_____________18			:	'Keyword_____________18'			-> mode(SomethingReallyMeaningful);
+Keyword____________19			:	'Keyword____________19'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
 Keyword_________________20:
-	'Keyword_________________20'				{doesItBlend()}? {domeSomething($text);}
-;												// Specified in the interest of formatting.
-Keyword_21:				'Keyword_21'			{domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword______22:		'Keyword______22';		// Specified in the interest of formatting.
-Keyword__23:			'Keyword__23'			{domeSomething($text);};
-Keyword____________24:	'Keyword____________24'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_25:				'Keyword_25'			{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____26:			'Keyword_____26'		{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__27:			'Keyword__27'			{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
+	'Keyword_________________20'					{doesItBlend()}? {domeSomething($text);}
+;													// Specified in the interest of formatting.
+Keyword_21				:	'Keyword_21'			{domeSomething($text);} -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______22			:	'Keyword______22';		// Specified in the interest of formatting.
+Keyword__23				:	'Keyword__23'			{domeSomething($text);};
+Keyword____________24	:	'Keyword____________24'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_25				:	'Keyword_25'			{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____26			:	'Keyword_____26'		{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__27				:	'Keyword__27'			{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword________________________28:
 	'Keyword________________________28'				{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;													// Specified in the interest of formatting.
-Keyword_____________29: 'Keyword_____________29'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_____________29 : 'Keyword_____________29'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule____0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -21681,18 +21681,18 @@ rule_12: (
 	| rule____		# label____
 	| rule________	# label________
 ;					// Final trailing comment.
-rule_________________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_________________13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________14: (
-								{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
-		|						{doesItBlend}? alt2 ruleB // And another comment.
-		|						{doesItBlend}? alt3 ruleB /* Not aligned comment.*/
-	) rule_						# label_
-	| rule__					# label__
-	| rule____					# label____
-	| rule________				# label________ {doesItBlend}?
-;								// Final trailing comment.
-rule________15:				(	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule__________________16:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+									{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
+		|							{doesItBlend}? alt2 ruleB // And another comment.
+		|							{doesItBlend}? alt3 ruleB /* Not aligned comment.*/
+	) rule_							# label_
+	| rule__						# label__
+	| rule____						# label____
+	| rule________					# label________ {doesItBlend}?
+;									// Final trailing comment.
+rule________15				:	(	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________________16	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______________________17: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -21707,50 +21707,50 @@ rule________18: (
 	| rule____
 	| rule________	{doSomething($text);} {doesItBlend}?
 ;					// Final trailing comment.
-rule_____19: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_____19 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword____________________0:		'Keyword____________________0'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword________________1:			'Keyword________________1'			{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword____________________2:		'Keyword____________________2'		{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___3:						'Keyword___3'						{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword___4:						'Keyword___4'						-> type(SomethingReallyMeaningful);
-Keyword_____5:						'Keyword_____5'						{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____________________6:		'Keyword_____________________6'		{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____________________0		:	'Keyword____________________0'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword________________1			:	'Keyword________________1'			{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword____________________2		:	'Keyword____________________2'		{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___3							:	'Keyword___3'						{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___4							:	'Keyword___4'						-> type(SomethingReallyMeaningful);
+Keyword_____5						:	'Keyword_____5'						{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________________6		:	'Keyword_____________________6'		{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword________________________7:
-	'Keyword________________________7'									{domeSomething($text);}
-;																		// Specified in the interest of formatting.
-Keyword_________8:					'Keyword_________8';
+	'Keyword________________________7'										{domeSomething($text);}
+;																			// Specified in the interest of formatting.
+Keyword_________8					:	'Keyword_________8';
 Keyword_____________9:
-	'Keyword_____________9'												{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
+	'Keyword_____________9'													{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
 Keyword________10:
-	'Keyword________10'													{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword________________11:			'Keyword________________11'			{doesItBlend()}?;
-Keyword_______________________12:	'Keyword_______________________12'	{doesItBlend()}? {domeSomething($text);};
-Keyword__13:						'Keyword__13'						-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword______14:					'Keyword______14'					{doesItBlend()}?; // Specified in the interest of formatting.
+	'Keyword________10'														{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword________________11			:	'Keyword________________11'			{doesItBlend()}?;
+Keyword_______________________12	:	'Keyword_______________________12'	{doesItBlend()}? {domeSomething($text);};
+Keyword__13							:	'Keyword__13'						-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______14						:	'Keyword______14'					{doesItBlend()}?; // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword________15: 'Keyword________15' {doesItBlend()}?;
+Keyword________15 : 'Keyword________15' {doesItBlend()}?;
 Keyword________16:
-	'Keyword________16'								{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;													// Specified in the interest of formatting.
-Keyword______17:				'Keyword______17'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword____________________18:	'Keyword____________________18';
-Keyword______19:				'Keyword______19'		{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword____________20:			'Keyword____________20'	-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword________21:				'Keyword________21';
-Keyword___________22:			'Keyword___________22'			{domeSomething($text);};
-Keyword_23:						'Keyword_23'					{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword__________________24:	'Keyword__________________24'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+	'Keyword________16'									{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;														// Specified in the interest of formatting.
+Keyword______17					:	'Keyword______17'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword____________________18	:	'Keyword____________________18';
+Keyword______19					:	'Keyword______19'		{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____________20			:	'Keyword____________20'	-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword________21				:	'Keyword________21';
+Keyword___________22			:	'Keyword___________22'			{domeSomething($text);};
+Keyword_23						:	'Keyword_23'					{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword__________________24		:	'Keyword__________________24'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
 Keyword__________25:
 	'Keyword__________25'	{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;							// Specified in the interest of formatting.
-Keyword_________26:	'Keyword_________26';
-Keyword_____27:		'Keyword_____27'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_______28:	'Keyword_______28'	{doesItBlend()}? {domeSomething($text);};
+Keyword_________26	:	'Keyword_________26';
+Keyword_____27		:	'Keyword_____27'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_______28	:	'Keyword_______28'	{doesItBlend()}? {domeSomething($text);};
 Keyword_____________________29:
 	'Keyword_____________________29'	{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;										// Specified in the interest of formatting.
@@ -21843,7 +21843,7 @@ rule_________9: (
 	| rule________	# label________
 ;					// Final trailing comment.
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule____________________10: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________________10 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule___________11: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -21854,9 +21854,9 @@ rule_______________________12: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____													# label____
 	| rule________												# label________
 ;
-rule____________________13:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__________14:			( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule___________________15:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____________________13	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________14			:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule___________________15	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_____________16: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__				# label__
 	| rule____				# label____
@@ -21878,56 +21878,56 @@ rule_______19: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ru
 	| rule________		# label________ {doSomething($text);}
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword___________________0:
-	'Keyword___________________0'										{domeSomething($text);} {doesItBlend()}?
-;																		// Specified in the interest of formatting.
-Keyword_____________1:				'Keyword_____________1'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword____2:						'Keyword____2';						// Specified in the interest of formatting.
-Keyword____________3:				'Keyword____________3'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword____4:						'Keyword____4'						-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword__________5:					'Keyword__________5'				{domeSomething($text);};
+	'Keyword___________________0'											{domeSomething($text);} {doesItBlend()}?
+;																			// Specified in the interest of formatting.
+Keyword_____________1				:	'Keyword_____________1'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____2						:	'Keyword____2';						// Specified in the interest of formatting.
+Keyword____________3				:	'Keyword____________3'				{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword____4						:	'Keyword____4'						-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________5					:	'Keyword__________5'				{domeSomething($text);};
 Keyword_______________________6:
-	'Keyword_______________________6'									{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword___________7:				'Keyword___________7';
-Keyword________________________8:	'Keyword________________________8'	{doesItBlend()}?;
+	'Keyword_______________________6'										{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword___________7					:	'Keyword___________7';
+Keyword________________________8	:	'Keyword________________________8'	{doesItBlend()}?;
 Keyword_____________________9:
-	'Keyword_____________________9'										{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
+	'Keyword_____________________9'											{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;
-Keyword______10:					'Keyword______10'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_______11:					'Keyword_______11'					{doesItBlend()}? {domeSomething($text);};
-Keyword____12:						'Keyword____12'						{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword____13:						'Keyword____13'						-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword________________14:			'Keyword________________14'			{domeSomething($text);};
+Keyword______10						:	'Keyword______10'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_______11					:	'Keyword_______11'					{doesItBlend()}? {domeSomething($text);};
+Keyword____12						:	'Keyword____12'						{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword____13						:	'Keyword____13'						-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword________________14			:	'Keyword________________14'			{domeSomething($text);};
 // $antlr-format groupedAlignments on
 Keyword_______________15:
 	'Keyword_______________15'	-> mode(SomethingReallyMeaningful)
 ;								// Specified in the interest of formatting.
 Keyword_______16:
-	'Keyword_______16'									{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;														// Specified in the interest of formatting.
-Keyword_______________17:	'Keyword_______________17'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword___________18:		'Keyword___________18'		{domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword_______16'										{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;															// Specified in the interest of formatting.
+Keyword_______________17	:	'Keyword_______________17'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___________18		:	'Keyword___________18'		{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword__________________19:
 	'Keyword__________________19'	{doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;									// Specified in the interest of formatting.
 Keyword______________20:
 	'Keyword______________20'									{doesItBlend()}? {domeSomething($text);}
 ;																// Specified in the interest of formatting.
-Keyword_____________21:			'Keyword_____________21'		{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword___________22:			'Keyword___________22';			// Specified in the interest of formatting.
-Keyword__________________23:	'Keyword__________________23'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_____________21		:	'Keyword_____________21'		{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___________22		:	'Keyword___________22';			// Specified in the interest of formatting.
+Keyword__________________23	:	'Keyword__________________23'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword______________________24:
 	'Keyword______________________24'								{domeSomething($text);}
 ;																	// Specified in the interest of formatting.
-Keyword_____________________25: 'Keyword_____________________25'	{doesItBlend()}? {domeSomething($text);};
+Keyword_____________________25 : 'Keyword_____________________25'	{doesItBlend()}? {domeSomething($text);};
 Keyword__________________26:
-	'Keyword__________________26'							{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;															// Specified in the interest of formatting.
-Keyword_________________27:	'Keyword_________________27';	// Specified in the interest of formatting.
-Keyword____________28:		'Keyword____________28'			{domeSomething($text);} {doesItBlend()}?;
+	'Keyword__________________26'								{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																// Specified in the interest of formatting.
+Keyword_________________27	:	'Keyword_________________27';	// Specified in the interest of formatting.
+Keyword____________28		:	'Keyword____________28'			{domeSomething($text);} {doesItBlend()}?;
 Keyword_____________29:
 	'Keyword_____________29'	{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;								// Specified in the interest of formatting.
@@ -21959,7 +21959,7 @@ rule_____2: (
 	| rule________
 ;
 rule____3: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -22024,7 +22024,7 @@ rule__________10: (
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ;					// Final trailing comment.
-rule_________11: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_________11 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule____12: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -22035,7 +22035,7 @@ rule_________________________13: (alt1 {doSomething($text);} ruleA | alt2 {doSom
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule_14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_14 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________________15: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -22054,8 +22054,8 @@ rule_16: (
 	| rule____		# label____
 	| rule________	# label________
 ;					// Final trailing comment.
-rule________17:				( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule__________________18:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________17				:	( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule__________________18	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_________________________19: (
 					{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
 		|			{doesItBlend}? alt2 ruleB // And another comment.
@@ -22066,51 +22066,51 @@ rule_________________________19: (
 	| rule________	# label________ {doesItBlend}?
 ;					// Final trailing comment.
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword______0:					'Keyword______0'				{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword__1:						'Keyword__1'					-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______0					:	'Keyword______0'				{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__1						:	'Keyword__1'					-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword_________________2:
-	'Keyword_________________2'									{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword_________3:				'Keyword_________3'				{doesItBlend()}?;
-Keyword__________4:				'Keyword__________4'			{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword___________________5:	'Keyword___________________5'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
+	'Keyword_________________2'										{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword_________3				:	'Keyword_________3'				{doesItBlend()}?;
+Keyword__________4				:	'Keyword__________4'			{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___________________5		:	'Keyword___________________5'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword_____6:
-	'Keyword_____6'												{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword_____________7:			'Keyword_____________7'			{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____________8:			'Keyword_____________8'			-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword______________9:			'Keyword______________9'		{doesItBlend()}? -> type(SomethingReallyMeaningful);
+	'Keyword_____6'													{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword_____________7			:	'Keyword_____________7'			{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________8			:	'Keyword_____________8'			-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______________9			:	'Keyword______________9'		{doesItBlend()}? -> type(SomethingReallyMeaningful);
 Keyword_____________________10:
-	'Keyword_____________________10'							{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
+	'Keyword_____________________10'								{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword__________________11:	'Keyword__________________11'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_________12:				'Keyword_________12'			-> type(SomethingReallyMeaningful);
-Keyword___________________13:	'Keyword___________________13';
-Keyword______14:				'Keyword______14'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________________11		:	'Keyword__________________11'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_________12				:	'Keyword_________12'			-> type(SomethingReallyMeaningful);
+Keyword___________________13	:	'Keyword___________________13';
+Keyword______14					:	'Keyword______14'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 Keyword_________________________15:
 	'Keyword_________________________15'	{domeSomething($text);}
 ;											// Specified in the interest of formatting.
-Keyword________________16:			'Keyword________________16';
-Keyword_____________17:				'Keyword_____________17'			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_______________________18:	'Keyword_______________________18'	{doesItBlend()}? {domeSomething($text);};
-Keyword__________________19:		'Keyword__________________19';
-Keyword_____________20:				'Keyword_____________20'		{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___________21:				'Keyword___________21'			-> type(SomethingReallyMeaningful);
-Keyword________________22:			'Keyword________________22'		-> mode(SomethingReallyMeaningful);
-Keyword_________________23:			'Keyword_________________23'	{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword________________16			:	'Keyword________________16';
+Keyword_____________17				:	'Keyword_____________17'			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_______________________18	:	'Keyword_______________________18'	{doesItBlend()}? {domeSomething($text);};
+Keyword__________________19			:	'Keyword__________________19';
+Keyword_____________20				:	'Keyword_____________20'		{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___________21				:	'Keyword___________21'			-> type(SomethingReallyMeaningful);
+Keyword________________22			:	'Keyword________________22'		-> mode(SomethingReallyMeaningful);
+Keyword_________________23			:	'Keyword_________________23'	{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_________________________24:
 	'Keyword_________________________24' {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword___25:			'Keyword___25';			// Specified in the interest of formatting.
-Keyword___________26:	'Keyword___________26'	-> mode(SomethingReallyMeaningful);
-Keyword_________27:		'Keyword_________27'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword___25			:	'Keyword___25';			// Specified in the interest of formatting.
+Keyword___________26	:	'Keyword___________26'	-> mode(SomethingReallyMeaningful);
+Keyword_________27		:	'Keyword_________27'	{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword_28:
 	'Keyword_28'	{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;					// Specified in the interest of formatting.
-Keyword____________________29: 'Keyword____________________29';
+Keyword____________________29 : 'Keyword____________________29';
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_________________0: (
@@ -22229,7 +22229,7 @@ rule_____________________13: (
 	| rule____
 	| rule________
 ;																// Final trailing comment.
-rule_________14: (												{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________14 : (												{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule______________________15: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__													# label__
 	| rule____													# label____
@@ -22240,57 +22240,57 @@ rule___16: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB)
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule_________17: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_______________________18: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+rule_________17 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_______________________18: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
 ;
-rule____19: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule____19 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword________0:				'Keyword________0';					// Specified in the interest of formatting.
-Keyword_1:						'Keyword_1'							{doesItBlend()}?;
-Keyword_____2:					'Keyword_____2';					// Specified in the interest of formatting.
-Keyword______________________3:	'Keyword______________________3'	{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_____________________4:	'Keyword_____________________4'		{domeSomething($text);} {doesItBlend()}?;
-Keyword_________________5:		'Keyword_________________5'			{domeSomething($text);};
-Keyword______________6:			'Keyword______________6'			{doesItBlend()}?;
-Keyword______________7:			'Keyword______________7'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword________0				:	'Keyword________0';					// Specified in the interest of formatting.
+Keyword_1						:	'Keyword_1'							{doesItBlend()}?;
+Keyword_____2					:	'Keyword_____2';					// Specified in the interest of formatting.
+Keyword______________________3	:	'Keyword______________________3'	{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_____________________4	:	'Keyword_____________________4'		{domeSomething($text);} {doesItBlend()}?;
+Keyword_________________5		:	'Keyword_________________5'			{domeSomething($text);};
+Keyword______________6			:	'Keyword______________6'			{doesItBlend()}?;
+Keyword______________7			:	'Keyword______________7'			{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
 Keyword______________8:
-	'Keyword______________8'										{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																	// Specified in the interest of formatting.
-Keyword_________9:				'Keyword_________9'					{domeSomething($text);};
-Keyword_______________10:		'Keyword_______________10'			{domeSomething($text);}; // Specified in the interest of formatting.
+	'Keyword______________8'											{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																		// Specified in the interest of formatting.
+Keyword_________9				:	'Keyword_________9'					{domeSomething($text);};
+Keyword_______________10		:	'Keyword_______________10'			{domeSomething($text);}; // Specified in the interest of formatting.
 Keyword____11:
-	'Keyword____11'													{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																	// Specified in the interest of formatting.
-Keyword___________________12:	'Keyword___________________12'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword______13:				'Keyword______13'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword__________14:			'Keyword__________14'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+	'Keyword____11'														{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																		// Specified in the interest of formatting.
+Keyword___________________12	:	'Keyword___________________12'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword______13					:	'Keyword______13'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword__________14				:	'Keyword__________14'				-> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword____________________15: 'Keyword____________________15' {domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword____________________15 : 'Keyword____________________15' {domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword______________________16:
-	'Keyword______________________16'								{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																	// Specified in the interest of formatting.
-Keyword__________________17:	'Keyword__________________17';		// Specified in the interest of formatting.
-Keyword___18:					'Keyword___18'						{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_____________19:			'Keyword_____________19'			{domeSomething($text);};
-Keyword________20:				'Keyword________20'					{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_____21:					'Keyword_____21'					{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword___________22:			'Keyword___________22'				{doesItBlend()}?;
-Keyword___23:					'Keyword___23'						{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_______24:				'Keyword_______24'					-> type(SomethingReallyMeaningful);
-Keyword________25:				'Keyword________25'					{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_____________________26:	'Keyword_____________________26';	// Specified in the interest of formatting.
-Keyword______________27:		'Keyword______________27'			-> type(SomethingReallyMeaningful);
-Keyword_________________28:		'Keyword_________________28'		{domeSomething($text);} {doesItBlend()}?;
-Keyword_____________29:			'Keyword_____________29'			{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
+	'Keyword______________________16'									{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																		// Specified in the interest of formatting.
+Keyword__________________17		:	'Keyword__________________17';		// Specified in the interest of formatting.
+Keyword___18					:	'Keyword___18'						{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_____________19			:	'Keyword_____________19'			{domeSomething($text);};
+Keyword________20				:	'Keyword________20'					{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_____21					:	'Keyword_____21'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___________22			:	'Keyword___________22'				{doesItBlend()}?;
+Keyword___23					:	'Keyword___23'						{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_______24				:	'Keyword_______24'					-> type(SomethingReallyMeaningful);
+Keyword________25				:	'Keyword________25'					{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_____________________26	:	'Keyword_____________________26';	// Specified in the interest of formatting.
+Keyword______________27			:	'Keyword______________27'			-> type(SomethingReallyMeaningful);
+Keyword_________________28		:	'Keyword_________________28'		{domeSomething($text);} {doesItBlend()}?;
+Keyword_____________29			:	'Keyword_____________29'			{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_______0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -22323,7 +22323,7 @@ rule____3: (
 	| rule________	{doesItBlend}?
 ;					// Final trailing comment.
 rule_____________________4: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -22392,76 +22392,76 @@ rule________________11: (
 	| rule____
 	| rule________	{doSomething($text);}
 ;					// Final trailing comment.
-rule______________________12:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__________________13:		( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule______________________12	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule__________________13		:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_____________________14: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
 		| alt3 ruleB /* Not aligned comment.*/
-	) rule_							# label_
-	| rule__						# label__
-	| rule____						# label____
-	| rule________					# label________
-;									// Final trailing comment.
-rule_______________________15:	(	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule________________________16:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+	) rule_								# label_
+	| rule__							# label__
+	| rule____							# label____
+	| rule________						# label________
+;										// Final trailing comment.
+rule_______________________15	:	(	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________________________16	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______________________17: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__						# label__
 	| rule____						# label____
 	| rule________					# label________ {doSomething($text);}
 ;
-rule___18:					( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___________________19:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___18					:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___________________19	:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword________________0:			'Keyword________________0'	{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword________________0			:	'Keyword________________0'	{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
 Keyword___________________1:
-	'Keyword___________________1'								{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword____________2:				'Keyword____________2'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
+	'Keyword___________________1'									{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword____________2				:	'Keyword____________2'		{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword_________________________3:
-	'Keyword_________________________3'							{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword_______________4:			'Keyword_______________4';
+	'Keyword_________________________3'								{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword_______________4				:	'Keyword_______________4';
 Keyword_________________________5:
-	'Keyword_________________________5'							{domeSomething($text);}
-;																// Specified in the interest of formatting.
+	'Keyword_________________________5'								{domeSomething($text);}
+;																	// Specified in the interest of formatting.
 Keyword_______________________6:
-	'Keyword_______________________6'							{domeSomething($text);}
-;																// Specified in the interest of formatting.
-Keyword_____7:						'Keyword_____7'				{domeSomething($text);};
-Keyword___________8:				'Keyword___________8'		{domeSomething($text);};
-Keyword_________________________9:	'Keyword_________________________9';
-Keyword______10:					'Keyword______10'			{domeSomething($text);} {doesItBlend()}?;
-Keyword_______11:					'Keyword_______11'			-> type(SomethingReallyMeaningful);
-Keyword______________12:			'Keyword______________12'	{doesItBlend()}?; // Specified in the interest of formatting.
+	'Keyword_______________________6'								{domeSomething($text);}
+;																	// Specified in the interest of formatting.
+Keyword_____7						:	'Keyword_____7'				{domeSomething($text);};
+Keyword___________8					:	'Keyword___________8'		{domeSomething($text);};
+Keyword_________________________9	:	'Keyword_________________________9';
+Keyword______10						:	'Keyword______10'			{domeSomething($text);} {doesItBlend()}?;
+Keyword_______11					:	'Keyword_______11'			-> type(SomethingReallyMeaningful);
+Keyword______________12				:	'Keyword______________12'	{doesItBlend()}?; // Specified in the interest of formatting.
 Keyword_______________________13:
-	'Keyword_______________________13'							{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
+	'Keyword_______________________13'								{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
 Keyword____14:
-	'Keyword____14'												{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
+	'Keyword____14'													{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword___15:						'Keyword___15'						-> type(SomethingReallyMeaningful);
-Keyword_______________________16:	'Keyword_______________________16';	// Specified in the interest of formatting.
-Keyword_____________17:				'Keyword_____________17'			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_____________________18:		'Keyword_____________________18'	{doesItBlend()}?;
-Keyword______________19:			'Keyword______________19'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword_________20:					'Keyword_________20';
+Keyword___15						:	'Keyword___15'						-> type(SomethingReallyMeaningful);
+Keyword_______________________16	:	'Keyword_______________________16';	// Specified in the interest of formatting.
+Keyword_____________17				:	'Keyword_____________17'			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_____________________18		:	'Keyword_____________________18'	{doesItBlend()}?;
+Keyword______________19				:	'Keyword______________19'			{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword_________20					:	'Keyword_________20';
 Keyword____________21:
 	'Keyword____________21'	{domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;							// Specified in the interest of formatting.
 Keyword_______22:
-	'Keyword_______22'													{doesItBlend()}? -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_______________________23:	'Keyword_______________________23'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_______24:					'Keyword_______24'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
-Keyword______________________25:	'Keyword______________________25';
-Keyword________26:					'Keyword________26'					{domeSomething($text);};
-Keyword______________27:			'Keyword______________27'			{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_____28:						'Keyword_____28'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_____________________29:		'Keyword_____________________29'	-> type(SomethingReallyMeaningful);
+	'Keyword_______22'														{doesItBlend()}? -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_______________________23	:	'Keyword_______________________23'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_______24					:	'Keyword_______24'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword______________________25		:	'Keyword______________________25';
+Keyword________26					:	'Keyword________26'					{domeSomething($text);};
+Keyword______________27				:	'Keyword______________27'			{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_____28						:	'Keyword_____28'					{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_____________________29		:	'Keyword_____________________29'	-> type(SomethingReallyMeaningful);
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule___________________0: (
@@ -22545,14 +22545,14 @@ rule__________________9: (
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule______10:		(				{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
-rule__________11:	(				{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule______10		:	(			{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________11	:	(			{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________________________12: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__						# label__
 	| rule____						# label____
 	| rule________					# label________ {doesItBlend}?
 ;
-rule________13: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule________13 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______________________14: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__					# label__
 	| rule____					# label____
@@ -22567,7 +22567,7 @@ rule___15: (
 	| rule____
 	| rule________	{doesItBlend}?
 ;					// Final trailing comment.
-rule___16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___16 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_______________17: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -22577,62 +22577,62 @@ rule_______________17: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule___18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule___18 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule________________________19: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__						# label__
 	| rule____						# label____
 	| rule________					# label________ {doesItBlend}?
 ;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
-Keyword_________________________0:	'Keyword_________________________0'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword___1:						'Keyword___1'						{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword__________________2:			'Keyword__________________2'		{doesItBlend()}?;
+Keyword_________________________0	:	'Keyword_________________________0'	{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword___1							:	'Keyword___1'						{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword__________________2			:	'Keyword__________________2'		{doesItBlend()}?;
 Keyword_____________3:
-	'Keyword_____________3'												{domeSomething($text);} -> type(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
+	'Keyword_____________3'													{domeSomething($text);} -> type(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
 Keyword________________4:
-	'Keyword________________4'											{domeSomething($text);} {doesItBlend()}?
-;																		// Specified in the interest of formatting.
-Keyword_______5:					'Keyword_______5'					{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword_________________6:			'Keyword_________________6'			{domeSomething($text);} {doesItBlend()}?;
-Keyword______________7:				'Keyword______________7'			{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword________________8:			'Keyword________________8'			{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+	'Keyword________________4'												{domeSomething($text);} {doesItBlend()}?
+;																			// Specified in the interest of formatting.
+Keyword_______5						:	'Keyword_______5'					{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword_________________6			:	'Keyword_________________6'			{domeSomething($text);} {doesItBlend()}?;
+Keyword______________7				:	'Keyword______________7'			{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword________________8			:	'Keyword________________8'			{domeSomething($text);} -> mode(SomethingReallyMeaningful);
 Keyword____________9:
-	'Keyword____________9'												{doesItBlend()}? -> mode(SomethingReallyMeaningful)
-;																		// Specified in the interest of formatting.
-Keyword_______________________10:	'Keyword_______________________10';
-Keyword___________11:				'Keyword___________11'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword___12:						'Keyword___12';						// Specified in the interest of formatting.
-Keyword__13:						'Keyword__13'						{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___________________14:		'Keyword___________________14'		{doesItBlend()}?;
+	'Keyword____________9'													{doesItBlend()}? -> mode(SomethingReallyMeaningful)
+;																			// Specified in the interest of formatting.
+Keyword_______________________10	:	'Keyword_______________________10';
+Keyword___________11				:	'Keyword___________11'				{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword___12						:	'Keyword___12';						// Specified in the interest of formatting.
+Keyword__13							:	'Keyword__13'						{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___________________14		:	'Keyword___________________14'		{doesItBlend()}?;
 // $antlr-format groupedAlignments on
 Keyword____________15:
 	'Keyword____________15'	{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
 ;							// Specified in the interest of formatting.
-Keyword______________________16:	'Keyword______________________16';
-Keyword______17:					'Keyword______17'			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword______________18:			'Keyword______________18'	-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______________________16	:	'Keyword______________________16';
+Keyword______17					:	'Keyword______17'			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword______________18			:	'Keyword______________18'	-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword__________19:
-	'Keyword__________19'										{domeSomething($text);} -> mode(SomethingReallyMeaningful)
-;																// Specified in the interest of formatting.
-Keyword__20:					'Keyword__20'					{doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword___________________21:	'Keyword___________________21'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword_____________22:			'Keyword_____________22';		// Specified in the interest of formatting.
-Keyword___________23:			'Keyword___________23'			{domeSomething($text);};
-Keyword__________24:			'Keyword__________24'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
-Keyword____________25:			'Keyword____________25'			{domeSomething($text);}; // Specified in the interest of formatting.
-Keyword__________________26:	'Keyword__________________26'	{domeSomething($text);};
-Keyword________________27:		'Keyword________________27';	// Specified in the interest of formatting.
-Keyword__28:					'Keyword__28'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
+	'Keyword__________19'											{domeSomething($text);} -> mode(SomethingReallyMeaningful)
+;																	// Specified in the interest of formatting.
+Keyword__20						:	'Keyword__20'					{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword___________________21	:	'Keyword___________________21'	{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword_____________22			:	'Keyword_____________22';		// Specified in the interest of formatting.
+Keyword___________23			:	'Keyword___________23'			{domeSomething($text);};
+Keyword__________24				:	'Keyword__________24'			{doesItBlend()}? -> type(SomethingReallyMeaningful);
+Keyword____________25			:	'Keyword____________25'			{domeSomething($text);}; // Specified in the interest of formatting.
+Keyword__________________26		:	'Keyword__________________26'	{domeSomething($text);};
+Keyword________________27		:	'Keyword________________27';	// Specified in the interest of formatting.
+Keyword__28						:	'Keyword__28'					{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword________________29:
 	'Keyword________________29'	{domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;								// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule____0: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -22673,7 +22673,7 @@ rule_________________________4: (
 	| rule________	# label________
 ;
 rule________________________5: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -22689,7 +22689,7 @@ rule__________________6: (
 	| rule________ {doSomething($text);}
 ;
 rule_________________7: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -22713,7 +22713,7 @@ rule____________9: (
 	| rule________	# label________
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule____10: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule____10 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_______11: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__			# label__
 	| rule____			# label____
@@ -22733,13 +22733,13 @@ rule________________13: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule____											# label____
 	| rule________										# label________
 ;
-rule_____________________14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_____________________14 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__15: (			{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__		# label__
 	| rule____		# label____
 	| rule________	# label________ {doesItBlend}?
 ;
-rule__________16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________16 : ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule____17: (
 					{doesItBlend}? alt1 {doSomething($text);} ruleA // Mom look, a trailing comment.
 		|			{doesItBlend}? alt2 {doSomething($text);} ruleB // And another comment.
@@ -22758,36 +22758,36 @@ rule____18: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule_________________________19: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
+rule_________________________19 : ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
-<<Unexpected input or wrong formatter command>> // $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
-Keyword_______________________0:	'Keyword_______________________0'	{domeSomething($text);} {doesItBlend()}?;
-Keyword___________________1:		'Keyword___________________1'		{doesItBlend()}? {domeSomething($text);};
-Keyword_________2:					'Keyword_________2'					{doesItBlend()}?; // Specified in the interest of formatting.
-Keyword___3:						'Keyword___3'						{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_______________________0	:	'Keyword_______________________0'	{domeSomething($text);} {doesItBlend()}?;
+Keyword___________________1		:	'Keyword___________________1'		{doesItBlend()}? {domeSomething($text);};
+Keyword_________2				:	'Keyword_________2'					{doesItBlend()}?; // Specified in the interest of formatting.
+Keyword___3						:	'Keyword___3'						{doesItBlend()}? -> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
 Keyword_________________________4:
 	'Keyword_________________________4'									{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
-Keyword________5:					'Keyword________5'					{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword______________6:				'Keyword______________6'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
-Keyword_________________7:			'Keyword_________________7';
-Keyword____8:						'Keyword____8'						{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword____________________9:		'Keyword____________________9'		-> type(SomethingReallyMeaningful);
-Keyword_________________10:			'Keyword_________________10'		{domeSomething($text);};
-Keyword____11:						'Keyword____11'						{domeSomething($text);} -> type(SomethingReallyMeaningful);
+Keyword________5				:	'Keyword________5'					{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword______________6			:	'Keyword______________6'			{domeSomething($text);} {doesItBlend()}?; // Specified in the interest of formatting.
+Keyword_________________7		:	'Keyword_________________7';
+Keyword____8					:	'Keyword____8'						{doesItBlend()}? -> mode(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword____________________9	:	'Keyword____________________9'		-> type(SomethingReallyMeaningful);
+Keyword_________________10		:	'Keyword_________________10'		{domeSomething($text);};
+Keyword____11					:	'Keyword____11'						{domeSomething($text);} -> type(SomethingReallyMeaningful);
 Keyword______________________12:
 	'Keyword______________________12'									{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;																		// Specified in the interest of formatting.
-Keyword__________13:				'Keyword__________13'				{domeSomething($text);};
+Keyword__________13				:	'Keyword__________13'				{domeSomething($text);};
 Keyword_______14:
 	'Keyword_______14'													{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful)
 ;																		// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
-Keyword_____________15:			'Keyword_____________15'		{doesItBlend()}?;
-Keyword_________16:				'Keyword_________16'			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
-Keyword_________17:				'Keyword_________17'			{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword____________________18:	'Keyword____________________18'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_____________15			:	'Keyword_____________15'		{doesItBlend()}?;
+Keyword_________16				:	'Keyword_________16'			-> type(SomethingReallyMeaningful); // Specified in the interest of formatting.
+Keyword_________17				:	'Keyword_________17'			{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword____________________18	:	'Keyword____________________18'	{doesItBlend()}? -> mode(SomethingReallyMeaningful);
 Keyword_______________________19:
 	'Keyword_______________________19'	{domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;										// Specified in the interest of formatting.
@@ -22795,18 +22795,18 @@ Keyword_______________________20:
 	'Keyword_______________________20' {doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful)
 ;
 Keyword________________21:
-	'Keyword________________21'						{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
-;													// Specified in the interest of formatting.
-Keyword_____________22:	'Keyword_____________22'	{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
-Keyword___23:			'Keyword___23'				-> mode(SomethingReallyMeaningful);
+	'Keyword________________21'							{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful)
+;														// Specified in the interest of formatting.
+Keyword_____________22	:	'Keyword_____________22'	{doesItBlend()}? {domeSomething($text);}; // Specified in the interest of formatting.
+Keyword___23			:	'Keyword___23'				-> mode(SomethingReallyMeaningful);
 Keyword___________24:
 	'Keyword___________24'												{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful)
 ;																		// Specified in the interest of formatting.
-Keyword__________25:				'Keyword__________25'				{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword_____________26:				'Keyword_____________26'			{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
-Keyword_________________27:			'Keyword_________________27';		// Specified in the interest of formatting.
-Keyword___________________28:		'Keyword___________________28'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
-Keyword______________________29:	'Keyword______________________29';	// Specified in the interest of formatting.
+Keyword__________25				:	'Keyword__________25'				{doesItBlend()}? {domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword_____________26			:	'Keyword_____________26'			{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful);
+Keyword_________________27		:	'Keyword_________________27';		// Specified in the interest of formatting.
+Keyword___________________28	:	'Keyword___________________28'		{domeSomething($text);} -> mode(SomethingReallyMeaningful);
+Keyword______________________29	:	'Keyword______________________29';	// Specified in the interest of formatting.
 // $antlr-format groupedAlignments on
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule___________________0: (
@@ -22876,7 +22876,7 @@ rule______________________7: (
 	| rule________
 ;
 rule___________8: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -22884,7 +22884,7 @@ rule___________8: (
 	| rule________ {doesItBlend}?
 ;
 rule______________________9: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -22892,7 +22892,7 @@ rule______________________9: (
 	| rule________	# label________ {doesItBlend}?
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
-rule_______10: (						{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_______10 : (						{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule________________________11: (alt1	{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
@@ -22907,7 +22907,7 @@ rule________________12: (
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;					// Final trailing comment.
-rule____13: (		{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____13 : (		{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule____14: (
 			{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
 		|	{doesItBlend}? alt2 ruleB // And another comment.
@@ -22926,7 +22926,7 @@ rule___15: (
 	| rule____
 	| rule________
 ; // Final trailing comment.
-rule_16: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
+rule_16 : ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule________________________17: (
 		alt1	{doSomething($text);} ruleA // Mom look, a trailing comment.
 		| alt2	{doSomething($text);} ruleB // And another comment.
@@ -22936,7 +22936,7 @@ rule________________________17: (
 	| rule____
 	| rule________	{doSomething($text);}
 ;					// Final trailing comment.
-rule_________18: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________18 : (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule________________________19: (
 		alt1 ruleA		// Mom look, a trailing comment.
 		| alt2 ruleB	// And another comment.
@@ -23504,7 +23504,7 @@ rule________________________9
 ; // Final trailing comment.
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
 rule______10
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -23634,7 +23634,7 @@ rule_____________________3
 ;
 rule_4
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -23643,7 +23643,7 @@ rule_4
 ;
 rule___5
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -23661,7 +23661,7 @@ rule______________6
 ;
 rule_______________________7
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -23705,7 +23705,7 @@ rule______________11
 	| rule________ # label________
 ;
 rule______________12
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -23730,7 +23730,7 @@ rule_________________________14
 	| rule____
 	| rule________ {doSomething($text);}
 ; // Final trailing comment.
-rule_________________15: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________________15: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__17
 	: (alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
@@ -24266,7 +24266,7 @@ rule__________________8
 ;
 rule____________9
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -24321,7 +24321,7 @@ rule___18
 	| rule________
 ; // Final trailing comment.
 rule____________________19
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -24400,7 +24400,7 @@ rule_________________2
 ;
 rule__________3
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -24456,7 +24456,7 @@ rule___8
 ;
 rule_______9
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -24465,7 +24465,7 @@ rule_______9
 ;
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
 rule___________10
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doSomething($text);} {doesItBlend}?
@@ -24498,16 +24498,16 @@ rule____________14
 	| rule________ {doSomething($text);}
 ;
 rule_________15
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
 ;
 rule_______________16: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________________________17: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________________________17: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________________19
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -25007,7 +25007,7 @@ rule__________________7
 ;
 rule_________________8
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -25035,7 +25035,7 @@ rule_________10
 	| rule________	# label________
 ; // Final trailing comment.
 rule__________11
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																						# label__
 	| rule____																						# label____
 	| rule________																					# label________ {doSomething($text);} {doesItBlend}?
@@ -25058,7 +25058,7 @@ rule__________14
 	| rule________	# label________ {doesItBlend}?
 ; // Final trailing comment.
 rule_________________15
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__											# label__
 	| rule____											# label____
 	| rule________										# label________ {doesItBlend}?
@@ -25086,7 +25086,7 @@ rule_______________________18
 	| rule________						# label________
 ;
 rule___________19
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -25203,7 +25203,7 @@ rule____5
 ; // Final trailing comment.
 rule_____________________6
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -25212,7 +25212,7 @@ rule_____________________6
 ;
 rule_________________________7
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -25275,7 +25275,7 @@ rule_________________16
 	| rule________																	# label________ {doSomething($text);}
 ;
 rule________17
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -25784,7 +25784,7 @@ rule_______3
 ;
 rule_________________________4
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -25793,7 +25793,7 @@ rule_________________________4
 ;
 rule_________________5
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -25874,7 +25874,7 @@ rule_____14
 	| rule____		# label____
 	| rule________	# label________
 ; // Final trailing comment.
-rule______________________15: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule______________________15: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________________________16
 	: (
 		alt1 ruleA // Mom look, a trailing comment.
@@ -25962,7 +25962,7 @@ rule_________________1
 ; // Final trailing comment.
 rule_______2
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -25980,7 +25980,7 @@ rule________________________3
 ;
 rule_____________4
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -25998,7 +25998,7 @@ rule______________________5
 ;
 rule______________6
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -26025,7 +26025,7 @@ rule_____8
 ;
 rule______9
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -26074,7 +26074,7 @@ rule___________________16
 	| rule________																	# label________ {doSomething($text);}
 ;
 rule________________17
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__											# label__
 	| rule____											# label____
 	| rule________										# label________ {doesItBlend}?
@@ -26136,7 +26136,7 @@ Keyword_________________29: 'Keyword_________________29'				{doesItBlend()}?; //
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule____________0
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -26209,7 +26209,7 @@ rule_______________________7
 ;
 rule_____________8
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -26252,7 +26252,7 @@ rule_________________14
 	| rule________ {doSomething($text);}
 ;
 rule_____________15: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________________________16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________________________16: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule________________________17
 	: (alt1			{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__		# label__
@@ -26370,7 +26370,7 @@ rule_____________4
 ; // Final trailing comment.
 rule_____________________5
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -26420,7 +26420,7 @@ rule______________________10
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;
-rule_______________11: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_______________11: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_____12: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule__________13
 	: (alt1 ruleA | alt2 ruleB) rule_	# label_
@@ -26430,7 +26430,7 @@ rule__________13
 ;
 rule_____________14: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule___15: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule________________________16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________________________16: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_____________________17: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule________________18
 	: (
@@ -26567,7 +26567,7 @@ rule_____________________6
 ; // Final trailing comment.
 rule_____________7
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -26699,7 +26699,7 @@ Keyword______________29
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule____0
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -26717,7 +26717,7 @@ rule____1
 ;
 rule_____________2
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -26837,7 +26837,7 @@ rule____17
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule_________________18: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________________18: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_____________________19
 	: (
 					{doesItBlend}? alt1 ruleA // Mom look, a trailing comment.
@@ -26920,7 +26920,7 @@ rule_______________________1
 ;					// Final trailing comment.
 rule__________2
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -26939,7 +26939,7 @@ rule___________3
 ;					// Final trailing comment.
 rule__________________4
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -26948,7 +26948,7 @@ rule__________________4
 ;
 rule___________________5
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -26977,7 +26977,7 @@ rule________________________7
 ;					// Final trailing comment.
 rule_________________________8
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -27276,7 +27276,7 @@ Keyword________________29: 'Keyword________________29' {doesItBlend()}? -> type(
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule______________0
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -27350,7 +27350,7 @@ rule_____________7
 ;
 rule__________________8
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -27369,7 +27369,7 @@ rule___9
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
 rule________10: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule_____11
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -27554,7 +27554,7 @@ rule_______________7
 ;
 rule______________________8
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -27791,7 +27791,7 @@ rule____13
 rule_______________14: (	{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule____________15: (		{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule__________16
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -27881,7 +27881,7 @@ rule_________________0
 ;
 rule____________1
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -27971,9 +27971,9 @@ rule_________11
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;
-rule________12: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule________12: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_____13
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -28002,7 +28002,7 @@ rule_____________17
 	| rule________	# label________
 ;					// Final trailing comment.
 rule________18: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule_____19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_____19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
 // $antlr-format alignColons hanging, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
@@ -28061,7 +28061,7 @@ Keyword___29: 'Keyword___29'				{doesItBlend()}? -> type(SomethingReallyMeaningf
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule____________________0
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -28166,7 +28166,7 @@ rule_____________________10
 ;					// Final trailing comment.
 rule_11: (			{doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule__12
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -28327,7 +28327,7 @@ rule______6
 ;
 rule____________________7
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -28562,7 +28562,7 @@ rule_______________11
 	| rule____							# label____
 	| rule________						# label________
 ;
-rule_12: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_12: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_______________________13
 	: (alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__							# label__
@@ -28683,7 +28683,7 @@ rule_________________1
 ;
 rule_____________2
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -28692,7 +28692,7 @@ rule_____________2
 ;
 rule____3
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -28932,7 +28932,7 @@ rule____________________7
 ;
 rule__8
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -29046,7 +29046,7 @@ Keyword________________29
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule______________________0
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -29065,7 +29065,7 @@ rule________________________1
 ;					// Final trailing comment.
 rule_____________2
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -29129,7 +29129,7 @@ rule___________________8
 ;
 rule______9
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -29143,14 +29143,14 @@ rule___________10
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);}
 ;
-rule__11: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__11: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule___________12
 	: (alt1			{doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__		# label__
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);}
 ;
-rule_________13: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule____14
 	: (
 		alt1	{doSomething($text);} ruleA // Mom look, a trailing comment.
@@ -29634,7 +29634,7 @@ rule_________0
 ;
 rule_1
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -29768,7 +29768,7 @@ rule_______________________17
 	| rule________ {doSomething($text);}
 ;
 rule___________18
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doSomething($text);} {doesItBlend}?
@@ -29870,7 +29870,7 @@ rule___4
 ;
 rule_______________5
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -29879,7 +29879,7 @@ rule_______________5
 ;
 rule__6
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -29917,7 +29917,7 @@ rule_________________9
 // $antlr-format allowShortRulesOnASingleLine true, allowShortBlocksOnASingleLine true
 rule__10: ( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
 rule______11
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -29928,15 +29928,15 @@ rule__________________12
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule__________________13: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________________13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_______14
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doSomething($text);} {doesItBlend}?
 ;
 rule______________15
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doesItBlend}?
@@ -30441,7 +30441,7 @@ rule_______2
 ;
 rule___3
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_ # label_
 	| rule__ # label__
@@ -30533,7 +30533,7 @@ rule_____________15
 	| rule________ # label________
 ;
 rule___________16
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_ # label_
 	| rule__ # label__
 	| rule____ # label____
 	| rule________ # label________ {doSomething($text);} {doesItBlend}?
@@ -30608,7 +30608,7 @@ Keyword___________________29: 'Keyword___________________29' {domeSomething($tex
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule______________0
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -30636,7 +30636,7 @@ rule_________________2
 ;
 rule_________________3
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -30654,7 +30654,7 @@ rule____________________4
 ;
 rule_______________________5
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -30747,7 +30747,7 @@ rule_____________________18
 	| rule____ # label____
 	| rule________ # label________
 ;
-rule_________________________19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_________________________19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
 // $antlr-format alignColons hanging, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
@@ -31220,7 +31220,7 @@ rule___________________1
 ; // Final trailing comment.
 rule_______________2
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -31248,7 +31248,7 @@ rule__________4
 ;
 rule_5
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -31266,7 +31266,7 @@ rule___________6
 ;
 rule____________________7
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -31318,7 +31318,7 @@ rule___________12
 	| rule____							# label____
 	| rule________						# label________
 ;
-rule____________________13: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____________________13: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule________14
 	: (
 		alt1 ruleA // Mom look, a trailing comment.
@@ -31463,7 +31463,7 @@ rule______________________7
 ;
 rule_____________8
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -31486,7 +31486,7 @@ rule_______________10
 	| rule____
 	| rule________ {doSomething($text);}
 ;
-rule____11: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____11: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________12
 	: (
 			{doesItBlend}? alt1 ruleA	// Mom look, a trailing comment.
@@ -31524,7 +31524,7 @@ rule________15
 	| rule________ {doSomething($text);} {doesItBlend}?
 ; // Final trailing comment.
 rule__16
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__											# label__
 	| rule____											# label____
 	| rule________										# label________ {doesItBlend}?
@@ -31540,7 +31540,7 @@ rule_17
 	| rule________	# label________
 ; // Final trailing comment.
 rule_____________18
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -31994,7 +31994,7 @@ Keyword______________________29
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule_____________________0
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -32111,9 +32111,9 @@ rule________________________15
 	| rule____		# label____
 	| rule________	# label________
 ; // Final trailing comment.
-rule____16: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____16: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule________17
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_	# label_
 	| rule__																						# label__
 	| rule____																						# label____
 	| rule________																					# label________ {doSomething($text);} {doesItBlend}?
@@ -32237,7 +32237,7 @@ rule______________6
 ;
 rule_______7
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -32276,7 +32276,7 @@ rule______________________10
 ; // Final trailing comment.
 rule_________11: ( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule______________12
-	: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
+	: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_	# label_
 	| rule__											# label__
 	| rule____											# label____
 	| rule________										# label________ {doesItBlend}?
@@ -32292,7 +32292,7 @@ rule_______________________13
 	| rule________
 ; // Final trailing comment.
 rule_____________14
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -32430,7 +32430,7 @@ rule_______5
 ;
 rule_________________6
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -32439,7 +32439,7 @@ rule_________________6
 ;
 rule_____7
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -32587,7 +32587,7 @@ rule____________0
 ;
 rule_______________1
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -32683,7 +32683,7 @@ rule______________________12
 	| rule________						# label________
 ;
 rule_13
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -32782,7 +32782,7 @@ rule___________1
 ;
 rule_________________________2
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -32819,7 +32819,7 @@ rule_________________________5
 ; // Final trailing comment.
 rule_6
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -32871,7 +32871,7 @@ rule________________________11
 	| rule________
 ; // Final trailing comment.
 rule_________________________12:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule__________________13:			( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule__________________13:			({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule________________14
 	: (
 		alt1 ruleA		// Mom look, a trailing comment.
@@ -32960,7 +32960,7 @@ Keyword_____________________29
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule___________0
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -32987,7 +32987,7 @@ rule______________________2
 ;
 rule_____________________3
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -33015,7 +33015,7 @@ rule______5
 ;
 rule____________________6
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -33202,7 +33202,7 @@ rule_2
 ;
 rule_____3
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -33321,7 +33321,7 @@ rule________________17
 	| rule________	# label________ {doSomething($text);} {doesItBlend}?
 ;
 rule____________18:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
-rule___________19:	( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule___________19:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
 // $antlr-format alignColons hanging, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
@@ -33644,7 +33644,7 @@ rule__________________7
 ;
 rule______________8
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -33984,7 +33984,7 @@ Keyword_____________________29
 // $antlr-format allowShortRulesOnASingleLine false, allowShortBlocksOnASingleLine false
 rule______________0
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -34022,7 +34022,7 @@ rule_____________3
 ;
 rule_4
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -34070,7 +34070,7 @@ rule___________8
 ;
 rule_9
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -34250,7 +34250,7 @@ rule_____________5
 ;
 rule___________________6
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -34407,7 +34407,7 @@ rule__1
 ;
 rule___________________2
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -34416,7 +34416,7 @@ rule___________________2
 ;
 rule_______3
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -34524,7 +34524,7 @@ rule____________18
 	| rule____							# label____
 	| rule________						# label________
 ;
-rule____19: ( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule____19: ({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 
 // $antlr-format alignColons hanging, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
@@ -34702,9 +34702,9 @@ rule__12
 ;
 rule_________________13:		( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 rule_____14:					( alt1 ruleA | alt2 ruleB) rule_ # label_ | rule__ # label__ | rule____ # label____ | rule________ # label________;
-rule_____________________15:	( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule_____________________15:	({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_________16
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?
@@ -35299,7 +35299,7 @@ rule_________________17
 	| rule____		# label____
 	| rule________	# label________ {doSomething($text);}
 ;
-rule___18:		( {doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
+rule___18:		({doesItBlend}? alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________ {doesItBlend}?;
 rule_____19:	( alt1 ruleA | alt2 ruleB) rule_ | rule__ | rule____ | rule________;
 
 // $antlr-format alignColons hanging, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
@@ -35581,7 +35581,7 @@ rule________1
 ;					// Final trailing comment.
 rule___2
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_
 	| rule__
@@ -35618,7 +35618,7 @@ rule_____5
 ;
 rule______________6
 	: (
-		 {doesItBlend}? alt1 ruleA
+		{doesItBlend}? alt1 ruleA
 		| alt2 ruleB
 	) rule_			# label_
 	| rule__		# label__
@@ -35710,7 +35710,7 @@ rule______________17
 	| rule________	# label________
 ;					// Final trailing comment.
 rule___18
-	: ( {doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
+	: ({doesItBlend}? alt1 {doSomething($text);} ruleA | alt2 {doSomething($text);} ruleB) rule_
 	| rule__
 	| rule____
 	| rule________ {doSomething($text);} {doesItBlend}?

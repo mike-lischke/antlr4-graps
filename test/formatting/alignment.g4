@@ -4556,7 +4556,7 @@ rule_________________________18: ( alt1{doSomething($text);}ruleA// Mom look, a 
 )rule_ | rule__ | rule____ | rule________ {doSomething($text);} ; // Final trailing comment.
 rule________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword___________0:'Keyword___________0'-> type(SomethingReallyMeaningful) ;
 Keyword________________________1:'Keyword________________________1'-> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -4619,7 +4619,7 @@ rule______________________17: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule_
 rule___________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule___________________19: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________  {doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_________0:'Keyword_________0'{domeSomething($text);} ; // Specified in the interest of formatting.
 Keyword_________1:'Keyword_________1'-> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -4691,7 +4691,7 @@ rule____________17: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | ru
 rule____________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule____________________19: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________  {doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_______________________0:'Keyword_______________________0'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword___1:'Keyword___1'-> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -4766,7 +4766,7 @@ rule______________________18: ( alt1 ruleA// Mom look, a trailing comment.
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ; // Final trailing comment.
 rule__________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_________________0:'Keyword_________________0'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ;
 Keyword_1:'Keyword_1'{doesItBlend()}? -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -4835,7 +4835,7 @@ rule_________________17: ({doesItBlend}?alt1 ruleA// Mom look, a trailing commen
 rule______________18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword__________________0:'Keyword__________________0'-> mode(SomethingReallyMeaningful) ;
 Keyword___________1:'Keyword___________1'{domeSomething($text);} -> type(SomethingReallyMeaningful) ;
@@ -4898,7 +4898,7 @@ rule_________17: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}r
 rule__________18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule____________________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword___________________0:'Keyword___________________0'{domeSomething($text);} -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword_______________1:'Keyword_______________1'{doesItBlend()}? {domeSomething($text);} ;
@@ -4976,7 +4976,7 @@ rule_____17: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rul
 rule______________18: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);} ;
 rule________19: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________  {doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword________________0:'Keyword________________0'{domeSomething($text);} -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword______1:'Keyword______1'{domeSomething($text);} {doesItBlend()}? ; // Specified in the interest of formatting.
@@ -5051,7 +5051,7 @@ rule________________17: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | 
 rule_________________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule____________19: ({doesItBlend}?alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);}{doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_______________0:'Keyword_______________0'-> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword____________1:'Keyword____________1';
@@ -5117,7 +5117,7 @@ rule______17: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | ru
 rule________________18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule____________19: ({doesItBlend}?alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);}{doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword________________0:'Keyword________________0'{doesItBlend()}? -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword_______1:'Keyword_______1'{domeSomething($text);} ;
@@ -5183,7 +5183,7 @@ rule__18: ( alt1 ruleA// Mom look, a trailing comment.
 )rule_ | rule__ | rule____ | rule________   ; // Final trailing comment.
 rule_______________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_______________0:'Keyword_______________0'{doesItBlend()}? ;
 Keyword_____________1:'Keyword_____________1'{doesItBlend()}? {domeSomething($text);} ; // Specified in the interest of formatting.
@@ -5261,7 +5261,7 @@ rule_________________17: ( alt1 ruleA// Mom look, a trailing comment.
 rule_18: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);} ;
 rule___19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_______0:'Keyword_______0'{domeSomething($text);} ;
 Keyword___1:'Keyword___1'; // Specified in the interest of formatting.
@@ -5339,7 +5339,7 @@ rule____17: ( alt1 ruleA// Mom look, a trailing comment.
 rule________________________18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule______________19: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________  {doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_________________________0:'Keyword_________________________0'{domeSomething($text);} ;
 Keyword__________________1:'Keyword__________________1'{doesItBlend()}? ;
@@ -5414,7 +5414,7 @@ rule________________17: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ # label_ 
 rule______18: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);} ;
 rule__________________19: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_0:'Keyword_0'{domeSomething($text);} -> mode(SomethingReallyMeaningful) ;
 Keyword__________1:'Keyword__________1'{domeSomething($text);} -> type(SomethingReallyMeaningful) ;
@@ -5492,7 +5492,7 @@ rule__________18: ( alt1 ruleA// Mom look, a trailing comment.
 )rule_ | rule__ | rule____ | rule________   ; // Final trailing comment.
 rule______19: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________  {doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_________________________0:'Keyword_________________________0'{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful) ;
 Keyword______1:'Keyword______1'-> type(SomethingReallyMeaningful) ;
@@ -5567,7 +5567,7 @@ rule______________________17: ( alt1 ruleA// Mom look, a trailing comment.
 rule__________________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule_______19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword______________________0:'Keyword______________________0'{domeSomething($text);} {doesItBlend()}? ;
 Keyword_____________1:'Keyword_____________1';
@@ -5645,7 +5645,7 @@ rule_____19: ( alt1 ruleA// Mom look, a trailing comment.
 | ____alt3 ruleB/* Not aligned comment.*/
 )rule_ | rule__ | rule____ | rule________   ; // Final trailing comment.
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword____0:'Keyword____0'{domeSomething($text);} {doesItBlend()}? ; // Specified in the interest of formatting.
 Keyword_____________________1:'Keyword_____________________1'{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -5714,7 +5714,7 @@ rule___17: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # la
 rule____18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule_________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword________________0:'Keyword________________0'{doesItBlend()}? -> type(SomethingReallyMeaningful) ;
 Keyword__________________1:'Keyword__________________1'{domeSomething($text);} ; // Specified in the interest of formatting.
@@ -5786,7 +5786,7 @@ rule__________________17: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # 
 rule__________________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule__19: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________  {doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword______________________0:'Keyword______________________0'{domeSomething($text);} {doesItBlend()}? ; // Specified in the interest of formatting.
 Keyword______1:'Keyword______1'-> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -5855,7 +5855,7 @@ rule_____________________19: ( alt1{doSomething($text);}ruleA// Mom look, a trai
 | ____alt3{doSomething($text);}ruleB/* Not aligned comment.*/
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ; // Final trailing comment.
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_______0:'Keyword_______0'-> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword___1:'Keyword___1'{doesItBlend()}? ; // Specified in the interest of formatting.
@@ -5939,7 +5939,7 @@ rule______________________18: ( alt1 ruleA// Mom look, a trailing comment.
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ; // Final trailing comment.
 rule_______________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_____________________0:'Keyword_____________________0'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ;
 Keyword_______________________1:'Keyword_______________________1'{domeSomething($text);} ; // Specified in the interest of formatting.
@@ -6005,7 +6005,7 @@ rule____________________17: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule___
 rule_____________18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule______________________19: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_____________________0:'Keyword_____________________0'-> mode(SomethingReallyMeaningful) ;
 Keyword______________1:'Keyword______________1'{domeSomething($text);} -> type(SomethingReallyMeaningful) ;
@@ -6080,7 +6080,7 @@ rule____________________18: ( alt1{doSomething($text);}ruleA// Mom look, a trail
 )rule_ | rule__ | rule____ | rule________ {doSomething($text);} ; // Final trailing comment.
 rule_______________________19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_______________________0:'Keyword_______________________0'-> mode(SomethingReallyMeaningful) ;
 Keyword__________________1:'Keyword__________________1';
@@ -6155,7 +6155,7 @@ rule___________17: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rul
 rule___________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule________19: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword____________________0:'Keyword____________________0'{domeSomething($text);} ; // Specified in the interest of formatting.
 Keyword__________1:'Keyword__________1'-> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -6221,7 +6221,7 @@ rule________17: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | 
 rule_______18: ({doesItBlend}?alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);}{doesItBlend}?;
 rule__19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword________________________0:'Keyword________________________0'{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword________________________1:'Keyword________________________1'{doesItBlend()}? ;
@@ -6290,7 +6290,7 @@ rule_18: ({doesItBlend}?alt1 ruleA// Mom look, a trailing comment.
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________  {doesItBlend}?; // Final trailing comment.
 rule______________________19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword____________________0:'Keyword____________________0'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword_________________________1:'Keyword_________________________1'{doesItBlend()}? {domeSomething($text);} ;
@@ -6359,7 +6359,7 @@ rule____________17: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule
 rule____________________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule_19: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________  {doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_____0:'Keyword_____0'{domeSomething($text);} ; // Specified in the interest of formatting.
 Keyword_____1:'Keyword_____1'-> mode(SomethingReallyMeaningful) ;
@@ -6431,7 +6431,7 @@ rule_______________17: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # lab
 rule____18: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);} ;
 rule_____19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword___________0:'Keyword___________0'{doesItBlend()}? -> mode(SomethingReallyMeaningful) ;
 Keyword_____________1:'Keyword_____________1'{doesItBlend()}? ;
@@ -6506,7 +6506,7 @@ rule___________17: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);
 rule__18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule_19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword___0:'Keyword___0'{doesItBlend()}? -> type(SomethingReallyMeaningful) ;
 Keyword________________1:'Keyword________________1'{doesItBlend()}? {domeSomething($text);} ; // Specified in the interest of formatting.
@@ -6572,7 +6572,7 @@ rule_______________________17: ({doesItBlend}?alt1 ruleA// Mom look, a trailing 
 rule________18: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________  {doesItBlend}?;
 rule__19: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword__0:'Keyword__0'{domeSomething($text);} -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword_________1:'Keyword_________1'{doesItBlend()}? {domeSomething($text);} ;
@@ -6641,7 +6641,7 @@ rule___________17: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule_
 rule_____________18: ({doesItBlend}?alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);}{doesItBlend}?;
 rule_______________________19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_________________0:'Keyword_________________0'{domeSomething($text);} -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword____________1:'Keyword____________1'{doesItBlend()}? -> mode(SomethingReallyMeaningful) ;
@@ -6719,7 +6719,7 @@ rule________17: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__
 rule________________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule_______19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword___________0:'Keyword___________0'{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful) ;
 Keyword___________________1:'Keyword___________________1'{domeSomething($text);} {doesItBlend()}? ;
@@ -6788,7 +6788,7 @@ rule_______________________18: ( alt1 ruleA// Mom look, a trailing comment.
 )rule_ | rule__ | rule____ | rule________   ; // Final trailing comment.
 rule__________19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens off, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_____________0:'Keyword_____________0'{doesItBlend()}? ;
 Keyword________________1:'Keyword________________1'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ;
@@ -6860,7 +6860,7 @@ rule_______17: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule_____
 rule___________________18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule________________________19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword______________0:'Keyword______________0'-> type(SomethingReallyMeaningful) ;
 Keyword____________________1:'Keyword____________________1';
@@ -6932,7 +6932,7 @@ rule________________________17: ( alt1 ruleA// Mom look, a trailing comment.
 rule_18: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________  {doesItBlend}?;
 rule_________________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword________________________0:'Keyword________________________0'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ;
 Keyword_1:'Keyword_1'{domeSomething($text);} {doesItBlend()}? ;
@@ -7001,7 +7001,7 @@ rule_______18: ( alt1{doSomething($text);}ruleA// Mom look, a trailing comment.
 )rule_ | rule__ | rule____ | rule________ {doSomething($text);} ; // Final trailing comment.
 rule____________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword___________________0:'Keyword___________________0'{doesItBlend()}? {domeSomething($text);} ;
 Keyword_____________1:'Keyword_____________1'{doesItBlend()}? {domeSomething($text);} ; // Specified in the interest of formatting.
@@ -7082,7 +7082,7 @@ rule____________________18: ( alt1 ruleA// Mom look, a trailing comment.
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ; // Final trailing comment.
 rule___19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword________0:'Keyword________0'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ;
 Keyword________________1:'Keyword________________1'{domeSomething($text);} -> mode(SomethingReallyMeaningful) ;
@@ -7154,7 +7154,7 @@ rule__19: ( alt1{doSomething($text);}ruleA// Mom look, a trailing comment.
 | ____alt3{doSomething($text);}ruleB/* Not aligned comment.*/
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ; // Final trailing comment.
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_______________________0:'Keyword_______________________0'{doesItBlend()}? -> type(SomethingReallyMeaningful) ;
 Keyword_____1:'Keyword_____1'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -7232,7 +7232,7 @@ rule_______________________19: ( alt1 ruleA// Mom look, a trailing comment.
 | ____alt3 ruleB/* Not aligned comment.*/
 )rule_ | rule__ | rule____ | rule________   ; // Final trailing comment.
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword______0:'Keyword______0'{domeSomething($text);} -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword___________1:'Keyword___________1'; // Specified in the interest of formatting.
@@ -7298,7 +7298,7 @@ rule__________18: ({doesItBlend}?alt1 ruleA// Mom look, a trailing comment.
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________  {doesItBlend}?; // Final trailing comment.
 rule________________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword__0:'Keyword__0';
 Keyword_________________________1:'Keyword_________________________1'{domeSomething($text);} -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -7376,7 +7376,7 @@ rule___________18: ( alt1 ruleA// Mom look, a trailing comment.
 )rule_ | rule__ | rule____ | rule________   ; // Final trailing comment.
 rule___19: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword___0:'Keyword___0'{domeSomething($text);} ; // Specified in the interest of formatting.
 Keyword_________________1:'Keyword_________________1'{doesItBlend()}? -> type(SomethingReallyMeaningful) ;
@@ -7460,7 +7460,7 @@ rule___________17: ( alt1{doSomething($text);}ruleA// Mom look, a trailing comme
 rule___18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule__19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword__0:'Keyword__0'{domeSomething($text);} -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword_________________________1:'Keyword_________________________1'{domeSomething($text);} -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -7529,7 +7529,7 @@ rule___________________19: ( alt1 ruleA// Mom look, a trailing comment.
 | ____alt3 ruleB/* Not aligned comment.*/
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ; // Final trailing comment.
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword________________0:'Keyword________________0'{doesItBlend()}? {domeSomething($text);} -> type(SomethingReallyMeaningful) ;
 Keyword________________________1:'Keyword________________________1'{domeSomething($text);} -> type(SomethingReallyMeaningful) ;
@@ -7598,7 +7598,7 @@ rule________18: ({doesItBlend}?alt1{doSomething($text);}ruleA// Mom look, a trai
 )rule_ | rule__ | rule____ | rule________ {doSomething($text);}{doesItBlend}?; // Final trailing comment.
 rule_19: ({doesItBlend}?alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);}{doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword____0:'Keyword____0'{domeSomething($text);} ; // Specified in the interest of formatting.
 Keyword_________________1:'Keyword_________________1'{domeSomething($text);} {doesItBlend()}? ;
@@ -7664,7 +7664,7 @@ rule_____18: ( alt1 ruleA// Mom look, a trailing comment.
 )rule_ | rule__ | rule____ | rule________   ; // Final trailing comment.
 rule________19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_____0:'Keyword_____0'{domeSomething($text);} -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword_____1:'Keyword_____1'-> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -7730,7 +7730,7 @@ rule_________17: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule_
 rule___________18: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________  {doesItBlend}?;
 rule________19: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________  {doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword______0:'Keyword______0'{doesItBlend()}? ; // Specified in the interest of formatting.
 Keyword_______1:'Keyword_______1';
@@ -7796,7 +7796,7 @@ rule______________19: ( alt1 ruleA// Mom look, a trailing comment.
 | ____alt3 ruleB/* Not aligned comment.*/
 )rule_ | rule__ | rule____ | rule________   ; // Final trailing comment.
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_____0:'Keyword_____0'-> type(SomethingReallyMeaningful) ;
 Keyword__1:'Keyword__1';
@@ -7862,7 +7862,7 @@ rule________________17: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # la
 rule_______________18: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________  {doesItBlend}?;
 rule_______19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword________________________0:'Keyword________________________0'; // Specified in the interest of formatting.
 Keyword________1:'Keyword________1'; // Specified in the interest of formatting.
@@ -7931,7 +7931,7 @@ rule______17: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____
 rule____________________18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule___________________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers off, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_____________0:'Keyword_____________0'{doesItBlend()}? ; // Specified in the interest of formatting.
 Keyword________1:'Keyword________1'{domeSomething($text);} ; // Specified in the interest of formatting.
@@ -8006,7 +8006,7 @@ rule________________________17: ({doesItBlend}?alt1{doSomething($text);}ruleA|__
 rule__________________18: ({doesItBlend}?alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);}{doesItBlend}?;
 rule______________________19: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________  {doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword__________0:'Keyword__________0'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ;
 Keyword________________________1:'Keyword________________________1';
@@ -8072,7 +8072,7 @@ rule____________________17: ( alt1{doSomething($text);}ruleA|____alt2{doSomethin
 rule___________________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule___19: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_______0:'Keyword_______0';
 Keyword___________1:'Keyword___________1'{doesItBlend()}? ;
@@ -8153,7 +8153,7 @@ rule_______________19: ( alt1 ruleA// Mom look, a trailing comment.
 | ____alt3 ruleB/* Not aligned comment.*/
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ; // Final trailing comment.
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_________________0:'Keyword_________________0'-> type(SomethingReallyMeaningful) ;
 Keyword__________________1:'Keyword__________________1'{domeSomething($text);} ;
@@ -8222,7 +8222,7 @@ rule________________17: ({doesItBlend}?alt1{doSomething($text);}ruleA|____alt2{d
 rule_____________________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule_______________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword____________________0:'Keyword____________________0';
 Keyword__________________1:'Keyword__________________1'{domeSomething($text);} ; // Specified in the interest of formatting.
@@ -8300,7 +8300,7 @@ rule________17: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule____
 rule_18: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________  {doesItBlend}?;
 rule_19: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_______0:'Keyword_______0'{doesItBlend()}? ; // Specified in the interest of formatting.
 Keyword_______1:'Keyword_______1'{domeSomething($text);} -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -8375,7 +8375,7 @@ rule______________________17: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule_
 rule___18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule__________________19: ({doesItBlend}?alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);}{doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword___0:'Keyword___0'{doesItBlend()}? ; // Specified in the interest of formatting.
 Keyword______________1:'Keyword______________1'{domeSomething($text);} {doesItBlend()}? ; // Specified in the interest of formatting.
@@ -8459,7 +8459,7 @@ rule_____19: ( alt1{doSomething($text);}ruleA// Mom look, a trailing comment.
 | ____alt3{doSomething($text);}ruleB/* Not aligned comment.*/
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ; // Final trailing comment.
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_______________________0:'Keyword_______________________0'{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword_____________1:'Keyword_____________1'{domeSomething($text);} {doesItBlend()}? -> type(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -8531,7 +8531,7 @@ rule__17: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule__
 rule_________________________18: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 rule________________19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels off, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword__________0:'Keyword__________0';
 Keyword_________1:'Keyword_________1'{domeSomething($text);} -> mode(SomethingReallyMeaningful) ;
@@ -8609,7 +8609,7 @@ rule____________________19: ({doesItBlend}?alt1{doSomething($text);}ruleA// Mom 
 |{doesItBlend}?____alt3{doSomething($text);}ruleB/* Not aligned comment.*/
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);}{doesItBlend}?; // Final trailing comment.
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword________0:'Keyword________0'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword____________1:'Keyword____________1'{doesItBlend()}? ; // Specified in the interest of formatting.
@@ -8687,7 +8687,7 @@ rule________18: ({doesItBlend}?alt1{doSomething($text);}ruleA// Mom look, a trai
 )rule_ | rule__ | rule____ | rule________ {doSomething($text);}{doesItBlend}?; // Final trailing comment.
 rule_____19: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword____________________0:'Keyword____________________0'{domeSomething($text);} -> type(SomethingReallyMeaningful) ;
 Keyword________________1:'Keyword________________1'{doesItBlend()}? ; // Specified in the interest of formatting.
@@ -8762,7 +8762,7 @@ rule______________17: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($tex
 rule_______________18: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________  {doesItBlend}?;
 rule_______19: ( alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________ {doSomething($text);} ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword___________________0:'Keyword___________________0'{domeSomething($text);} {doesItBlend()}? ; // Specified in the interest of formatting.
 Keyword_____________1:'Keyword_____________1'-> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -8834,7 +8834,7 @@ rule_________________________19: ({doesItBlend}?alt1 ruleA// Mom look, a trailin
 |{doesItBlend}?____alt3 ruleB/* Not aligned comment.*/
 )rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________  {doesItBlend}?; // Final trailing comment.
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands off, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword______0:'Keyword______0'{doesItBlend()}? -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
 Keyword__1:'Keyword__1'-> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -8909,7 +8909,7 @@ rule_________17: ( alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ |
 rule_______________________18: ({doesItBlend}?alt1{doSomething($text);}ruleA|____alt2{doSomething($text);}ruleB)rule_ | rule__ | rule____ | rule________ {doSomething($text);}{doesItBlend}?;
 rule____19: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword________0:'Keyword________0'; // Specified in the interest of formatting.
 Keyword_1:'Keyword_1'{doesItBlend()}? ;
@@ -8987,7 +8987,7 @@ rule______________________17: ( alt1{doSomething($text);}ruleA|____alt2{doSometh
 rule___18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule___________________19: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions off, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword________________0:'Keyword________________0'{domeSomething($text);} {doesItBlend()}? -> mode(SomethingReallyMeaningful) ;
 Keyword___________________1:'Keyword___________________1'{doesItBlend()}? -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -9050,7 +9050,7 @@ rule_______________17: ( alt1 ruleA// Mom look, a trailing comment.
 rule___18: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 rule________________________19: ({doesItBlend}?alt1 ruleA|____alt2 ruleB)rule_ # label_ | rule__ # label__ | rule____ #label____| rule________#label________  {doesItBlend}?;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments off 
 // $antlr-format groupedAlignments off
 Keyword_________________________0:'Keyword_________________________0'{domeSomething($text);} -> mode(SomethingReallyMeaningful) ;
 Keyword___1:'Keyword___1'{doesItBlend()}? -> mode(SomethingReallyMeaningful) ; // Specified in the interest of formatting.
@@ -9119,7 +9119,7 @@ rule____18: ( alt1 ruleA// Mom look, a trailing comment.
 )rule_ | rule__ | rule____ | rule________   ; // Final trailing comment.
 rule_________________________19: ( alt1 ruleA|____alt2 ruleB)rule_ | rule__ | rule____ | rule________   ;
 
-// $antlr-format alignColons ownLine, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
+// $antlr-format alignColons trailing, alignFirstTokens on, alignTrailers on, alignLabels on, alignLexerCommands on, alignActions on, alignTrailingComments on
 // $antlr-format groupedAlignments off
 Keyword_______________________0:'Keyword_______________________0'{domeSomething($text);} {doesItBlend()}? ;
 Keyword___________________1:'Keyword___________________1'{doesItBlend()}? {domeSomething($text);} ;

@@ -591,14 +591,9 @@ describe('antlr4-graps:', function () {
 
     describe("Formatting:", function () {
         it("With all options (except alignment)", function () {
-            let text: string;
-            let range = new LexicalRange();
-            range.start = { column: 0, row: 1 };
-            range.end = { column: 1, row: 100000 };
-
             // Format a file with all kinds of syntactic elements. Start out with default
             // fomatting options and change them in the file to test all variations.
-            [text, range] = backend.formatGrammar("test/formatting/raw.g4", {}, range);
+            let [text, start, stop] = backend.formatGrammar("test/formatting/raw.g4", {}, 0, 1e10);
 
             //fs.writeFileSync("test/formatting-results/raw.g4", text, "utf8");
             let expected = fs.readFileSync("test/formatting-results/raw.g4", { encoding: "utf8" });
@@ -609,59 +604,46 @@ describe('antlr4-graps:', function () {
             this.timeout(20000);
             //createAlignmentGrammar();
 
-            let text: string;
-            let range = new LexicalRange();
-            range.start = { column: 0, row: 0 };
-            range.end = { column: 1, row: 100000 };
-
             // Load a large file with all possible alignment combinations (50 rules for each permutation),
             // checking so also the overall performance (9600 rules).
-            [text, range] = backend.formatGrammar("test/formatting/alignment.g4", {}, range);
+            let [text, start, stop] = backend.formatGrammar("test/formatting/alignment.g4", {}, 0, 1e10);
 
             //fs.writeFileSync("test/formatting-results/alignment.g4", text, "utf8");
             let expected = fs.readFileSync("test/formatting-results/alignment.g4", { encoding: "utf8" });
             expect(expected).to.equal(text);
         });
 
-        it.only("Ranged formatting", function () {
-            // First some edge cases with empty/simple results.
-            let [text, range] = backend.formatGrammar("test/formatting/raw.g4", {},
-                { start: { column: 0, row: -1 }, end: { column: 1, row: -1 } });
-            expect(text.length, "Test 1").to.equal(0);
-            expect(range, "Test 2").to.deep.equal({ start: { column: 0, row: 1 }, end: { column: 1e100, row: 1 }});
-
-            [text, range] = backend.formatGrammar("test/formatting/raw.g4", {},
-                { start: { column: 4, row: 43 }, end: { column: 0, row: 43 }});
-            expect(text, "Test 3").to.equal("\tsuperClass ");
-            expect(range, "Test 4").to.deep.equal({ start: { column: 0, row: 43 }, end: { column: 1e100, row: 43 }});
-
-            [text, range] = backend.formatGrammar("test/formatting/raw.g4", {},
-                { start: { column: 1000, row: 43 }, end: { column: 16, row: 43 }});
-            expect(text, "Test 5").to.equal("\tsuperClass ");
-            expect(range, "Test 6").to.deep.equal({ start: { column: 0, row: 43 }, end: { column: 1e100, row: 43 }});
-
-            [text, range] = backend.formatGrammar("test/formatting/raw.g4", {},
-                { start: { column: 0, row: 1e100 }, end: { column: 10, row: 1e100 - 100} });
-            expect(text, "Test 7").to.equal("\n");
-            expect(range, "Test 8").to.deep.equal({ start: { column: 0, row: 2125 }, end: { column: 1e100, row: 2125 }});
+        it("Ranged formatting", function () {
+            let [text, targetStart, targetStop] = backend.formatGrammar("test/formatting/raw.g4", {}, -10, -20);
+            expect(text.length, "Test 0a").to.equal(0);
+            expect(targetStart, "Test 0b").to.equal(0);
+            expect(targetStop, "Test 0c").to.equal(4);
 
             let rangeTests = JSON.parse(fs.readFileSync("test/formatting/ranges.json", { encoding: "utf8" }));
-            let testNumber = 9;
-            let target: LexicalRange;
-            for (let rangeTest of rangeTests) {
-                [text, target] = backend.formatGrammar("test/formatting/raw.g4", {}, rangeTest.source);
+            let source = fs.readFileSync("test/formatting/raw.g4", { encoding: "utf8" });
+            for (let i = 1; i <= rangeTests.length; ++i) {
+                let rangeTest = rangeTests[i - 1];
 
-                fs.writeFileSync("test/formatting-results/" + rangeTest.result, text, "utf8");
+                 // Range ends are non-inclusive.
+                let startIndex = positionToIndex(source, rangeTest.source.start.column, rangeTest.source.start.row);
+                let stopIndex = positionToIndex(source, rangeTest.source.end.column, rangeTest.source.end.row) - 1;
+                [text, targetStart, targetStop] = backend.formatGrammar("test/formatting/raw.g4", {}, startIndex, stopIndex);
+
+                let [startColumn, startRow] = indexToPosition(source, targetStart);
+                let [stopColumn, stopRow] = indexToPosition(source, targetStop + 1);
+                let range = { start: { column: startColumn, row: startRow }, end: { column: stopColumn, row: stopRow }};
+
+                //fs.writeFileSync("test/formatting-results/" + rangeTest.result, text, "utf8");
                 let expected = fs.readFileSync("test/formatting-results/" + rangeTest.result, { encoding: "utf8" });
-                expect(target, "Test " + testNumber++).to.deep.equal(rangeTest.target);
-                expect(expected, "Test " + testNumber++).to.equal(text);
+                expect(range, "Range Test " + i + "a").to.deep.equal(rangeTest.target);
+                expect(expected, "Test " + i + "b").to.equal(text);
             }
-
         });
 
-        // This test has been taken out by intention as it difficult to get good results for all grammars
+        // This test has been taken out by intention as it is difficult to get good results for all grammars
         // with the same set of settings. Consider it more like a smoke test.
-        // For running it you must copy the ANTLR4 grammar directory into "test/formatting/grammars-v4".
+        // For running it you must copy the ANTLR4 grammar directory into "test/formatting/grammars-v4"
+        // (or adjust the path in this test).
         xit("ANTLR grammar directory", function () {
             this.timeout(20000);
 
@@ -669,12 +651,7 @@ describe('antlr4-graps:', function () {
             let counter = 0;
             for (let file of files) {
                 ++counter;
-                let text: string;
-                let range = new LexicalRange();
-                range.start = { column: 0, row: 0 };
-                range.end = { column: 1, row: 100000 };
-
-                [text, range] = backend.formatGrammar(file, {
+                let [text, start, stop] = backend.formatGrammar(file, {
                     useTab: false,
                     tabWidth: 4,
                     spaceBeforeAssignmentOperators: true,
@@ -684,11 +661,11 @@ describe('antlr4-graps:', function () {
                     singleLineOverrulesHangingColon: false,
                     alignTrailingComments: true,
                     alignLexerCommands: true,
-                }, range);
+                }, 0, 100000);
                 let output = file.replace("formatting/", "formatting-results/");
 
-                fs.ensureDirSync(path.dirname(output));
-                fs.writeFileSync(output, text, "utf8");
+                //fs.ensureDirSync(path.dirname(output));
+                //fs.writeFileSync(output, text, "utf8");
                 let expected = fs.readFileSync(output, { encoding: "utf8" });
                 expect(expected, "Test 1").to.equal(text);
             }
@@ -796,4 +773,61 @@ function createAlignmentGrammar(): void {
     }
 
     fs.writeFileSync("test/formatting/alignment.g4", grammar, "utf8");
+}
+
+/** Converts the given position in the text to a character index (assuming 4 chars tabwidth). */
+function positionToIndex(text: string, column: number, row: number): number {
+    let currentRow = 1; // Remember: row numbers in ANTLR4 are one-based.
+    let currentColumn = 0;
+
+    for (let i = 0; i < text.length; ++i) {
+        if (row < currentRow) { // Happens when the column value was greater than previous column width.
+            return i - 1;
+        }
+
+        if (currentRow == row && currentColumn == column) {
+            return i;
+        }
+        switch (text[i]) {
+            case "\n": {
+                currentColumn = 0;
+                ++currentRow;
+                break;
+            }
+            case "\t": {
+                currentColumn += 4 - (currentColumn % 4);
+                break;
+            }
+            default:
+                ++currentColumn;
+                break;
+        }
+    }
+    return text.length;
+}
+
+/** Converts the given character index into a column/row pair (assuming 4 chars tabwidth). */
+function indexToPosition(text: string, index: number): [number, number] {
+    let currentRow = 1;
+    let currentColumn = 0;
+    for (let i = 0; i < text.length; ++i) {
+        if (i == index) {
+            return [currentColumn, currentRow];
+        }
+        switch (text[i]) {
+            case "\n": {
+                currentColumn = 0;
+                ++currentRow;
+                break;
+            }
+            case "\t": {
+                currentColumn += 4 - (currentColumn % 4);
+                break;
+            }
+            default:
+                ++currentColumn;
+                break;
+        }
+    }
+    return [currentColumn, currentRow];
 }

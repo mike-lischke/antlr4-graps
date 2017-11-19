@@ -172,7 +172,7 @@ export interface FormattingOptions {
     // This setting has no effect for non-rule commands that end with a semicolon (e.g. "grammar Test;", "import Blah;" etc.).
     // Such commands are always placed on a single line.
     alignSemicolons?: "none" | "ownLine" | "hanging";
-    breakBeforeParens?: boolean; // For blocks: if true puts opening parenthesis on an own line. Default: false.
+    breakBeforeParens?: boolean; // For blocks: if true puts opening parentheses on an own line. Default: false.
 
     // Place rule internals (return value, local variables, @init, @after) all on a single line, if true. Default: false.
     ruleInternalsOnSingleLine?: boolean;
@@ -181,7 +181,7 @@ export interface FormattingOptions {
     // When true alignments are organized in groups of lines where they apply. These line groups are separated
     // by lines where a specific alignment type does not appear. Default: true.
     groupedAlignments?: boolean;
-    alignFirstTokens?: boolean; // Align first token in a rule after the colon. Default: false.
+    alignFirstTokens?: boolean; // Align first tokens in rules after the colon. Default: false.
     alignLexerCommands?: boolean; // Align arrows from lexer commands. Default: false.
     alignActions?: boolean; // Align actions ({} blocks in rules) and predicates. Default: false.
     alignLabels?: boolean; // Align alt labels (# name). Default: true.
@@ -451,8 +451,8 @@ export class AntlrLanguageSupport {
         return context.generateSentences(options, definitions);
     }
 
-    public formatGrammar(fileName: string, options: FormattingOptions, range: LexicalRange): [string, LexicalRange] {
+    public formatGrammar(fileName: string, options: FormattingOptions, start: number, stop: number): [string, number, number] {
         var context = this.getContext(fileName);
-        return context.formatGrammar(options, range);
+        return context.formatGrammar(options, start, stop);
     }
 }

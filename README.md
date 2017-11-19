@@ -30,6 +30,7 @@ Here's a feature summary of the module:
 * built-in interpreters for parse runs without the need to compile the generated parser (not yet finished)
 * ATN graph (nodes and links describing the ATN structure for a given rule)
 * Sentence generation (random or all-path generation of sentences that are valid for a given grammar), mostly used for testing and grammar review.
+* Grammar formatting, controlled by large set of (dynamically switchable) options.
 
 ## Usage
 
@@ -48,12 +49,9 @@ Additionally, there is a `mocha` setup for Visual Studio Code, which even allows
 ## Known Issues
 see [bug tracker](https://github.com/mike-lischke/antlr-graps/issues)
 
-Also, the code completion feature is not fully ready yet and needs some improvements. Use it only for testing small grammars for now.
-
 ## What's next?
 
 * Improve code completion
-* Automatic code formatting
 * Refactoring: extract rule, rename items, comment selected lines, remove left recursion
 * Templates (for frequently used rules like whitespace, ID etc.)
 * Support for debugging
@@ -61,6 +59,10 @@ Also, the code completion feature is not fully ready yet and needs some improvem
 I'd love to see code contributions, to make the module evolve quicker.
 
 ## Release Notes
+
+### 1.3.11
+- Added support for grammar formatting
+- Updated docs for that and sentence generation
 
 ### 1.3.9
 - Return also the rule index from `ruleFromPosition`
@@ -77,7 +79,7 @@ I'd love to see code contributions, to make the module evolve quicker.
 - Improvements for ATN graph scripts.
 
 ### 1.3.2
-- antlr4-graps now ships with custom builds of antlr4 and antlr4-typescript jars, to be able to generate code.
+- antlr4-graps now ships with a custom build of antlr4, to be able to generate code.
 - Added code generation support for grammars.
 - Typscript code is no longer published.
 - Added special ATN deserializer class for the typescript runtime that allows to load standard ATN data (antlr4ts uses an extended version).

@@ -809,11 +809,11 @@ export class SourceContext {
         return this.symbolTable.getSymbolInfo(symbol);
     }
 
-    public formatGrammar(options: FormattingOptions, range: LexicalRange): [string, LexicalRange] {
+    public formatGrammar(options: FormattingOptions, start: number, stop: number): [string, number, number] {
         this.tokenStream.fill();
         let tokens = this.tokenStream.getTokens();
         let formatter = new GrammarFormatter(tokens);
-        return formatter.formatGrammar(options, range);
+        return formatter.formatGrammar(options, start, stop);
     }
 
     private runSemanticAnalysisIfNeeded() {
