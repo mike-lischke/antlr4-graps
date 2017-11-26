@@ -595,7 +595,7 @@ describe('antlr4-graps:', function () {
             // fomatting options and change them in the file to test all variations.
             let [text, start, stop] = backend.formatGrammar("test/formatting/raw.g4", {}, 0, 1e10);
 
-            //fs.writeFileSync("test/formatting-results/raw.g4", text, "utf8");
+            //fs.writeFileSync("test/formatting-results/raw2.g4", text, "utf8");
             let expected = fs.readFileSync("test/formatting-results/raw.g4", { encoding: "utf8" });
             expect(expected).to.equal(text);
         });

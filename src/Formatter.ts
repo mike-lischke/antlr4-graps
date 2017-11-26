@@ -169,8 +169,18 @@ export class GrammarFormatter {
                                 if (this.tokens[localRun].line < startRow) {
                                     ++this.currentIndentation;
                                     inBraces = true;
-                                    coalesceWhitespaces = true;
                                 }
+
+                                // Determine if we are in an assignment or between them.
+                                localRun = startIndex;
+                                let type = 0;
+                                do {
+                                    type = this.tokens[localRun].type;
+                                    if (type != ANTLRv4Lexer.WS && type != ANTLRv4Lexer.LINE_COMMENT
+                                        && type != ANTLRv4Lexer.BLOCK_COMMENT && type != ANTLRv4Lexer.DOC_COMMENT)
+                                        break;
+                                } while (localRun-- > 0);
+                                coalesceWhitespaces = type != ANTLRv4Lexer.SEMI;
                                 done = true;
                                 break;
                             }
@@ -435,27 +445,30 @@ export class GrammarFormatter {
                         this.addLineBreak();
                     }
 
-                    // Find the action end token.
+                    // Find the action end token (or the last in the given source range).
                     let startIndex = i;
-                    while (this.tokens[i].type != Token.EOF && this.tokens[i].type != ANTLRv4Lexer.END_ACTION) {
+                    while (i <= endIndex
+                        && this.tokens[i].type != Token.EOF
+                        && this.tokens[i].type != ANTLRv4Lexer.END_ACTION) {
                         ++i;
                     }
 
                     // Add a new range for the action code.
                     this.addRaw(startIndex, i - 1);
-                    if (inCatchFinally && this.tokens[i - 1].text !== "\n") {
-                        this.addLineBreak();
-                    }
-                    this.add(i);
-                    this.addSpace();
-                    this.add(InsertMarker.WhitespaceEraser);
+                    if (i <= endIndex) {
+                        if (inCatchFinally && this.tokens[i - 1].text !== "\n") {
+                            this.addLineBreak();
+                        }
+                        this.add(i);
+                        this.addSpace();
 
-                    minLineInsertionPending = this.currentIndentation == 0;
-                    if (!inRule) {
-                        inNamedAction = false;
-                        coalesceWhitespaces = false;
+                        minLineInsertionPending = this.currentIndentation == 0;
+                        if (!inRule) {
+                            inNamedAction = false;
+                            coalesceWhitespaces = false;
+                        }
+                        inCatchFinally = false;
                     }
-                    inCatchFinally = false;
 
                     break;
                 }
@@ -552,7 +565,6 @@ export class GrammarFormatter {
                         }
                         this.add(i);
                     }
-                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -679,7 +691,6 @@ export class GrammarFormatter {
                     if (!inLexerCommand) {
                         this.addSpace();
                     }
-                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -690,7 +701,6 @@ export class GrammarFormatter {
                     this.add(i);
 
                     this.addSpace();
-                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -726,7 +736,6 @@ export class GrammarFormatter {
 
                     this.add(i);
                     this.addSpace();
-                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -820,7 +829,6 @@ export class GrammarFormatter {
                     }
 
                     this.addSpace();
-                    this.add(InsertMarker.WhitespaceEraser);
 
                     if (this.singleLineBlockNesting > 0) {
                         // Now decrease single line block counter for the closing parenthesis too.
@@ -848,7 +856,6 @@ export class GrammarFormatter {
                     }
                     this.add(i);
                     this.addSpace();
-                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -888,7 +895,6 @@ export class GrammarFormatter {
                     }
                     this.add(i);
                     this.addSpace();
-                    this.add(InsertMarker.WhitespaceEraser);
                     break;
                 }
 
@@ -953,16 +959,18 @@ export class GrammarFormatter {
             }
         }
 
-        if (startIndex > 0
-            && this.tokens[endIndex].type == ANTLRv4Lexer.WS
-            && this.tokens[endIndex + 1].type != ANTLRv4Lexer.EOF) {
-            // If we ended with a whitespace and there's more in the text after that, we are missing whitespace
-            // output yet (which is already considered in the target range).
-            // However, since we don't scan further, we cannot enforce min empty lines here and just add
-            // a single linebreak.
+        if (this.lastEntryIs(InsertMarker.WhitespaceEraser)) {
+            this.removeLastEntry();
+        }
+
+        // If we ended with an alignment entry, we apply it only if the selected range ends in whitespaces.
+        if (this.tokens[endIndex].type != ANTLRv4Lexer.WS) {
+            // If the end index is not at a whitespace then we neither apply any trailing alignments nor
+            // keep trailing whitespaces in our output pipeline.
+            if (this.lastEntryIs(InsertMarker.Alignment)) {
+                this.removeLastEntry();
+            }
             this.removeTrailingWhitespaces();
-            this.addLineBreak();
-            this.pushCurrentIndentation();
         }
 
         // Output phase: compose all collected entries into a result string.
@@ -1815,20 +1823,27 @@ export class GrammarFormatter {
                 for (let group of alignment.groups) {
                     // If the group only consists of a single member then ignore it.
                     if (group.length == 1) {
-                        let previousChar = this.outputPipeline[group[0] - 1];
-                        if (this.entryIs(group[0] - 1, InsertMarker.Whitespace)
-                            || this.entryIs(group[0] - 1, ANTLRv4Lexer.LPAREN)) {
-                            this.outputPipeline[group[0]] = InsertMarker.WhitespaceEraser;
-                        } else {
-                            this.outputPipeline[group[0]] = InsertMarker.Space;
+                        if (group[0] < this.outputPipeline.length) {
+                            let previousChar = this.outputPipeline[group[0] - 1];
+                            if (this.entryIs(group[0] - 1, InsertMarker.Whitespace)
+                                || this.entryIs(group[0] - 1, ANTLRv4Lexer.LPAREN)) {
+                                this.outputPipeline[group[0]] = InsertMarker.WhitespaceEraser;
+                            } else {
+                                this.outputPipeline[group[0]] = InsertMarker.Space;
+                            }
                         }
                         continue;
                     }
 
                     let columns: number[] = [];
                     for (let member of group) {
-                        console.assert(this.outputPipeline[member] <= InsertMarker.Alignment);
-                        columns.push(this.columnForEntry(member));
+                        // For partial formatting it can happen we removed the last alignment entry
+                        // in the pipeline. However the associated alignment group still exists and
+                        // may here try to access a non-existing pipeline entry.
+                        if (member < this.outputPipeline.length) {
+                            console.assert(this.outputPipeline[member] <= InsertMarker.Alignment);
+                            columns.push(this.columnForEntry(member));
+                        }
                     }
 
                     // Determine the largest column and bring this up to the next tab stop (if we are using tabs)

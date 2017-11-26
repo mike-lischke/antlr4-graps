@@ -151,6 +151,231 @@ void doAfter() {}
 @parser::listenerdeclarations {/* listener public declarations/members section */}
 @parser::listenermembers {/* listener private declarations/members section */}
 @parser::listenerdefinitions {/* listener definitions section */}
+
+
+
+
+
+
+
+
+@parser::baselistenerpreinclude {/* base listener preinclude section */}
+@parser::baselistenerpostinclude {/* base listener postinclude section */}
+@parser::baselistenerdeclarations {/* base listener public declarations/members section */}
+@parser::baselistenermembers {/* base listener private declarations/members section */}
+@parser::baselistenerdefinitions {/* base listener definitions section */}
+
+
+
+
+
+
+
+
+@parser::visitorpreinclude {/* visitor preinclude section */}
+@parser::visitorpostinclude {/* visitor postinclude section */}
+@parser::visitordeclarations {/* visitor public declarations/members section */}
+@parser::visitormembers {/* visitor private declarations/members section */}
+@parser::visitordefinitions {/* visitor definitions section */}
+
+
+
+
+
+
+
+
+@parser::basevisitorpreinclude {/* base visitor preinclude section */}
+@parser::basevisitorpostinclude {/* base visitor postinclude section */}
+@parser::basevisitordeclarations {/* base visitor public declarations/members section */}
+@parser::basevisitormembers {/* base visitor private declarations/members section */}
+@parser::basevisitordefinitions {/* base visitor definitions section */}
+
+//------------------------------------------------------------------------------------------------------------------
+// $antlr-format maxEmptyLinesToKeep: 5, minEmptyLines 1
+@parser::listenerpreinclude {/* listener preinclude section */} 
+
+@parser::listenerpostinclude {/* listener postinclude section */}
+
+@parser::listenerdeclarations {/* listener public declarations/members section */}
+
+@parser::listenermembers {/* listener private declarations/members section */}
+
+@parser::listenerdefinitions {/* listener definitions section */}
+
+
+
+
+
+@parser::baselistenerpreinclude {/* base listener preinclude section */}
+
+@parser::baselistenerpostinclude {/* base listener postinclude section */}
+
+@parser::baselistenerdeclarations {/* base listener public declarations/members section */}
+
+@parser::baselistenermembers {/* base listener private declarations/members section */}
+
+@parser::baselistenerdefinitions {/* base listener definitions section */}
+
+
+
+
+
+@parser::visitorpreinclude {/* visitor preinclude section */}
+
+@parser::visitorpostinclude {/* visitor postinclude section */}
+
+@parser::visitordeclarations {/* visitor public declarations/members section */}
+
+@parser::visitormembers {/* visitor private declarations/members section */}
+
+@parser::visitordefinitions {/* visitor definitions section */}
+
+
+
+
+
+@parser::basevisitorpreinclude {/* base visitor preinclude section */}
+
+@parser::basevisitorpostinclude {/* base visitor postinclude section */}
+
+@parser::basevisitordeclarations {/* base visitor public declarations/members section */}
+
+@parser::basevisitormembers {/* base visitor private declarations/members section */}
+
+@parser::basevisitordefinitions {/* base visitor definitions section */}
+
+//------------------------------------------------------------------------------------------------------------------
+// $antlr-format maxEmptyLinesToKeep: 3, minEmptyLines 3
+@parser::listenerpreinclude {/* listener preinclude section */} 
+
+
+
+@parser::listenerpostinclude {/* listener postinclude section */}
+
+
+
+@parser::listenerdeclarations {/* listener public declarations/members section */}
+
+
+
+@parser::listenermembers {/* listener private declarations/members section */}
+
+
+
+@parser::listenerdefinitions {/* listener definitions section */}
+
+
+
+@parser::baselistenerpreinclude {/* base listener preinclude section */}
+
+
+
+@parser::baselistenerpostinclude {/* base listener postinclude section */}
+
+
+
+@parser::baselistenerdeclarations {/* base listener public declarations/members section */}
+
+
+
+@parser::baselistenermembers {/* base listener private declarations/members section */}
+
+
+
+@parser::baselistenerdefinitions {/* base listener definitions section */}
+
+
+
+@parser::visitorpreinclude {/* visitor preinclude section */}
+
+
+
+@parser::visitorpostinclude {/* visitor postinclude section */}
+
+
+
+@parser::visitordeclarations {/* visitor public declarations/members section */}
+
+
+
+@parser::visitormembers {/* visitor private declarations/members section */}
+
+
+
+@parser::visitordefinitions {/* visitor definitions section */}
+
+
+
+@parser::basevisitorpreinclude {/* base visitor preinclude section */}
+
+
+
+@parser::basevisitorpostinclude {/* base visitor postinclude section */}
+
+
+
+@parser::basevisitordeclarations {/* base visitor public declarations/members section */}
+
+
+
+@parser::basevisitormembers {/* base visitor private declarations/members section */}
+
+
+
+@parser::basevisitordefinitions {/* base visitor definitions section */}
+
+
+
+//------------------------------------------------------------------------------------------------------------------
+// $antlr-format maxEmptyLinesToKeep: 1, minEmptyLines 5
+@parser::listenerpreinclude {/* listener preinclude section */} 
+
+@parser::listenerpostinclude {/* listener postinclude section */}
+
+@parser::listenerdeclarations {/* listener public declarations/members section */}
+
+@parser::listenermembers {/* listener private declarations/members section */}
+
+@parser::listenerdefinitions {/* listener definitions section */}
+
+@parser::baselistenerpreinclude {/* base listener preinclude section */}
+
+@parser::baselistenerpostinclude {/* base listener postinclude section */}
+
+@parser::baselistenerdeclarations {/* base listener public declarations/members section */}
+
+@parser::baselistenermembers {/* base listener private declarations/members section */}
+
+@parser::baselistenerdefinitions {/* base listener definitions section */}
+
+@parser::visitorpreinclude {/* visitor preinclude section */}
+
+@parser::visitorpostinclude {/* visitor postinclude section */}
+
+@parser::visitordeclarations {/* visitor public declarations/members section */}
+
+@parser::visitormembers {/* visitor private declarations/members section */}
+
+@parser::visitordefinitions {/* visitor definitions section */}
+
+@parser::basevisitorpreinclude {/* base visitor preinclude section */}
+
+@parser::basevisitorpostinclude {/* base visitor postinclude section */}
+
+@parser::basevisitordeclarations {/* base visitor public declarations/members section */}
+
+@parser::basevisitormembers {/* base visitor private declarations/members section */}
+
+@parser::basevisitordefinitions {/* base visitor definitions section */}
+
+//------------------------------------------------------------------------------------------------------------------
+// $antlr-format maxEmptyLinesToKeep: 0, minEmptyLines 100
+@parser::listenerpreinclude {/* listener preinclude section */} 
+@parser::listenerpostinclude {/* listener postinclude section */}
+@parser::listenerdeclarations {/* listener public declarations/members section */}
+@parser::listenermembers {/* listener private declarations/members section */}
+@parser::listenerdefinitions {/* listener definitions section */}
 @parser::baselistenerpreinclude {/* base listener preinclude section */}
 @parser::baselistenerpostinclude {/* base listener postinclude section */}
 @parser::baselistenerdeclarations {/* base listener public declarations/members section */}
@@ -165,195 +390,6 @@ void doAfter() {}
 @parser::basevisitorpostinclude {/* base visitor postinclude section */}
 @parser::basevisitordeclarations {/* base visitor public declarations/members section */}
 @parser::basevisitormembers {/* base visitor private declarations/members section */}
-@parser::basevisitordefinitions {/* base visitor definitions section */}
-
-//------------------------------------------------------------------------------------------------------------------
-// $antlr-format maxEmptyLinesToKeep: 5, minEmptyLines 1
-@parser::listenerpreinclude {/* listener preinclude section */} 
-
-@parser::listenerpostinclude {/* listener postinclude section */} 
-
-@parser::listenerdeclarations {/* listener public declarations/members section */} 
-
-@parser::listenermembers {/* listener private declarations/members section */} 
-
-@parser::listenerdefinitions {/* listener definitions section */} 
-
-@parser::baselistenerpreinclude {/* base listener preinclude section */} 
-
-@parser::baselistenerpostinclude {/* base listener postinclude section */} 
-
-@parser::baselistenerdeclarations {/* base listener public declarations/members section */} 
-
-@parser::baselistenermembers {/* base listener private declarations/members section */} 
-
-@parser::baselistenerdefinitions {/* base listener definitions section */} 
-
-@parser::visitorpreinclude {/* visitor preinclude section */} 
-
-@parser::visitorpostinclude {/* visitor postinclude section */} 
-
-@parser::visitordeclarations {/* visitor public declarations/members section */} 
-
-@parser::visitormembers {/* visitor private declarations/members section */} 
-
-@parser::visitordefinitions {/* visitor definitions section */} 
-
-@parser::basevisitorpreinclude {/* base visitor preinclude section */} 
-
-@parser::basevisitorpostinclude {/* base visitor postinclude section */} 
-
-@parser::basevisitordeclarations {/* base visitor public declarations/members section */} 
-
-@parser::basevisitormembers {/* base visitor private declarations/members section */} 
-
-@parser::basevisitordefinitions {/* base visitor definitions section */}
-
-//------------------------------------------------------------------------------------------------------------------
-// $antlr-format maxEmptyLinesToKeep: 3, minEmptyLines 3
-@parser::listenerpreinclude {/* listener preinclude section */} 
-
-
-
-@parser::listenerpostinclude {/* listener postinclude section */} 
-
-
-
-@parser::listenerdeclarations {/* listener public declarations/members section */} 
-
-
-
-@parser::listenermembers {/* listener private declarations/members section */} 
-
-
-
-@parser::listenerdefinitions {/* listener definitions section */} 
-
-
-
-@parser::baselistenerpreinclude {/* base listener preinclude section */} 
-
-
-
-@parser::baselistenerpostinclude {/* base listener postinclude section */} 
-
-
-
-@parser::baselistenerdeclarations {/* base listener public declarations/members section */} 
-
-
-
-@parser::baselistenermembers {/* base listener private declarations/members section */} 
-
-
-
-@parser::baselistenerdefinitions {/* base listener definitions section */} 
-
-
-
-@parser::visitorpreinclude {/* visitor preinclude section */} 
-
-
-
-@parser::visitorpostinclude {/* visitor postinclude section */} 
-
-
-
-@parser::visitordeclarations {/* visitor public declarations/members section */} 
-
-
-
-@parser::visitormembers {/* visitor private declarations/members section */} 
-
-
-
-@parser::visitordefinitions {/* visitor definitions section */} 
-
-
-
-@parser::basevisitorpreinclude {/* base visitor preinclude section */} 
-
-
-
-@parser::basevisitorpostinclude {/* base visitor postinclude section */} 
-
-
-
-@parser::basevisitordeclarations {/* base visitor public declarations/members section */} 
-
-
-
-@parser::basevisitormembers {/* base visitor private declarations/members section */} 
-
-
-
-@parser::basevisitordefinitions {/* base visitor definitions section */}
-
-
-
-//------------------------------------------------------------------------------------------------------------------
-// $antlr-format maxEmptyLinesToKeep: 1, minEmptyLines 5
-@parser::listenerpreinclude {/* listener preinclude section */} 
-
-@parser::listenerpostinclude {/* listener postinclude section */} 
-
-@parser::listenerdeclarations {/* listener public declarations/members section */} 
-
-@parser::listenermembers {/* listener private declarations/members section */} 
-
-@parser::listenerdefinitions {/* listener definitions section */} 
-
-@parser::baselistenerpreinclude {/* base listener preinclude section */} 
-
-@parser::baselistenerpostinclude {/* base listener postinclude section */} 
-
-@parser::baselistenerdeclarations {/* base listener public declarations/members section */} 
-
-@parser::baselistenermembers {/* base listener private declarations/members section */} 
-
-@parser::baselistenerdefinitions {/* base listener definitions section */} 
-
-@parser::visitorpreinclude {/* visitor preinclude section */} 
-
-@parser::visitorpostinclude {/* visitor postinclude section */} 
-
-@parser::visitordeclarations {/* visitor public declarations/members section */} 
-
-@parser::visitormembers {/* visitor private declarations/members section */} 
-
-@parser::visitordefinitions {/* visitor definitions section */} 
-
-@parser::basevisitorpreinclude {/* base visitor preinclude section */} 
-
-@parser::basevisitorpostinclude {/* base visitor postinclude section */} 
-
-@parser::basevisitordeclarations {/* base visitor public declarations/members section */} 
-
-@parser::basevisitormembers {/* base visitor private declarations/members section */} 
-
-@parser::basevisitordefinitions {/* base visitor definitions section */}
-
-//------------------------------------------------------------------------------------------------------------------
-// $antlr-format maxEmptyLinesToKeep: 0, minEmptyLines 100
-@parser::listenerpreinclude {/* listener preinclude section */} 
-@parser::listenerpostinclude {/* listener postinclude section */} 
-@parser::listenerdeclarations {/* listener public declarations/members section */} 
-@parser::listenermembers {/* listener private declarations/members section */} 
-@parser::listenerdefinitions {/* listener definitions section */} 
-@parser::baselistenerpreinclude {/* base listener preinclude section */} 
-@parser::baselistenerpostinclude {/* base listener postinclude section */} 
-@parser::baselistenerdeclarations {/* base listener public declarations/members section */} 
-@parser::baselistenermembers {/* base listener private declarations/members section */} 
-@parser::baselistenerdefinitions {/* base listener definitions section */} 
-@parser::visitorpreinclude {/* visitor preinclude section */} 
-@parser::visitorpostinclude {/* visitor postinclude section */} 
-@parser::visitordeclarations {/* visitor public declarations/members section */} 
-@parser::visitormembers {/* visitor private declarations/members section */} 
-@parser::visitordefinitions {/* visitor definitions section */} 
-@parser::basevisitorpreinclude {/* base visitor preinclude section */} 
-@parser::basevisitorpostinclude {/* base visitor postinclude section */} 
-@parser::basevisitordeclarations {/* base visitor public declarations/members section */} 
-@parser::basevisitormembers {/* base visitor private declarations/members section */} 
 @parser::basevisitordefinitions {/* base visitor definitions section */}
 // $antlr-format reset
 rule1: rule2 (COMMA rule2)*;
@@ -392,6 +428,7 @@ catch[...] {
 finally {
   cleanUp();
 }
+
 unused2:
 	(unused[1] .)+ (Colon | Semicolon | Plus)? ~Semicolon
 ;
@@ -2681,3 +2718,19 @@ roleOrLabelKeyword:
 		| WITHOUT_SYMBOL
 	)
 ;
+
+@header {/*
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301  USA
+ */
+}
+
+@postinclude {
+#include "MySQLBaseRecognizer.h"
+}

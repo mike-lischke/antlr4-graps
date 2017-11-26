@@ -5,4 +5,4 @@
 			| {serverVersion < 50700}? columnRef?
 		)
 	)
-	| DISABLE_SYMBOL KEYS_SYMBOL 
+	| DISABLE_SYMBOL KEYS_SYMBOL

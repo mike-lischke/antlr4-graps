@@ -923,6 +923,75 @@
         "source": {
             "start": {
                 "column": 0,
+                "row": 420
+            },
+            "end": {
+                "column": 5,
+                "row": 420
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 420
+            },
+            "end": {
+                "column": 5,
+                "row": 420
+            }
+        },
+        "result": "range41.txt"
+    },
+    {
+        "source": {
+            "start": {
+                "column": 0,
+                "row": 2130
+            },
+            "end": {
+                "column": 15,
+                "row": 2132
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 2126
+            },
+            "end": {
+                "column": 3,
+                "row": 2135
+            }
+        },
+        "result": "range42.txt"
+    },
+    {
+        "source": {
+            "start": {
+                "column": 0,
+                "row": 2130
+            },
+            "end": {
+                "column": 1,
+                "row": 2136
+            }
+        },
+        "target": {
+            "start": {
+                "column": 0,
+                "row": 2126
+            },
+            "end": {
+                "column": 1,
+                "row": 2136
+            }
+        },
+        "result": "range43.txt"
+    },
+    {
+        "source": {
+            "start": {
+                "column": 0,
                 "row": 1e100
             },
             "end": {
@@ -933,11 +1002,11 @@
         "target": {
             "start": {
                 "column": 0,
-                "row": 2125
+                "row": 2143
             },
             "end": {
                 "column": 0,
-                "row": 2125
+                "row": 2143
             }
         },
         "result": "range100.txt"

@@ -18,4 +18,4 @@ OF_SYMBOL:				O F								{serverVersion >= 80001}?; // SQL-1999-R
 SKIP_SYMBOL:			S K I P							{serverVersion >= 80001}?; // MYSQL
 LOCKED_SYMBOL:			L O C K E D						{serverVersion >= 80001}?; // MYSQL
 NOWAIT_SYMBOL:			N O W A I T						{serverVersion >= 80001}?; // MYSQL
-GROUPING_SYMBOL 
+GROUPING_SYMBOL

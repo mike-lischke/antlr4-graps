@@ -1,1 +1,1 @@
-	superClass 
+	superClass

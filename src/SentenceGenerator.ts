@@ -1,6 +1,8 @@
-/*!
- * Copyright 2016 The ANTLR Project. All rights reserved.
- * Licensed under the BSD-3-Clause license. See LICENSE file in the project root for license information.
+/*
+ * This file is released under the MIT license.
+ * Copyright (c) 2016, 2017 Mike Lischke
+ *
+ * See LICENSE file for more info.
  */
 
 "use strict";

@@ -22,4 +22,3 @@ options { // Trailing comment.
 	superClass = /* inline comment */ Base4
 	/* inline comment */;
 	// Single line comment, non-trailing
-	

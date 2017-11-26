@@ -9,4 +9,3 @@
 		Base4
 	/* inline comment */;
 	// Single line comment, non-trailing. Stays as is without separator line.
-	

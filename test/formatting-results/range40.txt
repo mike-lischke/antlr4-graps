@@ -11,4 +11,4 @@
 		| FOREIGN_SYMBOL KEY_SYMBOL (
 			// This part is no longer optional starting with 5.7.
 			{serverVersion >= 50700}? columnRef
-			| {serverVersion < 50700} 
+			| {serverV

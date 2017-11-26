@@ -7,4 +7,4 @@ stat: expr Equal expr Semicolon | expr Semicolon;
 expr:
 	expr Star expr
 	| expr Plus expr
-	| OpenPar 
+	| OpenPar

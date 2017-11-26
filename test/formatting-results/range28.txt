@@ -1,3 +1,3 @@
 // $antlr-format alignColons: none, alignFirstTokens on, alignLexerCommands true
 Colon:		':';
-Semicolon:	';'
+Semicolon:	';' 

@@ -26,4 +26,4 @@ SKIP_SYMBOL: S K I P {serverVersion >= 80001}?; // MYSQL
 LOCKED_SYMBOL: L O C K E D {serverVersion >= 80001}?; // MYSQL
 NOWAIT_SYMBOL: N O W A I T {serverVersion >= 80001}?; // MYSQL
 GROUPING_SYMBOL:
-	G R O U P I N G {serverVersion >= 80001} 
+	G R O U P I N G {serverVersi

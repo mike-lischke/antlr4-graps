@@ -11,3 +11,4 @@ options { // Trailing comment, that moves behind the opening brace.
 	// Single line comment, non-trailing. Stays as is without separator line.
 	/*Standalone comment (indentation needs correction)*/
 }
+
