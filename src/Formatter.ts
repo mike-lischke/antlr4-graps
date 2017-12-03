@@ -89,6 +89,9 @@ export class GrammarFormatter {
 
         this.setDefaultOptions();
         this.options = Object.assign(this.options, options); // Overwrite default values with passed in values.
+        if (this.options.columnLimit! <= 0) {
+            this.options.columnLimit = 1e30;
+        }
 
         this.outputPipeline = [];
         this.currentIndentation = 0;
