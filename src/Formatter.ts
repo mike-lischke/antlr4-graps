@@ -323,7 +323,8 @@ export class GrammarFormatter {
                     this.currentLine += breakCount;
                     this.currentColumn = 0;
 
-                    if (minLineInsertionPending) {
+                    // Ensure empty lines only if still have something to format.
+                    if (i < endIndex && minLineInsertionPending) {
                         minLineInsertionPending = false;
                         this.ensureMinEmptyLines();
                     }
