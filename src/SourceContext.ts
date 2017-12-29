@@ -15,8 +15,8 @@ import * as path from 'path';
 import * as fs from 'fs';
 
 import {
-    ANTLRInputStream, CommonTokenStream, BailErrorStrategy, DefaultErrorStrategy, Token, LexerInterpreter,
-    ParserInterpreter, CharStream, RuleContext, ParserRuleContext, CommonToken
+    ANTLRInputStream, CommonTokenStream, BailErrorStrategy, DefaultErrorStrategy, Token,  CharStream, RuleContext,
+    ParserRuleContext, CommonToken
 } from 'antlr4ts';
 import {
     PredictionMode, ATNState, RuleTransition, TransitionType, ATNStateType, BlockStartState, DecisionState,
@@ -43,7 +43,7 @@ import { ContextErrorListener } from './ContextErrorListener';
 import { DetailsListener } from './DetailsListener';
 import { SemanticListener } from './SemanticListener';
 import { RuleVisitor } from './RuleVisitor';
-import { InterpreterDataReader } from "./InterpreterDataReader";
+import { InterpreterDataReader, InterpreterData } from "./InterpreterDataReader";
 import { ErrorParser } from "./ErrorParser";
 
 import {
@@ -54,20 +54,22 @@ import {
 import { LexicalRange } from "../index";
 import { SentenceGenerator } from "./SentenceGenerator";
 import { GrammarFormatter } from "./Formatter";
+import { GrapsDebugger } from "./GrapsDebugger";
 
 enum GrammarType { Unknown, Parser, Lexer, Combined };
 
 // One source context per file. Source contexts can reference each other (e.g. for symbol lookups).
 export class SourceContext {
-    public symbolTable = new GrapsSymbolTable("Context", { allowDuplicateSymbols: true }, this);
+    public symbolTable: GrapsSymbolTable;
     public references: SourceContext[] = []; // Contexts referencing us.
     public sourceId: string;
 
     /* @internal */
     public diagnostics: DiagnosticEntry[] = [];
 
-    constructor(private fileName: string) {
-        this.sourceId = path.basename(fileName);
+    constructor(public fileName: string) {
+        this.sourceId = path.basename(fileName, path.extname(fileName));
+        this.symbolTable =  new GrapsSymbolTable(this.sourceId, { allowDuplicateSymbols: true }, this);
 
         // Initialize static global symbol table, if not yet done.
         if (!SourceContext.globalSymbols.resolve("EOF")) {
@@ -427,12 +429,15 @@ export class SourceContext {
         this.parser.interpreter.setPredictionMode(PredictionMode.SLL);
 
         this.tree = undefined;
-        this.lexerInterpreter = undefined;
-        this.parserInterpreter = undefined;
+        this.grammarType = GrammarType.Unknown;
+        this.grammarLexerData = undefined;
+        this.grammarLexerRuleMap.clear();
+        this.grammarParserData = undefined;
+        this.grammarLexerRuleMap.clear();
+
         this.semanticAnalysisDone = false;
         this.diagnostics.length = 0;
         this.imports.length = 0;
-        this.grammarType = GrammarType.Unknown;
 
         this.symbolTable.clear();
         this.symbolTable.addDependencies(SourceContext.globalSymbols);
@@ -451,13 +456,16 @@ export class SourceContext {
         }
 
         if (this.tree && this.tree.childCount > 0) {
-            let typeContext = this.tree.grammarType();
-            if (typeContext.LEXER()) {
-                this.grammarType = GrammarType.Lexer;
-            } else if (typeContext.PARSER()) {
-                this.grammarType = GrammarType.Parser;
-            } else {
-                this.grammarType = GrammarType.Combined;
+            try {
+                let typeContext = this.tree.grammarType();
+                if (typeContext.LEXER()) {
+                    this.grammarType = GrammarType.Lexer;
+                } else if (typeContext.PARSER()) {
+                    this.grammarType = GrammarType.Parser;
+                } else {
+                    this.grammarType = GrammarType.Combined;
+                }
+            } catch (e) {
             }
         }
         this.symbolTable.tree = this.tree;
@@ -482,19 +490,45 @@ export class SourceContext {
         this.runSemanticAnalysisIfNeeded();
 
         let result = new Map();
-        for (let symbol of this.symbolTable.getAllSymbols(Symbol, true)) {
-            if (symbol instanceof ParserRuleSymbol || symbol instanceof LexerTokenSymbol) {
-                let entry: ReferenceNode = { rules: [], tokens: [], literals: [] };
+        for (let symbol of this.symbolTable.getAllSymbols(Symbol, false)) {
+            if (symbol instanceof ParserRuleSymbol
+                || symbol instanceof LexerTokenSymbol
+                || symbol instanceof FragmentLexerTokenSymbol) {
+                let entry: ReferenceNode = {
+                    kind: symbol instanceof ParserRuleSymbol ? SymbolKind.ParserRule : SymbolKind.LexerToken,
+                    rules: [],
+                    tokens: [],
+                    literals: []
+                };
                 for (let child of symbol.getAllSymbols(ParserRuleSymbol, true)) {
-                    entry.rules.push(child.name);
+                    let resolved = this.symbolTable.resolve(child.name, false);
+                    if (resolved) {
+                        entry.rules.push(resolved.qualifiedName());
+                    } else {
+                        entry.rules.push(child.name);
+                    }
                 }
                 for (let child of symbol.getAllSymbols(LexerTokenSymbol, true)) {
-                    entry.tokens.push(child.name);
+                    let resolved = this.symbolTable.resolve(child.name, false);
+                    if (resolved) {
+                        entry.tokens.push(resolved.qualifiedName());
+                    } else {
+                        entry.tokens.push(child.name);
+                    }
                 }
                 for (let child of symbol.getAllSymbols(LiteralSymbol, true)) {
-                    entry.literals.push(child.name);
+                    let resolved = this.symbolTable.resolve(child.name, false);
+                    if (resolved) {
+                        entry.literals.push(resolved.qualifiedName());
+                    } else {
+                        entry.literals.push(child.name);
+                    }
                 }
-                result.set(symbol.name, entry);
+                result.set(symbol.qualifiedName(), entry);
+            } else if (symbol instanceof BuiltInLexerTokenSymbol) {
+                result.set(symbol.qualifiedName(), { kind: SymbolKind.BuiltInLexerToken, rules: [], tokens: [], literals: [] });
+            } else if (symbol instanceof VirtualLexerTokenSymbol) {
+                result.set(symbol.qualifiedName(), { kind: SymbolKind.VirtualLexerToken, rules: [], tokens: [], literals: [] });
             }
         }
         return result;
@@ -557,16 +591,16 @@ export class SourceContext {
             if (context.ruleIndex == ANTLRv4Parser.RULE_parserRuleSpec) {
                 const name = (context as ParserRuleSpecContext).RULE_REF().text;
                 let index;
-                if (this.parserInterpreter) {
-                    index = this.parserInterpreter.getRuleIndexMap().get(name);
+                if (this.grammarParserData) {
+                    index = this.grammarParserRuleMap.get(name);
                 }
                 return [name, index];
             }
 
             const name = (context as LexerRuleSpecContext).TOKEN_REF().text;
             let index;
-            if (this.lexerInterpreter) {
-                index = this.lexerInterpreter.getRuleIndexMap().get(name);
+            if (this.grammarLexerData) {
+                index = this.grammarLexerRuleMap.get(name);
             }
             return [name, index];
         }
@@ -676,20 +710,20 @@ export class SourceContext {
 
     public getATNGraph(rule: string): ATNGraphData | undefined {
         let isLexerRule = rule[0] == rule[0].toUpperCase();
-        if ((isLexerRule && !this.lexerInterpreter) || (!isLexerRule && !this.parserInterpreter)) {
+        if ((isLexerRule && !this.grammarLexerData) || (!isLexerRule && !this.grammarParserData)) {
             // Requires a generation run.
             return;
         }
 
-        let ruleIndexMap = isLexerRule ? this.lexerInterpreter!.getRuleIndexMap() : this.parserInterpreter!.getRuleIndexMap();
+        let ruleIndexMap = isLexerRule ? this.grammarLexerRuleMap : this.grammarParserRuleMap;
         if (!ruleIndexMap.has(rule)) {
             return;
         }
         let ruleIndex: number = ruleIndexMap.get(rule)!;
 
-        let atn = isLexerRule ? this.lexerInterpreter!.atn : this.parserInterpreter!.atn;
-        let ruleNames = isLexerRule ? this.lexerInterpreter!.ruleNames : this.parserInterpreter!.ruleNames;
-        let vocabulary = isLexerRule ? this.lexerInterpreter!.vocabulary : this.parserInterpreter!.vocabulary;
+        let atn = isLexerRule ? this.grammarLexerData!.atn : this.grammarParserData!.atn;
+        let ruleNames = isLexerRule ? this.grammarLexerData!.ruleNames : this.grammarParserData!.ruleNames;
+        let vocabulary = isLexerRule ? this.grammarLexerData!.vocabulary : this.grammarParserData!.vocabulary;
 
         let startState = atn.ruleToStartState[ruleIndex];
         let stopState = atn.ruleToStopState[ruleIndex];
@@ -787,30 +821,28 @@ export class SourceContext {
      * @returns A list of strings with sentences that this grammar would successfully parse.
      */
     public generateSentences(options: SentenceGenerationOptions, definitions?: Map<string, string>): string[] {
-        if (!this.lexerInterpreter || !this.parserInterpreter) {
+        if (!this.grammarLexerData || !this.grammarParserData) {
             // Requires a generation run.
             return [];
         }
         let isLexerRule = options.startRule[0] == options.startRule[0].toUpperCase();
 
-        let generator = new SentenceGenerator(this.lexerInterpreter.atn, this.lexerInterpreter.getRuleIndexMap(),
-            this.lexerInterpreter.vocabulary, this.lexerInterpreter.ruleNames, this.parserInterpreter.ruleNames);
+        let generator = new SentenceGenerator(this.grammarLexerData.atn, this.grammarLexerRuleMap,
+            this.grammarLexerData.vocabulary!, this.grammarLexerData.ruleNames, this.grammarParserData.ruleNames);
 
-        let lexerRuleIndexMap = this.lexerInterpreter.getRuleIndexMap();
-        let parserRuleIndexMap = this.parserInterpreter.getRuleIndexMap();
         let start: RuleStartState;
         if (isLexerRule) {
-            let index = lexerRuleIndexMap.get(options.startRule);
+            let index = this.grammarLexerRuleMap.get(options.startRule);
             if (index == undefined) {
                 return [];
             }
-            start = this.lexerInterpreter.atn.ruleToStartState[index];
+            start = this.grammarLexerData.atn.ruleToStartState[index];
         } else {
-            let index = parserRuleIndexMap.get(options.startRule);
+            let index = this.grammarParserRuleMap.get(options.startRule);
             if (index == undefined) {
                 return [];
             }
-            start = this.parserInterpreter.atn.ruleToStartState[index];
+            start = this.grammarParserData.atn.ruleToStartState[index];
         }
 
         return generator.generate(options, start, definitions);
@@ -825,6 +857,13 @@ export class SourceContext {
         let tokens = this.tokenStream.getTokens();
         let formatter = new GrammarFormatter(tokens);
         return formatter.formatGrammar(options, start, stop);
+    }
+
+    public createDebugger(lexerGrammarName: string, parserGrammarName: string, input: string): GrapsDebugger | undefined {
+        if (this.grammarLexerData && this.grammarParserData) {
+            return new GrapsDebugger(lexerGrammarName, parserGrammarName, this.grammarLexerData, this.grammarParserData, input);
+        }
+        return undefined;
     }
 
     private runSemanticAnalysisIfNeeded() {
@@ -877,17 +916,28 @@ export class SourceContext {
         }
 
         if (fs.existsSync(lexerFile)) {
-            let data = InterpreterDataReader.parseFile(lexerFile);
-            this.interpreterInput = new ANTLRInputStream(""); // Will be overwritten on interpreter runs.
-            this.lexerInterpreter = new LexerInterpreter(this.fileName, data.vocabulary, data.modes, data.ruleNames, data.atn, this.interpreterInput);
-            this.tokens = new CommonTokenStream(this.lexerInterpreter);
+            this.grammarLexerData = InterpreterDataReader.parseFile(lexerFile);
+            let map = new Map<string, number>();
+            for (let i = 0; i < this.grammarLexerData.ruleNames.length; ++i) {
+                map.set(this.grammarLexerData.ruleNames[i], i);
+            }
+            this.grammarLexerRuleMap = map;
+        } else {
+            this.grammarLexerData = undefined;
+            this.grammarLexerRuleMap.clear();
         }
 
-        if (this.lexerInterpreter && fs.existsSync(parserFile)) {
-            let data = InterpreterDataReader.parseFile(parserFile);
-            this.parserInterpreter = new ParserInterpreter(this.fileName, data.vocabulary, data.ruleNames, data.atn, this.tokens!)
+        if (this.grammarLexerData && fs.existsSync(parserFile)) {
+            this.grammarParserData = InterpreterDataReader.parseFile(parserFile);
+            let map = new Map<string, number>();
+            for (let i = 0; i < this.grammarParserData.ruleNames.length; ++i) {
+                map.set(this.grammarParserData.ruleNames[i], i);
+            }
+            this.grammarParserRuleMap = map;
+        } else {
+            this.grammarParserData = undefined;
+            this.grammarParserRuleMap.clear();
         }
-
     }
 
     /**
@@ -931,22 +981,22 @@ export class SourceContext {
 
     private static globalSymbols = new GrapsSymbolTable("Global Symbols", { allowDuplicateSymbols: false });
 
-    // Interpreter infrastructure.
-    private interpreterInput: CharStream;
-    private tokens: CommonTokenStream | undefined;
-    private lexerInterpreter: LexerInterpreter | undefined;
-    private parserInterpreter: ParserInterpreter | undefined;
-
     // Result related fields.
     //private diagnostics: DiagnosticEntry[] = [];
     private rrdScripts: Map<string, string>;
     private semanticAnalysisDone: boolean = false; // Includes determining reference counts.
 
     // Grammar parsing infrastructure.
-    private grammarType: GrammarType;
     private tokenStream: CommonTokenStream;
     private parser: ANTLRv4Parser | undefined;
     private errorListener: ContextErrorListener = new ContextErrorListener(this.diagnostics);
+
+    // Grammar data.
+    private grammarType: GrammarType;
+    private grammarLexerData: InterpreterData | undefined;
+    private grammarLexerRuleMap: Map<string, number> = new Map();
+    private grammarParserData: InterpreterData | undefined;
+    private grammarParserRuleMap: Map<string, number> = new Map();
 
     private tree: GrammarSpecContext | undefined; // The root context from the last parse run.
     private imports: string[] = []; // Updated on each parse run.

@@ -12,6 +12,7 @@ import * as path from "path";
 
 import { SourceContext } from './SourceContext';
 import { ATNStateType, TransitionType } from "antlr4ts/atn";
+import { GrapsDebugger } from "./GrapsDebugger";
 
 export enum SymbolGroupKind { // Multiple symbol kinds can be involved in a symbol lookup.
     TokenRef,
@@ -81,6 +82,7 @@ export class DiagnosticEntry {
  * for parser rules to check for implicit lexer tokens.
  */
 export class ReferenceNode {
+    kind: SymbolKind;
     rules: string[];
     tokens: string[];
     literals: string[];
@@ -402,6 +404,21 @@ export class AntlrLanguageSupport {
         return result;
     }
 
+    public getDependencies(fileName: string): string[] {
+        let entry = this.sourceContexts.get(fileName);
+        if (!entry) {
+            return [];
+        }
+        let dependencies: Set<SourceContext> = new Set();
+        this.pushDependencyFiles(entry, dependencies);
+
+        let result: string[] = [];
+        for (let dep of dependencies) {
+            result.push(dep.fileName);
+        }
+        return result;
+    }
+
     public getReferenceGraph(fileName: string): Map<string, ReferenceNode> {
         var context = this.getContext(fileName);
         return context.getReferenceGraph();
@@ -454,5 +471,11 @@ export class AntlrLanguageSupport {
     public formatGrammar(fileName: string, options: FormattingOptions, start: number, stop: number): [string, number, number] {
         var context = this.getContext(fileName);
         return context.formatGrammar(options, start, stop);
+    }
+
+    public createDebugger(fileName: string, lexerGrammarName: string, parserGrammarName: string,
+        input: string): GrapsDebugger | undefined {
+        var context = this.getContext(fileName);
+        return context.createDebugger(lexerGrammarName, parserGrammarName, input);
     }
 }

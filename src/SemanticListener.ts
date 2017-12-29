@@ -33,10 +33,12 @@ export class SemanticListener implements ANTLRv4ParserListener {
 
     // Check references to other parser rules.
     exitRuleref(ctx: RulerefContext) {
-        let ruleRef = ctx.RULE_REF()
-        let symbol = ruleRef.text;
-        this.checkSymbolExistance(true, SymbolGroupKind.RuleRef, symbol, "Unknown parser rule", ruleRef.symbol);
-        this.symbolTable.countReference(symbol);
+        let ruleRef = ctx.RULE_REF();
+        if (ruleRef) {
+            let symbol = ruleRef.text;
+            this.checkSymbolExistance(true, SymbolGroupKind.RuleRef, symbol, "Unknown parser rule", ruleRef.symbol);
+            this.symbolTable.countReference(symbol);
+        }
     }
 
     // Check references to other lexer tokens.
@@ -119,7 +121,8 @@ export class SemanticListener implements ANTLRv4ParserListener {
                 range: {
                     start: {
                         column: offendingToken.charPositionInLine,
-                        row: offendingToken.line },
+                        row: offendingToken.line
+                    },
                     end: {
                         column: offendingToken.charPositionInLine + offendingToken.stopIndex - offendingToken.startIndex + 1,
                         row: offendingToken.line
