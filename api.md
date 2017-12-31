@@ -72,10 +72,12 @@ The file name you pass to all API functions is mostly used to identify a source 
 > `function AntlrLanguageSupport.getCodeCompletionCandidates(fileName, column, row)`
 >
 > Returns an array of `SymbolInfo` objects which represent symbols that are possible input at the given input position. You should have called `setText()` at least once before calling this method in order to have internal state set up properly.
+
+-----
+
+> `function AntlrLanguageSupport.getDependencies(fileName)`
 >
-> Note: the code completion implementation is still in incomplete state, so expect problems there (especially slowness with big grammars).
->
-> Does nothing if the grammar with the given file name hasn't been loaded yet.
+> Returns a list of strings with names of grammars this grammar depends on.
 
 -----
 

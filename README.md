@@ -60,6 +60,11 @@ I'd love to see code contributions, to make the module evolve quicker.
 
 ## Release Notes
 
+### 1.3.13
+
+- New API `getDependencies` for a list of sub grammars a grammar depends on.
+- The reference graph now contains qualified symbols (the grammar from which it was read).
+
 ### 1.3.11
 - Added support for grammar formatting
 - Updated docs for that and sentence generation
