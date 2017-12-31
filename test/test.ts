@@ -56,7 +56,7 @@ describe('antlr4-graps:', function () {
             var info = backend.infoForSymbol("test/t.g4", 7, 2, true);
             assert(info);
             expect(info!.name, "Test 1").to.equal("B");
-            expect(info!.source, "Test 2").to.equal("t.g4");
+            expect(info!.source, "Test 2").to.equal("t");
             expect(info!.kind, "Test 3").to.equal(SymbolKind.LexerToken);
             assert(info!.definition);
             expect(info!.definition!.text, "Test 4").to.equal("B: 'B';");
@@ -72,7 +72,7 @@ describe('antlr4-graps:', function () {
 
             let info = symbols[8];
             expect(info.name, "Test 2").to.equal("x");
-            expect(info.source, "Test 3").to.equal("t.g4");
+            expect(info.source, "Test 3").to.equal("t");
             expect(info.kind, "Test 4").to.equal(SymbolKind.ParserRule);
             expect(info.definition!.text, "Test5").to.equal("x: A | B | C;");
             expect(info.definition!.range.start.column, "Test 6").to.equal(0);
@@ -145,7 +145,7 @@ describe('antlr4-graps:', function () {
 
             let info = symbols[40];
             expect(info.name, "Test 2").to.equal("Mode2");
-            expect(info.source, "Test 3").to.equal("TLexer.g4");
+            expect(info.source, "Test 3").to.equal("TLexer");
             expect(info.kind, "Test 4").to.equal(SymbolKind.LexerMode);
             assert(info.definition, "Test 5");
             expect(info.definition!.text, "Test 6").to.equal("mode Mode2;");
@@ -249,18 +249,18 @@ describe('antlr4-graps:', function () {
 
         it("Reference Graph", function () {
             let graph = backend.getReferenceGraph("test/TParser.g4");
-            expect(graph.size, "Test 1").to.equal(13);
-            expect(graph.has("expr"), "Test 2");
-            expect(graph.get("expr")!.tokens.length, "Test 3").to.equal(9);
-            expect(graph.get("expr")!.tokens[4], "Test 4").to.equal("QuestionMark");
+            expect(graph.size, "Test 1").to.equal(48);
+            expect(graph.has("TParser.expr"), "Test 2").to.be.true;
+            expect(graph.get("TParser.expr")!.tokens.length, "Test 3").to.equal(9);
+            expect(graph.get("TParser.expr")!.tokens[4], "Test 4").to.equal("TLexer.QuestionMark");
 
-            expect(graph.has("flowControl"), "Test 5");
-            expect(graph.get("flowControl")!.rules.length, "Test 6").to.equal(1);
-            expect(graph.get("flowControl")!.tokens.length, "Test 17").to.equal(2);
-            expect(graph.get("flowControl")!.literals.length, "Test 8").to.equal(1);
-            expect(graph.get("flowControl")!.rules[0], "Test 9").to.equal("expr");
-            expect(graph.get("flowControl")!.tokens[1], "Test 10").to.equal("Continue");
-            expect(graph.get("flowControl")!.literals[0], "Test 11").to.equal("return");
+            expect(graph.has("TParser.flowControl"), "Test 5").to.be.true;
+            expect(graph.get("TParser.flowControl")!.rules.length, "Test 6").to.equal(1);
+            expect(graph.get("TParser.flowControl")!.tokens.length, "Test 17").to.equal(2);
+            expect(graph.get("TParser.flowControl")!.literals.length, "Test 8").to.equal(1);
+            expect(graph.get("TParser.flowControl")!.rules[0], "Test 9").to.equal("TParser.expr");
+            expect(graph.get("TParser.flowControl")!.tokens[1], "Test 10").to.equal("TLexer.Continue");
+            expect(graph.get("TParser.flowControl")!.literals[0], "Test 11").to.equal("return");
         });
 
     });
@@ -517,7 +517,7 @@ describe('antlr4-graps:', function () {
             var info = backend.infoForSymbol("test/TParser.g4", 48, 93, true);
             assert(info, "Test 1");
             expect(info!.name, "Test 2").to.equal("Semicolon");
-            expect(info!.source, "Test 3").to.equal("TLexer.g4");
+            expect(info!.source, "Test 3").to.equal("TLexer");
             expect(info!.kind, "Test 4").to.equal(SymbolKind.LexerToken);
             assert(info!.definition, "Test 5");
             expect(info!.definition!.text, "Test 6").to.equal("Semicolon: \';\';");

@@ -81,6 +81,7 @@ export class DiagnosticEntry {
  * for parser rules to check for implicit lexer tokens.
  */
 export class ReferenceNode {
+    kind: SymbolKind;
     rules: string[];
     tokens: string[];
     literals: string[];
@@ -398,6 +399,21 @@ export class AntlrLanguageSupport {
         var result: number = context.getReferenceCount(symbol);
         for (let reference of context.references) {
             result += reference.getReferenceCount(symbol);
+        }
+        return result;
+    }
+
+    public getDependencies(fileName: string): string[] {
+        let entry = this.sourceContexts.get(fileName);
+        if (!entry) {
+            return [];
+        }
+        let dependencies: Set<SourceContext> = new Set();
+        this.pushDependencyFiles(entry, dependencies);
+
+        let result: string[] = [];
+        for (let dep of dependencies) {
+            result.push(dep.fileName);
         }
         return result;
     }

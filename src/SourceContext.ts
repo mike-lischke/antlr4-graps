@@ -23,7 +23,7 @@ import {
     RuleStopState, PlusBlockStartState, StarLoopEntryState, RuleStartState
 } from 'antlr4ts/atn';
 import { ParseCancellationException, IntervalSet } from 'antlr4ts/misc';
-import { ParseTreeWalker, TerminalNode, ParseTree } from 'antlr4ts/tree';
+import { ParseTreeWalker, TerminalNode, ParseTree, ParseTreeListener } from 'antlr4ts/tree';
 
 import { CodeCompletionCore, Symbol, ScopedSymbol, LiteralSymbol } from "antlr4-c3";
 
@@ -38,7 +38,7 @@ import {
     SentenceGenerationOptions, FormattingOptions
 } from './AntlrLanguageSupport';
 
-import { ContextErrorListener } from './ContextErrorListener';
+import { ContextErrorListener, ContextLexerErrorListener } from './ContextErrorListener';
 
 import { DetailsListener } from './DetailsListener';
 import { SemanticListener } from './SemanticListener';
@@ -59,15 +59,16 @@ enum GrammarType { Unknown, Parser, Lexer, Combined };
 
 // One source context per file. Source contexts can reference each other (e.g. for symbol lookups).
 export class SourceContext {
-    public symbolTable = new GrapsSymbolTable("Context", { allowDuplicateSymbols: true }, this);
+    public symbolTable: GrapsSymbolTable;
     public references: SourceContext[] = []; // Contexts referencing us.
     public sourceId: string;
 
     /* @internal */
     public diagnostics: DiagnosticEntry[] = [];
 
-    constructor(private fileName: string) {
-        this.sourceId = path.basename(fileName);
+    constructor(public fileName: string) {
+        this.sourceId = path.basename(fileName, path.extname(fileName));
+        this.symbolTable =  new GrapsSymbolTable(this.sourceId, { allowDuplicateSymbols: true }, this);
 
         // Initialize static global symbol table, if not yet done.
         if (!SourceContext.globalSymbols.resolve("EOF")) {
@@ -409,8 +410,10 @@ export class SourceContext {
     public setText(source: string) {
         let input = new ANTLRInputStream(source);
         let lexer = new ANTLRv4Lexer(input);
+
+        // There won't be lexer errors actually. They are silently bubbled up and will cause parser errors.
         lexer.removeErrorListeners();
-        lexer.addErrorListener(this.errorListener);
+        lexer.addErrorListener(this.lexerErrorListener);
         this.tokenStream = new CommonTokenStream(lexer);
         this.parser = undefined;
     }
@@ -451,18 +454,21 @@ export class SourceContext {
         }
 
         if (this.tree && this.tree.childCount > 0) {
-            let typeContext = this.tree.grammarType();
-            if (typeContext.LEXER()) {
-                this.grammarType = GrammarType.Lexer;
-            } else if (typeContext.PARSER()) {
-                this.grammarType = GrammarType.Parser;
-            } else {
-                this.grammarType = GrammarType.Combined;
+            try {
+                let typeContext = this.tree.grammarType();
+                if (typeContext.LEXER()) {
+                    this.grammarType = GrammarType.Lexer;
+                } else if (typeContext.PARSER()) {
+                    this.grammarType = GrammarType.Parser;
+                } else {
+	                this.grammarType = GrammarType.Combined;
+                }
+		    } catch (e) {
             }
         }
         this.symbolTable.tree = this.tree;
         let listener: DetailsListener = new DetailsListener(this.symbolTable, this.imports);
-        ParseTreeWalker.DEFAULT.walk(listener, this.tree);
+        ParseTreeWalker.DEFAULT.walk(listener as ParseTreeListener, this.tree);
 
         return this.imports;
     }
@@ -482,19 +488,49 @@ export class SourceContext {
         this.runSemanticAnalysisIfNeeded();
 
         let result = new Map();
-        for (let symbol of this.symbolTable.getAllSymbols(Symbol, true)) {
-            if (symbol instanceof ParserRuleSymbol || symbol instanceof LexerTokenSymbol) {
-                let entry: ReferenceNode = { rules: [], tokens: [], literals: [] };
+        for (let symbol of this.symbolTable.getAllSymbols(Symbol, false)) {
+            if (symbol instanceof ParserRuleSymbol
+                || symbol instanceof LexerTokenSymbol
+                || symbol instanceof FragmentLexerTokenSymbol) {
+                let entry: ReferenceNode = {
+                    kind: symbol instanceof ParserRuleSymbol ? SymbolKind.ParserRule : SymbolKind.LexerToken,
+                    rules: [],
+                    tokens: [],
+                    literals: []
+                };
+
                 for (let child of symbol.getAllSymbols(ParserRuleSymbol, true)) {
-                    entry.rules.push(child.name);
+                    let resolved = this.symbolTable.resolve(child.name, false);
+                    if (resolved) {
+                        entry.rules.push(resolved.qualifiedName());
+                    } else {
+                        entry.rules.push(child.name);
+                    }
                 }
+
                 for (let child of symbol.getAllSymbols(LexerTokenSymbol, true)) {
-                    entry.tokens.push(child.name);
+                    let resolved = this.symbolTable.resolve(child.name, false);
+                    if (resolved) {
+                        entry.tokens.push(resolved.qualifiedName());
+                    } else {
+                        entry.tokens.push(child.name);
+                    }
                 }
+
                 for (let child of symbol.getAllSymbols(LiteralSymbol, true)) {
-                    entry.literals.push(child.name);
+                    let resolved = this.symbolTable.resolve(child.name, false);
+                    if (resolved) {
+                        entry.literals.push(resolved.qualifiedName());
+                    } else {
+                        entry.literals.push(child.name);
+                    }
                 }
-                result.set(symbol.name, entry);
+
+                result.set(symbol.qualifiedName(), entry);
+            } else if (symbol instanceof BuiltInLexerTokenSymbol) {
+                result.set(symbol.qualifiedName(), { kind: SymbolKind.BuiltInLexerToken, rules: [], tokens: [], literals: [] });
+            } else if (symbol instanceof VirtualLexerTokenSymbol) {
+                result.set(symbol.qualifiedName(), { kind: SymbolKind.VirtualLexerToken, rules: [], tokens: [], literals: [] });
             }
         }
         return result;
@@ -833,7 +869,7 @@ export class SourceContext {
             //this.diagnostics.length = 0; Don't, we would lose our syntax errors from last parse run.
             this.rrdScripts = new Map();
             let semanticListener = new SemanticListener(this.diagnostics, this.symbolTable);
-            ParseTreeWalker.DEFAULT.walk(semanticListener, this.tree!);
+            ParseTreeWalker.DEFAULT.walk(semanticListener as ParseTreeListener, this.tree!);
 
             let visitor = new RuleVisitor(this.rrdScripts);
             let t = visitor.visit(this.tree!);
@@ -947,6 +983,7 @@ export class SourceContext {
     private tokenStream: CommonTokenStream;
     private parser: ANTLRv4Parser | undefined;
     private errorListener: ContextErrorListener = new ContextErrorListener(this.diagnostics);
+    private lexerErrorListener: ContextLexerErrorListener = new ContextLexerErrorListener(this.diagnostics);
 
     private tree: GrammarSpecContext | undefined; // The root context from the last parse run.
     private imports: string[] = []; // Updated on each parse run.

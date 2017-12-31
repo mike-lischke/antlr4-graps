@@ -7,6 +7,8 @@
 
 "use strict";
 
+import * as path from "path";
+
 import { DiagnosticEntry, DiagnosticType } from "../index";
 import { SourceContext } from "./SourceContext";
 
@@ -112,8 +114,6 @@ export class ErrorParser {
      * Converts errors genrated by the ANTLR tool into our diagnostics structure for reporting.
      */
 	public convertErrorsToDiagnostics(text: string): boolean {
-		//console.log(text);
-
 		let lines = text.split("\n");
 		for (let line of lines) {
 			if (line.length > 0) {
@@ -129,7 +129,7 @@ export class ErrorParser {
 					// Find the context this error belongs to.
 					let context: SourceContext | undefined;
 					for (let candidate of this.contexts) {
-						if (candidate.sourceId === fileName) {
+					    if (path.basename(candidate.fileName) === fileName) {
 							context = candidate;
 							break;
 						}

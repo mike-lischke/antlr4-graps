@@ -22,7 +22,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
     constructor(private diagnostics: DiagnosticEntry[], private symbolTable: GrapsSymbolTable) { }
 
     // Check references to other lexer tokens.
-    exitTerminalRule(ctx: TerminalRuleContext) {
+    exitTerminalRule = function(ctx: TerminalRuleContext) {
         let tokenRef = ctx.TOKEN_REF();
         if (tokenRef) {
             let symbol = tokenRef.text;
@@ -32,15 +32,17 @@ export class SemanticListener implements ANTLRv4ParserListener {
     }
 
     // Check references to other parser rules.
-    exitRuleref(ctx: RulerefContext) {
-        let ruleRef = ctx.RULE_REF()
-        let symbol = ruleRef.text;
-        this.checkSymbolExistance(true, SymbolGroupKind.RuleRef, symbol, "Unknown parser rule", ruleRef.symbol);
-        this.symbolTable.countReference(symbol);
+    exitRuleref = function(ctx: RulerefContext) {
+        let ruleRef = ctx.RULE_REF();
+        if (ruleRef) {
+            let symbol = ruleRef.text;
+            this.checkSymbolExistance(true, SymbolGroupKind.RuleRef, symbol, "Unknown parser rule", ruleRef.symbol);
+            this.symbolTable.countReference(symbol);
+            }
     }
 
     // Check references to other lexer tokens.
-    exitSetElement(ctx: SetElementContext) {
+    exitSetElement = function(ctx: SetElementContext) {
         let tokenRef = ctx.TOKEN_REF();
         if (tokenRef) {
             let symbol = tokenRef.text;
@@ -50,7 +52,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
     }
 
     // Check references to modes + channels in lexer actions.
-    exitLexerCommand(ctx: LexerCommandContext) {
+    exitLexerCommand = function(ctx: LexerCommandContext) {
         let lexerCommandExpr = ctx.lexerCommandExpr();
         let lexerCommandExprId = lexerCommandExpr ? lexerCommandExpr.identifier() : undefined;
         if (lexerCommandExprId) {
@@ -71,7 +73,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
     }
 
     // Check definition of a lexer token.
-    exitLexerRuleSpec(ctx: LexerRuleSpecContext) {
+    exitLexerRuleSpec = function(ctx: LexerRuleSpecContext) {
         let tokenRef = ctx.TOKEN_REF();
         let name = tokenRef.text;
 
@@ -94,7 +96,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
     }
 
     // Check definition of a parser rule.
-    exitParserRuleSpec(ctx: ParserRuleSpecContext) {
+    exitParserRuleSpec = function(ctx: ParserRuleSpecContext) {
         // Same processing here as for lexer rules.
         let ruleRef = ctx.RULE_REF();
         let name = ruleRef.text;
@@ -119,7 +121,8 @@ export class SemanticListener implements ANTLRv4ParserListener {
                 range: {
                     start: {
                         column: offendingToken.charPositionInLine,
-                        row: offendingToken.line },
+                        row: offendingToken.line
+                    },
                     end: {
                         column: offendingToken.charPositionInLine + offendingToken.stopIndex - offendingToken.startIndex + 1,
                         row: offendingToken.line
