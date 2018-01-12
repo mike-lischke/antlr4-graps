@@ -141,7 +141,7 @@ export class GrapsSymbolTable extends SymbolTable {
                     return { // TODO: implement a best match search.
                         kind: kind,
                         name: symbol!.name,
-                        source: table.owner.sourceId,
+                        source: table.owner.fileName,
                         definition: definitionForContext(table.tree, true)
                     };
                 }
@@ -152,7 +152,7 @@ export class GrapsSymbolTable extends SymbolTable {
         return {
             kind: kind,
             name: symbol.name,
-            source: (symbol.context && symbolTable && symbolTable.owner) ? symbolTable.owner.sourceId : "ANTLR runtime",
+            source: (symbol.context && symbolTable && symbolTable.owner) ? symbolTable.owner.fileName : "ANTLR runtime",
             definition: definitionForContext(symbol.context, true),
             description: undefined
         };
@@ -168,7 +168,7 @@ export class GrapsSymbolTable extends SymbolTable {
             result.push({
                 kind: this.getKindFromSymbol(symbol),
                 name: symbol.name,
-                source: root.owner ? root.owner.sourceId : "ANTLR runtime",
+                source: root.owner ? root.owner.fileName : "ANTLR runtime",
                 definition: definitionForContext(symbol.context, true),
                 description: undefined
             });
