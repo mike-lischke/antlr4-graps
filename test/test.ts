@@ -247,7 +247,7 @@ describe('antlr4-graps:', function () {
                 " Sequence(NonTerminal('id')), Sequence(NonTerminal('flowControl')), Sequence(Terminal('INT')), Sequence(Terminal('String')))).addTo()");
         });
 
-        it.only("Reference Graph", function () {
+        it("Reference Graph", function () {
             let graph = backend.getReferenceGraph("test/TParser.g4");
             expect(graph.size, "Test 1").to.equal(48);
             expect(graph.has("TParser.expr"), "Test 2").to.be.true;
