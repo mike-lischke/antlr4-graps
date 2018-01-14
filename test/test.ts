@@ -10,9 +10,10 @@
 import fs = require("fs-extra");
 import glob = require("glob");
 import path = require("path");
+import util = require("util");
 
 import { expect, should, assert } from 'chai';
-import { AntlrLanguageSupport, SourceContext, SymbolKind, ATNGraphData, LexicalRange } from "../index";
+import { AntlrLanguageSupport, SourceContext, SymbolKind, ATNGraphData, LexicalRange, GrapsDebugger } from "../index";
 
 var backend: AntlrLanguageSupport;
 
@@ -56,7 +57,7 @@ describe('antlr4-graps:', function () {
             var info = backend.infoForSymbol("test/t.g4", 7, 2, true);
             assert(info);
             expect(info!.name, "Test 1").to.equal("B");
-            expect(info!.source, "Test 2").to.equal("t");
+            expect(info!.source, "Test 2").to.equal("test/t.g4");
             expect(info!.kind, "Test 3").to.equal(SymbolKind.LexerToken);
             assert(info!.definition);
             expect(info!.definition!.text, "Test 4").to.equal("B: 'B';");
@@ -72,7 +73,7 @@ describe('antlr4-graps:', function () {
 
             let info = symbols[8];
             expect(info.name, "Test 2").to.equal("x");
-            expect(info.source, "Test 3").to.equal("t");
+            expect(info.source, "Test 3").to.equal("test/t.g4");
             expect(info.kind, "Test 4").to.equal(SymbolKind.ParserRule);
             expect(info.definition!.text, "Test5").to.equal("x: A | B | C;");
             expect(info.definition!.range.start.column, "Test 6").to.equal(0);
@@ -145,7 +146,7 @@ describe('antlr4-graps:', function () {
 
             let info = symbols[40];
             expect(info.name, "Test 2").to.equal("Mode2");
-            expect(info.source, "Test 3").to.equal("TLexer");
+            expect(info.source, "Test 3").to.equal("test/TLexer.g4");
             expect(info.kind, "Test 4").to.equal(SymbolKind.LexerMode);
             assert(info.definition, "Test 5");
             expect(info.definition!.text, "Test 6").to.equal("mode Mode2;");
@@ -517,7 +518,7 @@ describe('antlr4-graps:', function () {
             var info = backend.infoForSymbol("test/TParser.g4", 48, 93, true);
             assert(info, "Test 1");
             expect(info!.name, "Test 2").to.equal("Semicolon");
-            expect(info!.source, "Test 3").to.equal("TLexer");
+            expect(info!.source, "Test 3").to.equal("test/TLexer.g4");
             expect(info!.kind, "Test 4").to.equal(SymbolKind.LexerToken);
             assert(info!.definition, "Test 5");
             expect(info!.definition!.text, "Test 6").to.equal("Semicolon: \';\';");
@@ -536,7 +537,7 @@ describe('antlr4-graps:', function () {
         it("Generate data for tests", async function () {
             this.timeout(20000);
 
-            let result = await backend.generate("test/formatting/grammars-v4/cpp/CPP14.g4", { outputDir: "generated", language: "CSharp" });
+            let result = await backend.generate("test/CPP14.g4", { outputDir: "generated", language: "CSharp" });
             for (let file of result) {
                 let diagnostics = backend.getDiagnostics(file);
                 if (diagnostics.length > 0) {
@@ -567,7 +568,7 @@ describe('antlr4-graps:', function () {
                 ["Identifier", "cppIdentifier"],
             ]);
 
-            let sentences = backend.generateSentences("test/formatting/grammars-v4/cpp/CPP14.g4", {
+            let sentences = backend.generateSentences("test/CPP14.g4", {
                 startRule: "balancedtokenseq",
                 allPaths: false,
                 minTokenLength: 3,
