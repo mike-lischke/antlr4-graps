@@ -13,7 +13,7 @@ import path = require("path");
 import util = require("util");
 
 import { expect, should, assert } from 'chai';
-import { AntlrLanguageSupport, SourceContext, SymbolKind, ATNGraphData, LexicalRange, GrapsDebugger } from "../index";
+import { AntlrLanguageSupport, SourceContext, SymbolKind, ATNGraphData, LexicalRange } from "../index";
 
 var backend: AntlrLanguageSupport;
 

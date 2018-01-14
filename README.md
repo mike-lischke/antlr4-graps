@@ -60,6 +60,9 @@ I'd love to see code contributions, to make the module evolve quicker.
 
 ## Release Notes
 
+### 1.3.16
+- Return full paths for symbols to remove doubt from which file a symbol comes from.
+
 ### 1.3.13
 
 - New API `getDependencies` for a list of sub grammars a grammar depends on.
