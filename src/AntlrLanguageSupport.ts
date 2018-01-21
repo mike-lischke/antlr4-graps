@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017, Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -68,13 +68,49 @@ export enum DiagnosticType {
     Info,
     Warning,
     Error
-}
+};
 
 export class DiagnosticEntry {
     type: DiagnosticType;
     message: string;
     range: LexicalRange;
 };
+
+/**
+ * Contains a number of values for a lexer token. Used when constructing a token list and parse trees in the debugger.
+ */
+export class LexerToken {
+    text: string;
+    type: number;
+    name: string;
+    line: number;
+    offset: number; // Offset in the line.
+    channel: number;
+    tokenIndex: number;
+};
+
+export enum ParseTreeNodeType {
+    Rule,
+    Terminal,
+    Error
+};
+
+/**
+ * This node class is what exported parse trees are made of, which are created by the debugger interface.
+ * Each node stands either for an invoked rule, a terminal node or an error node.
+ */
+export class ParseTreeNode {
+    type: ParseTreeNodeType;
+
+    ruleIndex?: number;  // Only valid for the rule node type.
+    name: string;
+    start?: LexerToken;  // ditto
+    stop?: LexerToken;   // ditto
+
+    symbol?: LexerToken; // Only valid for non-rule nodes.
+
+    children: ParseTreeNode[]; // Available for all node types, but empty for non-rule types.
+}
 
 /**
  * All references of a rule (both lexer and parser) to other rules and string literals.
@@ -473,9 +509,8 @@ export class AntlrLanguageSupport {
         return context.formatGrammar(options, start, stop);
     }
 
-    public createDebugger(fileName: string, lexerGrammarName: string, parserGrammarName: string,
-        input: string): GrapsDebugger | undefined {
+    public createDebugger(fileName: string, input: string): GrapsDebugger | undefined {
         var context = this.getContext(fileName);
-        return context.createDebugger(lexerGrammarName, parserGrammarName, input);
+        return context.createDebugger(path.basename(fileName), input);
     }
 }

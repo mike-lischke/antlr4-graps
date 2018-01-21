@@ -865,9 +865,9 @@ export class SourceContext {
         return formatter.formatGrammar(options, start, stop);
     }
 
-    public createDebugger(lexerGrammarName: string, parserGrammarName: string, input: string): GrapsDebugger | undefined {
-        if (this.grammarLexerData && this.grammarParserData) {
-            return new GrapsDebugger(lexerGrammarName, parserGrammarName, this.grammarLexerData, this.grammarParserData, input);
+    public createDebugger(mainGrammarName: string, input: string): GrapsDebugger | undefined {
+        if (this.grammarLexerData) {
+            return new GrapsDebugger(mainGrammarName, this.grammarLexerData, this.grammarParserData, input);
         }
         return undefined;
     }
