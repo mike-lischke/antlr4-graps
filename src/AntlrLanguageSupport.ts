@@ -509,8 +509,8 @@ export class AntlrLanguageSupport {
         return context.formatGrammar(options, start, stop);
     }
 
-    public createDebugger(fileName: string, input: string): GrapsDebugger | undefined {
+    public createDebugger(fileName: string): GrapsDebugger | undefined {
         var context = this.getContext(fileName);
-        return context.createDebugger(path.basename(fileName), input);
+        return context.createDebugger(path.basename(fileName));
     }
 }
