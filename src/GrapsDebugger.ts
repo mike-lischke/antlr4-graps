@@ -13,19 +13,27 @@ import {
     LexerInterpreter, ParserInterpreter, Vocabulary, TokenStream, ANTLRInputStream, CommonTokenStream, CommonToken,
     ParserRuleContext, RecognitionException, ANTLRErrorListener, Recognizer, Token
 } from "antlr4ts";
-import { ATN, RuleStartState, ATNState, ATNStateType } from "antlr4ts/atn";
+import { ATN, RuleStartState, ATNState, ATNStateType, TransitionType, Transition, RuleTransition } from "antlr4ts/atn";
 import { ParseTree, ErrorNode, TerminalNode } from "antlr4ts/tree";
+import { Override } from "antlr4ts/Decorators";
+
+import { Symbol, ScopedSymbol, BlockSymbol } from "antlr4-c3";
 
 import { InterpreterData } from "./InterpreterDataReader";
-import { LexerToken, ParseTreeNode, ParseTreeNodeType, SymbolInfo } from "../index";
-import { Override } from "antlr4ts/Decorators";
-import { EOF } from "dns";
+import { LexerToken, ParseTreeNode, ParseTreeNodeType, SymbolInfo, LexicalRange } from "../index";
 import { SourceContext } from "./SourceContext";
+import { AlternativeSymbol, GrapsSymbolTable, RuleReferenceSymbol, EbnfSuffixSymbol } from "./GrapsSymbolTable";
 
 export interface GrapsBreakPoint {
     validated: boolean;
     line: number;
     id: number;
+}
+
+export interface GrapsStackFrame {
+    name: string;
+    source: string;
+    next: LexicalRange[];
 }
 
 /**
@@ -34,6 +42,7 @@ export interface GrapsBreakPoint {
 export class GrapsDebugger extends EventEmitter {
     constructor(
         private context: SourceContext,
+        private symbolTable: GrapsSymbolTable,
         public mainGrammarName: string,
         private lexerData: InterpreterData,
         private parserData: InterpreterData | undefined
@@ -49,8 +58,8 @@ export class GrapsDebugger extends EventEmitter {
         this.lexer.addErrorListener(new DebuggerLexerErrorListener(this));
         this.tokenStream = new CommonTokenStream(this.lexer);
         if (this.parserData) {
-            this.parser = new GrapsParserInterpreter(this, this.mainGrammarName, this.parserData.vocabulary,
-                this.parserData.ruleNames, this.parserData.atn, this.tokenStream);
+            this.parser = new GrapsParserInterpreter(this, this.symbolTable, this.mainGrammarName,
+                this.parserData.vocabulary, this.parserData.ruleNames, this.parserData.atn, this.tokenStream);
             this.parser.buildParseTree = true;
             this.parser.removeErrorListeners();
             this.parser.addErrorListener(new DebuggerErrorListener(this));
@@ -115,7 +124,7 @@ export class GrapsDebugger extends EventEmitter {
     }
 
     public addBreakPoint(path: string, line: number): GrapsBreakPoint {
-        let breakPoint = <GrapsBreakPoint> { validated: false, line: line, id: this.nextBreakPointId++ };
+        let breakPoint = <GrapsBreakPoint>{ validated: false, line: line, id: this.nextBreakPointId++ };
         this.breakPoints.set(breakPoint.id, breakPoint);
         this.validateBreakPoint(breakPoint);
 
@@ -184,28 +193,137 @@ export class GrapsDebugger extends EventEmitter {
         return this.parseContextToNode(this.parseTree);
     }
 
-    public get currentStackTrace(): SymbolInfo[] {
-        let result = new Array<SymbolInfo>();
+    public get currentStackTrace(): GrapsStackFrame[] {
+        let result: GrapsStackFrame[] = [];
         if (this.parser) {
-            let stack = this.parser.getRuleInvocationStack();
-            for (let frame of stack) {
-                result.push(this.context.getSymbolInfo(frame)!);
+            for (let frame of this.parser.callStack) {
+                let externalFrame = <GrapsStackFrame> {
+                    name: frame.name,
+                    source: frame.source,
+                    next: []
+                }
+
+                for (let next of frame.next) {
+                    if (next.context instanceof ParserRuleContext) {
+                        let start = next.context.start;
+                        let stop = next.context.stop;
+                        externalFrame.next.push({
+                            start: { column: start.charPositionInLine, row: start.line },
+                            end: { column: stop ? stop.charPositionInLine : 0, row: stop ? stop.line : start.line },
+                        });
+                    } else {
+                        let terminal = (next.context as TerminalNode).symbol;
+                        let length = terminal.stopIndex - terminal.startIndex + 1;
+                        externalFrame.next.push({
+                            start: { column: terminal.charPositionInLine, row: terminal.line },
+                            end: { column: terminal.charPositionInLine + length, row: terminal.line },
+                        });
+                    }
+                }
+                result.push(externalFrame);
             }
         }
-        return result;
+        return result.reverse();
     }
 
     public get currentTokenIndex(): number {
         return this.tokenStream.index;
     }
 
-	public sendEvent(event: string, ... args: any[]) {
-		setImmediate(_ => {
-			this.emit(event, ...args);
-		});
-	}
+    public sendEvent(event: string, ...args: any[]) {
+        setImmediate(_ => {
+            this.emit(event, ...args);
+        });
+    }
 
-    private parseContextToNode(tree: ParseTree) : ParseTreeNode {
+    /**
+     * Determines which symbols correspond to the target state we reach from the given transition.
+     * Even though the prediction algorithm determines a single path through the ATN we may get
+     * more than one result for ambiguities, since at the moment we only know a part of the path.
+     *
+     * @param frame The frame from which to compute the next symbol list.
+     * @param transition The transition to the next ATN state for which we want the symbol.
+     */
+    public computeNextSymbols(frame: InternalStackFrame, transition: Transition) {
+        frame.next = [];
+
+        let targetRule = "";
+        if (transition.target.stateType == ATNStateType.RULE_START) {
+            targetRule = this.ruleNameFromIndex(transition.target.ruleIndex)!;
+        }
+
+        for (let source of frame.current) {
+            let candidates = this.nextCandidates(source);
+            for (let candidate of candidates) {
+                if (candidate instanceof RuleReferenceSymbol) {
+                    if (candidate.name == targetRule) {
+                        frame.next.push(candidate);
+                    }
+                } else {
+                    if (candidate.context instanceof TerminalNode) {
+                        let type = candidate.context.symbol.type;
+                        if (transition.label && transition.label.contains(type)) {
+                            frame.next.push(candidate);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns a list of reachable leaf symbols from the given symbol.
+     * The start symbol must be a terminal or an alternative symbol.
+     */
+    private nextCandidates(start: Symbol): Symbol[] {
+        // There are 2 possible scenarios here:
+        //   - The next reachable symbol is a terminal symbol (rule or token reference).
+        //   - The next reachable symbol is a block.
+        // In the first case the result is just this symbol. Otherwise we have to drill down
+        // recursively to find terminal symbols that start alternatives.
+        //
+        // Additionally, we have to consider cardinalities here (loops, optionals).
+        let next = start.next;
+        if (!next) {
+            return [];
+        }
+
+        let result: Symbol[] = [];
+        if (next instanceof EbnfSuffixSymbol) {
+            // Check 1..n cardinality as that requires to include the current symbol again.
+            if (next.name[0] == "+") {
+                result.push(start);
+            }
+
+            next = next.next;
+            if (!next) {
+                return [];
+            }
+        }
+
+        if (!(next instanceof ScopedSymbol)) {
+            return [next];
+        }
+
+        // Must be a block then (rule alt block or inner alt block).
+        for (let alt of (next as ScopedSymbol).children) {
+            let subResult = this.nextCandidates(alt);
+            result.push(...subResult);
+        }
+
+        // Check cardinality which allows optional elements.
+        next = next.nextSibling;
+        if (next instanceof EbnfSuffixSymbol) {
+            if (next.name[0] == '?' || next.name[0] == '*') {
+                let subResult = this.nextCandidates(next);
+                result.push(...subResult);
+            }
+        }
+
+        return result;
+    }
+
+    private parseContextToNode(tree: ParseTree): ParseTreeNode {
         let result = new ParseTreeNode();
         result.children = [];
         if (tree instanceof ParserRuleContext) {
@@ -294,16 +412,25 @@ export class GrapsDebugger extends EventEmitter {
 }
 
 class GrapsParserInterpreter extends ParserInterpreter {
-    breakPoints: Set<ATNState> = new Set<ATNState>();
+    public breakPoints: Set<ATNState> = new Set<ATNState>();
+    public callStack: InternalStackFrame[];
 
-    constructor(private _debugger: GrapsDebugger, grammarFileName: string, vocabulary: Vocabulary,
-        ruleNames: string[], atn: ATN, input: TokenStream) {
+    constructor(
+        private _debugger: GrapsDebugger,
+        private symbolTable: GrapsSymbolTable,
+        grammarFileName: string,
+        vocabulary: Vocabulary,
+        ruleNames: string[],
+        atn: ATN,
+        input: TokenStream
+    ) {
         super(grammarFileName, vocabulary, ruleNames, atn, input);
     }
 
     start(startRuleIndex: number) {
         this.reset();
 
+        this.callStack = [];
         let startRuleStartState: RuleStartState = this._atn.ruleToStartState[startRuleIndex];
 
         this._rootContext = this.createInterpreterRuleContext(undefined, ATNState.INVALID_STATE_NUMBER, startRuleIndex);
@@ -331,10 +458,29 @@ class GrapsParserInterpreter extends ParserInterpreter {
 
         while (true) {
             let p = this.atnState;
+
+            // Update the list of next symbols if there's a label or rule ahead.
+            if (p.numberOfTransitions == 1) {
+                let lastStackFrame = this.callStack[this.callStack.length - 1];
+                switch (p.transition(0).serializationType) {
+                    case TransitionType.RULE:
+                    case TransitionType.ATOM:
+                    case TransitionType.NOT_SET:
+                    case TransitionType.RANGE:
+                    case TransitionType.SET:
+                    case TransitionType.WILDCARD: {
+                        lastStackFrame.current = lastStackFrame.next;
+                        this._debugger.computeNextSymbols(lastStackFrame, p.transition(0));
+
+                        break;
+                    }
+                }
+            }
+
             switch (p.stateType) {
                 case ATNStateType.RULE_STOP: {
-                    // End of start rule.
                     if (this._ctx.isEmpty) {
+                        // End of start rule.
                         if (this.startIsPrecedenceRule) {
                             let result: ParserRuleContext = this._ctx;
                             let parentContext: [ParserRuleContext, number] = this._parentContextStack.pop()!;
@@ -348,6 +494,7 @@ class GrapsParserInterpreter extends ParserInterpreter {
                         }
                     }
 
+                    this.callStack.pop();
                     let endOfCurrentRule = currentRule == this.atnState.ruleIndex;
                     this.visitRuleStopState(p);
 
@@ -357,6 +504,27 @@ class GrapsParserInterpreter extends ParserInterpreter {
                         return this._rootContext;
                     }
                     break;
+                }
+
+                case ATNStateType.RULE_START: {
+                    let frame = new InternalStackFrame();
+                    let ruleName = this._debugger.ruleNameFromIndex(this.atnState.ruleIndex);
+                    if (ruleName) {
+                        let ruleSymbol = this.symbolTable.resolve(ruleName, false);
+                        if (ruleSymbol) {
+                            // Get the source name from the symbol's symbol table (which doesn't
+                            // necessarily correspond to the one we have set for the debugger).
+                            let st = ruleSymbol.symbolTable as GrapsSymbolTable;
+                            if (st.owner) {
+                                frame.source = st.owner.fileName;
+                            }
+                            frame.name = ruleName;
+                            frame.current = [ruleSymbol];
+                            frame.next = [ruleSymbol];
+                            this.callStack.push(frame);
+                        }
+                    }
+                    // fall through
                 }
 
                 default:
@@ -396,14 +564,21 @@ class GrapsParserInterpreter extends ParserInterpreter {
 
 enum RunMode { Normal, StepIn, StepOver, StepOut };
 
+export class InternalStackFrame {
+    name: string;
+    source: string;
+    current: Symbol[];
+    next: Symbol[];
+}
+
 class DebuggerLexerErrorListener implements ANTLRErrorListener<number> {
     constructor(private _debugger: GrapsDebugger) {
     }
 
     syntaxError<T extends number>(recognizer: Recognizer<T, any>, offendingSymbol: T | undefined, line: number,
         charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
-            this._debugger.emit("output", "Lexer error (" + line + ", " + (charPositionInLine + 1) + "): " + msg,
-                this._debugger.mainGrammarName, line, charPositionInLine, true);
+        this._debugger.emit("output", "Lexer error (" + line + ", " + (charPositionInLine + 1) + "): " + msg,
+            this._debugger.mainGrammarName, line, charPositionInLine, true);
     }
 };
 
@@ -413,7 +588,7 @@ class DebuggerErrorListener implements ANTLRErrorListener<CommonToken> {
 
     syntaxError<T extends Token>(recognizer: Recognizer<T, any>, offendingSymbol: T | undefined, line: number,
         charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
-            this._debugger.emit("output", "Parser error (" + line + ", " + (charPositionInLine + 1) + "): " + msg,
-                this._debugger.mainGrammarName, line, charPositionInLine, true);
+        this._debugger.emit("output", "Parser error (" + line + ", " + (charPositionInLine + 1) + "): " + msg,
+            this._debugger.mainGrammarName, line, charPositionInLine, true);
     }
 };

@@ -47,8 +47,8 @@ import { InterpreterDataReader, InterpreterData } from "./InterpreterDataReader"
 import { ErrorParser } from "./ErrorParser";
 
 import {
-    GrapsSymbolTable, BuiltInChannelSymbol, BuiltInLexerTokenSymbol, BuiltInModeSymbol, ParserRuleSymbol,
-    VirtualLexerTokenSymbol, FragmentLexerTokenSymbol, LexerTokenSymbol
+    GrapsSymbolTable, BuiltInChannelSymbol, BuiltInTokenSymbol, BuiltInModeSymbol, RuleSymbol,
+    VirtualTokenSymbol, FragmentTokenSymbol, TokenSymbol, AlternativeSymbol
 } from "./GrapsSymbolTable";
 
 import { LexicalRange } from "../index";
@@ -75,7 +75,7 @@ export class SourceContext {
         if (!SourceContext.globalSymbols.resolve("EOF")) {
             SourceContext.globalSymbols.addNewSymbolOfType(BuiltInChannelSymbol, undefined, "DEFAULT_TOKEN_CHANNEL");
             SourceContext.globalSymbols.addNewSymbolOfType(BuiltInChannelSymbol, undefined, "HIDDEN");
-            SourceContext.globalSymbols.addNewSymbolOfType(BuiltInLexerTokenSymbol, undefined, "EOF");
+            SourceContext.globalSymbols.addNewSymbolOfType(BuiltInTokenSymbol, undefined, "EOF");
             SourceContext.globalSymbols.addNewSymbolOfType(BuiltInModeSymbol, undefined, "DEFAULT_MODE");
         }
     }
@@ -206,7 +206,7 @@ export class SourceContext {
             ANTLRv4Lexer.ACTION_CONTENT,
             ANTLRv4Lexer.UNTERMINATED_CHAR_SET,
             ANTLRv4Lexer.EOF,
-            -2, // Errorneously inserted. Needs fix in antlr4-c3.
+            -2, // Erroneously inserted. Needs fix in antlr4-c3.
         ]);
 
         core.preferredRules = new Set([
@@ -321,18 +321,18 @@ export class SourceContext {
                 }
 
                 case ANTLRv4Parser.RULE_terminalRule: { // Lexer rules.
-                    this.symbolTable.getAllSymbols(BuiltInLexerTokenSymbol).forEach(symbol => {
+                    this.symbolTable.getAllSymbols(BuiltInTokenSymbol).forEach(symbol => {
                         if (symbol.name !== "EOF") {
                             result.push({ kind: SymbolKind.BuiltInLexerToken, name: symbol.name, source: this.fileName, definition: undefined, description: undefined });
                         }
                     });
-                    this.symbolTable.getAllSymbols(VirtualLexerTokenSymbol).forEach(symbol => {
+                    this.symbolTable.getAllSymbols(VirtualTokenSymbol).forEach(symbol => {
                         result.push({ kind: SymbolKind.VirtualLexerToken, name: symbol.name, source: this.fileName, definition: undefined, description: undefined });
                     });
 
                     // Include fragment rules only when referenced from a lexer rule.
                     if (callStack[callStack.length - 1] === ANTLRv4Parser.RULE_lexerAtom) {
-                        this.symbolTable.getAllSymbols(FragmentLexerTokenSymbol).forEach(symbol => {
+                        this.symbolTable.getAllSymbols(FragmentTokenSymbol).forEach(symbol => {
                             result.push({
                                 kind: SymbolKind.FragmentLexerToken,
                                 name: symbol.name,
@@ -343,7 +343,7 @@ export class SourceContext {
                         });
                     }
 
-                    this.symbolTable.getAllSymbols(LexerTokenSymbol).forEach(symbol => {
+                    this.symbolTable.getAllSymbols(TokenSymbol).forEach(symbol => {
                         result.push({
                             kind: SymbolKind.LexerToken,
                             name: symbol.name,
@@ -364,7 +364,7 @@ export class SourceContext {
                 }
 
                 case ANTLRv4Parser.RULE_ruleref: {
-                    this.symbolTable.getAllSymbols(ParserRuleSymbol).forEach(symbol => {
+                    this.symbolTable.getAllSymbols(RuleSymbol).forEach(symbol => {
                         result.push({ kind: SymbolKind.ParserRule, name: symbol.name, source: this.fileName, definition: undefined, description: undefined });
                     });
                     break;
@@ -493,17 +493,17 @@ export class SourceContext {
 
         let result = new Map();
         for (let symbol of this.symbolTable.getAllSymbols(Symbol, false)) {
-            if (symbol instanceof ParserRuleSymbol
-                || symbol instanceof LexerTokenSymbol
-                || symbol instanceof FragmentLexerTokenSymbol) {
+            if (symbol instanceof RuleSymbol
+                || symbol instanceof TokenSymbol
+                || symbol instanceof FragmentTokenSymbol) {
                 let entry: ReferenceNode = {
-                    kind: symbol instanceof ParserRuleSymbol ? SymbolKind.ParserRule : SymbolKind.LexerToken,
+                    kind: symbol instanceof RuleSymbol ? SymbolKind.ParserRule : SymbolKind.LexerToken,
                     rules: [],
                     tokens: [],
                     literals: []
                 };
 
-                for (let child of symbol.getAllSymbols(ParserRuleSymbol, true)) {
+                for (let child of symbol.getNestedSymbolsOfType(RuleSymbol)) {
                     let resolved = this.symbolTable.resolve(child.name, false);
                     if (resolved) {
                         entry.rules.push(resolved.qualifiedName());
@@ -512,7 +512,7 @@ export class SourceContext {
                     }
                 }
 
-                for (let child of symbol.getAllSymbols(LexerTokenSymbol, true)) {
+                for (let child of symbol.getNestedSymbolsOfType(TokenSymbol)) {
                     let resolved = this.symbolTable.resolve(child.name, false);
                     if (resolved) {
                         entry.tokens.push(resolved.qualifiedName());
@@ -521,7 +521,7 @@ export class SourceContext {
                     }
                 }
 
-                for (let child of symbol.getAllSymbols(LiteralSymbol, true)) {
+                for (let child of symbol.getNestedSymbolsOfType(LiteralSymbol)) {
                     let resolved = this.symbolTable.resolve(child.name, false);
                     if (resolved) {
                         entry.literals.push(resolved.qualifiedName());
@@ -531,9 +531,9 @@ export class SourceContext {
                 }
 
                 result.set(symbol.qualifiedName(), entry);
-            } else if (symbol instanceof BuiltInLexerTokenSymbol) {
+            } else if (symbol instanceof BuiltInTokenSymbol) {
                 result.set(symbol.qualifiedName(), { kind: SymbolKind.BuiltInLexerToken, rules: [], tokens: [], literals: [] });
-            } else if (symbol instanceof VirtualLexerTokenSymbol) {
+            } else if (symbol instanceof VirtualTokenSymbol) {
                 result.set(symbol.qualifiedName(), { kind: SymbolKind.VirtualLexerToken, rules: [], tokens: [], literals: [] });
             }
         }
@@ -783,7 +783,7 @@ export class SourceContext {
                 } else if (transition.label) {
                     if (isLexerRule) {
                         // Lexer rules can be defined for a large range of characters (even the full Unicode range).
-                        // We hance return a compact form here instead of listing every character.
+                        // We hence return a compact form here instead of listing every character.
                         link.labels = this.intervalSetToStrings(transition.label);
                     } else {
                         for (let label of transition.label.toList()) {
@@ -797,7 +797,7 @@ export class SourceContext {
                 let nextState: ATNState;
                 if (transitsToRule) {
                     // Target is a state in a different rule (or this rule if left recursive).
-                    // Add a backlink from that subrule into ours.
+                    // Add a backlink from that sub rule into ours.
                     nextState = (transition as RuleTransition).followState;
                     let link = {
                         source: stateToIndex.get(marker)!, target: stateToIndex.get(nextState.stateNumber)!,
@@ -867,7 +867,8 @@ export class SourceContext {
 
     public createDebugger(mainGrammarName: string): GrapsDebugger | undefined {
         if (this.grammarLexerData) {
-            return new GrapsDebugger(this, mainGrammarName, this.grammarLexerData, this.grammarParserData);
+            return new GrapsDebugger(this, this.symbolTable, mainGrammarName, this.grammarLexerData,
+                this.grammarParserData);
         }
         return undefined;
     }
@@ -889,7 +890,7 @@ export class SourceContext {
      * Loads interpreter data if it exists and sets up the interpreters.
      */
     private setupInterpreters(outputDir?: string) {
-        // Load interpreter data if the code generation was successfull.
+        // Load interpreter data if the code generation was successful.
         // For that we only need the final parser and lexer files, not any imported stuff.
         // The target path is either the output path (if one was given) or the grammar path.
         let lexerFile = "";

@@ -171,7 +171,7 @@ export interface SentenceGenerationOptions {
     maxRecursions?: number;  // The maximum number of recursions in parser rules (default: 1);
     minTokenLength?: number; // Min count of elements in a lexer token (default: 1).
     maxTokenLength?: number; // Max count of elements in a lexer token (default: 256).
-    allPaths?: boolean;      // If false a single alt in a list is randomly choosen. If true sentences for all possible alts are generated (default: false).
+    allPaths?: boolean;      // If false a single alt in a list is randomly chosen. If true sentences for all possible alts are generated (default: false).
 };
 
 /**
@@ -195,7 +195,7 @@ export interface FormattingOptions {
 
     // Values not found in clang-format:
 
-    // When set to "none" places the colon directly behind the rule name. Trailing alignment aligns colons of consequtive
+    // When set to "none" places the colon directly behind the rule name. Trailing alignment aligns colons of consecutive
     // single line rules (with at least one whitespace between rule name and colon). Hanging alignment moves the
     // colon to the next line (after the normal indentation, aligning it so with the alt pipe chars).
     // Default: none.
@@ -313,7 +313,7 @@ export class AntlrLanguageSupport {
         }
 
         // Release all old dependencies. This will only unload grammars which have
-        // not been ref-counted by the above dep loading (or which are not used by other
+        // not been ref-counted by the above dependency loading (or which are not used by other
         // grammars).
         for (let dep of oldDependencies)
             this.releaseGrammar(dep);

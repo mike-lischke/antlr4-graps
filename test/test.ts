@@ -175,7 +175,7 @@ describe('antlr4-graps:', function () {
         });
 
         it('Editing', function () {
-            // "Edit" the source. This will release the lexer reference and reload it.
+            // Change the source. This will release the lexer reference and reload it.
             // If that doesn't work we'll get a lot of unknown-symbol errors (for all lexer symbols).
             let source = fs.readFileSync("test/TParser.g4", 'utf8');
             backend.setText("test/TParser.g4", source + "\nblah: any idarray;");
@@ -259,7 +259,7 @@ describe('antlr4-graps:', function () {
 
             expect(graph.has("TParser.flowControl"), "Test 5").to.be.true;
             expect(graph.get("TParser.flowControl")!.rules.length, "Test 6").to.equal(1);
-            expect(graph.get("TParser.flowControl")!.tokens.length, "Test 17").to.equal(2);
+            expect(graph.get("TParser.flowControl")!.tokens.length, "Test 7").to.equal(2);
             expect(graph.get("TParser.flowControl")!.literals.length, "Test 8").to.equal(1);
             expect(graph.get("TParser.flowControl")!.rules[0], "Test 9").to.equal("TParser.expr");
             expect(graph.get("TParser.flowControl")!.tokens[1], "Test 10").to.equal("TLexer.Continue");
@@ -484,7 +484,7 @@ describe('antlr4-graps:', function () {
 
         it('Generation with Java exception, combined grammar (Java)', async function () {
             // Testing a grammar with an awful lot of (implicit) lexer tokens.
-            // Crashs ANTLR and we need to report that separately.
+            // Crashes ANTLR and we need to report that separately.
             try {
                 let result = await backend.generate("test/Expr.g4", {
                     outputDir: "generated", language: "Java", package: "graps", listeners: false, visitors: true
@@ -595,7 +595,7 @@ describe('antlr4-graps:', function () {
     describe("Formatting:", function () {
         it("With all options (except alignment)", function () {
             // Format a file with all kinds of syntactic elements. Start out with default
-            // fomatting options and change them in the file to test all variations.
+            // formatting options and change them in the file to test all variations.
             let [text, start, stop] = backend.formatGrammar("test/formatting/raw.g4", {}, 0, 1e10);
 
             //fs.writeFileSync("test/formatting-results/raw2.g4", text, "utf8");
