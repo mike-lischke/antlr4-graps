@@ -21,7 +21,7 @@ import {
     EbnfSuffixSymbol
 } from './GrapsSymbolTable';
 
-import { ScopedSymbol, LiteralSymbol, BlockSymbol } from "antlr4-c3";
+import { ScopedSymbol, LiteralSymbol, BlockSymbol, Symbol } from "antlr4-c3";
 import { TerminalNode, ParseTree } from 'antlr4ts/tree';
 
 export class DetailsListener implements ANTLRv4ParserListener {
@@ -46,13 +46,16 @@ export class DetailsListener implements ANTLRv4ParserListener {
     }
 
     exitParserRuleSpec(ctx: ParserRuleSpecContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(TokenSymbol, this.currentSymbol as ScopedSymbol, ";");
+        symbol.context = ctx.SEMI();
+
         if (this.currentSymbol) {
             this.currentSymbol = this.currentSymbol.parent as ScopedSymbol;
         }
     }
 
     enterRuleBlock(ctx: RuleBlockContext) {
-        this.currentSymbol = this.symbolTable.addNewSymbolOfType(BlockSymbol, this.currentSymbol, "");
+        this.currentSymbol = this.symbolTable.addNewSymbolOfType(BlockSymbol, this.currentSymbol as ScopedSymbol, "");
     }
 
     exitRuleBlock(ctx: RuleBlockContext) {
@@ -62,7 +65,7 @@ export class DetailsListener implements ANTLRv4ParserListener {
     }
 
     enterBlock(ctx: BlockContext) {
-        this.currentSymbol = this.symbolTable.addNewSymbolOfType(BlockSymbol, this.currentSymbol, "");
+        this.currentSymbol = this.symbolTable.addNewSymbolOfType(BlockSymbol, this.currentSymbol as ScopedSymbol, "");
     }
 
     exitBlock(ctx: BlockContext) {
@@ -72,7 +75,7 @@ export class DetailsListener implements ANTLRv4ParserListener {
     }
 
     enterAlternative(ctx: AlternativeContext) {
-        this.currentSymbol = this.symbolTable.addNewSymbolOfType(AlternativeSymbol, this.currentSymbol, "");
+        this.currentSymbol = this.symbolTable.addNewSymbolOfType(AlternativeSymbol, this.currentSymbol as ScopedSymbol, "");
     }
 
     exitAlternative(ctx: AlternativeContext) {
@@ -96,7 +99,8 @@ export class DetailsListener implements ANTLRv4ParserListener {
             if (ctx.TOKEN_REF()) {
                 let refName = ctx.TOKEN_REF()!.text;
                 if (!this.currentSymbol.resolve(refName, true)) { // A rule can be referenced more than once.
-                    let symbol = this.symbolTable.addNewSymbolOfType(TokenSymbol, this.currentSymbol, refName);
+                    let symbol = this.symbolTable.addNewSymbolOfType(TokenReferenceSymbol,
+                        this.currentSymbol as ScopedSymbol, refName);
                     symbol.context = ctx.TOKEN_REF();
                 }
             } else {
@@ -104,7 +108,8 @@ export class DetailsListener implements ANTLRv4ParserListener {
                 let refName = ctx.STRING_LITERAL()!.text;
                 refName = refName.substring(1, refName.length - 1);
                 if (!this.currentSymbol.resolve(refName, true)) {
-                    let symbol = this.symbolTable.addNewSymbolOfType(LiteralSymbol, this.currentSymbol, refName);
+                    let symbol = this.symbolTable.addNewSymbolOfType(LiteralSymbol, this.currentSymbol as ScopedSymbol,
+                        refName);
                     symbol.context = ctx.STRING_LITERAL();
                 }
             }
@@ -115,7 +120,8 @@ export class DetailsListener implements ANTLRv4ParserListener {
         if (ctx.RULE_REF() && this.currentSymbol) {
             let refName = ctx.RULE_REF()!.text;
             if (!this.currentSymbol.resolve(refName, true)) {
-                let symbol = this.symbolTable.addNewSymbolOfType(RuleReferenceSymbol, this.currentSymbol, refName);
+                let symbol = this.symbolTable.addNewSymbolOfType(RuleReferenceSymbol, this.currentSymbol as ScopedSymbol,
+                    refName);
                 symbol.context = ctx.RULE_REF();
             }
         }
@@ -155,9 +161,10 @@ export class DetailsListener implements ANTLRv4ParserListener {
     }
 
     enterEbnfSuffix(ctx: EbnfSuffixContext) {
-        let symbol = this.symbolTable.addNewSymbolOfType(EbnfSuffixSymbol, this.currentSymbol, ctx.text);
+        let symbol = this.symbolTable.addNewSymbolOfType(EbnfSuffixSymbol, this.currentSymbol as ScopedSymbol,
+            ctx.text);
         symbol.context = ctx;
     }
 
-    private currentSymbol: ScopedSymbol | undefined;
+    private currentSymbol: Symbol | undefined;
 };

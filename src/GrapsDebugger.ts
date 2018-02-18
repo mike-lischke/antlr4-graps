@@ -11,7 +11,7 @@ import { EventEmitter } from "events";
 
 import {
     LexerInterpreter, ParserInterpreter, Vocabulary, TokenStream, ANTLRInputStream, CommonTokenStream, CommonToken,
-    ParserRuleContext, RecognitionException, ANTLRErrorListener, Recognizer, Token
+    ParserRuleContext, RecognitionException, ANTLRErrorListener, Recognizer, Token, Lexer
 } from "antlr4ts";
 import { ATN, RuleStartState, ATNState, ATNStateType, TransitionType, Transition, RuleTransition } from "antlr4ts/atn";
 import { ParseTree, ErrorNode, TerminalNode } from "antlr4ts/tree";
@@ -22,7 +22,7 @@ import { Symbol, ScopedSymbol, BlockSymbol } from "antlr4-c3";
 import { InterpreterData } from "./InterpreterDataReader";
 import { LexerToken, ParseTreeNode, ParseTreeNodeType, SymbolInfo, LexicalRange } from "../index";
 import { SourceContext } from "./SourceContext";
-import { AlternativeSymbol, GrapsSymbolTable, RuleReferenceSymbol, EbnfSuffixSymbol } from "./GrapsSymbolTable";
+import { AlternativeSymbol, GrapsSymbolTable, RuleReferenceSymbol, EbnfSuffixSymbol, RuleSymbol } from "./GrapsSymbolTable";
 
 export interface GrapsBreakPoint {
     validated: boolean;
@@ -185,6 +185,17 @@ export class GrapsDebugger extends EventEmitter {
         return this.parser.ruleNames.findIndex(entry => entry == ruleName);
     }
 
+    public tokenIndexFromName(tokenName: string): number {
+        let vocab = this.lexer.vocabulary;
+        for (let i = 0; i <= vocab.maxTokenType; ++i) {
+            if (vocab.getSymbolicName(i) == tokenName) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     public get currentParseTree(): ParseTreeNode | undefined {
         if (!this.parseTree) {
             return undefined;
@@ -197,7 +208,7 @@ export class GrapsDebugger extends EventEmitter {
         let result: GrapsStackFrame[] = [];
         if (this.parser) {
             for (let frame of this.parser.callStack) {
-                let externalFrame = <GrapsStackFrame> {
+                let externalFrame = <GrapsStackFrame>{
                     name: frame.name,
                     source: frame.source,
                     next: []
@@ -260,11 +271,16 @@ export class GrapsDebugger extends EventEmitter {
                         frame.next.push(candidate);
                     }
                 } else {
-                    if (candidate.context instanceof TerminalNode) {
-                        let type = candidate.context.symbol.type;
-                        if (transition.label && transition.label.contains(type)) {
+                    if (candidate.name == ";") { // Special case: end of rule.
+                        frame.next.push(candidate);
+                    } else if (candidate.context instanceof TerminalNode) {
+                        let type = this.tokenIndexFromName(candidate.context.symbol.text!);
+                        let currentType = this.tokenStream.LA(1);
+                        if (type == currentType
+                            && transition.matches(currentType, Lexer.MIN_CHAR_VALUE, Lexer.MAX_CHAR_VALUE)) {
                             frame.next.push(candidate);
                         }
+
                     }
                 }
             }
@@ -273,42 +289,75 @@ export class GrapsDebugger extends EventEmitter {
 
     /**
      * Returns a list of reachable leaf symbols from the given symbol.
-     * The start symbol must be a terminal or an alternative symbol.
      */
     private nextCandidates(start: Symbol): Symbol[] {
-        // There are 2 possible scenarios here:
-        //   - The next reachable symbol is a terminal symbol (rule or token reference).
-        //   - The next reachable symbol is a block.
-        // In the first case the result is just this symbol. Otherwise we have to drill down
-        // recursively to find terminal symbols that start alternatives.
-        //
-        // Additionally, we have to consider cardinalities here (loops, optionals).
-        let next = start.next;
-        if (!next) {
-            return [];
-        }
-
         let result: Symbol[] = [];
-        if (next instanceof EbnfSuffixSymbol) {
-            // Check 1..n cardinality as that requires to include the current symbol again.
-            if (next.name[0] == "+") {
-                result.push(start);
+
+        // We can get a rule symbol as start, which means we want to get the candidates
+        // from the rule's block, instead its sibling (which is another rule).
+        let next: Symbol | undefined;
+        if (start instanceof RuleSymbol) {
+            next = start.children[0]; // 2 children in a rule: the rule block and the semicolon.
+        } else {
+            // Any other case. Continue with the next directly following symbol.
+            next = start.nextSibling;
+
+            // Check EBNF suffixes first.
+            if (next instanceof EbnfSuffixSymbol) {
+                switch (next.name[0]) {
+                    case '?': { // The previous symbol was optional. We are done with it.
+                        next = next.nextSibling;
+                        break;
+                    }
+                    case '+':
+                    case '*': { // A loop - the previous symbol is again a candidate.
+                        result.push(start);
+                        next = next.nextSibling;
+                        break;
+                    }
+                }
             }
 
-            next = next.next;
             if (!next) {
-                return [];
+                // Nothing more in the current alt. Walk up the parent chain until we find a block with content.
+                let block = start;
+                while (true) {
+                    if (block.parent instanceof RuleSymbol) {
+                        result.push(block.lastSibling); // The semicolon.
+                        return result;
+                    }
+
+                    block = (block.parent as ScopedSymbol).parent;
+                    next = block.nextSibling;
+                    if (next) {
+                        if (next instanceof EbnfSuffixSymbol) {
+                            switch (next.name[0]) {
+                                case '?': {
+                                    next = next.nextSibling;
+                                    break;
+                                }
+                                case '+':
+                                case '*': {
+                                    // Include the candidates from the previous block again.
+                                    result.push(...this.candidatesFromBlock(block as ScopedSymbol));
+                                    next = next.nextSibling;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (next) {
+                            break;
+                        }
+                    }
+                }
             }
         }
 
-        if (!(next instanceof ScopedSymbol)) {
-            return [next];
-        }
-
-        // Must be a block then (rule alt block or inner alt block).
-        for (let alt of (next as ScopedSymbol).children) {
-            let subResult = this.nextCandidates(alt);
-            result.push(...subResult);
+        if (next instanceof BlockSymbol) {
+            result.push(...this.candidatesFromBlock(next));
+        } else {
+            result.push(next);
         }
 
         // Check cardinality which allows optional elements.
@@ -317,6 +366,29 @@ export class GrapsDebugger extends EventEmitter {
             if (next.name[0] == '?' || next.name[0] == '*') {
                 let subResult = this.nextCandidates(next);
                 result.push(...subResult);
+            }
+        }
+
+        return result;
+    }
+
+    private candidatesFromBlock(block: ScopedSymbol): Symbol[] {
+        let result: Symbol[] = [];
+        for (let alt of block.children) {
+            let next: Symbol | undefined = (alt as AlternativeSymbol).children[0];
+            if (next instanceof BlockSymbol) {
+                result.push(...this.candidatesFromBlock(next));
+            } else {
+                result.push(next);
+            }
+
+            // Check cardinality which allows optional elements.
+            next = next.nextSibling;
+            if (next instanceof EbnfSuffixSymbol) {
+                if (next.name[0] == '?' || next.name[0] == '*') {
+                    let subResult = this.nextCandidates(next);
+                    result.push(...subResult);
+                }
             }
         }
 
@@ -447,34 +519,23 @@ class GrapsParserInterpreter extends ParserInterpreter {
      * Resume parsing from the current ATN state until the end or we hit a breakpoint.
      */
     continue(runMode: RunMode): ParserRuleContext {
-        // Keep the index of the rule we are in currently, for step over/out.
-        let currentRule = this.atnState.ruleIndex;
+        // Need the current step depth for step over/out.
+        let stackDepth = this.callStack.length;
 
         // If we are not going to jump into a rule then make step over a step in.
-        // This way we can use step over only for rule processing.
-        if (this.atnState.stateType != ATNStateType.RULE_START && runMode == RunMode.StepOver) {
+        // This way we can use step over exclusively for rule processing.
+        let p = this.atnState;
+        if (p.transition(0).serializationType != TransitionType.RULE && runMode == RunMode.StepOver) {
             runMode = RunMode.StepIn;
         }
 
+        // We don't stop directly on the break point state but on the next rule/non-epsilon transition.
+        let breakPointPending = false;
+
         while (true) {
-            let p = this.atnState;
-
-            // Update the list of next symbols if there's a label or rule ahead.
-            if (p.numberOfTransitions == 1) {
-                let lastStackFrame = this.callStack[this.callStack.length - 1];
-                switch (p.transition(0).serializationType) {
-                    case TransitionType.RULE:
-                    case TransitionType.ATOM:
-                    case TransitionType.NOT_SET:
-                    case TransitionType.RANGE:
-                    case TransitionType.SET:
-                    case TransitionType.WILDCARD: {
-                        lastStackFrame.current = lastStackFrame.next;
-                        this._debugger.computeNextSymbols(lastStackFrame, p.transition(0));
-
-                        break;
-                    }
-                }
+            if (this.breakPoints.has(p)) {
+                breakPointPending = true;
+                runMode = RunMode.StepIn;
             }
 
             switch (p.stateType) {
@@ -495,14 +556,15 @@ class GrapsParserInterpreter extends ParserInterpreter {
                     }
 
                     this.callStack.pop();
-                    let endOfCurrentRule = currentRule == this.atnState.ruleIndex;
                     this.visitRuleStopState(p);
 
-                    if ((endOfCurrentRule && runMode == RunMode.StepOut)
-                        || (runMode == RunMode.StepOver && currentRule == this.atnState.ruleIndex)) {
-                        this._debugger.sendEvent("stopOnStep");
-                        return this._rootContext;
+                    if ((runMode == RunMode.StepOut && stackDepth == this.callStack.length + 1)
+                        || (runMode == RunMode.StepOver && stackDepth == this.callStack.length)) {
+                        // Reached the rule end right before a step over/out.
+                        // Continue with step-in to stop at the next work item.
+                        runMode = RunMode.StepIn;
                     }
+
                     break;
                 }
 
@@ -545,15 +607,43 @@ class GrapsParserInterpreter extends ParserInterpreter {
                     break;
             }
 
-            if (this.breakPoints.has(p)) {
-                this._debugger.sendEvent("stopOnBreakpoint");
-                return this._rootContext;
-            } else if (runMode == RunMode.StepIn) {
-                // Stop here when we reached a state which represents work to do.
-                if ((this.atnState.stateType == ATNStateType.RULE_START)
-                    || (this.atnState.stateType == ATNStateType.BASIC && !this.atnState.onlyHasEpsilonTransitions)) {
-                    this._debugger.sendEvent("stopOnStep");
-                    return this._rootContext;
+            // Update the list of next symbols if there's a label or rule ahead.
+            p = this.atnState;
+            if (p.numberOfTransitions == 1) {
+                let transition = p.transition(0);
+                switch (transition.serializationType) {
+                    case TransitionType.RULE:
+                    case TransitionType.ATOM:
+                    case TransitionType.NOT_SET:
+                    case TransitionType.RANGE:
+                    case TransitionType.SET:
+                    case TransitionType.WILDCARD: {
+                        let lastStackFrame = this.callStack[this.callStack.length - 1];
+                        lastStackFrame.current = lastStackFrame.next;
+                        this._debugger.computeNextSymbols(lastStackFrame, transition);
+
+                        if (runMode == RunMode.StepIn) {
+                            if (breakPointPending) {
+                                this._debugger.sendEvent("stopOnBreakpoint");
+                            } else {
+                                this._debugger.sendEvent("stopOnStep");
+                            }
+                            return this._rootContext;
+                        }
+
+                        break;
+                    }
+
+                    case TransitionType.EPSILON: { // Stop on the rule's semicolon.
+                        if (transition.target.stateType == ATNStateType.RULE_STOP && runMode == RunMode.StepIn) {
+                            let lastStackFrame = this.callStack[this.callStack.length - 1];
+                            lastStackFrame.current = lastStackFrame.next;
+                            this._debugger.computeNextSymbols(lastStackFrame, transition);
+                            this._debugger.sendEvent("stopOnStep");
+
+                            return this._rootContext;
+                        }
+                    }
                 }
             }
         }
