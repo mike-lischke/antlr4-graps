@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017 Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -126,10 +126,13 @@ export class GrapsSymbolTable extends SymbolTable {
         return symbol.context;
     }
 
-    public getSymbolInfo(name: string): SymbolInfo | undefined {
-        let symbol = this.resolve(name);
-        if (!symbol) {
-            return undefined;
+    public getSymbolInfo(symbol: string | Symbol): SymbolInfo | undefined {
+        if (!(symbol instanceof Symbol)) {
+            let temp = this.resolve(symbol);
+            if (!temp) {
+                return undefined;
+            }
+            symbol = temp;
         }
 
         let kind = this.getKindFromSymbol(symbol);
@@ -141,7 +144,7 @@ export class GrapsSymbolTable extends SymbolTable {
                 if (table.owner && table.owner.sourceId.includes(name)) {
                     return { // TODO: implement a best match search.
                         kind: kind,
-                        name: symbol!.name,
+                        name: (symbol as Symbol).name,
                         source: table.owner.fileName,
                         definition: definitionForContext(table.tree, true)
                     };
@@ -367,3 +370,6 @@ export class RuleSymbol extends ScopedSymbol { }
 export class RuleReferenceSymbol extends Symbol { }
 export class AlternativeSymbol extends ScopedSymbol { }
 export class EbnfSuffixSymbol extends Symbol { }
+export class OptionsSymbol extends ScopedSymbol { }
+export class ActionSymbol extends ScopedSymbol { }
+export class ArgumentSymbol extends ScopedSymbol { }

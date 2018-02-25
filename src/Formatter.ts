@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017, Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -27,7 +27,7 @@ enum InsertMarker {
     Comment = -101,
 
     // Action markers.
-    WhitespaceEraser = -102, // Marker for any comming whitespace to be ignored.
+    WhitespaceEraser = -102, // Marker for any future whitespace to be ignored.
     Error = -103,
 
     // Block markers.
@@ -76,7 +76,7 @@ export class GrammarFormatter {
     /**
      * This is the main formatting routine.
      *
-     * @param options Options that control the formatting process. Can be overriden in the code.
+     * @param options Options that control the formatting process. Can be overridden in the code.
      * @param start The character index in the input to start from.
      * @param stop The character index in the input to end with.
      * @returns A tuple containing the formatted text as well as new start/stop indices that should be used
@@ -134,7 +134,7 @@ export class GrammarFormatter {
                     break; // Don't include comment lines containing (potential) formatting instructions.
                 }
 
-                // The comment must be the only non-ws token on the line.
+                // The comment must be the only non-whitespace token on the line.
                 if (this.tokens[run].type != ANTLRv4Lexer.WS
                     || this.tokens[run].line + 1 != this.tokens[run + 1].line) {
                     break;
@@ -274,7 +274,7 @@ export class GrammarFormatter {
                         || nextType == ANTLRv4Lexer.BLOCK_COMMENT || nextType == ANTLRv4Lexer.DOC_COMMENT);
 
                     if (this.lastEntryIs(InsertMarker.WhitespaceEraser)) {
-                        // And ignore these incomming whitespaces if there is an eraser marker
+                        // And ignore these incoming whitespaces if there is an eraser marker
                         // (unless comments after a line break follow, which we want to stay on their line).
                         this.outputPipeline.pop();
 
@@ -303,7 +303,7 @@ export class GrammarFormatter {
                         && !this.options.keepEmptyLinesAtTheStartOfBlocks) {
                         breakCount = 1;
                     } else {
-                        // Take into account any linebreaks that are already in the pipeline.
+                        // Take into account any line breaks that are already in the pipeline.
                         let j = this.outputPipeline.length - 1;
                         while (j >= 0) {
                             if (this.entryIs(j, InsertMarker.LineBreak)) {
@@ -1326,7 +1326,7 @@ export class GrammarFormatter {
                                 // after the word wrapping.
                                 // In cases where alignment moves text beyond the column limit, we don't do
                                 // another word wrapping round. Instead we let alignments overrule the column limit.
-                                // The same applies for exceedance of the column limit caused by deep/large indentation, where
+                                // The same applies for exceeding of the column limit caused by deep/large indentation, where
                                 // the indentation already goes beyond that limit.
                                 if (this.lineHasNonWhitespaceContent()) {
                                     this.applyLineContinuation();
@@ -1386,7 +1386,7 @@ export class GrammarFormatter {
 
     /**
      * Computes the length of the given text, with tab stops.
-     * There must be no linebreaks in the text.
+     * There must be no line breaks in the text.
      */
     private computeLineLength(text: string): number {
         let length = 0;
@@ -1557,7 +1557,7 @@ export class GrammarFormatter {
 
                 case ANTLRv4Lexer.BLOCK_COMMENT:
                 case ANTLRv4Lexer.DOC_COMMENT: {
-                    // If the comment contains a linebreak we cannot format the block as single line.
+                    // If the comment contains a line break we cannot format the block as single line.
                     if (token.text!.indexOf("\n") >= 0) {
                         return [containsAlts, 1e100];
                     } else {
@@ -2078,7 +2078,7 @@ export class GrammarFormatter {
     private currentColumn: number;
 
     // When a block has been determined to fit as a whole on a single line (relevant only if allowShortBlocksOnASingleLine is true),
-    // this var directs linebreak handling.
+    // this var directs line break handling.
     // Note: counting begins on the most outer block that can be formatted on a single line, which is not necessarily
     //       the rule itself.
     private singleLineBlockNesting: number;

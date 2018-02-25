@@ -25,9 +25,19 @@ The file name you pass to all API functions is mostly used to identify a source 
 
 -----
 
-> `function AntlrLanguageSupport.enclosingRangeForSymbol(fileName, column, row, ruleScope)`
+> `function AntlrLanguageSupport.createDebugger(fileName, dataDir)`
 >
-> Returns a lexical range (start row/column, end row/column) of the scoped symbol that contains the given position. A scoped symbol is a symbol that can contain other symbols (e.g. a rule block, rule parameter blocks, options or token blocks). Setting `ruleScope` to `true` (default is `false`) causes the parse tree walker to stop not on the most inner block but always on a rule (or semantically equivalent) block (semantically equivalent are for instance token + option blocks). If no symbol could be found the result is undefined.
+> Returns a debugger instance for the given file and its dependencies. The data dir is a string specifying where to find interpreter data. This data must be created before (see method `generate()`) or the debugger creation will fail.
+> 
+> The method will return `undefined` if any of the participating grammars has pending errors (as determined by the `hasErrors()` method). Otherwise an instance of `GrapsDebugger` is returned, with its `valid` property set to `true` to indicate that the debugger setup went fine (or `false` if not). The setup can fail when interpreter data cannot be loaded for any reason (does not exist, access problems etc.).
+
+-----
+
+> `function AntlrLanguageSupport.enclosingSymbolAtPosition(fileName, column, row, ruleScope)`
+>
+> Returns the scoped symbol that contains the given position. A scoped symbol is a symbol that can contain other symbols (e.g. a rule block, rule parameter blocks, options or token blocks). Setting `ruleScope` to `true` (default is `false`) will make the method to walk up in the parent chain to find a rule, token or options block and returns that instead. If no symbol could be found the result is undefined.
+>
+> Note: anonymous symbols (like blocks and alternatives) have no name, but may have a generic name (e.g. "options").
 
 -----
 
@@ -75,6 +85,12 @@ The file name you pass to all API functions is mostly used to identify a source 
 
 -----
 
+> `function AntlrLanguageSupport.getContext(fileName, source?)`
+>
+> Returns the associated source context for the given file. If the file wasn't loaded yet it will be loaded by this call using either the (optional) source code or the content of the specified file (in this order). This method is usually not called externally, but frequently used by the backend to get source contexts for all kind of functionality.
+
+-----
+
 > `function AntlrLanguageSupport.getDependencies(fileName)`
 >
 > Returns a list of strings with names of grammars this grammar depends on.
@@ -99,9 +115,9 @@ The file name you pass to all API functions is mostly used to identify a source 
 
 -----
 
-> `function AntlrLanguageSupport.infoForSymbol(fileName, column, row, limitToChildren)`
+> `function AntlrLanguageSupport.hasErrors(fileName)`
 >
-> Returns informations about the symbol at the given position or `undefined` if no symbol could be found. The column and row params are numbers, while `limitToChildren` is a boolean (default is `true`) that indicates to consider only child symbols in specific contexts (rules, options, sets, lexer modes), which is important to limit lookup to symbols usage, not definition. If set to `false` any symbol found at that position is returned.
+> Returns `true` if the given grammar has any error, `false` otherwise.
 
 -----
 
@@ -143,6 +159,12 @@ The file name you pass to all API functions is mostly used to identify a source 
 > Call this function when the text of the grammar has changed. This is fast enough to be called on every keypress (and should be called like that to keep the internal input stream up to date for code completion). No heavy processing happens here.
 >
 > Does nothing if the grammar with the given file name hasn't been loaded yet.
+
+-----
+
+> `function AntlrLanguageSupport.symbolAtPosition(fileName, column, row, limitToChildren)`
+>
+> Returns informations about the symbol at the given position or `undefined` if no symbol could be found. The column and row params are numbers, while `limitToChildren` is a boolean (default is `true`) that indicates to consider only child symbols in specific contexts (rules, options, sets, lexer modes), which is important to limit lookup to symbols references, not definition. If set to `false` any symbol found at that position is returned.
 
 -----
 

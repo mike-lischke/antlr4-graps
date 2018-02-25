@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017, Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -102,41 +102,46 @@ describe('antlr4-graps:', function () {
         });
 
         it('reparse', function () {
-            backend.setText("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
-            backend.reparse("test/t.g4");
-            let diagnostics = backend.getDiagnostics("test/t.g4");
+            backend.loadGrammar("test/t.g4");
+            try {
+                backend.setText("test/t.g4", "grammar A; a:: b \n| c; c: b+;");
+                backend.reparse("test/t.g4");
+                let diagnostics = backend.getDiagnostics("test/t.g4");
 
-            expect(diagnostics.length, "Test 1").to.equal(4);
+                expect(diagnostics.length, "Test 1").to.equal(4);
 
-            expect(diagnostics[0].message, "Test 2").to.equal("mismatched input '::' expecting {BEGIN_ARGUMENT, 'options', 'returns', 'locals', 'throws', COLON, AT}");
-            expect(diagnostics[0].range.start.column, "Test 3").to.equal(12);
-            expect(diagnostics[0].range.start.row, "Test 4").to.equal(1);
-            expect(diagnostics[0].range.end.column, "Test 5").to.equal(14);
-            expect(diagnostics[0].range.end.row, "Test 6").to.equal(1);
+                expect(diagnostics[0].message, "Test 2").to.equal("mismatched input '::' expecting {BEGIN_ARGUMENT, 'options', 'returns', 'locals', 'throws', COLON, AT}");
+                expect(diagnostics[0].range.start.column, "Test 3").to.equal(12);
+                expect(diagnostics[0].range.start.row, "Test 4").to.equal(1);
+                expect(diagnostics[0].range.end.column, "Test 5").to.equal(14);
+                expect(diagnostics[0].range.end.row, "Test 6").to.equal(1);
 
-            expect(diagnostics[1].message, "Test 7").to.equal("mismatched input '|' expecting {BEGIN_ARGUMENT, 'options', 'returns', 'locals', 'throws', COLON, AT}");
-            expect(diagnostics[1].range.start.column, "Test 8").to.equal(0);
-            expect(diagnostics[1].range.start.row, "Test 9").to.equal(2);
-            expect(diagnostics[1].range.end.column, "Test 10").to.equal(1);
-            expect(diagnostics[1].range.end.row, "Test 11").to.equal(2);
+                expect(diagnostics[1].message, "Test 7").to.equal("mismatched input '|' expecting {BEGIN_ARGUMENT, 'options', 'returns', 'locals', 'throws', COLON, AT}");
+                expect(diagnostics[1].range.start.column, "Test 8").to.equal(0);
+                expect(diagnostics[1].range.start.row, "Test 9").to.equal(2);
+                expect(diagnostics[1].range.end.column, "Test 10").to.equal(1);
+                expect(diagnostics[1].range.end.row, "Test 11").to.equal(2);
 
-            backend.setText("test/t.g4", "grammar A; a: b \n| c; c: b+;")
-            backend.reparse("test/t.g4");
-            diagnostics = backend.getDiagnostics("test/t.g4");
+                backend.setText("test/t.g4", "grammar A; a: b \n| c; c: b+;")
+                backend.reparse("test/t.g4");
+                diagnostics = backend.getDiagnostics("test/t.g4");
 
-            expect(diagnostics.length, "Test 12").to.equal(2);
+                expect(diagnostics.length, "Test 12").to.equal(2);
 
-            expect(diagnostics[0].message, "Test 13").to.equal("Unknown parser rule \'b\'");
-            expect(diagnostics[0].range.start.column, "Test 14").to.equal(14);
-            expect(diagnostics[0].range.start.row, "Test 15").to.equal(1);
-            expect(diagnostics[0].range.end.column, "Test 16").to.equal(15);
-            expect(diagnostics[0].range.end.row, "Test 17").to.equal(1);
+                expect(diagnostics[0].message, "Test 13").to.equal("Unknown parser rule \'b\'");
+                expect(diagnostics[0].range.start.column, "Test 14").to.equal(14);
+                expect(diagnostics[0].range.start.row, "Test 15").to.equal(1);
+                expect(diagnostics[0].range.end.column, "Test 16").to.equal(15);
+                expect(diagnostics[0].range.end.row, "Test 17").to.equal(1);
 
-            expect(diagnostics[1].message, "Test 18").to.equal("Unknown parser rule \'b\'");
-            expect(diagnostics[1].range.start.column, "Test 19").to.equal(8);
-            expect(diagnostics[1].range.start.row, "Test 20").to.equal(2);
-            expect(diagnostics[1].range.end.column, "Test 21").to.equal(9);
-            expect(diagnostics[1].range.end.row, "Test 22").to.equal(2);
+                expect(diagnostics[1].message, "Test 18").to.equal("Unknown parser rule \'b\'");
+                expect(diagnostics[1].range.start.column, "Test 19").to.equal(8);
+                expect(diagnostics[1].range.start.row, "Test 20").to.equal(2);
+                expect(diagnostics[1].range.end.column, "Test 21").to.equal(9);
+                expect(diagnostics[1].range.end.row, "Test 22").to.equal(2);
+            } finally {
+                backend.releaseGrammar("test/t.g4");
+            }
         });
     });
 
@@ -198,36 +203,40 @@ describe('antlr4-graps:', function () {
         });
 
         it("Symbol ranges", function () {
-            let range = backend.enclosingRangeForSymbol("test/TParser.g4", 100, 4); // options {} block
-            expect(range, "Test 1").not.to.be.undefined;
-            expect(range!.start.row, "Test 2").to.equal(3);
-            expect(range!.start.column, "Test 3").to.equal(5);
-            expect(range!.end.row, "Test 4").to.equal(5);
-            expect(range!.end.column, "Test 5").to.equal(0);
+            let symbol = backend.enclosingSymbolAtPosition("test/TParser.g4", 100, 4); // options {} block
+            expect(symbol, "Test 1").not.to.be.undefined;
+            expect(symbol!.definition, "Test 2").not.to.be.undefined;
+            expect(symbol!.definition!.range.start.row, "Test 3").to.equal(3);
+            expect(symbol!.definition!.range.start.column, "Test 4").to.equal(5);
+            expect(symbol!.definition!.range.end.row, "Test 5").to.equal(5);
+            expect(symbol!.definition!.range.end.column, "Test 6").to.equal(0);
 
-            range = backend.enclosingRangeForSymbol("test/TParser.g4", 9, 34); // action block
-            expect(range, "Test 6").not.to.be.undefined;
-            expect(range!.start.row, "Test 7").to.equal(30);
-            expect(range!.start.column, "Test 8").to.equal(17);
-            expect(range!.end.row, "Test 9").to.equal(37);
-            expect(range!.end.column, "Test 10").to.equal(0);
+            symbol = backend.enclosingSymbolAtPosition("test/TParser.g4", 9, 34); // action block
+            expect(symbol, "Test 10").not.to.be.undefined;
+            expect(symbol!.definition, "Test 11").not.to.be.undefined;
+            expect(symbol!.definition!.range.start.row, "Test 12").to.equal(30);
+            expect(symbol!.definition!.range.start.column, "Test 13").to.equal(17);
+            expect(symbol!.definition!.range.end.row, "Test 14").to.equal(37);
+            expect(symbol!.definition!.range.end.column, "Test 15").to.equal(0);
 
-            range = backend.enclosingRangeForSymbol("test/TParser.g4", 1000, 1000); // beyond EOF
-            expect(range, "Test 11").to.be.undefined;
+            symbol = backend.enclosingSymbolAtPosition("test/TParser.g4", 1000, 1000); // beyond EOF
+            expect(symbol, "Test 20").to.be.undefined;
 
-            range = backend.enclosingRangeForSymbol("test/TParser.g4", 79, 82); // argument action block
-            expect(range, "Test 12").not.to.be.undefined;
-            expect(range!.start.row, "Test 13").to.equal(82);
-            expect(range!.start.column, "Test 14").to.equal(62);
-            expect(range!.end.row, "Test 15").to.equal(82);
-            expect(range!.end.column, "Test 16").to.equal(88);
+            symbol = backend.enclosingSymbolAtPosition("test/TParser.g4", 79, 82); // argument action block
+            expect(symbol, "Test 21").not.to.be.undefined;
+            expect(symbol!.definition, "Test 22").not.to.be.undefined;
+            expect(symbol!.definition!.range.start.row, "Test 23").to.equal(82);
+            expect(symbol!.definition!.range.start.column, "Test 24").to.equal(62);
+            expect(symbol!.definition!.range.end.row, "Test 25").to.equal(82);
+            expect(symbol!.definition!.range.end.column, "Test 26").to.equal(88);
 
-            range = backend.enclosingRangeForSymbol("test/TParser.g4", 79, 82, true); // same pos, rule context
-            expect(range, "Test 17").not.to.be.undefined;
-            expect(range!.start.row, "Test 18").to.equal(82);
-            expect(range!.start.column, "Test 19").to.equal(0);
-            expect(range!.end.row, "Test 20").to.equal(90);
-            expect(range!.end.column, "Test 21").to.equal(0);
+            symbol = backend.enclosingSymbolAtPosition("test/TParser.g4", 79, 82, true); // same pos, rule context
+            expect(symbol, "Test 30").not.to.be.undefined;
+            expect(symbol!.definition, "Test 31").not.to.be.undefined;
+            expect(symbol!.definition!.range.start.row, "Test 32").to.equal(82);
+            expect(symbol!.definition!.range.start.column, "Test 33").to.equal(0);
+            expect(symbol!.definition!.range.end.row, "Test 34").to.equal(90);
+            expect(symbol!.definition!.range.end.column, "Test 35").to.equal(0);
         });
     });
 
@@ -336,18 +345,26 @@ describe('antlr4-graps:', function () {
             }
         }).timeout(20000);
 
-        it("Interpreter load with existing data, split grammar", async function () {
+        it("Load interpreter with existing data, split grammar", async function () {
             expect(fs.existsSync("generated/"), "Test 1");
 
-            let result = await backend.generate("test/TParser.g4", { outputDir: "generated", language: "CSharp", loadOnly: true });
+            let result = await backend.generate("test/TParser.g4", {
+                outputDir: "generated", language: "CSharp", loadOnly: true
+            });
+
+            // No dependencies are returned since data is only loaded, not generated.
             expect(result, "Test 2").to.eql([]);
 
-            // Lexer data is stored in the parser source context, as that is what was generated,
-            // even if lexer data is implicitly generated.
+            // Only for combined grammars is the lexer data stored in the main context.
             let temp = backend.getATNGraph("test/TLexer.g4", "Dollar");
             expect(temp, "Test 3").to.be.undefined;
 
-            let dollarGraph = backend.getATNGraph("test/TParser.g4", "Dollar");
+            // Now load the lexer data too.
+            result = await backend.generate("test/TLexer.g4", {
+                outputDir: "generated", language: "CSharp", loadOnly: true
+            });
+
+            let dollarGraph = backend.getATNGraph("test/TLexer.g4", "Dollar");
             let statGraph = backend.getATNGraph("test/TParser.g4", "stat");
 
             try {
@@ -421,6 +438,7 @@ describe('antlr4-graps:', function () {
                 expect(statGraph!.links[12].labels[0], "Test 55").to.equal("';'");
             } finally {
                 backend.releaseGrammar("test/TParser.g4");
+                backend.releaseGrammar("test/TLexer.g4");
                 fs.removeSync("generated");
             }
         }).timeout(20000);
@@ -680,13 +698,14 @@ describe('antlr4-graps:', function () {
             let result = await backend.generate("test/CPP14.g4", { outputDir: "generated", language: "Java" });
             try {
                 let code = fs.readFileSync("test/code.cpp", { "encoding": "utf8" });
-                let d = backend.createDebugger("test/CPP14.g4");
+                let d = backend.createDebugger("test/CPP14.g4", "generated");
                 expect(d, "Test 1").not.to.be.undefined;
                 d!.start(0, code);
                 let tree = d!.currentParseTree;
                 //console.log(util.inspect(tree, false, null, true));
             } finally {
                 backend.releaseGrammar("test/CPP14.g4");
+                fs.removeSync("generated");
             }
         });
     });

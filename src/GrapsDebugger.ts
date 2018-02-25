@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017 Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -10,21 +10,29 @@
 import { EventEmitter } from "events";
 
 import {
-    LexerInterpreter, ParserInterpreter, Vocabulary, TokenStream, ANTLRInputStream, CommonTokenStream, CommonToken,
-    ParserRuleContext, RecognitionException, ANTLRErrorListener, Recognizer, Token, Lexer
+    LexerInterpreter, ParserInterpreter, Vocabulary, TokenStream, ANTLRInputStream,
+    CommonTokenStream, CommonToken, ParserRuleContext, RecognitionException, ANTLRErrorListener,
+    Recognizer, Token, Lexer
 } from "antlr4ts";
-import { ATN, RuleStartState, ATNState, ATNStateType, TransitionType, Transition, RuleTransition } from "antlr4ts/atn";
+import {
+    ATN, RuleStartState, ATNState, ATNStateType, TransitionType, Transition, RuleTransition
+} from "antlr4ts/atn";
 import { ParseTree, ErrorNode, TerminalNode } from "antlr4ts/tree";
 import { Override } from "antlr4ts/Decorators";
 
 import { Symbol, ScopedSymbol, BlockSymbol } from "antlr4-c3";
 
 import { InterpreterData } from "./InterpreterDataReader";
-import { LexerToken, ParseTreeNode, ParseTreeNodeType, SymbolInfo, LexicalRange } from "../index";
-import { SourceContext } from "./SourceContext";
-import { AlternativeSymbol, GrapsSymbolTable, RuleReferenceSymbol, EbnfSuffixSymbol, RuleSymbol } from "./GrapsSymbolTable";
+import {
+    LexerToken, ParseTreeNode, ParseTreeNodeType, SymbolInfo, LexicalRange,
+    AntlrLanguageSupport, SourceContext
+} from "../index";
+import {
+    AlternativeSymbol, GrapsSymbolTable, RuleReferenceSymbol, EbnfSuffixSymbol, RuleSymbol
+} from "./GrapsSymbolTable";
 
 export interface GrapsBreakPoint {
+    source: string;
     validated: boolean;
     line: number;
     id: number;
@@ -40,30 +48,54 @@ export interface GrapsStackFrame {
  * This class provides debugging support for a grammar.
  */
 export class GrapsDebugger extends EventEmitter {
-    constructor(
-        private context: SourceContext,
-        private symbolTable: GrapsSymbolTable,
-        public mainGrammarName: string,
-        private lexerData: InterpreterData,
-        private parserData: InterpreterData | undefined
-    ) {
+    constructor(private contexts: SourceContext[]) {
         super();
 
-        // We set up all our structures with an empty input stream. On start we replaced that with the
-        // actual input.
-        let stream = new ANTLRInputStream("");
-        this.lexer = new LexerInterpreter(this.mainGrammarName, this.lexerData.vocabulary, this.lexerData.modes,
-            this.lexerData.ruleNames, this.lexerData.atn, stream);
-        this.lexer.removeErrorListeners();
-        this.lexer.addErrorListener(new DebuggerLexerErrorListener(this));
-        this.tokenStream = new CommonTokenStream(this.lexer);
-        if (this.parserData) {
-            this.parser = new GrapsParserInterpreter(this, this.symbolTable, this.mainGrammarName,
-                this.parserData.vocabulary, this.parserData.ruleNames, this.parserData.atn, this.tokenStream);
-            this.parser.buildParseTree = true;
-            this.parser.removeErrorListeners();
-            this.parser.addErrorListener(new DebuggerErrorListener(this));
+        if (this.contexts.length == 0) {
+            return;
         }
+
+        // The context list contains all dependencies of the main grammar (which is the first entry).
+        // There can be only context with lexer data (either the main context if that represents a combined grammar)
+        // or a dedicated lexer context. Parser data is merged into one set (by ANTLR4) even if there
+        // sub grammar. We need sub grammar contexts for breakpoint validation and call stacks.
+        if (this.isValid) {
+            // Set up the required structures with an empty input stream.
+            // On start we will replace that with the actual input.
+            let lexerName = "";
+            let parserName = "";
+            for (let context of this.contexts) {
+                let [lexerData, parserData] = context.interpreterData;
+                if (!this.lexerData && lexerData) {
+                    this.lexerData = lexerData;
+                    lexerName = context.fileName;
+                }
+                if (!this.parserData && parserData) {
+                    this.parserData = parserData;
+                    parserName = context.fileName;
+                }
+            }
+
+            if (this.lexerData) {
+                let stream = new ANTLRInputStream("");
+                this.lexer = new LexerInterpreter(lexerName, this.lexerData.vocabulary,
+                    this.lexerData.modes, this.lexerData.ruleNames, this.lexerData.atn, stream);
+                this.lexer.removeErrorListeners();
+                this.lexer.addErrorListener(new DebuggerLexerErrorListener(this));
+                this.tokenStream = new CommonTokenStream(this.lexer);
+            }
+
+            if (this.parserData) {
+                this.parser = new GrapsParserInterpreter(this, this.contexts[0], this.parserData, this.tokenStream);
+                this.parser.buildParseTree = true;
+                this.parser.removeErrorListeners();
+                this.parser.addErrorListener(new DebuggerErrorListener(this));
+            }
+        }
+    }
+
+    public get isValid() {
+        return this.contexts.find(context => !context.isInterpreterDataLoaded) == undefined;
     }
 
     public start(startRuleIndex: number, input: string) {
@@ -124,7 +156,7 @@ export class GrapsDebugger extends EventEmitter {
     }
 
     public addBreakPoint(path: string, line: number): GrapsBreakPoint {
-        let breakPoint = <GrapsBreakPoint>{ validated: false, line: line, id: this.nextBreakPointId++ };
+        let breakPoint = <GrapsBreakPoint>{ source: path, validated: false, line: line, id: this.nextBreakPointId++ };
         this.breakPoints.set(breakPoint.id, breakPoint);
         this.validateBreakPoint(breakPoint);
 
@@ -161,10 +193,18 @@ export class GrapsDebugger extends EventEmitter {
     }
 
     public get channels(): string[] {
+        if (!this.lexerData) {
+            return [];
+        }
+
         return this.lexerData.channels;
     }
 
     public get modes(): string[] {
+        if (!this.lexerData) {
+            return [];
+        }
+
         return this.lexerData.modes;
     }
 
@@ -327,7 +367,7 @@ export class GrapsDebugger extends EventEmitter {
                         return result;
                     }
 
-                    block = (block.parent as ScopedSymbol).parent;
+                    block = (block.parent as ScopedSymbol).parent!;
                     next = block.nextSibling;
                     if (next) {
                         if (next instanceof EbnfSuffixSymbol) {
@@ -458,21 +498,29 @@ export class GrapsDebugger extends EventEmitter {
      * @param breakPoint The breakpoint to validate.
      */
     private validateBreakPoint(breakPoint: GrapsBreakPoint) {
-        if (!this.parserData) {
+        let context = this.contexts.find(context => context.fileName == breakPoint.source);
+        if (!context || !this.parserData) {
             return;
         }
 
-        let [name, index] = this.context.ruleFromPosition(0, breakPoint.line); // Assuming here a rule always starts in column 0.
-        if (name != undefined && index != undefined) {
+        // Assuming here a rule always starts in column 0.
+        let rule = context.enclosingSymbolAtPosition(0, breakPoint.line, true);
+        if (rule) {
             breakPoint.validated = true;
 
+            // Main and sub grammars are combined in the ATN (and interpreter data), which means
+            // the rule index must be looked up in the main context, regardless of the source file.
+            let index = this.ruleIndexFromName(rule.name);
             let start = this.parserData.atn.ruleToStartState[index];
             this.parser!.breakPoints.add(start);
-            let range = this.context.enclosingRangeForSymbol(0, breakPoint.line, true);
-            breakPoint.line = range!.start.row;
+            breakPoint.line = rule.definition!.range.start.row;
             this.sendEvent("breakpointValidated", breakPoint);
         }
     }
+
+    // Interpreter data for the main grammar as well as all imported grammars.
+    private lexerData: InterpreterData | undefined;
+    private parserData: InterpreterData | undefined;
 
     private lexer: LexerInterpreter;
     private tokenStream: CommonTokenStream;
@@ -489,14 +537,11 @@ class GrapsParserInterpreter extends ParserInterpreter {
 
     constructor(
         private _debugger: GrapsDebugger,
-        private symbolTable: GrapsSymbolTable,
-        grammarFileName: string,
-        vocabulary: Vocabulary,
-        ruleNames: string[],
-        atn: ATN,
+        private mainContext: SourceContext,
+        parserData: InterpreterData,
         input: TokenStream
     ) {
-        super(grammarFileName, vocabulary, ruleNames, atn, input);
+        super(mainContext.fileName, parserData.vocabulary, parserData.ruleNames, parserData.atn, input);
     }
 
     start(startRuleIndex: number) {
@@ -572,7 +617,7 @@ class GrapsParserInterpreter extends ParserInterpreter {
                     let frame = new InternalStackFrame();
                     let ruleName = this._debugger.ruleNameFromIndex(this.atnState.ruleIndex);
                     if (ruleName) {
-                        let ruleSymbol = this.symbolTable.resolve(ruleName, false);
+                        let ruleSymbol = this.mainContext.resolveSymbol(ruleName);
                         if (ruleSymbol) {
                             // Get the source name from the symbol's symbol table (which doesn't
                             // necessarily correspond to the one we have set for the debugger).
@@ -668,7 +713,7 @@ class DebuggerLexerErrorListener implements ANTLRErrorListener<number> {
     syntaxError<T extends number>(recognizer: Recognizer<T, any>, offendingSymbol: T | undefined, line: number,
         charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
         this._debugger.emit("output", "Lexer error (" + line + ", " + (charPositionInLine + 1) + "): " + msg,
-            this._debugger.mainGrammarName, line, charPositionInLine, true);
+            recognizer.inputStream!.sourceName, line, charPositionInLine, true);
     }
 };
 
@@ -679,6 +724,6 @@ class DebuggerErrorListener implements ANTLRErrorListener<CommonToken> {
     syntaxError<T extends Token>(recognizer: Recognizer<T, any>, offendingSymbol: T | undefined, line: number,
         charPositionInLine: number, msg: string, e: RecognitionException | undefined): void {
         this._debugger.emit("output", "Parser error (" + line + ", " + (charPositionInLine + 1) + "): " + msg,
-            this._debugger.mainGrammarName, line, charPositionInLine, true);
+        recognizer.inputStream!.sourceName, line, charPositionInLine, true);
     }
 };

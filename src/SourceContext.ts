@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017, Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -48,7 +48,7 @@ import { ErrorParser } from "./ErrorParser";
 
 import {
     GrapsSymbolTable, BuiltInChannelSymbol, BuiltInTokenSymbol, BuiltInModeSymbol, RuleSymbol,
-    VirtualTokenSymbol, FragmentTokenSymbol, TokenSymbol, AlternativeSymbol
+    VirtualTokenSymbol, FragmentTokenSymbol, TokenSymbol, AlternativeSymbol, RuleReferenceSymbol, TokenReferenceSymbol
 } from "./GrapsSymbolTable";
 
 import { LexicalRange } from "../index";
@@ -80,7 +80,7 @@ export class SourceContext {
         }
     }
 
-    public infoForSymbolAtPosition(column: number, row: number, limitToChildren: boolean): SymbolInfo | undefined {
+    public symbolAtPosition(column: number, row: number, limitToChildren: boolean): SymbolInfo | undefined {
         let terminal = parseTreeFromPosition(this.tree!, column, row);
         if (!terminal || !(terminal instanceof TerminalNode)) {
             return undefined;
@@ -115,7 +115,7 @@ export class SourceContext {
      * Returns the lexical range of the closest symbol scope that covers the given location.
      * @param ruleScope if true find the enclosing rule (if any) and return it's range, instead of the directly enclosing scope.
      */
-    public enclosingRangeForSymbol(column: number, row: number, ruleScope: boolean): LexicalRange | undefined {
+    public enclosingSymbolAtPosition(column: number, row: number, ruleScope: boolean): SymbolInfo | undefined {
         let context = parseTreeFromPosition(this.tree!, column, row);
         if (!context) {
             return;
@@ -127,7 +127,10 @@ export class SourceContext {
 
         if (ruleScope) {
             let run = context;
-            while (run && !(run instanceof RuleSpecContext) && !(run instanceof OptionsSpecContext) && !(run instanceof TokensSpecContext)) {
+            while (run
+                && !(run instanceof ParserRuleSpecContext)
+                && !(run instanceof OptionsSpecContext)
+                && !(run instanceof LexerRuleSpecContext)) {
                 run = run.parent;
             }
             if (run) {
@@ -135,19 +138,10 @@ export class SourceContext {
             }
         }
 
-        if (context instanceof ParserRuleContext) {
-            if (context.stop) {
-                return {
-                    start: { column: context.start.charPositionInLine, row: context.start.line },
-                    end: { column: context.stop.charPositionInLine, row: context.stop.line }
-                };
-            }
+        let symbol = this.symbolTable.symbolWithContext(context!);
+        if (symbol) {
+            return this.symbolTable.getSymbolInfo(symbol);
 
-            let length = context.start.inputStream!.size - context.start.startIndex + 1;
-            return {
-                start: { column: context.start.charPositionInLine, row: context.start.line },
-                end: { column: context.start.charPositionInLine + length, row: context.start.line }
-            };
         }
     }
 
@@ -503,7 +497,7 @@ export class SourceContext {
                     literals: []
                 };
 
-                for (let child of symbol.getNestedSymbolsOfType(RuleSymbol)) {
+                for (let child of symbol.getNestedSymbolsOfType(RuleReferenceSymbol)) {
                     let resolved = this.symbolTable.resolve(child.name, false);
                     if (resolved) {
                         entry.rules.push(resolved.qualifiedName());
@@ -512,7 +506,7 @@ export class SourceContext {
                     }
                 }
 
-                for (let child of symbol.getNestedSymbolsOfType(TokenSymbol)) {
+                for (let child of symbol.getNestedSymbolsOfType(TokenReferenceSymbol)) {
                     let resolved = this.symbolTable.resolve(child.name, false);
                     if (resolved) {
                         entry.tokens.push(resolved.qualifiedName());
@@ -582,13 +576,16 @@ export class SourceContext {
         return this.symbolTable.getReferenceCount(symbol);
     }
 
+    /**
+     * Similar like `enclosingRangeForSymbol` but returns the rule's name and index, if found.
+     */
     public ruleFromPosition(column: number, row: number): [string | undefined, number | undefined] {
-        let terminal = parseTreeFromPosition(this.tree!, column, row);
-        if (!terminal) {
+        let tree = parseTreeFromPosition(this.tree!, column, row);
+        if (!tree) {
             return [undefined, undefined];
         }
 
-        let context: RuleContext | undefined = (terminal as RuleContext);
+        let context: RuleContext | undefined = (tree as RuleContext);
         while (context && context.ruleIndex != ANTLRv4Parser.RULE_parserRuleSpec && context.ruleIndex != ANTLRv4Parser.RULE_lexerRuleSpec) {
             context = context.parent;
         }
@@ -858,6 +855,10 @@ export class SourceContext {
         return this.symbolTable.getSymbolInfo(symbol);
     }
 
+    public resolveSymbol(symbolName: string): Symbol | undefined {
+        return this.symbolTable.resolve(symbolName, false);
+    }
+
     public formatGrammar(options: FormattingOptions, start: number, stop: number): [string, number, number] {
         this.tokenStream.fill();
         let tokens = this.tokenStream.getTokens();
@@ -865,12 +866,24 @@ export class SourceContext {
         return formatter.formatGrammar(options, start, stop);
     }
 
-    public createDebugger(mainGrammarName: string): GrapsDebugger | undefined {
-        if (this.grammarLexerData) {
-            return new GrapsDebugger(this, this.symbolTable, mainGrammarName, this.grammarLexerData,
-                this.grammarParserData);
+    public get isInterpreterDataLoaded(): boolean {
+        return this.grammarLexerData != undefined || this.grammarParserData != undefined;
+    }
+
+    /**
+     * Internal function to provide interpreter data to certain internal classes (e.g. the debugger).
+     */
+    public get interpreterData(): [InterpreterData | undefined, InterpreterData | undefined] {
+        return [this.grammarLexerData, this.grammarParserData];
+    }
+
+    public get hasErrors(): boolean {
+        for (let diagnostic of this.diagnostics) {
+            if (diagnostic.type == DiagnosticType.Error) {
+                return true;
+            }
         }
-        return undefined;
+        return false;
     }
 
     private runSemanticAnalysisIfNeeded() {
@@ -889,7 +902,7 @@ export class SourceContext {
     /**
      * Loads interpreter data if it exists and sets up the interpreters.
      */
-    private setupInterpreters(outputDir?: string) {
+    public setupInterpreters(outputDir?: string) {
         // Load interpreter data if the code generation was successful.
         // For that we only need the final parser and lexer files, not any imported stuff.
         // The target path is either the output path (if one was given) or the grammar path.
@@ -897,26 +910,28 @@ export class SourceContext {
         let parserFile = "";
         let baseName = (this.fileName.endsWith(".g4") ? path.basename(this.fileName, ".g4") : path.basename(this.fileName, ".g"));
         let grammarPath = (outputDir) ? outputDir : path.dirname(this.fileName);
+
         switch (this.grammarType) {
-            case GrammarType.Parser:
+            case GrammarType.Combined: {
+                // In a combined grammar the lexer is implicitly extracted and treated as a separate file.
+                // We have no own source context for this case and hence load both lexer and parser data here.
                 if (baseName.endsWith("Parser")) {
                     baseName = baseName.substr(0, baseName.length - "Parser".length);
                 }
                 parserFile = path.join(grammarPath, baseName) + "Parser.interp"
                 lexerFile = path.join(grammarPath, baseName) + "Lexer.interp"
                 break;
+            }
 
-            case GrammarType.Lexer:
+            case GrammarType.Lexer: {
                 lexerFile = path.join(grammarPath, baseName) + ".interp"
                 break;
+            }
 
-            case GrammarType.Combined:
-                if (baseName.endsWith("Parser")) {
-                    baseName = baseName.substr(0, baseName.length - "Parser".length);
-                }
+            case GrammarType.Parser: {
                 parserFile = path.join(grammarPath, baseName) + ".interp"
-                lexerFile = path.join(grammarPath, baseName) + "Lexer.interp"
                 break;
+            }
 
             default: // Unknown, no data is loaded.
                 break;
@@ -934,7 +949,7 @@ export class SourceContext {
             this.grammarLexerRuleMap.clear();
         }
 
-        if (this.grammarLexerData && fs.existsSync(parserFile)) {
+        if (fs.existsSync(parserFile)) {
             this.grammarParserData = InterpreterDataReader.parseFile(parserFile);
             let map = new Map<string, number>();
             for (let i = 0; i < this.grammarParserData.ruleNames.length; ++i) {

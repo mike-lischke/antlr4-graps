@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017, Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -10,7 +10,9 @@
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import {
     LexerRuleSpecContext, ParserRuleSpecContext, TokensSpecContext, ChannelsSpecContext,
-    ModeSpecContext, DelegateGrammarContext, OptionContext, TerminalRuleContext, RulerefContext, OptionValueContext, BlockContext, AlternativeContext, RuleBlockContext, EbnfSuffixContext
+    ModeSpecContext, DelegateGrammarContext, OptionContext, TerminalRuleContext, RulerefContext,
+    OptionValueContext, BlockContext, AlternativeContext, RuleBlockContext, EbnfSuffixContext,
+    OptionsSpecContext, ActionBlockContext, ArgActionBlockContext
 } from '../parser/ANTLRv4Parser';
 
 import { SymbolKind } from '../index';
@@ -18,7 +20,10 @@ import {
     GrapsSymbolTable, FragmentTokenSymbol, TokenSymbol, TokenReferenceSymbol, RuleSymbol, RuleReferenceSymbol,
     VirtualTokenSymbol, TokenChannelSymbol, LexerModeSymbol, ImportSymbol, TokenVocabSymbol, definitionForContext,
     AlternativeSymbol,
-    EbnfSuffixSymbol
+    EbnfSuffixSymbol,
+    OptionsSymbol,
+    ActionSymbol,
+    ArgumentSymbol
 } from './GrapsSymbolTable';
 
 import { ScopedSymbol, LiteralSymbol, BlockSymbol, Symbol } from "antlr4-c3";
@@ -47,7 +52,10 @@ export class DetailsListener implements ANTLRv4ParserListener {
 
     exitParserRuleSpec(ctx: ParserRuleSpecContext) {
         let symbol = this.symbolTable.addNewSymbolOfType(TokenSymbol, this.currentSymbol as ScopedSymbol, ";");
-        symbol.context = ctx.SEMI();
+        try {
+            symbol.context = ctx.SEMI();
+        } catch (e) {
+        }
 
         if (this.currentSymbol) {
             this.currentSymbol = this.currentSymbol.parent as ScopedSymbol;
@@ -66,6 +74,7 @@ export class DetailsListener implements ANTLRv4ParserListener {
 
     enterBlock(ctx: BlockContext) {
         this.currentSymbol = this.symbolTable.addNewSymbolOfType(BlockSymbol, this.currentSymbol as ScopedSymbol, "");
+        this.currentSymbol.context = ctx;
     }
 
     exitBlock(ctx: BlockContext) {
@@ -76,6 +85,7 @@ export class DetailsListener implements ANTLRv4ParserListener {
 
     enterAlternative(ctx: AlternativeContext) {
         this.currentSymbol = this.symbolTable.addNewSymbolOfType(AlternativeSymbol, this.currentSymbol as ScopedSymbol, "");
+        this.currentSymbol.context = ctx;
     }
 
     exitAlternative(ctx: AlternativeContext) {
@@ -144,10 +154,17 @@ export class DetailsListener implements ANTLRv4ParserListener {
 
     exitDelegateGrammar(ctx: DelegateGrammarContext) {
         let context = ctx.identifier()[ctx.identifier().length - 1];
-        let name = definitionForContext(context, false)!.text;
-        let symbol = this.symbolTable.addNewSymbolOfType(ImportSymbol, undefined, name);
+        if (context) {
+            let name = definitionForContext(context, false)!.text;
+            let symbol = this.symbolTable.addNewSymbolOfType(ImportSymbol, undefined, name);
+            symbol.context = ctx;
+            this.imports.push(name);
+        }
+    }
+
+    enterOptionsSpec(ctx: OptionsSpecContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(OptionsSymbol, undefined, "options");
         symbol.context = ctx;
-        this.imports.push(name);
     }
 
     exitOption(ctx: OptionContext) {
@@ -163,6 +180,16 @@ export class DetailsListener implements ANTLRv4ParserListener {
     enterEbnfSuffix(ctx: EbnfSuffixContext) {
         let symbol = this.symbolTable.addNewSymbolOfType(EbnfSuffixSymbol, this.currentSymbol as ScopedSymbol,
             ctx.text);
+        symbol.context = ctx;
+    }
+
+    enterActionBlock(ctx: ActionBlockContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(ActionSymbol, undefined, "action");
+        symbol.context = ctx;
+    }
+
+    enterArgActionBlock(ctx: ArgActionBlockContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(ArgumentSymbol, undefined, "argument");
         symbol.context = ctx;
     }
 

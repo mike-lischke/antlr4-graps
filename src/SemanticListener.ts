@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017 Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -78,7 +78,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
         let name = tokenRef.text;
 
         // The symbol table already contains an entry for this symbol. So we can only partially use that
-        // for duplicate checks. `seenSymbols` tracks occurences for symbols in the main symbol table.
+        // for duplicate checks. `seenSymbols` tracks occurrences for symbols in the main symbol table.
         let seenSymbol = this.seenSymbols.get(name);
         if (seenSymbol) {
             this.reportDuplicateSymbol(name, tokenRef.symbol, seenSymbol);
@@ -91,7 +91,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
                     symbol.context.start : (symbol.context as TerminalNode).symbol;
                 this.reportDuplicateSymbol(name, tokenRef.symbol, symbol.context ? start : undefined);
             } else {
-                // Otherwise we haven't come accross this symbol yet.
+                // Otherwise we haven't come across this symbol yet.
                 this.seenSymbols.set(name, tokenRef.symbol);
             }
         }

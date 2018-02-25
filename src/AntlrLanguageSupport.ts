@@ -10,8 +10,9 @@
 import * as fs from "fs";
 import * as path from "path";
 
-import { SourceContext } from './SourceContext';
 import { ATNStateType, TransitionType } from "antlr4ts/atn";
+
+import { SourceContext } from './SourceContext';
 import { GrapsDebugger } from "./GrapsDebugger";
 
 export enum SymbolGroupKind { // Multiple symbol kinds can be involved in a symbol lookup.
@@ -319,7 +320,7 @@ export class AntlrLanguageSupport {
             this.releaseGrammar(dep);
     }
 
-    private getContext(fileName: string, source?: string | undefined): SourceContext {
+    public getContext(fileName: string, source?: string | undefined): SourceContext {
         let contextEntry = this.sourceContexts.get(fileName);
         if (!contextEntry) {
             return this.loadGrammar(fileName, source);
@@ -333,7 +334,7 @@ export class AntlrLanguageSupport {
      * Does nothing if no grammar has been loaded for that file name.
      */
     public setText(fileName: string, source: string) {
-        var contextEntry = this.sourceContexts.get(fileName);
+        let contextEntry = this.sourceContexts.get(fileName);
         if (contextEntry) {
             contextEntry.context.setText(source);
         }
@@ -343,14 +344,14 @@ export class AntlrLanguageSupport {
      * Triggers a parse run for the given file name. This grammar must have been loaded before.
      */
     public reparse(fileName: string) {
-        var contextEntry = this.sourceContexts.get(fileName);
+        let contextEntry = this.sourceContexts.get(fileName);
         if (contextEntry) {
             this.parseGrammar(contextEntry);
         }
     }
 
     public loadGrammar(fileName: string, source?: string): SourceContext {
-        var contextEntry = this.sourceContexts.get(fileName);
+        let contextEntry = this.sourceContexts.get(fileName);
         if (!contextEntry) {
             if (!source) {
                 try {
@@ -361,7 +362,7 @@ export class AntlrLanguageSupport {
                 };
             }
 
-            var context = new SourceContext(fileName);
+            let context = new SourceContext(fileName);
             contextEntry = { context: context, refCount: 0, dependencies: [], grammar: fileName };
             this.sourceContexts.set(fileName, contextEntry);
 
@@ -375,7 +376,7 @@ export class AntlrLanguageSupport {
     }
 
     private internalReleaseGrammar(fileName: string, referencing?: ContextEntry) {
-        var contextEntry = this.sourceContexts.get(fileName);
+        let contextEntry = this.sourceContexts.get(fileName);
         if (contextEntry) {
             if (referencing) {
                 // If a referencing context is given remove this one from the reference's dependencies list,
@@ -399,32 +400,33 @@ export class AntlrLanguageSupport {
     }
 
     public infoForSymbol(fileName: string, column: number, row: number, limitToChildren: boolean = true): SymbolInfo | undefined {
-        var context = this.getContext(fileName);
-        return context.infoForSymbolAtPosition(column, row, limitToChildren);
+        let context = this.getContext(fileName);
+        return context.symbolAtPosition(column, row, limitToChildren);
     };
 
-    public enclosingRangeForSymbol(fileName: string, column: number, row: number, ruleScope: boolean = false): LexicalRange | undefined {
-        var context = this.getContext(fileName);
-        return context.enclosingRangeForSymbol(column, row, ruleScope);
+    public enclosingSymbolAtPosition(fileName: string, column: number, row: number,
+        ruleScope: boolean = false): SymbolInfo | undefined {
+        let context = this.getContext(fileName);
+        return context.enclosingSymbolAtPosition(column, row, ruleScope);
     }
 
     public listSymbols(fileName: string, fullList: boolean): SymbolInfo[] {
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
         return context.listSymbols(!fullList);
     };
 
     public getCodeCompletionCandidates(fileName: string, column: number, row: number): SymbolInfo[] {
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
         return context.getCodeCompletionCandidates(column, row);
     };
 
     public getDiagnostics(fileName: string): DiagnosticEntry[] {
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
         return context.getDiagnostics();
     };
 
     public ruleFromPosition(fileName: string, column: number, row: number): [string | undefined, number | undefined ]{
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
         return context.ruleFromPosition(column, row);
     }
 
@@ -432,7 +434,7 @@ export class AntlrLanguageSupport {
      * Count how many times a symbol has been referenced. The given file must contain the definition of this symbol.
      */
     public countReferences(fileName: string, symbol: string): number {
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
         var result: number = context.getReferenceCount(symbol);
         for (let reference of context.references) {
             result += reference.getReferenceCount(symbol);
@@ -456,12 +458,12 @@ export class AntlrLanguageSupport {
     }
 
     public getReferenceGraph(fileName: string): Map<string, ReferenceNode> {
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
         return context.getReferenceGraph();
     }
 
     public getRRDScript(fileName: string, rule: string): string {
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
 
         let result = context.getRRDScript(rule);
         if (!result) {
@@ -476,18 +478,19 @@ export class AntlrLanguageSupport {
         return result!;
     };
 
-    private pushDependencyFiles(entry: ContextEntry, parameters: Set<SourceContext>) {
+    private pushDependencyFiles(entry: ContextEntry, contexts: Set<SourceContext>) {
+        // Using a set for the context list here, to automatically exclude duplicates.
         for (let dep of entry.dependencies) {
             let depEntry = this.sourceContexts.get(dep);
             if (depEntry) {
-                this.pushDependencyFiles(depEntry, parameters);
-                parameters.add(depEntry.context);
+                this.pushDependencyFiles(depEntry, contexts);
+                contexts.add(depEntry.context);
             }
         }
     }
 
     public generate(fileName: string, options: GenerationOptions): Promise<string[]> {
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
         let dependencies: Set<SourceContext> = new Set();
         this.pushDependencyFiles(this.sourceContexts.get(fileName)!, dependencies);
 
@@ -495,22 +498,45 @@ export class AntlrLanguageSupport {
     }
 
     public getATNGraph(fileName: string, rule: string): ATNGraphData | undefined {
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
         return context.getATNGraph(rule);
     }
 
     public generateSentences(fileName: string, options: SentenceGenerationOptions, definitions?: Map<string, string>): string[] {
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
         return context.generateSentences(options, definitions);
     }
 
     public formatGrammar(fileName: string, options: FormattingOptions, start: number, stop: number): [string, number, number] {
-        var context = this.getContext(fileName);
+        let context = this.getContext(fileName);
         return context.formatGrammar(options, start, stop);
     }
 
-    public createDebugger(fileName: string): GrapsDebugger | undefined {
-        var context = this.getContext(fileName);
-        return context.createDebugger(path.basename(fileName));
+    public hasErrors(fileName: string): boolean {
+        let context = this.getContext(fileName);
+        return context.hasErrors;
+    }
+
+    public createDebugger(fileName: string, dataDir: string): GrapsDebugger | undefined {
+        let context = this.getContext(fileName);
+        if (!context) {
+            return;
+        }
+
+        let contexts: Set<SourceContext> = new Set();
+        contexts.add(context);
+        this.pushDependencyFiles(this.sourceContexts.get(fileName)!, contexts);
+
+        for (let dependency of contexts) {
+            if (dependency.hasErrors) {
+                return;
+            }
+
+            if (!dependency.isInterpreterDataLoaded) {
+                dependency.setupInterpreters(dataDir);
+            }
+        }
+
+        return new GrapsDebugger([...contexts]);
     }
 }
