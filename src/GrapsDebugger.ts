@@ -98,7 +98,7 @@ export class GrapsDebugger extends EventEmitter {
         return this.contexts.find(context => !context.isInterpreterDataLoaded) == undefined;
     }
 
-    public start(startRuleIndex: number, input: string) {
+    public start(startRuleIndex: number, input: string, noDebug: boolean) {
         let stream = new ANTLRInputStream(input);
         this.lexer.inputStream = stream;
 
@@ -107,14 +107,20 @@ export class GrapsDebugger extends EventEmitter {
             return;
         }
 
-        this.parser.breakPoints.clear();
-        for (let bp of this.breakPoints) {
-            this.validateBreakPoint(bp[1]);
-        }
-
         this.parseTree = undefined;
-        this.parser.start(startRuleIndex);
-        this.continue();
+        this.parser.breakPoints.clear();
+
+        if (noDebug) {
+            this.parseTree = this.parser.parse(startRuleIndex);
+            this.sendEvent("end");
+        } else {
+            for (let bp of this.breakPoints) {
+                this.validateBreakPoint(bp[1]);
+            }
+
+            this.parser.start(startRuleIndex);
+            this.continue();
+        }
     }
 
     public continue() {
