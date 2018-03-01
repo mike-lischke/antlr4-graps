@@ -373,3 +373,4 @@ export class EbnfSuffixSymbol extends Symbol { }
 export class OptionsSymbol extends ScopedSymbol { }
 export class ActionSymbol extends ScopedSymbol { }
 export class ArgumentSymbol extends ScopedSymbol { }
+export class OperatorSymbol extends Symbol { }

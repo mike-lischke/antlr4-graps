@@ -700,7 +700,7 @@ describe('antlr4-graps:', function () {
                 let code = fs.readFileSync("test/code.cpp", { "encoding": "utf8" });
                 let d = backend.createDebugger("test/CPP14.g4", "generated");
                 expect(d, "Test 1").not.to.be.undefined;
-                d!.start(0, code);
+                d!.start(0, code, false);
                 let tree = d!.currentParseTree;
                 //console.log(util.inspect(tree, false, null, true));
             } finally {

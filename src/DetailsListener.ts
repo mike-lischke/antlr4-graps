@@ -12,21 +12,17 @@ import {
     LexerRuleSpecContext, ParserRuleSpecContext, TokensSpecContext, ChannelsSpecContext,
     ModeSpecContext, DelegateGrammarContext, OptionContext, TerminalRuleContext, RulerefContext,
     OptionValueContext, BlockContext, AlternativeContext, RuleBlockContext, EbnfSuffixContext,
-    OptionsSpecContext, ActionBlockContext, ArgActionBlockContext
+    OptionsSpecContext, ActionBlockContext, ArgActionBlockContext, LabeledAltContext, LabeledElementContext
 } from '../parser/ANTLRv4Parser';
 
 import { SymbolKind } from '../index';
 import {
     GrapsSymbolTable, FragmentTokenSymbol, TokenSymbol, TokenReferenceSymbol, RuleSymbol, RuleReferenceSymbol,
     VirtualTokenSymbol, TokenChannelSymbol, LexerModeSymbol, ImportSymbol, TokenVocabSymbol, definitionForContext,
-    AlternativeSymbol,
-    EbnfSuffixSymbol,
-    OptionsSymbol,
-    ActionSymbol,
-    ArgumentSymbol
+    AlternativeSymbol, EbnfSuffixSymbol, OptionsSymbol, ActionSymbol, ArgumentSymbol, OperatorSymbol
 } from './GrapsSymbolTable';
 
-import { ScopedSymbol, LiteralSymbol, BlockSymbol, Symbol } from "antlr4-c3";
+import { ScopedSymbol, LiteralSymbol, BlockSymbol, Symbol, VariableSymbol } from "antlr4-c3";
 import { TerminalNode, ParseTree } from 'antlr4ts/tree';
 
 export class DetailsListener implements ANTLRv4ParserListener {
@@ -184,13 +180,26 @@ export class DetailsListener implements ANTLRv4ParserListener {
     }
 
     enterActionBlock(ctx: ActionBlockContext) {
-        let symbol = this.symbolTable.addNewSymbolOfType(ActionSymbol, undefined, "action");
+        let symbol = this.symbolTable.addNewSymbolOfType(ActionSymbol, this.currentSymbol as ScopedSymbol, "action");
         symbol.context = ctx;
     }
 
     enterArgActionBlock(ctx: ArgActionBlockContext) {
-        let symbol = this.symbolTable.addNewSymbolOfType(ArgumentSymbol, undefined, "argument");
+        let symbol = this.symbolTable.addNewSymbolOfType(ArgumentSymbol, this.currentSymbol as ScopedSymbol,
+            "argument");
         symbol.context = ctx;
+    }
+
+    enterLabeledElement(ctx: LabeledElementContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(VariableSymbol, this.currentSymbol as ScopedSymbol,
+            ctx.identifier().text);
+        symbol.context = ctx;
+
+        if (ctx.childCount > 1) {
+            let operator = this.symbolTable.addNewSymbolOfType(OperatorSymbol, this.currentSymbol as ScopedSymbol,
+                ctx.getChild(1).text);
+            operator.context = ctx.getChild(1);
+        }
     }
 
     private currentSymbol: Symbol | undefined;

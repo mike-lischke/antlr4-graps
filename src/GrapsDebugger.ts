@@ -20,7 +20,7 @@ import {
 import { ParseTree, ErrorNode, TerminalNode } from "antlr4ts/tree";
 import { Override } from "antlr4ts/Decorators";
 
-import { Symbol, ScopedSymbol, BlockSymbol } from "antlr4-c3";
+import { Symbol, ScopedSymbol, BlockSymbol, VariableSymbol } from "antlr4-c3";
 
 import { InterpreterData } from "./InterpreterDataReader";
 import {
@@ -111,6 +111,7 @@ export class GrapsDebugger extends EventEmitter {
         this.parser.breakPoints.clear();
 
         if (noDebug) {
+            //this.parser.setProfile(true);
             this.parseTree = this.parser.parse(startRuleIndex);
             this.sendEvent("end");
         } else {
@@ -214,6 +215,22 @@ export class GrapsDebugger extends EventEmitter {
         return this.lexerData.modes;
     }
 
+    public get errorCount(): number {
+        if (!this.parser) {
+            return 0;
+        }
+
+        return this.parser.numberOfSyntaxErrors;
+    }
+
+    public get inputSize(): number {
+        if (!this.parser) {
+            return 0;
+        }
+
+        return this.parser.inputStream.size;
+    }
+
     public ruleNameFromIndex(ruleIndex: number): string | undefined {
         if (!this.parser) {
             return;
@@ -285,6 +302,55 @@ export class GrapsDebugger extends EventEmitter {
 
     public get currentTokenIndex(): number {
         return this.tokenStream.index;
+    }
+
+    /**
+     * Return a string describing the stack frame at the given index.
+     * Note: we return the stack trace reverted, so we have to account for that here.
+     */
+    public getStackInfo(index: number): string {
+        if (!this.parser || index < 0 || index > this.parser.callStack.length) {
+            return "Invalid Stack Frame";
+        }
+        let frame = this.parser.callStack[this.parser.callStack.length - index - 1];
+        return "Context " + frame.name;
+    }
+
+    public getVariables(index: number): [string, string][] {
+        let result: [string, string][] = [];
+        if (!this.parser || index < 0 || index > this.parser.callStack.length) {
+            return [];
+        }
+        let frame = this.parser.callStack[this.parser.callStack.length - index - 1];
+
+        // There's always at least one current symbol in the given frame.
+        // Go up the parent chain to find the rule symbol which contains this current symbol.
+        let run = frame.current[0];
+        while (run && !(run instanceof RuleSymbol)) {
+            run = run.parent as ScopedSymbol;
+        }
+
+        if (run) {
+            // Walk up the parent chain of the current parser rule context to find the
+            // corresponding context for our stack frame.
+            let context = this.parser.context;
+            while (index-- > 0) {
+                context = context.parent!;
+            }
+
+            let symbols = (run as ScopedSymbol).getNestedSymbolsOfType(VariableSymbol);
+
+            // Coalesce variable names and look up the value.
+            let variables: Set<string> = new Set<string>();
+            for (let symbol of symbols) {
+                variables.add(symbol.name);
+            }
+            for (let variable of variables) {
+
+            }
+        }
+
+        return result;
     }
 
     public sendEvent(event: string, ...args: any[]) {
@@ -362,6 +428,12 @@ export class GrapsDebugger extends EventEmitter {
                         break;
                     }
                 }
+            } else if (next instanceof VariableSymbol) {
+                // Skip over variables (element labels) and their operator.
+                next = next.nextSibling;
+                if (next) {
+                    next = next.nextSibling;
+                }
             }
 
             if (!next) {
@@ -422,18 +494,27 @@ export class GrapsDebugger extends EventEmitter {
         let result: Symbol[] = [];
         for (let alt of block.children) {
             let next: Symbol | undefined = (alt as AlternativeSymbol).children[0];
-            if (next instanceof BlockSymbol) {
-                result.push(...this.candidatesFromBlock(next));
-            } else {
-                result.push(next);
+            if (next instanceof VariableSymbol) { // Jump over variable assignments.
+                next = next.nextSibling;
+                if (next) {
+                    next = next.nextSibling;
+                }
             }
 
-            // Check cardinality which allows optional elements.
-            next = next.nextSibling;
-            if (next instanceof EbnfSuffixSymbol) {
-                if (next.name[0] == '?' || next.name[0] == '*') {
-                    let subResult = this.nextCandidates(next);
-                    result.push(...subResult);
+            if (next) {
+                if (next instanceof BlockSymbol) {
+                    result.push(...this.candidatesFromBlock(next));
+                } else {
+                    result.push(next);
+                }
+
+                // Check cardinality which allows optional elements.
+                next = next.nextSibling;
+                if (next instanceof EbnfSuffixSymbol) {
+                    if (next.name[0] == '?' || next.name[0] == '*') {
+                        let subResult = this.nextCandidates(next);
+                        result.push(...subResult);
+                    }
                 }
             }
         }
@@ -492,12 +573,14 @@ export class GrapsDebugger extends EventEmitter {
             line: token.line,
             offset: token.charPositionInLine,
             channel: token.channel,
-            tokenIndex: token.tokenIndex
+            tokenIndex: token.tokenIndex,
+            startIndex: token.startIndex,
+            stopIndex: token.stopIndex
         }
     }
 
     /**
-     * Validates the breakpoint's position.
+     * Validates a breakpoint's position.
      * When a breakpoint is within a rule, but not at the start line, it will be moved to that line.
      * Only breakpoints at rule start lines will be set to be valid and only valid breakpoints are
      * sent to the parser interpreter.
@@ -517,9 +600,16 @@ export class GrapsDebugger extends EventEmitter {
             // Main and sub grammars are combined in the ATN (and interpreter data), which means
             // the rule index must be looked up in the main context, regardless of the source file.
             let index = this.ruleIndexFromName(rule.name);
-            let start = this.parserData.atn.ruleToStartState[index];
-            this.parser!.breakPoints.add(start);
-            breakPoint.line = rule.definition!.range.start.row;
+            if (breakPoint.line == rule.definition!.range.end.row) {
+                // If the breakpoint's line is on the rule's end (the semicolon) then
+                // use the rule's end state for break.
+                let stop = this.parserData.atn.ruleToStopState[index];
+                this.parser!.breakPoints.add(stop);
+            } else {
+                let start = this.parserData.atn.ruleToStartState[index];
+                this.parser!.breakPoints.add(start);
+                breakPoint.line = rule.definition!.range.start.row;
+            }
             this.sendEvent("breakpointValidated", breakPoint);
         }
     }
@@ -540,6 +630,7 @@ export class GrapsDebugger extends EventEmitter {
 class GrapsParserInterpreter extends ParserInterpreter {
     public breakPoints: Set<ATNState> = new Set<ATNState>();
     public callStack: InternalStackFrame[];
+    public pauseRequested = false;
 
     constructor(
         private _debugger: GrapsDebugger,
@@ -551,8 +642,7 @@ class GrapsParserInterpreter extends ParserInterpreter {
     }
 
     start(startRuleIndex: number) {
-        this.reset();
-
+        this.pauseRequested = false;
         this.callStack = [];
         let startRuleStartState: RuleStartState = this._atn.ruleToStartState[startRuleIndex];
 
@@ -584,7 +674,13 @@ class GrapsParserInterpreter extends ParserInterpreter {
         let breakPointPending = false;
 
         while (true) {
-            if (this.breakPoints.has(p)) {
+            if (this.pauseRequested) {
+                this.pauseRequested = false;
+                runMode = RunMode.StepIn; // Stop at next possible position.
+            }
+
+            if (this.breakPoints.has(p) && p.stateType != ATNStateType.RULE_STOP) {
+                // Don't mark a pending break point here. The rule end bp already been handled.
                 breakPointPending = true;
                 runMode = RunMode.StepIn;
             }
@@ -595,7 +691,7 @@ class GrapsParserInterpreter extends ParserInterpreter {
                         // End of start rule.
                         if (this.startIsPrecedenceRule) {
                             let result: ParserRuleContext = this._ctx;
-                            let parentContext: [ParserRuleContext, number] = this._parentContextStack.pop()!;
+                            let parentContext = this._parentContextStack.pop()!;
                             this.unrollRecursionContexts(parentContext[0]);
                             this._debugger.sendEvent("end");
                             return result;
@@ -686,13 +782,20 @@ class GrapsParserInterpreter extends ParserInterpreter {
                     }
 
                     case TransitionType.EPSILON: { // Stop on the rule's semicolon.
-                        if (transition.target.stateType == ATNStateType.RULE_STOP && runMode == RunMode.StepIn) {
-                            let lastStackFrame = this.callStack[this.callStack.length - 1];
-                            lastStackFrame.current = lastStackFrame.next;
-                            this._debugger.computeNextSymbols(lastStackFrame, transition);
-                            this._debugger.sendEvent("stopOnStep");
+                        if (transition.target.stateType == ATNStateType.RULE_STOP) {
+                            let isBreakPoint = this.breakPoints.has(transition.target);
+                            if (runMode == RunMode.StepIn || isBreakPoint) {
+                                let lastStackFrame = this.callStack[this.callStack.length - 1];
+                                lastStackFrame.current = lastStackFrame.next;
+                                this._debugger.computeNextSymbols(lastStackFrame, transition);
+                                if (isBreakPoint) {
+                                    this._debugger.sendEvent("stopOnBreakpoint");
+                                } else {
+                                    this._debugger.sendEvent("stopOnStep");
+                                }
 
-                            return this._rootContext;
+                                return this._rootContext;
+                            }
                         }
                     }
                 }

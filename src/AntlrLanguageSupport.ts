@@ -88,6 +88,9 @@ export class LexerToken {
     offset: number; // Offset in the line.
     channel: number;
     tokenIndex: number;
+    startIndex: number;
+    stopIndex: number;
+    [key: string]: string | number | object;
 };
 
 export enum ParseTreeNodeType {
