@@ -5,7 +5,8 @@
   "main": "out/index.js",
   "typings": "out/index.d.ts",
   "scripts": {
-    "antlr4ts": "antlr4ts grammars/ANTLRv4LexBasic.g4 grammars/ANTLRv4Lexer.g4 grammars/ANTLRv4Parser.g4 -o parser -visitor",
+    "antlr4": "antlr4ts grammars/ANTLRv4LexBasic.g4 grammars/ANTLRv4Lexer.g4 grammars/ANTLRv4Parser.g4 -o parser -visitor -Xexact-output-dir",
+    "cpp": "java -jar antlr/antlr4-4.7.2-SNAPSHOT-complete.jar test/t2.g4 -o generated -Xexact-output-dir",
     "prepublishOnly": "npm run test",
     "test": "tsc && mocha out/test"
   },
@@ -19,20 +20,20 @@
     "grammar"
   ],
   "dependencies": {
-    "antlr4-c3": "^1.1.4",
+    "antlr4-c3": "^1.1.7",
     "antlr4ts": "^0.4.1-alpha.0",
     "fs-extra": "^5.0.0",
     "glob": "^7.1.2"
   },
   "devDependencies": {
     "@types/chai": "^3.5.2",
-    "@types/fs-extra": "^5.0.0",
-    "@types/glob": "^5.0.34",
-    "@types/mocha": "^2.2.45",
-    "@types/node": "^8.5.2",
+    "@types/fs-extra": "^5.0.1",
+    "@types/glob": "^5.0.35",
+    "@types/mocha": "^2.2.48",
+    "@types/node": "^8.9.4",
     "chai": "^3.5.0",
     "mocha": "^3.5.3",
-    "typescript": "^2.6.2"
+    "typescript": "^2.7.2"
   },
   "author": "Mike Lischke",
   "license": "MIT"

@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017 Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -14,13 +14,14 @@ import { SymbolTable, Symbol, ScopedSymbol, SymbolTableOptions } from "antlr4-c3
 import { SymbolKind, SymbolGroupKind, SymbolInfo, Definition } from '../index';
 import { SourceContext } from './SourceContext';
 import { ANTLRv4Parser, ModeSpecContext, GrammarSpecContext } from '../parser/ANTLRv4Parser';
+import { ParseTree, TerminalNode } from 'antlr4ts/tree';
 
 type SymbolStore = Map<SymbolKind, Map<string, ParserRuleContext | undefined>>;
 
 export class GrapsSymbolTable extends SymbolTable {
     public tree: ParserRuleContext; // Set by the owning source context after each parse run.
 
-    constructor(name: string, options: SymbolTableOptions, private owner?: SourceContext) {
+    constructor(name: string, options: SymbolTableOptions, public owner?: SourceContext) {
         super(name, options);
     };
 
@@ -47,16 +48,16 @@ export class GrapsSymbolTable extends SymbolTable {
                 symbol = this.addNewSymbolOfType(ImportSymbol, undefined, name);
                 break;
             case SymbolKind.BuiltInLexerToken:
-                symbol = this.addNewSymbolOfType(BuiltInLexerTokenSymbol, undefined, name);
+                symbol = this.addNewSymbolOfType(BuiltInTokenSymbol, undefined, name);
                 break;
             case SymbolKind.VirtualLexerToken:
-                symbol = this.addNewSymbolOfType(VirtualLexerTokenSymbol, undefined, name);
+                symbol = this.addNewSymbolOfType(VirtualTokenSymbol, undefined, name);
                 break;
             case SymbolKind.FragmentLexerToken:
-                symbol = this.addNewSymbolOfType(FragmentLexerTokenSymbol, undefined, name);
+                symbol = this.addNewSymbolOfType(FragmentTokenSymbol, undefined, name);
                 break;
             case SymbolKind.LexerToken:
-                symbol = this.addNewSymbolOfType(LexerTokenSymbol, undefined, name);
+                symbol = this.addNewSymbolOfType(TokenSymbol, undefined, name);
                 break;
             case SymbolKind.BuiltInMode:
                 symbol = this.addNewSymbolOfType(BuiltInModeSymbol, undefined, name);
@@ -71,7 +72,7 @@ export class GrapsSymbolTable extends SymbolTable {
                 symbol = this.addNewSymbolOfType(TokenChannelSymbol, undefined, name);
                 break;
             default: // SymbolKind.ParserRule
-                symbol = this.addNewSymbolOfType(ParserRuleSymbol, undefined, name);
+                symbol = this.addNewSymbolOfType(RuleSymbol, undefined, name);
                 break;
         }
         symbol.context = ctx;
@@ -117,7 +118,7 @@ export class GrapsSymbolTable extends SymbolTable {
         return false;
     }
 
-    public contextForSymbol(name: string, kind: SymbolKind, localOnly: boolean): ParserRuleContext | undefined {
+    public contextForSymbol(name: string, kind: SymbolKind, localOnly: boolean): ParseTree | undefined {
         let symbol = this.getSymbolOfType(name, kind, localOnly);
         if (!symbol) {
             return undefined;
@@ -125,10 +126,13 @@ export class GrapsSymbolTable extends SymbolTable {
         return symbol.context;
     }
 
-    public getSymbolInfo(name: string): SymbolInfo | undefined {
-        let symbol = this.resolve(name);
-        if (!symbol) {
-            return undefined;
+    public getSymbolInfo(symbol: string | Symbol): SymbolInfo | undefined {
+        if (!(symbol instanceof Symbol)) {
+            let temp = this.resolve(symbol);
+            if (!temp) {
+                return undefined;
+            }
+            symbol = temp;
         }
 
         let kind = this.getKindFromSymbol(symbol);
@@ -140,7 +144,7 @@ export class GrapsSymbolTable extends SymbolTable {
                 if (table.owner && table.owner.sourceId.includes(name)) {
                     return { // TODO: implement a best match search.
                         kind: kind,
-                        name: symbol!.name,
+                        name: (symbol as Symbol).name,
                         source: table.owner.fileName,
                         definition: definitionForContext(table.tree, true)
                     };
@@ -148,7 +152,7 @@ export class GrapsSymbolTable extends SymbolTable {
             });
         }
 
-        let symbolTable = symbol.getSymbolTable() as GrapsSymbolTable;
+        let symbolTable = symbol.symbolTable as GrapsSymbolTable;
         return {
             kind: kind,
             name: symbol.name,
@@ -164,7 +168,7 @@ export class GrapsSymbolTable extends SymbolTable {
 
         let symbols = this.getAllSymbols(t, localOnly);
         for (let symbol of symbols) {
-            let root = symbol.getRoot() as GrapsSymbolTable;
+            let root = symbol.root as GrapsSymbolTable;
             result.push({
                 kind: this.getKindFromSymbol(symbol),
                 name: symbol.name,
@@ -181,15 +185,15 @@ export class GrapsSymbolTable extends SymbolTable {
 
         result.push(...this.symbolsOfType(TokenVocabSymbol, localOnly));
         result.push(...this.symbolsOfType(ImportSymbol, localOnly));
-        result.push(...this.symbolsOfType(BuiltInLexerTokenSymbol, localOnly));
-        result.push(...this.symbolsOfType(VirtualLexerTokenSymbol, localOnly));
-        result.push(...this.symbolsOfType(FragmentLexerTokenSymbol, localOnly));
-        result.push(...this.symbolsOfType(LexerTokenSymbol, localOnly));
+        result.push(...this.symbolsOfType(BuiltInTokenSymbol, localOnly));
+        result.push(...this.symbolsOfType(VirtualTokenSymbol, localOnly));
+        result.push(...this.symbolsOfType(FragmentTokenSymbol, localOnly));
+        result.push(...this.symbolsOfType(TokenSymbol, localOnly));
         result.push(...this.symbolsOfType(BuiltInModeSymbol, localOnly));
         result.push(...this.symbolsOfType(LexerModeSymbol, localOnly));
         result.push(...this.symbolsOfType(BuiltInChannelSymbol, localOnly));
         result.push(...this.symbolsOfType(TokenChannelSymbol, localOnly));
-        result.push(...this.symbolsOfType(ParserRuleSymbol, localOnly));
+        result.push(...this.symbolsOfType(RuleSymbol, localOnly));
 
         return result;
     }
@@ -229,13 +233,13 @@ export class GrapsSymbolTable extends SymbolTable {
             case SymbolKind.Import:
                 return this.resolve(name, localOnly) as ImportSymbol;
             case SymbolKind.BuiltInLexerToken:
-                return this.resolve(name, localOnly) as BuiltInLexerTokenSymbol;
+                return this.resolve(name, localOnly) as BuiltInTokenSymbol;
             case SymbolKind.VirtualLexerToken:
-                return this.resolve(name, localOnly) as VirtualLexerTokenSymbol;
+                return this.resolve(name, localOnly) as VirtualTokenSymbol;
             case SymbolKind.FragmentLexerToken:
-                return this.resolve(name, localOnly) as FragmentLexerTokenSymbol;
+                return this.resolve(name, localOnly) as FragmentTokenSymbol;
             case SymbolKind.LexerToken:
-                return this.resolve(name, localOnly) as LexerTokenSymbol;
+                return this.resolve(name, localOnly) as TokenSymbol;
             case SymbolKind.BuiltInMode:
                 return this.resolve(name, localOnly) as BuiltInModeSymbol;
             case SymbolKind.LexerMode:
@@ -245,7 +249,7 @@ export class GrapsSymbolTable extends SymbolTable {
             case SymbolKind.TokenChannel:
                 return this.resolve(name, localOnly) as TokenChannelSymbol;
             case SymbolKind.ParserRule:
-                return this.resolve(name, localOnly) as ParserRuleSymbol;
+                return this.resolve(name, localOnly) as RuleSymbol;
         }
 
         return undefined;
@@ -258,16 +262,16 @@ export class GrapsSymbolTable extends SymbolTable {
         if (symbol instanceof ImportSymbol) {
             return SymbolKind.Import;
         }
-        if (symbol instanceof BuiltInLexerTokenSymbol) {
+        if (symbol instanceof BuiltInTokenSymbol) {
             return SymbolKind.BuiltInLexerToken;
         }
-        if (symbol instanceof VirtualLexerTokenSymbol) {
+        if (symbol instanceof VirtualTokenSymbol) {
             return SymbolKind.VirtualLexerToken;
         }
-        if (symbol instanceof FragmentLexerTokenSymbol) {
+        if (symbol instanceof FragmentTokenSymbol) {
             return SymbolKind.FragmentLexerToken;
         }
-        if (symbol instanceof LexerTokenSymbol) {
+        if (symbol instanceof TokenSymbol) {
             return SymbolKind.LexerToken;
         }
         if (symbol instanceof BuiltInModeSymbol) {
@@ -291,42 +295,56 @@ export class GrapsSymbolTable extends SymbolTable {
 /**
  * Returns the definition info for the given rule context. Exported as required by listeners.
  */
-export function definitionForContext(ctx: ParserRuleContext | undefined, keepQuotes: boolean): Definition | undefined {
-    if (!ctx)
+export function definitionForContext(ctx: ParseTree | undefined, keepQuotes: boolean): Definition | undefined {
+    if (!ctx) {
         return undefined;
-
-    let cs: CharStream = ctx.start.tokenSource!.inputStream!;
+    }
 
     var result: Definition = {
         text: "",
         range: {
-            start: { column: ctx.start.charPositionInLine, row: ctx.start.line },
-            end: { column: ctx.stop!.charPositionInLine, row: ctx.stop!.line }
+            start: { column: 0, row: 0 },
+            end: { column: 0, row: 0 }
         }
     };
 
-    let start = ctx.start.startIndex;
-    let stop = ctx.stop!.stopIndex;
+    if (ctx instanceof ParserRuleContext) {
+        let range = <Interval> { a: ctx.start.startIndex, b: ctx.stop!.stopIndex };
 
-    // For mode definitions we only need the init line, not all the lexer rules following it.
-    if (ctx.ruleIndex == ANTLRv4Parser.RULE_modeSpec) {
-        let modeSpec: ModeSpecContext = <ModeSpecContext>ctx;
-        stop = modeSpec.SEMI().symbol.stopIndex;
-        result.range.end.column = modeSpec.SEMI().symbol.charPositionInLine;
-        result.range.end.row = modeSpec.SEMI().symbol.line;
-    } else if (ctx.ruleIndex == ANTLRv4Parser.RULE_grammarSpec) {
-        // Similar for entire grammars. We only need the introducer line here.
-        let grammarSpec: GrammarSpecContext = <GrammarSpecContext>ctx;
-        stop = grammarSpec.SEMI().symbol.stopIndex;
-        result.range.end.column = grammarSpec.SEMI().symbol.charPositionInLine;
-        result.range.end.row = grammarSpec.SEMI().symbol.line;
+        result.range.start.column = ctx.start.charPositionInLine;
+        result.range.start.row = ctx.start.line;
+        result.range.end.column = ctx.stop!.charPositionInLine;
+        result.range.end.row = ctx.stop!.line;
 
-        start = grammarSpec.grammarType().start.startIndex;
-        result.range.start.column = grammarSpec.grammarType().start.charPositionInLine;
-        result.range.start.row = grammarSpec.grammarType().start.line;
+        // For mode definitions we only need the init line, not all the lexer rules following it.
+        if (ctx.ruleIndex == ANTLRv4Parser.RULE_modeSpec) {
+            let modeSpec: ModeSpecContext = <ModeSpecContext>ctx;
+            range.b = modeSpec.SEMI().symbol.stopIndex;
+            result.range.end.column = modeSpec.SEMI().symbol.charPositionInLine;
+            result.range.end.row = modeSpec.SEMI().symbol.line;
+        } else if (ctx.ruleIndex == ANTLRv4Parser.RULE_grammarSpec) {
+            // Similar for entire grammars. We only need the introducer line here.
+            let grammarSpec: GrammarSpecContext = <GrammarSpecContext>ctx;
+            range.b = grammarSpec.SEMI().symbol.stopIndex;
+            result.range.end.column = grammarSpec.SEMI().symbol.charPositionInLine;
+            result.range.end.row = grammarSpec.SEMI().symbol.line;
+
+            range.a = grammarSpec.grammarType().start.startIndex;
+            result.range.start.column = grammarSpec.grammarType().start.charPositionInLine;
+            result.range.start.row = grammarSpec.grammarType().start.line;
+        }
+
+        let cs = ctx.start.tokenSource!.inputStream;
+        result.text = cs!.getText(range);
+    } else if (ctx instanceof TerminalNode) {
+        result.text = ctx.text;
+
+        result.range.start.column = ctx.symbol.charPositionInLine;
+        result.range.start.row = ctx.symbol.line;
+        result.range.end.column = ctx.symbol.charPositionInLine + result.text.length;
+        result.range.end.row = ctx.symbol.line;
     }
 
-    result.text = cs.getText(new Interval(start, stop));
     if (keepQuotes || result.text.length < 2)
         return result;
 
@@ -339,12 +357,20 @@ export function definitionForContext(ctx: ParserRuleContext | undefined, keepQuo
 
 export class TokenVocabSymbol extends Symbol { }
 export class ImportSymbol extends Symbol { }
-export class BuiltInLexerTokenSymbol extends Symbol { }
-export class VirtualLexerTokenSymbol extends Symbol { }
-export class FragmentLexerTokenSymbol extends ScopedSymbol { }
-export class LexerTokenSymbol extends ScopedSymbol { }
+export class BuiltInTokenSymbol extends Symbol { }
+export class VirtualTokenSymbol extends Symbol { }
+export class FragmentTokenSymbol extends ScopedSymbol { }
+export class TokenSymbol extends ScopedSymbol { }
+export class TokenReferenceSymbol extends Symbol { }
 export class BuiltInModeSymbol extends Symbol { }
 export class LexerModeSymbol extends Symbol { }
 export class BuiltInChannelSymbol extends Symbol { }
 export class TokenChannelSymbol extends Symbol { }
-export class ParserRuleSymbol extends ScopedSymbol { }
+export class RuleSymbol extends ScopedSymbol { }
+export class RuleReferenceSymbol extends Symbol { }
+export class AlternativeSymbol extends ScopedSymbol { }
+export class EbnfSuffixSymbol extends Symbol { }
+export class OptionsSymbol extends ScopedSymbol { }
+export class ActionSymbol extends ScopedSymbol { }
+export class ArgumentSymbol extends ScopedSymbol { }
+export class OperatorSymbol extends Symbol { }

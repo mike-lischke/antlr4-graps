@@ -10,3 +10,4 @@
 export * from "./src/AntlrLanguageSupport"
 export * from "./src/SourceContext"
 export * from "./src/GrapsSymbolTable"
+export * from "./src/GrapsDebugger"

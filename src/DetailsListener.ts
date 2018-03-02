@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017, Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -10,16 +10,20 @@
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import {
     LexerRuleSpecContext, ParserRuleSpecContext, TokensSpecContext, ChannelsSpecContext,
-    ModeSpecContext, DelegateGrammarContext, OptionContext, TerminalRuleContext, RulerefContext, OptionValueContext
+    ModeSpecContext, DelegateGrammarContext, OptionContext, TerminalRuleContext, RulerefContext,
+    OptionValueContext, BlockContext, AlternativeContext, RuleBlockContext, EbnfSuffixContext,
+    OptionsSpecContext, ActionBlockContext, ArgActionBlockContext, LabeledAltContext, LabeledElementContext
 } from '../parser/ANTLRv4Parser';
 
 import { SymbolKind } from '../index';
 import {
-    GrapsSymbolTable, FragmentLexerTokenSymbol, LexerTokenSymbol, ParserRuleSymbol, VirtualLexerTokenSymbol,
-    TokenChannelSymbol, LexerModeSymbol, ImportSymbol, TokenVocabSymbol, definitionForContext
+    GrapsSymbolTable, FragmentTokenSymbol, TokenSymbol, TokenReferenceSymbol, RuleSymbol, RuleReferenceSymbol,
+    VirtualTokenSymbol, TokenChannelSymbol, LexerModeSymbol, ImportSymbol, TokenVocabSymbol, definitionForContext,
+    AlternativeSymbol, EbnfSuffixSymbol, OptionsSymbol, ActionSymbol, ArgumentSymbol, OperatorSymbol
 } from './GrapsSymbolTable';
 
-import { ScopedSymbol, LiteralSymbol } from "antlr4-c3";
+import { ScopedSymbol, LiteralSymbol, BlockSymbol, Symbol, VariableSymbol } from "antlr4-c3";
+import { TerminalNode, ParseTree } from 'antlr4ts/tree';
 
 export class DetailsListener implements ANTLRv4ParserListener {
     constructor(private symbolTable: GrapsSymbolTable, private imports: string[]) { }
@@ -28,57 +32,103 @@ export class DetailsListener implements ANTLRv4ParserListener {
         let tokenRef = ctx.TOKEN_REF();
         if (tokenRef) {
             if (ctx.FRAGMENT()) {
-                this.currentRuleSymbol = this.symbolTable.addNewSymbolOfType(FragmentLexerTokenSymbol, undefined, tokenRef.text);
-                this.currentRuleSymbol.context = ctx;
+                this.currentSymbol = this.symbolTable.addNewSymbolOfType(FragmentTokenSymbol, undefined, tokenRef.text);
+                this.currentSymbol.context = ctx;
             } else {
-                this.currentRuleSymbol = this.symbolTable.addNewSymbolOfType(LexerTokenSymbol, undefined, tokenRef.text);
-                this.currentRuleSymbol.context = ctx;
+                this.currentSymbol = this.symbolTable.addNewSymbolOfType(TokenSymbol, undefined, tokenRef.text);
+                this.currentSymbol.context = ctx;
             }
         }
     }
 
     enterParserRuleSpec(ctx: ParserRuleSpecContext) {
-        let name = ctx.RULE_REF().text;
-        if (this.symbolTable.resolve(name)) {
-            return; // Duplicate symbols are handled in the semantic phase.
+        this.currentSymbol = this.symbolTable.addNewSymbolOfType(RuleSymbol, undefined, ctx.RULE_REF().text);
+        this.currentSymbol.context = ctx;
+    }
+
+    exitParserRuleSpec(ctx: ParserRuleSpecContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(TokenSymbol, this.currentSymbol as ScopedSymbol, ";");
+        try {
+            symbol.context = ctx.SEMI();
+        } catch (e) {
         }
-        this.currentRuleSymbol = this.symbolTable.addNewSymbolOfType(ParserRuleSymbol, undefined, ctx.RULE_REF().text);
-        this.currentRuleSymbol.context = ctx;
+
+        if (this.currentSymbol) {
+            this.currentSymbol = this.currentSymbol.parent as ScopedSymbol;
+        }
+    }
+
+    enterRuleBlock(ctx: RuleBlockContext) {
+        this.currentSymbol = this.symbolTable.addNewSymbolOfType(BlockSymbol, this.currentSymbol as ScopedSymbol, "");
+    }
+
+    exitRuleBlock(ctx: RuleBlockContext) {
+        if (this.currentSymbol) {
+            this.currentSymbol = this.currentSymbol.parent as ScopedSymbol;
+        }
+    }
+
+    enterBlock(ctx: BlockContext) {
+        this.currentSymbol = this.symbolTable.addNewSymbolOfType(BlockSymbol, this.currentSymbol as ScopedSymbol, "");
+        this.currentSymbol.context = ctx;
+    }
+
+    exitBlock(ctx: BlockContext) {
+        if (this.currentSymbol) {
+            this.currentSymbol = this.currentSymbol.parent as ScopedSymbol;
+        }
+    }
+
+    enterAlternative(ctx: AlternativeContext) {
+        this.currentSymbol = this.symbolTable.addNewSymbolOfType(AlternativeSymbol, this.currentSymbol as ScopedSymbol, "");
+        this.currentSymbol.context = ctx;
+    }
+
+    exitAlternative(ctx: AlternativeContext) {
+        if (this.currentSymbol) {
+            this.currentSymbol = this.currentSymbol.parent as ScopedSymbol;
+        }
     }
 
     enterTokensSpec(ctx: TokensSpecContext) {
         let idList = ctx.idList();
         if (idList) {
             for (let identifier of idList.identifier()) {
-                let symbol = this.symbolTable.addNewSymbolOfType(VirtualLexerTokenSymbol, undefined, identifier.text);
+                let symbol = this.symbolTable.addNewSymbolOfType(VirtualTokenSymbol, undefined, identifier.text);
                 symbol.context = ctx;
             }
         }
     }
 
     enterTerminalRule(ctx: TerminalRuleContext) {
-        if (this.currentRuleSymbol) {
+        if (this.currentSymbol) {
             if (ctx.TOKEN_REF()) {
                 let refName = ctx.TOKEN_REF()!.text;
-                if (!this.currentRuleSymbol.resolve(refName, true)) { // A rule can be referenced more than once.
-                    let symbol = this.symbolTable.addNewSymbolOfType(LexerTokenSymbol, this.currentRuleSymbol, refName);
+                if (!this.currentSymbol.resolve(refName, true)) { // A rule can be referenced more than once.
+                    let symbol = this.symbolTable.addNewSymbolOfType(TokenReferenceSymbol,
+                        this.currentSymbol as ScopedSymbol, refName);
+                    symbol.context = ctx.TOKEN_REF();
                 }
             } else {
                 // Must be a string literal then.
                 let refName = ctx.STRING_LITERAL()!.text;
                 refName = refName.substring(1, refName.length - 1);
-                if (!this.currentRuleSymbol.resolve(refName, true)) {
-                    let symbol = this.symbolTable.addNewSymbolOfType(LiteralSymbol, this.currentRuleSymbol, refName);
+                if (!this.currentSymbol.resolve(refName, true)) {
+                    let symbol = this.symbolTable.addNewSymbolOfType(LiteralSymbol, this.currentSymbol as ScopedSymbol,
+                        refName);
+                    symbol.context = ctx.STRING_LITERAL();
                 }
             }
         }
     }
 
     enterRuleref(ctx: RulerefContext) {
-        if (ctx.RULE_REF() && this.currentRuleSymbol) {
+        if (ctx.RULE_REF() && this.currentSymbol) {
             let refName = ctx.RULE_REF()!.text;
-            if (!this.currentRuleSymbol.resolve(refName, true)) {
-                let symbol = this.symbolTable.addNewSymbolOfType(ParserRuleSymbol, this.currentRuleSymbol, refName);
+            if (!this.currentSymbol.resolve(refName, true)) {
+                let symbol = this.symbolTable.addNewSymbolOfType(RuleReferenceSymbol, this.currentSymbol as ScopedSymbol,
+                    refName);
+                symbol.context = ctx.RULE_REF();
             }
         }
     }
@@ -100,15 +150,22 @@ export class DetailsListener implements ANTLRv4ParserListener {
 
     exitDelegateGrammar(ctx: DelegateGrammarContext) {
         let context = ctx.identifier()[ctx.identifier().length - 1];
-        let name = definitionForContext(context, false)!.text;
-        let symbol = this.symbolTable.addNewSymbolOfType(ImportSymbol, undefined, name);
+        if (context) {
+            let name = definitionForContext(context, false)!.text;
+            let symbol = this.symbolTable.addNewSymbolOfType(ImportSymbol, undefined, name);
+            symbol.context = ctx;
+            this.imports.push(name);
+        }
+    }
+
+    enterOptionsSpec(ctx: OptionsSpecContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(OptionsSymbol, undefined, "options");
         symbol.context = ctx;
-        this.imports.push(name);
     }
 
     exitOption(ctx: OptionContext) {
         let option = ctx.identifier().text;
-        if (option.toLocaleLowerCase() == "tokenvocab" && ctx.tryGetRuleContext(0, OptionValueContext)) {
+        if (option.toLowerCase() == "tokenvocab" && ctx.tryGetRuleContext(0, OptionValueContext)) {
             let name = ctx.optionValue().text;
             let symbol = this.symbolTable.addNewSymbolOfType(TokenVocabSymbol, undefined, name);
             symbol.context = ctx;
@@ -116,5 +173,34 @@ export class DetailsListener implements ANTLRv4ParserListener {
         }
     }
 
-    private currentRuleSymbol: ScopedSymbol | undefined;
+    enterEbnfSuffix(ctx: EbnfSuffixContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(EbnfSuffixSymbol, this.currentSymbol as ScopedSymbol,
+            ctx.text);
+        symbol.context = ctx;
+    }
+
+    enterActionBlock(ctx: ActionBlockContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(ActionSymbol, this.currentSymbol as ScopedSymbol, "action");
+        symbol.context = ctx;
+    }
+
+    enterArgActionBlock(ctx: ArgActionBlockContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(ArgumentSymbol, this.currentSymbol as ScopedSymbol,
+            "argument");
+        symbol.context = ctx;
+    }
+
+    enterLabeledElement(ctx: LabeledElementContext) {
+        let symbol = this.symbolTable.addNewSymbolOfType(VariableSymbol, this.currentSymbol as ScopedSymbol,
+            ctx.identifier().text);
+        symbol.context = ctx;
+
+        if (ctx.childCount > 1) {
+            let operator = this.symbolTable.addNewSymbolOfType(OperatorSymbol, this.currentSymbol as ScopedSymbol,
+                ctx.getChild(1).text);
+            operator.context = ctx.getChild(1);
+        }
+    }
+
+    private currentSymbol: Symbol | undefined;
 };

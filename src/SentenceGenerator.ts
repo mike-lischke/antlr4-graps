@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017 Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -171,7 +171,7 @@ export class SentenceGenerator {
                     }
 
                     if (transition.serializationType == TransitionType.RULE) {
-                        // Assume at least one "loop" for a subrule.
+                        // Assume at least one "loop" for a sub rule.
                         loopCounts.push(1);
                         ++alreadyTaken;
                         run = (transition as RuleTransition).followState;
@@ -257,7 +257,7 @@ export class SentenceGenerator {
                 default: {
                     let transition = run.transition(0);
                     switch (transition.serializationType) {
-                        case TransitionType.RULE: { // Transition into a subrule.
+                        case TransitionType.RULE: { // Transition into a sub rule.
                             run = (transition as RuleTransition).followState;
                             let ruleStart = transition.target as RuleStartState;
 
@@ -350,7 +350,7 @@ export class SentenceGenerator {
 
     /**
      * Processes a chain of parser rule states.
-     * @returns A tuple of generated strings and a flag indicating if we bailed out because the maxium recursion count
+     * @returns A tuple of generated strings and a flag indicating if we bailed out because the maximum recursion count
      *          was reached.
      */
     private generateFromSequence(start: ATNState, stop: ATNState): [string[], boolean] {
@@ -413,7 +413,7 @@ export class SentenceGenerator {
                     while (iteration++ < this.maxIterations) {
                         let [subResult, flag] = this.generateFromBlock(loopStart, this.allPaths);
                         if (flag) {
-                            // We can ignore a recursion block here, since a kleene star loop is optional.
+                            // We can ignore a recursion block here, since a Kleene star loop is optional.
                             break;
                         }
                         result = this.combine(result, subResult, " ");
@@ -493,7 +493,7 @@ export class SentenceGenerator {
                                     }
 
                                     // Here we try to convert the token value to a lexer rule index. This is however
-                                    // not 100% reliable, as a lexer rule can return any token value by explicitely
+                                    // not 100% reliable, as a lexer rule can return any token value by explicitly
                                     // setting the return type (which doesn't happen often fortunately).
                                     let token = this.getIntervalElement(transition.label, i);
                                     let ruleName = this.vocabulary.getSymbolicName(token);
@@ -540,7 +540,7 @@ export class SentenceGenerator {
 
     /**
      * Processes a non-loop block (all-path setting applies here).
-     * @returns A list of generated strings and a flag indicating wheter we only saw recursive paths.
+     * @returns A list of generated strings and a flag indicating if we only saw recursive paths.
      */
     private generateFromBlock(start: BlockStartState, allPaths: boolean): [string[], boolean] {
         let result: string[] = [];

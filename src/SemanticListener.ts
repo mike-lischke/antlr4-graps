@@ -1,6 +1,6 @@
 /*
  * This file is released under the MIT license.
- * Copyright (c) 2016, 2017 Mike Lischke
+ * Copyright (c) 2016, 2018, Mike Lischke
  *
  * See LICENSE file for more info.
  */
@@ -8,14 +8,14 @@
 "use strict";
 
 import { SymbolGroupKind, SymbolKind, DiagnosticEntry, DiagnosticType } from '../index';
-import { GrapsSymbolTable, LexerTokenSymbol, ParserRuleSymbol } from './GrapsSymbolTable';
+import { GrapsSymbolTable, TokenSymbol, RuleSymbol } from './GrapsSymbolTable';
 import { ANTLRv4ParserListener } from '../parser/ANTLRv4ParserListener';
 import {
     TerminalRuleContext, RulerefContext, SetElementContext, LexerCommandContext, LexerRuleSpecContext,
     ParserRuleSpecContext
 } from '../parser/ANTLRv4Parser';
 
-import { Token } from 'antlr4ts';
+import { Token, ParserRuleContext } from 'antlr4ts';
 import { TerminalNode } from 'antlr4ts/tree';
 
 export class SemanticListener implements ANTLRv4ParserListener {
@@ -38,7 +38,7 @@ export class SemanticListener implements ANTLRv4ParserListener {
             let symbol = ruleRef.text;
             this.checkSymbolExistance(true, SymbolGroupKind.RuleRef, symbol, "Unknown parser rule", ruleRef.symbol);
             this.symbolTable.countReference(symbol);
-            }
+        }
     }
 
     // Check references to other lexer tokens.
@@ -78,18 +78,20 @@ export class SemanticListener implements ANTLRv4ParserListener {
         let name = tokenRef.text;
 
         // The symbol table already contains an entry for this symbol. So we can only partially use that
-        // for duplicate checks. `seenSymbols` tracks occurences for symbols in the main symbol table.
+        // for duplicate checks. `seenSymbols` tracks occurrences for symbols in the main symbol table.
         let seenSymbol = this.seenSymbols.get(name);
         if (seenSymbol) {
             this.reportDuplicateSymbol(name, tokenRef.symbol, seenSymbol);
         } else {
             // Check if there are dependencies which already have this symbol, expressed by the fact
             // that the found symbol is not defined in the main symbol table.
-            let symbol = this.symbolTable.resolve(name) as LexerTokenSymbol;
-            if (symbol.getRoot() != this.symbolTable) {
-                this.reportDuplicateSymbol(name, tokenRef.symbol, symbol.context ? symbol.context.start : undefined);
+            let symbol = this.symbolTable.resolve(name) as TokenSymbol;
+            if (symbol.root != this.symbolTable) {
+                let start = symbol.context instanceof ParserRuleContext ?
+                    symbol.context.start : (symbol.context as TerminalNode).symbol;
+                this.reportDuplicateSymbol(name, tokenRef.symbol, symbol.context ? start : undefined);
             } else {
-                // Otherwise we haven't come accross this symbol yet.
+                // Otherwise we haven't come across this symbol yet.
                 this.seenSymbols.set(name, tokenRef.symbol);
             }
         }
@@ -104,9 +106,15 @@ export class SemanticListener implements ANTLRv4ParserListener {
         if (seenSymbol) {
             this.reportDuplicateSymbol(name, ruleRef.symbol, seenSymbol);
         } else {
-            let symbol = this.symbolTable.resolve(name) as ParserRuleSymbol;
-            if (symbol.getRoot() != this.symbolTable) {
-                this.reportDuplicateSymbol(name, ruleRef.symbol, symbol.context ? symbol.context.start : undefined);
+            let symbol = this.symbolTable.resolve(name) as RuleSymbol;
+            if (symbol.root != this.symbolTable) {
+                let start;
+                if (symbol.context instanceof ParserRuleContext) {
+                    start = symbol.context.start;
+                } else if (symbol.context instanceof TerminalNode) {
+                    start = symbol.context.symbol;
+                }
+                this.reportDuplicateSymbol(name, ruleRef.symbol, start);
             } else {
                 this.seenSymbols.set(name, ruleRef.symbol);
             }
