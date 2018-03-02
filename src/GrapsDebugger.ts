@@ -56,9 +56,9 @@ export class GrapsDebugger extends EventEmitter {
         }
 
         // The context list contains all dependencies of the main grammar (which is the first entry).
-        // There can be only context with lexer data (either the main context if that represents a combined grammar)
-        // or a dedicated lexer context. Parser data is merged into one set (by ANTLR4) even if there
-        // sub grammar. We need sub grammar contexts for breakpoint validation and call stacks.
+        // There can be only one context with lexer data (either the main context if that represents a combined
+        // grammar) or a dedicated lexer context. Parser data is merged into one set (by ANTLR4) even if there
+        // are sub grammars. We need sub grammar contexts for breakpoint validation and call stacks.
         if (this.isValid) {
             // Set up the required structures with an empty input stream.
             // On start we will replace that with the actual input.
@@ -581,9 +581,8 @@ export class GrapsDebugger extends EventEmitter {
 
     /**
      * Validates a breakpoint's position.
-     * When a breakpoint is within a rule, but not at the start line, it will be moved to that line.
-     * Only breakpoints at rule start lines will be set to be valid and only valid breakpoints are
-     * sent to the parser interpreter.
+     * Breakpoints are aligned either to the first or the last rule line, hence the debugger
+     * can only break on enter or on exit of the rule.
      * @param breakPoint The breakpoint to validate.
      */
     private validateBreakPoint(breakPoint: GrapsBreakPoint) {
@@ -680,7 +679,7 @@ class GrapsParserInterpreter extends ParserInterpreter {
             }
 
             if (this.breakPoints.has(p) && p.stateType != ATNStateType.RULE_STOP) {
-                // Don't mark a pending break point here. The rule end bp already been handled.
+                // Don't mark a pending break point here. The rule end bp has already been handled.
                 breakPointPending = true;
                 runMode = RunMode.StepIn;
             }

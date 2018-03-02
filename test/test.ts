@@ -622,7 +622,7 @@ describe('antlr4-graps:', function () {
         });
 
         it("Alignment formatting", function () {
-            this.timeout(20000);
+            this.timeout(30000);
             //createAlignmentGrammar();
 
             // Load a large file with all possible alignment combinations (50 rules for each permutation),

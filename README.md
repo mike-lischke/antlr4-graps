@@ -16,21 +16,21 @@ The module comes with jars for parser generation (the main ANTLR jar and a deriv
 
 Here's a feature summary of the module:
 
-* semi-automatic grammar management (manual loading/unloading of a main grammar, automatic loading of dependencies)
-* (re)parsing of a grammar (and its dependencies), which collects internal diagnostics
-* symbol lookup at a given position, rule name from position, enclosing range (the outer rule or the block containing a symbol)
-* listing of all found symbols
-* syntactic and semantic diagnostics (e.g. duplicate symbols, unknown symbols)
-* symbol reference counts (usage counts), unreferenced rules
-* a reference graph for all symbols
-* code completion candidates (fairly stable now, might be a bit slow for large grammars)
-* railroad diagrams for rules
-* parser generation, including interpreter data generation, with flexible configuration (listeners, visitors, search/lib folder etc.)
-* full semantic checks and reports by code generation (e.g. left-recursive rule detection etc.)
-* built-in interpreters for parse runs without the need to compile the generated parser (not yet finished)
+* Semi-automatic grammar management (manual loading/unloading of a main grammar, automatic loading of dependencies).
+* (Re)parsing of a grammar (and its dependencies), which collects internal diagnostics.
+* Symbol lookup at a given position, rule name from position, enclosing range (the outer rule or the block containing a symbol).
+* Listing of all found symbols.
+* Syntactic and semantic diagnostics (e.g. duplicate symbols, unknown symbols).
+* Symbol reference counts (usage counts), unreferenced rules.
+* A reference graph for all symbols.
+* Code completion candidates (fairly stable now, might be a bit slow for large grammars).
+* Railroad diagrams for rules.
+* Parser generation, including interpreter data generation, with flexible configuration (listeners, visitors, search/lib folder etc.).
+* Full semantic checks and reports by code generation (e.g. left-recursive rule detection etc.).
 * ATN graph (nodes and links describing the ATN structure for a given rule)
 * Sentence generation (random or all-path generation of sentences that are valid for a given grammar), mostly used for testing and grammar review.
 * Grammar formatting, controlled by large set of (dynamically switchable) options.
+* Grammar debugging support, with the usual features (run through, run w/o debugging, step-in, step-over, step-out, breakpoints at rule enter and exit points).
 
 ## Usage
 
@@ -51,14 +51,17 @@ see [bug tracker](https://github.com/mike-lischke/antlr-graps/issues)
 
 ## What's next?
 
+* Grammar profiling
 * Improve code completion
 * Refactoring: extract rule, rename items, comment selected lines, remove left recursion
 * Templates (for frequently used rules like whitespace, ID etc.)
-* Support for debugging
 
 I'd love to see code contributions, to make the module evolve quicker.
 
 ## Release Notes
+
+### 1.4.0
+- Added a grammar debugger.
 
 ### 1.3.16
 - Return full paths for symbols to remove doubt from which file a symbol comes from.
