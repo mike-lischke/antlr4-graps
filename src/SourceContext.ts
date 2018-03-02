@@ -633,7 +633,7 @@ export class SourceContext {
                 if (options.language === "typescript") {
                     parameters.push(path.join(__dirname, '../../antlr/antlr4-typescript-4.6-SNAPSHOT-complete.jar'));
                 } else {
-                    parameters.push(path.join(__dirname, '../../antlr/antlr4-4.7.1-SNAPSHOT-complete.jar'));
+                    parameters.push(path.join(__dirname, '../../antlr/antlr4-4.7.2-SNAPSHOT-complete.jar'));
                 }
             }
 
@@ -661,6 +661,9 @@ export class SourceContext {
             let genListener = options.listeners == undefined || options.listeners === true;
             parameters.push(genListener ? "-listener" : "-no-listener");
             parameters.push(options.visitors === true ? "-visitor" : "-no-visitor");
+            if (options.language != "typescript") {
+                parameters.push("-Xexact-output-dir"); // Available starting with 4.7.2.
+            }
             dependencies.add(thisRef); // Needs this also in the error parser.
 
             let fileList: string[] = [];

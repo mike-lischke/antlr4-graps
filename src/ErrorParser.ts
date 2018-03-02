@@ -129,7 +129,7 @@ export class ErrorParser {
 					// Find the context this error belongs to.
 					let context: SourceContext | undefined;
 					for (let candidate of this.contexts) {
-					    if (path.basename(candidate.fileName) === fileName) {
+					    if (candidate.fileName === fileName) {
 							context = candidate;
 							break;
 						}
