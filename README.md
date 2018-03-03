@@ -6,6 +6,11 @@
 
 ANTLR4 graps (Grammar Parsing Service) is a TypeScript node module using the [TypeScript ANTLR runtime](https://github.com/tunnelvisionlabs/antlr4ts) (antlr4ts) created by Sam Harwell. At the time being this runtime is still considered alpha, while it works already quite well.
 
+# Note
+**This will be the last release of antlr4-graps as a standalone module. It looks like there's no general interest in such a special module. Instead it will continue its existance in the only application that uses it so far: [ANTLR4 for Visual Studio Code](https://github.com/mike-lischke/vscode-antlr4).**
+
+Speak up as soon as you can if you think antlr4-graps should stay as own node module.
+
 ## Features
 
 At its core this module manages source contexts for each ANTLR4 grammar source an application provides (usually files, but can also be strings in memory). It manages grammar dependencies and automatically loads them as required (either from the same folder as the requesting grammar or from a common lib folder).
@@ -34,7 +39,7 @@ Here's a feature summary of the module:
 
 ## Usage
 
-You can find details about use and all available public functions and structures in the [api reference file](api.md).
+You can find details about use and all available public functions and structures in the [api reference file](api.md). See the ANTLR4 for vscode extension for using the debugger.
 
 ## Testing
 
@@ -51,6 +56,7 @@ see [bug tracker](https://github.com/mike-lischke/antlr-graps/issues)
 
 ## What's next?
 
+* Convert the module to a subfolder in the [ANTLR4 for vscode](https://github.com/mike-lischke/vscode-antlr4) extension
 * Grammar profiling
 * Improve code completion
 * Refactoring: extract rule, rename items, comment selected lines, remove left recursion

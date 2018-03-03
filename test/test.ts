@@ -704,6 +704,8 @@ describe('antlr4-graps:', function () {
                 d!.start(0, code, false);
                 let tree = d!.currentParseTree;
                 //console.log(util.inspect(tree, false, null, true));
+
+                // TODO: test step-in/out/over/ as well as breakpoints.
             } finally {
                 backend.releaseGrammar("test/CPP14.g4");
                 fs.removeSync("generated");
