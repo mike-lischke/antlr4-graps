@@ -695,6 +695,7 @@ describe('antlr4-graps:', function () {
 
     describe("Debugger:", function () {
         it("Run interpreter", async function () {
+            this.timeout(10000);
             let result = await backend.generate("test/CPP14.g4", { outputDir: "generated", language: "Java" });
             try {
                 let code = fs.readFileSync("test/code.cpp", { "encoding": "utf8" });
